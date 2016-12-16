@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.6)
 project(SuperGunBros)
 
+find_package(OpenGL)
 
-set(CMAKE_CXX_STANDARD 11)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -g")
 
 
 if(APPLE)
@@ -16,7 +15,9 @@ endif()
 
 
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp lib/glad/src/glad.c)
 add_executable(SuperGunBros ${SOURCE_FILES})
 
-target_link_libraries(SuperGunBros ${GLFW_LIBRARY})
+target_link_libraries(SuperGunBros ${GLFW_LIBRARY} ${OPENGL_LIBRARIES})
+include_directories(lib/glad/include)
+include_directories(lib/json)
