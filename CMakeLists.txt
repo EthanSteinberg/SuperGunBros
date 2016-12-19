@@ -3,7 +3,7 @@ project(SuperGunBros)
 
 find_package(OpenGL)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -g -Wno-unused-parameter")
 
 
 if(APPLE)
@@ -14,10 +14,25 @@ else()
 endif()
 
 
+set(LIBRARY_FILES 
+	lib/glad/src/glad.c 
+	lib/png/lodepng.cpp
+)
 
-set(SOURCE_FILES main.cpp lib/glad/src/glad.c)
-add_executable(SuperGunBros ${SOURCE_FILES})
+set(SOURCE_FILES 
+	src/main.cpp 
+	src/renderlist.cpp
+	src/render.cpp
+	src/menuscreen.cpp
+	src/readyscreen.cpp
+	src/gamescreen.cpp
+	src/gameoverscreen.cpp
+)
+	
+
+add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 
 target_link_libraries(SuperGunBros ${GLFW_LIBRARY} ${OPENGL_LIBRARIES})
 include_directories(lib/glad/include)
 include_directories(lib/json)
+include_directories(lib/png)
