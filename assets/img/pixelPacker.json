@@ -1,118 +1,118 @@
 {
-   "backToMenu" : {
-      "sizex" : 529,
-      "sizey" : 192,
-      "x" : 595,
-      "y" : 0
-   },
-   "backToMenuYellow" : {
-      "sizex" : 529,
-      "sizey" : 192,
-      "x" : 0,
-      "y" : 122
-   },
-   "black" : {
-      "sizex" : 1,
-      "sizey" : 1,
-      "x" : 592,
-      "y" : 122
-   },
-   "bullet" : {
-      "sizex" : 10,
-      "sizey" : 10,
-      "x" : 575,
-      "y" : 183
-   },
-   "gamepad" : {
-      "sizex" : 202,
-      "sizey" : 97,
-      "x" : 1636,
-      "y" : 0
-   },
-   "green" : {
-      "sizex" : 1,
-      "sizey" : 1,
-      "x" : 592,
-      "y" : 124
-   },
-   "keyboard" : {
-      "sizex" : 237,
-      "sizey" : 68,
-      "x" : 1655,
-      "y" : 98
-   },
-   "red" : {
-      "sizex" : 1,
-      "sizey" : 1,
-      "x" : 592,
-      "y" : 126
-   },
-   "redWon" : {
-      "sizex" : 510,
-      "sizey" : 121,
-      "x" : 1125,
-      "y" : 0
-   },
-   "selectPlayers" : {
-      "sizex" : 526,
-      "sizey" : 59,
-      "x" : 0,
-      "y" : 373
-   },
-   "simpleGun" : {
-      "sizex" : 13,
-      "sizey" : 7,
-      "x" : 561,
-      "y" : 183
-   },
-   "sizex" : 2048,
-   "sizey" : 2048,
-   "startButton" : {
-      "sizex" : 529,
-      "sizey" : 192,
-      "x" : 1125,
-      "y" : 122
-   },
-   "startButtonYellow" : {
-      "sizex" : 529,
-      "sizey" : 192,
-      "x" : 586,
-      "y" : 193
-   },
-   "stickRed" : {
-      "sizex" : 30,
-      "sizey" : 60,
-      "x" : 530,
-      "y" : 122
-   },
-   "stickYellow" : {
-      "sizex" : 30,
-      "sizey" : 60,
-      "x" : 561,
-      "y" : 122
-   },
-   "title" : {
-      "sizex" : 529,
-      "sizey" : 57,
-      "x" : 0,
-      "y" : 315
-   },
-   "white" : {
-      "sizex" : 1,
-      "sizey" : 1,
-      "x" : 592,
-      "y" : 128
-   },
-   "yellow" : {
-      "sizex" : 1,
-      "sizey" : 1,
-      "x" : 592,
-      "y" : 130
-   },
-   "yellowWon" : {
-      "sizex" : 594,
-      "sizey" : 121,
-      "x" : 0,
-      "y" : 0
-   }
+    "backToMenu": {
+        "sizex": 529,
+        "sizey": 192,
+        "x": 595,
+        "y": 0
+    },
+    "backToMenuYellow": {
+        "sizex": 529,
+        "sizey": 192,
+        "x": 0,
+        "y": 122
+    },
+    "black": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 592,
+        "y": 122
+    },
+    "bullet": {
+        "sizex": 10,
+        "sizey": 10,
+        "x": 575,
+        "y": 183
+    },
+    "gamepad": {
+        "sizex": 202,
+        "sizey": 97,
+        "x": 1636,
+        "y": 0
+    },
+    "green": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 592,
+        "y": 124
+    },
+    "keyboard": {
+        "sizex": 237,
+        "sizey": 68,
+        "x": 1655,
+        "y": 98
+    },
+    "red": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 592,
+        "y": 126
+    },
+    "redWon": {
+        "sizex": 510,
+        "sizey": 121,
+        "x": 1125,
+        "y": 0
+    },
+    "selectPlayers": {
+        "sizex": 526,
+        "sizey": 59,
+        "x": 0,
+        "y": 373
+    },
+    "simpleGun": {
+        "sizex": 13,
+        "sizey": 7,
+        "x": 561,
+        "y": 183
+    },
+    "sizex": 2048,
+    "sizey": 2048,
+    "startButton": {
+        "sizex": 529,
+        "sizey": 192,
+        "x": 1125,
+        "y": 122
+    },
+    "startButtonYellow": {
+        "sizex": 529,
+        "sizey": 192,
+        "x": 586,
+        "y": 193
+    },
+    "stickRed": {
+        "sizex": 30,
+        "sizey": 60,
+        "x": 530,
+        "y": 122
+    },
+    "stickYellow": {
+        "sizex": 30,
+        "sizey": 60,
+        "x": 561,
+        "y": 122
+    },
+    "title": {
+        "sizex": 529,
+        "sizey": 57,
+        "x": 0,
+        "y": 315
+    },
+    "white": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 592,
+        "y": 128
+    },
+    "yellow": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 592,
+        "y": 130
+    },
+    "yellowWon": {
+        "sizex": 594,
+        "sizey": 121,
+        "x": 0,
+        "y": 0
+    }
 }

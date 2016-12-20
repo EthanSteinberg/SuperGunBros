@@ -74,7 +74,7 @@ void load_texture_atlas(int program) {
     unsigned decode_error = lodepng::decode(image, atlas_width, atlas_height, "../assets/img/pixelPacker.png");
 
     if (decode_error != 0) {
-        std::cerr << "error while decoding the texture atlas: " << lodepng_error_text(error) << std::endl;
+        std::cerr << "error while decoding the texture atlas: " << lodepng_error_text(decode_error) << std::endl;
     }
 
     unsigned int texture;
