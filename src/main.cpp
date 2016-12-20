@@ -65,16 +65,25 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
+    //Window settings
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
+    //Mac Compatibility
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    //Debug mode if compatible
     if (GLAD_GL_KHR_debug) {
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
     }
 
+    //Create the window
     GLFWwindow* window = glfwCreateWindow(600, 600, "SuperGunBros", nullptr, nullptr);
+
+    //Verify Window Creation
     if (!window) {
         glfwTerminate();
         exit(EXIT_FAILURE);

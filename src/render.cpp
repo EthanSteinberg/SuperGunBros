@@ -8,6 +8,7 @@
 #include <glad/glad.h>
 
 const char* vertex_shader_source = R"(
+    #version 100
     attribute vec3 position;
     attribute vec2 a_texcoord;
     attribute vec2 a_texpos;
@@ -27,6 +28,7 @@ const char* vertex_shader_source = R"(
   )";
 
 const char* fragment_shader_source = R"(
+    #version 100
     precision mediump float;
     uniform sampler2D atlas;
     uniform vec2 atlas_size;
@@ -78,7 +80,7 @@ void load_texture_atlas(int program) {
     }
 
     unsigned int texture;
-    glCreateTextures(GL_TEXTURE_2D, 1, &texture);
+    glGenTextures(1, &texture);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, atlas_width, atlas_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
