@@ -66,10 +66,13 @@ int main(void)
     }
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+    if (GLAD_GL_KHR_debug) {
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    }
 
     GLFWwindow* window = glfwCreateWindow(600, 600, "SuperGunBros", nullptr, nullptr);
     if (!window) {
@@ -83,7 +86,9 @@ int main(void)
 
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
-    glDebugMessageCallback(opengl_error, nullptr);
+    if (GLAD_GL_KHR_debug) {
+        glDebugMessageCallback(opengl_error, nullptr); 
+    }
 
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
