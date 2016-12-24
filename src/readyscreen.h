@@ -2,7 +2,7 @@
 #define READY_SCREEN_H_INCLUDED
 
 #include "screen.h"
-#include "playerinfo.h"
+#include "player.h"
 
 class ReadyScreen : public Screen {
 public:
@@ -14,7 +14,7 @@ public:
 	std::unique_ptr<Screen> on_key(int key, int action);
 
 private:
-	bool contains_player_for_joystock(int index);
+	bool contains_player_for_joystick(int index);
 
 	std::vector<PlayerInfo> players;
 };

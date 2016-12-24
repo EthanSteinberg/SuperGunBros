@@ -2,7 +2,7 @@
 #define GAME_OVER_SCREEN_H_INCLUDED
 
 #include "screen.h"
-#include "playerinfo.h"
+#include "player.h"
 
 class GameOverScreen : public Screen {
 public:

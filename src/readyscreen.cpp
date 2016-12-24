@@ -64,7 +64,7 @@ void ReadyScreen::render(RenderList& list, double mouseX, double mouseY) {
 
 std::unique_ptr<Screen> ReadyScreen::update(GLFWwindow* window) {
     for (int index = 0; index < GLFW_JOYSTICK_LAST; index++) {
-        if (glfwJoystickPresent(index) && !contains_player_for_joystock(index)) {
+        if (glfwJoystickPresent(index) && !contains_player_for_joystick(index)) {
         	int count;
         	const unsigned char* axes = glfwGetJoystickButtons(index, &count);
           	
@@ -98,8 +98,9 @@ std::unique_ptr<Screen> ReadyScreen::on_key(int key, int action) {
 	return nullptr;
 }
 
-bool ReadyScreen::contains_player_for_joystock(int index) {
+bool ReadyScreen::contains_player_for_joystick(int index) {
 	for (const PlayerInfo& info : players) {
+
 		if (info.joystick_index == index) {
 			return true;
 		}

@@ -3,7 +3,7 @@
 
 #include "screen.h"
 #include <vector>
-#include "playerinfo.h"
+#include "player.h"
 
 struct PlayerState {
 	double x;

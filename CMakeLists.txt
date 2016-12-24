@@ -27,7 +27,7 @@ set(SOURCE_FILES
 	src/readyscreen.cpp
 	src/gamescreen.cpp
 	src/gameoverscreen.cpp
-)
+		src/gamepad.cpp src/gamepad.h src/player.cpp src/player.h)
 	
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
