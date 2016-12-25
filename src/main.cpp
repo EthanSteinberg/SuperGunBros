@@ -81,7 +81,7 @@ int main(void)
     }
 
     //Create the window
-    GLFWwindow* window = glfwCreateWindow(600, 600, "SuperGunBros", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "SuperGunBros", nullptr, nullptr);
 
     //Verify Window Creation
     if (!window) {
