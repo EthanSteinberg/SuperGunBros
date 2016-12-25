@@ -7,7 +7,7 @@ ReadyScreen::ReadyScreen() {
 	PlayerInfo keyboardPlayer = {
 		PlayerType::KEYBOARD,
 		PlayerColor::RED,
-		-1
+		NULL //TODO: build keyboard gamepad abstraction
 	};
 
 	players.push_back(keyboardPlayer);
@@ -73,7 +73,7 @@ std::unique_ptr<Screen> ReadyScreen::update(GLFWwindow* window) {
           			PlayerInfo joystickPlayer = {
           				PlayerType::GAMEPAD,
           				PlayerColor::YELLOW,
-          				index
+          				GamePad::getGamePad(index)
           			};
 
           			players.push_back(joystickPlayer);
@@ -101,7 +101,7 @@ std::unique_ptr<Screen> ReadyScreen::on_key(int key, int action) {
 bool ReadyScreen::contains_player_for_joystick(int index) {
 	for (const PlayerInfo& info : players) {
 
-		if (info.joystick_index == index) {
+		if (info.gamePad && info.gamePad->getIndex() == index) {
 			return true;
 		}
 	}

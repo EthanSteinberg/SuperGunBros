@@ -5,6 +5,8 @@
 #ifndef SUPERGUNBROS_PLAYER_H
 #define SUPERGUNBROS_PLAYER_H
 
+#include "gamepad.h"
+
 enum class PlayerType {
     KEYBOARD,
     GAMEPAD
@@ -20,7 +22,7 @@ enum class PlayerColor {
 struct PlayerInfo {
     PlayerType type;
     PlayerColor color;
-    int joystick_index;
+    GamePad* gamePad;
 };
 
 

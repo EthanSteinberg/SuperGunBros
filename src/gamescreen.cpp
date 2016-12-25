@@ -142,45 +142,19 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
 			firing_bullet = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
 		} else if (player.info.type == PlayerType::GAMEPAD) {
-			int joystick = player.info.joystick_index;
+			inputs player_inputs = player.info.gamePad->getState();
 
-			std::stringstream debug;
-			debug << "-------------------------------\n";
-			debug << "GAMEPAD DEBUG " << joystick << "\n";
-			debug << "-------------------------------\n";
-			debug << glfwGetJoystickName(joystick) << "\n";
-			debug << "AXES: \n";
-
-			int count;
-			const float *axis = glfwGetJoystickAxes(joystick, &count);
-			debug << "count " << count << "\n";
-			dx += axis[4] * 0.05;
-
-			for(int k = 0; k < count; k++){
-				debug << "  " << k << " - " << axis[k] << "\n";
-			}
+			dx += player_inputs.ls.x * 0.05;
 
 			//REPLACE WITH ATAN2 CALCULATION (MIGHT NEED THRESHOLDING)
-			player.gun_angle += axis[3] * 0.1;
+			player.gun_angle += player_inputs.rs.y * 0.1;
 
-			const unsigned char *buttons = glfwGetJoystickButtons(joystick, &count);
-
-			debug << "BUTTONS: \n";
-			debug << "count " << count << "\n";
-
-			for(int k = 0; k < count; k++){
-				debug << "  " << k << " - " << buttons[k] << "\n";
-			}
-
-			if (buttons[4] && is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1) && player.ticks_left_jumping == 0) {
+			if (player_inputs.rb && is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1) && player.ticks_left_jumping == 0) {
 				player.ticks_left_jumping = 30;
 			}
 
-			firing_bullet = buttons[5];
+			firing_bullet = player_inputs.rt;
 
-			debug << "\n\n";
-			std::string s = debug.str();
-			fprintf(stdout, s.c_str());
 		}
 
 		if (dx > 0) {
