@@ -22,7 +22,7 @@ enum class PlayerColor {
 struct PlayerInfo {
     PlayerType type;
     PlayerColor color;
-    GamePad* gamePad;
+    std::shared_ptr<GamePad> gamePad;
 };
 
 

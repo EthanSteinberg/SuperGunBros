@@ -65,12 +65,12 @@ public:
     int getIndex(){return js;}
 };
 
-GamePad* GamePad::getGamePad(int joy){
+std::shared_ptr<GamePad> GamePad::getGamePad(int joy){
     //The next lines are a zero-fault tolerant version of controller registration
     //const char *jname = glfwGetJoystickName(joy);
     //return mappings[jname](joy);
 
-    return new Xbox360Controller(joy);
+    return std::make_shared<Xbox360Controller>(joy);
 }
 
 
