@@ -10,6 +10,7 @@
 
 #include <string>
 #include <map>
+#include <memory>
 
 //"Xbox 360 Wired Controller"
 //"Logitech Logitech Dual Action"
@@ -23,7 +24,7 @@ class GamePad {
 
 public:
     //Factory method for gamepads
-    static GamePad* getGamePad(int joy);
+    static std::shared_ptr<GamePad> getGamePad(int joy);
     //What you actually use to query a gamepad
     virtual inputs getState() = 0;
     //Might not need this, leaving it for to alter code as little as possible;
