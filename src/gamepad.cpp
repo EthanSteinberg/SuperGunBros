@@ -42,6 +42,8 @@ public:
 
         status.back = natButtons[5];
         status.start = natButtons[4];
+        status.l3 = natButtons[6];
+        status.r3 = natButtons[7];
 
         status.ud = natButtons[0];
         status.dd = natButtons[1];
@@ -86,6 +88,8 @@ public:
 
         status.back = natButtons[8];
         status.start = natButtons[9];
+        status.l3 = natButtons[10];
+        status.r3 = natButtons[11];
 
         status.ud = natAxes[5] == -1;
         status.dd = natAxes[5] == 1;
