@@ -45,11 +45,7 @@ struct inputs{
     button_val a, b, x, y;
     button_val lb, rb, lt, rt;
     button_val back, start;
-    button_val l3, r3;
     button_val ud, dd, ld, rd;
-
-    //I don't think we'll use the xbox home button, but it's here just in case
-    button_val extra;
 };
 
 
