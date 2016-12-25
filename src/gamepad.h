@@ -26,7 +26,7 @@ public:
     static GamePad* getGamePad(int joy);
     //What you actually use to query a gamepad
     virtual inputs getState() = 0;
-    //Might not need this, leaving it for to alter code as little as possible;
+    //Might not need this, leaving it so as to alter code as little as possible;
     virtual int getIndex() = 0;
 };
 

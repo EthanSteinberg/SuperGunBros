@@ -91,10 +91,12 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 			list.scale(-1, 1);
 		}
 
+        double gun_angle = player.facing_right ? player.gun_angle : M_PI - player.gun_angle;
+
 		list.translate(-15 + 26, -30 + 35);
-		list.rotate(player.gun_angle);
+		list.rotate(gun_angle);
 		list.add_image("simpleGun", -2, -5);
-		list.rotate(-player.gun_angle);
+		list.rotate(-gun_angle);
 		list.translate(-(-15 + 26), -(-30 + 35));
 
 		if (!player.facing_right) {
@@ -131,14 +133,19 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 				player.ticks_left_jumping = 30;
 			}
 
-			//REPLACE WITH ATAN2 calculation based on X and Y difference in mouse vs player position
-			if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-				player.gun_angle += 0.1;
-			}
+			double cursorX;
+            double cursorY;
 
-			if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-				player.gun_angle -= 0.1;
-			}
+            glfwGetCursorPos(window, &cursorX, &cursorY);
+
+
+            double xdiff = cursorX - (player.x * 30);
+            double ydiff = cursorY - (player.y * 30);
+
+            fprintf(stdout, "c(%f, %f), p(%f, %f)\n", cursorX, cursorY, player.x, player.y);
+            fprintf(stdout, "mapped(%f, %f), diff(%f, %f)\n", player.x * 30.0, player.y * 30.0, xdiff, ydiff);
+
+            player.gun_angle = atan2(ydiff, xdiff);
 
 			firing_bullet = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
 		} else if (player.info.type == PlayerType::GAMEPAD) {
@@ -146,8 +153,10 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
 			dx += player_inputs.ls.x * 0.05;
 
-			//REPLACE WITH ATAN2 CALCULATION (MIGHT NEED THRESHOLDING)
-			player.gun_angle += player_inputs.rs.y * 0.1;
+            //TODO Handle case where player isn't aiming to aim flat
+            //fabs(player_inputs.rs.x) < 0.2 && fabs(player_inputs.rs.y) < 0.2
+
+            player.gun_angle = atan2(player_inputs.rs.y, player_inputs.rs.x);
 
 			if (player_inputs.rb && is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1) && player.ticks_left_jumping == 0) {
 				player.ticks_left_jumping = 30;
@@ -157,13 +166,13 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
 		}
 
-		if (dx > 0) {
+		if (fabs(player.gun_angle) < M_PI/2) {
 			player.facing_right = true;
-		} else if (dx < 0) {
+		} else {
 			player.facing_right = false;
 		}
 
-		player.gun_angle = std::max(std::min(player.gun_angle, M_PI / 3), -M_PI / 3);
+		//player.gun_angle = std::max(std::min(player.gun_angle, M_PI / 3), -M_PI / 3);
 
 		if (player.ticks_left_jumping > 0) {
 			player.ticks_left_jumping --;
@@ -181,10 +190,10 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 			next_bullet.player_owner = i;
 
 			double scale_factor = player.facing_right ? 1 : -1;
-			next_bullet.x = player.x + scale_factor * ((-15 + 26)/60.0 + 15.0/60 * cos(-17.0 * M_PI / 180.0 + player.gun_angle));
+			next_bullet.x = player.x + scale_factor * ((-15 + 26)/60.0) + 15.0/60 * cos(-17.0 * M_PI / 180.0 + player.gun_angle);
 			next_bullet.y = player.y + (-30 + 35)/60.0 + 15.0/60 * sin(-17.0 * M_PI / 180.0 + player.gun_angle);
 
-			next_bullet.x_vel = 0.05 * scale_factor * cos(player.gun_angle);
+			next_bullet.x_vel = 0.05 * cos(player.gun_angle);
 			next_bullet.y_vel = 0.05 * sin(player.gun_angle);
 
 			bullets.push_back(next_bullet);
