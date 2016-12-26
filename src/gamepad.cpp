@@ -49,6 +49,9 @@ public:
         status.dd = natButtons[1];
         status.ld = natButtons[2];
         status.rd = natButtons[3];
+
+        //natButtons[10] is the xbox button
+
         return status;
     }
 

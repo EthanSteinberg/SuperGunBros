@@ -119,9 +119,12 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 		double dy = 0;
 
 		bool firing_bullet;
+        bool attempting_jump;
 
 		// Deal with player input.
 		if (player.info.type == PlayerType::KEYBOARD) {
+
+            //X-axis
 			if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 				dx -= 0.05;
 			}
@@ -129,50 +132,51 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 				dx += 0.05;
 			}
 
-			if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1) && player.ticks_left_jumping == 0) {
-				player.ticks_left_jumping = 30;
-			}
-
-			double cursorX;
+            //Directional Aiming
+            double cursorX;
             double cursorY;
-
             glfwGetCursorPos(window, &cursorX, &cursorY);
-
-
             double xdiff = cursorX - (player.x * 30);
             double ydiff = cursorY - (player.y * 30);
-
-            fprintf(stdout, "c(%f, %f), p(%f, %f)\n", cursorX, cursorY, player.x, player.y);
-            fprintf(stdout, "mapped(%f, %f), diff(%f, %f)\n", player.x * 30.0, player.y * 30.0, xdiff, ydiff);
-
             player.gun_angle = atan2(ydiff, xdiff);
 
+            //Gather inputs for later calculations
 			firing_bullet = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
+            attempting_jump = glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS;
+
 		} else if (player.info.type == PlayerType::GAMEPAD) {
 			inputs player_inputs = player.info.gamePad->getState();
 
-			dx += player_inputs.ls.x * 0.05;
+            //Threshold the motion so that you aren't creeping around at slow speed
+            float x_thresh = (fabs(player_inputs.ls.x) > 0.3) ? player_inputs.ls.x : 0;
+			dx += x_thresh * 0.05;
 
-            //TODO Handle case where player isn't aiming to aim flat
-            //fabs(player_inputs.rs.x) < 0.2 && fabs(player_inputs.rs.y) < 0.2
+            //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
+            if(fabs(player_inputs.rs.x) < 0.3 && fabs(player_inputs.rs.y) < 0.3){
+                //This line is a travesty and I'm happy about that (direction of motion aim, keep direction if not moving)
+                int right = (dx > 0) ? 1 : (dx < 0) ? 0 : (player.facing_right) ? 1 : 0;
+                player.gun_angle = M_PI - right * M_PI;
+            } else {
+                player.gun_angle = atan2(player_inputs.rs.y, player_inputs.rs.x);
+            }
 
-            player.gun_angle = atan2(player_inputs.rs.y, player_inputs.rs.x);
-
-			if (player_inputs.rb && is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1) && player.ticks_left_jumping == 0) {
-				player.ticks_left_jumping = 30;
-			}
-
+            //Checking inputs for later calculations
+            attempting_jump = player_inputs.rb;
 			firing_bullet = player_inputs.rt;
 
 		}
 
+        //Direction is based on way you're aiming if you're aiming //TODO and direction of motion otherwise
 		if (fabs(player.gun_angle) < M_PI/2) {
 			player.facing_right = true;
 		} else {
 			player.facing_right = false;
 		}
 
-		//player.gun_angle = std::max(std::min(player.gun_angle, M_PI / 3), -M_PI / 3);
+        //Jumping logic
+        if (attempting_jump && is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1) && player.ticks_left_jumping == 0) {
+            player.ticks_left_jumping = 30;
+        }
 
 		if (player.ticks_left_jumping > 0) {
 			player.ticks_left_jumping --;
@@ -181,6 +185,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 			dy = 0.05;
 		}
 
+        //Bullet logic
 		if (player.ticks_till_next_bullet > 0) {
 			player.ticks_till_next_bullet --;
 		} else if (firing_bullet) {
@@ -199,6 +204,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 			bullets.push_back(next_bullet);
 		}
 
+        //Movement logic
 		if (!is_colliding_with_ground(player.x + dx, player.y + dy, 0.5 - 0.1, 1 - 0.1)) {
 			player.x += dx;
 			player.y += dy;

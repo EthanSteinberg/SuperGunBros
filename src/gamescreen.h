@@ -5,23 +5,6 @@
 #include <vector>
 #include "player.h"
 
-struct PlayerState {
-	double x;
-	double y;
-
-	int ticks_left_jumping;
-
-	PlayerInfo info;
-
-	double gun_angle;
-
-	bool facing_right;
-
-	int ticks_till_next_bullet;
-
-	int health;
-};
-
 struct Bullet {
 	unsigned int player_owner;
 
