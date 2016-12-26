@@ -19,22 +19,28 @@ GameScreen::GameScreen(const std::vector<PlayerInfo>& infos) {
 				break;
 
 			case 1:
-				player.x = 8.75;
+				player.x = 18.75;
 				break;
 		}
 		players.push_back(player);
 	}
 
 	// Initialize the map
-	for (int x = 0; x < 10; x++) {
+	for (int x = 0; x < 20; x++) {
 		for (int y = 0; y < 10; y++) {
 
-			if (x == 0 || x == 9 || y == 0 || y == 9) {
+			if (x == 0 || x == 19 || y == 0 || y == 9) {
 				// Add borders around the map
 				is_ground[x][y] = true;
 			} else if (x >=3 && x <= 5 && y == 7) {
-				// Add a little platform
-				is_ground[x][y] = true;
+                // Add a little platform
+                is_ground[x][y] = true;
+            } else if (x >= 14 && x <= 16 && y == 7) {
+                // Add a little platform
+                is_ground[x][y] = true;
+            } else if (x >= 7 && x <= 12 && y == 5){
+                // Add a little platform
+                is_ground[x][y] = true;
 			} else {
 				is_ground[x][y] = false;
 			}
@@ -46,7 +52,7 @@ GameScreen::GameScreen(const std::vector<PlayerInfo>& infos) {
 void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 
 	// Render the map
-	for (int x = 0; x < 10; x++) {
+	for (int x = 0; x < 20; x++) {
 		for (int y = 0; y < 10; y++) {
 
 			if (is_ground[x][y]) {
@@ -118,17 +124,17 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 		double dx = 0;
 		double dy = 0;
 
-		bool firing_bullet;
-        bool attempting_jump;
+		bool firing_bullet = false;
+        bool attempting_jump = false;
 
 		// Deal with player input.
 		if (player.info.type == PlayerType::KEYBOARD) {
 
             //X-axis
-			if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { //Changed from left arrow
 				dx -= 0.05;
 			}
-			if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { //Changed from right arrow
 				dx += 0.05;
 			}
 
@@ -141,8 +147,8 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             player.gun_angle = atan2(ydiff, xdiff);
 
             //Gather inputs for later calculations
-			firing_bullet = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
-            attempting_jump = glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS;
+			firing_bullet = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS; //changed from space bar
+            attempting_jump = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS; //Changed from up key
 
 		} else if (player.info.type == PlayerType::GAMEPAD) {
 			inputs player_inputs = player.info.gamePad->getState();
@@ -153,15 +159,25 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
             //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
             if(fabs(player_inputs.rs.x) < 0.3 && fabs(player_inputs.rs.y) < 0.3){
+
+                //Original code
                 //This line is a travesty and I'm happy about that (direction of motion aim, keep direction if not moving)
                 int right = (dx > 0) ? 1 : (dx < 0) ? 0 : (player.facing_right) ? 1 : 0;
                 player.gun_angle = M_PI - right * M_PI;
+
+                //This code changes it to the left stick controlling aim in the absence of right stick controls
+                //Still reverts to flat aim in previous direction if no input is provided
+                //if (fabs(player_inputs.ls.x) < 0.3 && fabs(player_inputs.ls.y) < 0.3){
+                //    player.gun_angle = player.facing_right ? 0 : M_PI;
+                //} else {
+                //    player.gun_angle = atan2(player_inputs.ls.y, player_inputs.ls.x);
+                //}
             } else {
                 player.gun_angle = atan2(player_inputs.rs.y, player_inputs.rs.x);
             }
 
             //Checking inputs for later calculations
-            attempting_jump = player_inputs.rb;
+            attempting_jump = player_inputs.rb; //TODO reassess the merit of this, as it feels awkward to some people
 			firing_bullet = player_inputs.rt;
 
 		}
@@ -189,7 +205,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 		if (player.ticks_till_next_bullet > 0) {
 			player.ticks_till_next_bullet --;
 		} else if (firing_bullet) {
-			player.ticks_till_next_bullet = 10;
+			player.ticks_till_next_bullet = 30;
 
 			Bullet next_bullet;
 			next_bullet.player_owner = i;
@@ -198,8 +214,8 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 			next_bullet.x = player.x + scale_factor * ((-15 + 26)/60.0) + 15.0/60 * cos(-17.0 * M_PI / 180.0 + player.gun_angle);
 			next_bullet.y = player.y + (-30 + 35)/60.0 + 15.0/60 * sin(-17.0 * M_PI / 180.0 + player.gun_angle);
 
-			next_bullet.x_vel = 0.05 * cos(player.gun_angle);
-			next_bullet.y_vel = 0.05 * sin(player.gun_angle);
+			next_bullet.x_vel = 0.10 * cos(player.gun_angle);
+			next_bullet.y_vel = 0.10 * sin(player.gun_angle);
 
 			bullets.push_back(next_bullet);
 		}
@@ -231,6 +247,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 		}
 
 		bool hit_a_player = false;
+        bool hit_a_bullet = false;
 
 		for (unsigned int i = 0; i < players.size(); i++) {
 			auto& player = players[i];
@@ -250,7 +267,15 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 			}
 		}
 
-		if (hit_a_player) {
+        for (auto& bullet2 : bullets) {
+            if (&bullet2 != &bullet && rect_rect_colliding(bullet.x, bullet.y, 10/60.0, 10/60.0, bullet2.x, bullet2.y, 10/60.0, 10/60.0)){
+                hit_a_bullet = true;
+            }
+        }
+
+
+
+		if (hit_a_player || hit_a_bullet) {
 			continue;
 		}
 
