@@ -94,10 +94,10 @@ public:
         status.l3 = natButtons[10];
         status.r3 = natButtons[11];
 
-        status.ud = natAxes[5] == -1;
-        status.dd = natAxes[5] == 1;
-        status.ld = natAxes[4] == -1;
-        status.rd = natAxes[4] == 1;
+        status.ud = (button_val) (natAxes[5] == -1);
+        status.dd = (button_val) (natAxes[5] == 1);
+        status.ld = (button_val) (natAxes[4] == -1);
+        status.rd = (button_val) (natAxes[4] == 1);
         return status;
     }
 

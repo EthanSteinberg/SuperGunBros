@@ -29,6 +29,9 @@ struct PlayerState {
     double x;
     double y;
 
+    double dx;
+    double dy;
+
     int ticks_left_jumping;
 
     PlayerInfo info;
@@ -36,6 +39,8 @@ struct PlayerState {
     double gun_angle;
 
     bool facing_right;
+    bool is_jumping;
+    bool double_jump;
 
     int ticks_till_next_bullet;
 

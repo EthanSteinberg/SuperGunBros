@@ -5,13 +5,24 @@
 #include <string>
 #include <cmath>
 
+#define MAX_X_SPEED 0.1
+#define MAX_Y_SPEED 0.2
+#define JUMP_COEF 0.1
+#define GRAVITY 0.05
+#define X_ACCEL 0.01
+//Affects acceleration in the air
+#define AERIAL_ACCEL_COEF 0.5
+#define BULLET_VEL 0.1
+#define JUMP_DIR 20
+#define SIGMA 0.001
+
 GameScreen::GameScreen(const std::vector<PlayerInfo>& infos) {
 
 	// Initialize the player state
 	for (unsigned int i = 0; i < infos.size(); i++) {
 		const auto& info = infos[i];
 		PlayerState player = {
-			0,8.5, false, info, 0, true, 0, 100
+			0,8.5, 0, 0, false, info, 0, true, false, true, 0, 100
 		};
 		switch (i) {
 			case 0:
@@ -120,23 +131,23 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 
 std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 	for (unsigned int i = 0; i < players.size(); i++) {
-		auto& player = players[i];
-		double dx = 0;
-		double dy = 0;
+        auto &player = players[i];
 
-		bool firing_bullet = false;
+        bool firing_bullet = false;
         bool attempting_jump = false;
 
-		// Deal with player input.
-		if (player.info.type == PlayerType::KEYBOARD) {
+        double accel = 0;
+
+        // Deal with player input.
+        if (player.info.type == PlayerType::KEYBOARD) {
 
             //X-axis
-			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { //Changed from left arrow
-				dx -= 0.05;
-			}
-			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { //Changed from right arrow
-				dx += 0.05;
-			}
+            if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { //Changed from left arrow
+                accel -= X_ACCEL;
+            }
+            if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { //Changed from right arrow
+                accel += X_ACCEL;
+            }
 
             //Directional Aiming
             double cursorX;
@@ -147,65 +158,76 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             player.gun_angle = atan2(ydiff, xdiff);
 
             //Gather inputs for later calculations
-			firing_bullet = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS; //changed from space bar
+            firing_bullet = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS; //changed from space bar
             attempting_jump = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS; //Changed from up key
 
-		} else if (player.info.type == PlayerType::GAMEPAD) {
-			inputs player_inputs = player.info.gamePad->getState();
+        } else if (player.info.type == PlayerType::GAMEPAD) {
+            inputs player_inputs = player.info.gamePad->getState();
 
             //Threshold the motion so that you aren't creeping around at slow speed
             float x_thresh = (fabs(player_inputs.ls.x) > 0.3) ? player_inputs.ls.x : 0;
-			dx += x_thresh * 0.05;
+            accel += x_thresh * X_ACCEL;
 
             //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
-            if(fabs(player_inputs.rs.x) < 0.3 && fabs(player_inputs.rs.y) < 0.3){
+            if (fabs(player_inputs.rs.x) < 0.3 && fabs(player_inputs.rs.y) < 0.3) {
 
                 //Original code
                 //This line is a travesty and I'm happy about that (direction of motion aim, keep direction if not moving)
-                int right = (dx > 0) ? 1 : (dx < 0) ? 0 : (player.facing_right) ? 1 : 0;
-                player.gun_angle = M_PI - right * M_PI;
+                //int right = (dx > 0) ? 1 : (dx < 0) ? 0 : (player.facing_right) ? 1 : 0;
+                //player.gun_angle = M_PI - right * M_PI;
 
                 //This code changes it to the left stick controlling aim in the absence of right stick controls
                 //Still reverts to flat aim in previous direction if no input is provided
-                //if (fabs(player_inputs.ls.x) < 0.3 && fabs(player_inputs.ls.y) < 0.3){
-                //    player.gun_angle = player.facing_right ? 0 : M_PI;
-                //} else {
-                //    player.gun_angle = atan2(player_inputs.ls.y, player_inputs.ls.x);
-                //}
+                if (fabs(player_inputs.ls.x) < 0.3 && fabs(player_inputs.ls.y) < 0.3) {
+                    player.gun_angle = player.facing_right ? 0 : M_PI;
+                } else {
+                    player.gun_angle = atan2(player_inputs.ls.y, player_inputs.ls.x);
+                }
             } else {
                 player.gun_angle = atan2(player_inputs.rs.y, player_inputs.rs.x);
             }
 
             //Checking inputs for later calculations
-            attempting_jump = player_inputs.rb; //TODO reassess the merit of this, as it feels awkward to some people
-			firing_bullet = player_inputs.rt;
+            attempting_jump = player_inputs.rb || player_inputs.lt || player_inputs.a; //TODO determine best input
+            firing_bullet = player_inputs.rt;
 
-		}
-
-        //Direction is based on way you're aiming if you're aiming //TODO and direction of motion otherwise
-		if (fabs(player.gun_angle) < M_PI/2) {
-			player.facing_right = true;
-		} else {
-			player.facing_right = false;
-		}
-
-        //Jumping logic
-        if (attempting_jump && is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1) && player.ticks_left_jumping == 0) {
-            player.ticks_left_jumping = 30;
         }
 
-		if (player.ticks_left_jumping > 0) {
-			player.ticks_left_jumping --;
-			dy = -0.07;
-		} else {
-			dy = 0.05;
-		}
+        //Direction is based on way you're aiming if you're aiming
+        if (fabs(player.gun_angle) < M_PI / 2) {
+            player.facing_right = true;
+        } else {
+            player.facing_right = false;
+        }
+
+        //X-Speed considerations for stopping and turning around on the ground
+        if (is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1)) {
+            if (accel == 0) {
+                player.dx = player.dx / 4;
+                if (fabs(player.dx) < 0.2 * X_ACCEL) {
+                    player.dx = 0;
+                }
+            } else if (fabs(player.dx + accel) < fabs(player.dx)) {
+                player.dx = player.dx = (player.dx / 4) + accel;
+            } else {
+                player.dx += accel;
+            }
+        } else {
+            //X-Speed considerations for aerial motion
+            player.dx = player.dx + AERIAL_ACCEL_COEF * accel;
+        }
+
+        //Speed cap for horizontal motion
+        //TODO figure out if we want to alter or remove the cap when not grounded
+        if (fabs(player.dx) > MAX_X_SPEED){
+            player.dx = (player.dx > 0) ? MAX_X_SPEED : -MAX_X_SPEED;
+        }
 
         //Bullet logic
 		if (player.ticks_till_next_bullet > 0) {
 			player.ticks_till_next_bullet --;
 		} else if (firing_bullet) {
-			player.ticks_till_next_bullet = 30;
+			player.ticks_till_next_bullet = 15;
 
 			Bullet next_bullet;
 			next_bullet.player_owner = i;
@@ -214,22 +236,104 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 			next_bullet.x = player.x + scale_factor * ((-15 + 26)/60.0) + 15.0/60 * cos(-17.0 * M_PI / 180.0 + player.gun_angle);
 			next_bullet.y = player.y + (-30 + 35)/60.0 + 15.0/60 * sin(-17.0 * M_PI / 180.0 + player.gun_angle);
 
-			next_bullet.x_vel = 0.10 * cos(player.gun_angle);
-			next_bullet.y_vel = 0.10 * sin(player.gun_angle);
+			next_bullet.x_vel = BULLET_VEL * cos(player.gun_angle);
+			next_bullet.y_vel = BULLET_VEL * sin(player.gun_angle);
 
 			bullets.push_back(next_bullet);
 		}
 
-        //Movement logic
-		if (!is_colliding_with_ground(player.x + dx, player.y + dy, 0.5 - 0.1, 1 - 0.1)) {
-			player.x += dx;
-			player.y += dy;
-		} else if (!is_colliding_with_ground(player.x, player.y + dy, 0.5 - 0.1, 1 - 0.1)) {
-			player.y += dy;
-		} else if (!is_colliding_with_ground(player.x + dx, player.y, 0.5 - 0.1, 1 - 0.1)) {
-			player.x += dx;
-			player.ticks_left_jumping = 0;
-		}
+        //Jumping/Gravity logic
+        //Grounded
+        if(is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1)){
+
+            //Reset jumps
+            player.double_jump = false;
+            player.is_jumping = false;
+
+            //Arrest fall
+            player.dy = 0;
+
+            //Standard-Jump
+            if(attempting_jump){
+                player.is_jumping = true;
+                player.dy -= 1 * JUMP_COEF;
+                player.ticks_left_jumping = JUMP_DIR;
+            }
+
+        //Wall-Cling
+        } else if (is_colliding_with_ground(player.x + (accel > 0 ? 1 : -1) * 0.5, player.y, 0.5 - 0.1, 1 - 0.1)){
+
+            //Reset jumps
+            player.double_jump = false;
+            player.is_jumping = false;
+
+            //Arrest motion
+            player.dx = 0;
+
+            //Half speed fall, plus added friction based on the speed
+            //TODO revisit formula
+            player.dy = (player.dy + GRAVITY) / 2;
+
+            //Wall-Jump
+            if(attempting_jump){
+                int dir = accel > 0 ? 1 : -1;
+                player.is_jumping = true;
+                player.dy -= 1 * JUMP_COEF;
+                player.dx = dir * JUMP_COEF;
+                player.ticks_left_jumping = JUMP_DIR;
+            }
+
+        //Aerial Logic
+        } else {
+            //Continued-Jump
+            if(player.is_jumping){
+                if(attempting_jump){
+                    if (player.ticks_left_jumping >= 0) {
+                        player.ticks_left_jumping--;
+                        //To smoothly counteract the falling motion
+                        player.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
+                    }
+                } else {
+                    player.is_jumping = false;
+                    player.ticks_left_jumping = 0;
+                }
+            } else {
+                //Double-Jump
+                if(attempting_jump && !player.double_jump){
+                    //Consume your double jump
+                    player.double_jump = true;
+                    player.is_jumping = true;
+                    player.dy += 1 * JUMP_COEF;
+                    player.ticks_left_jumping = JUMP_DIR; //TODO any tweaks necessary?
+
+                }
+            }
+            //Gravity always has an effect in the air.
+            player.dy += GRAVITY;
+            if (fabs(player.dy) > MAX_Y_SPEED){
+                player.dy = (player.dy > 0) ? MAX_Y_SPEED : -MAX_Y_SPEED;
+            }
+        }
+
+        //Collision tracking super basic
+        //TODO more nuanced approach
+        bool loop = true;
+        while(is_colliding_with_ground(player.x + player.dx, player.y + player.dy, 0.5 - 0.1, 1 - 0.1) && loop){
+            loop = false;
+            if(is_colliding_with_ground(player.x + player.dx, player.y, 0.5 - 0.1, 1 - 0.1)&& player.dx != 0){
+                player.dx =  fabs(player.dx) < X_ACCEL ? 0 : player.dx - (player.dx > 0 ? X_ACCEL : -X_ACCEL);
+                loop = true;
+            }
+            if(is_colliding_with_ground(player.x, player.y + player.dy, 0.5 - 0.1, 1 - 0.1) && player.dy != 0){
+                player.dy = fabs(player.dy) < X_ACCEL ? 0 : player.dy - (player.dy > 0 ? X_ACCEL : -X_ACCEL);
+                player.ticks_left_jumping = 0; //regardless of what's happening, this guy isn't going up anymore.
+                loop = true;
+            }
+        }
+
+        //Make motions as necessary
+        player.x += player.dx;
+        player.y += player.dy;
 
 	}
 
@@ -267,6 +371,9 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 			}
 		}
 
+        //Not a good way to check for bullet collisions, but it's here for now.
+        //TODO make a fullproof method that doesn't risk destroying a single bullet and not the other one
+        //TODO make this all part of the projectile class logic to allow for some bullets to beat others etc.
         for (auto& bullet2 : bullets) {
             if (&bullet2 != &bullet && rect_rect_colliding(bullet.x, bullet.y, 10/60.0, 10/60.0, bullet2.x, bullet2.y, 10/60.0, 10/60.0)){
                 hit_a_bullet = true;
