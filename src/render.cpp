@@ -96,15 +96,16 @@ void load_texture_atlas(int program) {
 }
 
 // Update the size. This requires changing a uniform variable and the viewport.
-void update_size(int program, int width, int height) {
-    glViewport(0, 0, width, height);
+void update_size(int program, int pixel_width, int pixel_height,
+                 int screen_width, int screen_height) {
+    glViewport(0, 0, pixel_width, pixel_height);
 
     int screen_size_location = glGetUniformLocation(program, "screen_size");
-    glUniform2f(screen_size_location, width, height);
+    glUniform2f(screen_size_location, screen_width, screen_height);
 }
 
 // Create and initialize the OpenGL program.
-void create_and_use_program(int width, int height) {
+void create_and_use_program(int pixel_width, int pixel_height, int screen_width, int screen_height){
     int program = glCreateProgram();
 
     int vertex_shader = create_and_compile_shader(vertex_shader_source, GL_VERTEX_SHADER);
@@ -148,5 +149,5 @@ void create_and_use_program(int width, int height) {
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0, 1, 1, 1.0);
 
-    update_size(program, width, height);
+    update_size(program, pixel_width, pixel_height, screen_width, screen_height);
 }

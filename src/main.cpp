@@ -10,6 +10,9 @@
 #include "render.h"
 #include "menuscreen.h"
 
+const int screen_width = 1280;
+const int screen_height = 720;
+
 struct MainData {
     std::unique_ptr<Screen> current_screen;
 };
@@ -99,10 +102,10 @@ int main(void)
         glDebugMessageCallback(opengl_error, nullptr); 
     }
 
-    int width, height;
-    glfwGetFramebufferSize(window, &width, &height);
+    int pixel_width, pixel_height;
+    glfwGetFramebufferSize(window, &pixel_width, &pixel_height);
 
-    create_and_use_program(width, height);
+    create_and_use_program(pixel_width, pixel_height, screen_width, screen_height);
 
     MainData data;
     data.current_screen = std::make_unique<MenuScreen>();

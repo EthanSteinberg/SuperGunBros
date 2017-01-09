@@ -26,9 +26,9 @@ public:
     //Factory method for gamepads
     static std::shared_ptr<GamePad> getGamePad(int joy);
     //What you actually use to query a gamepad
-    virtual inputs getState() = 0;
+    virtual inputs getInputs() const = 0;
     //Might not need this, leaving it so as to alter code as little as possible;
-    virtual int getIndex() = 0;
+    virtual int getIndex() const = 0;
 };
 
 //It's nice to have a .x and .y

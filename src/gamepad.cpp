@@ -18,7 +18,7 @@ public:
         js = joy;
     }
 
-    inputs getState() {
+    inputs getInputs() const {
         inputs status;
         int count;
         const float* natAxes = glfwGetJoystickAxes(js, &count);
@@ -55,7 +55,7 @@ public:
         return status;
     }
 
-    int getIndex(){return js;}
+    int getIndex() const {return js;}
 
   private:
     int js;
@@ -67,7 +67,7 @@ public:
         js = joy;
     }
 
-    inputs getState() {
+    inputs getInputs() const {
         inputs status;
         int count;
         const float* natAxes = glfwGetJoystickAxes(js, &count);
@@ -101,7 +101,7 @@ public:
         return status;
     }
 
-    int getIndex(){return js;}
+    int getIndex() const {return js;}
 
   private:
     int js;
