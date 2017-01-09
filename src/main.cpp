@@ -84,7 +84,7 @@ int main(void)
     }
 
     //Create the window
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "SuperGunBros", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, "SuperGunBros", nullptr, nullptr);
 
     //Verify Window Creation
     if (!window) {
@@ -99,7 +99,7 @@ int main(void)
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
     if (GLAD_GL_KHR_debug) {
-        glDebugMessageCallback(opengl_error, nullptr); 
+        glDebugMessageCallback(opengl_error, nullptr);
     }
 
     int pixel_width, pixel_height;
