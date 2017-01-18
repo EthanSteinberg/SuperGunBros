@@ -54,7 +54,6 @@ class Player {
 public:
     Player(double start_x, double start_y, PlayerInfo info);
     void render(RenderList& list) const;
-    void target_point(double mouseX, double mouseY);
     void update(GLFWwindow* window);
     Bullet spawn_bullet() const;
 
@@ -64,6 +63,9 @@ public:
     PlayerState state;
 private:
     AnimationState get_interpolated_frame() const;
+
+    double get_gun_angle(double mouseX, double mouseY) const;
+
     bool is_facing_right() const;
     std::vector<AnimationState> frames;
     double current_time;

@@ -112,10 +112,10 @@ void Player::update(GLFWwindow* window) {
         double cursorY;
         glfwGetCursorPos(window, &cursorX, &cursorY);
 
-        state.input.rs.x = (float)(cursorX - (prev_state.x * 60));
-        state.input.rs.y = (float)(cursorY - (prev_state.y * 60));
+        double needed_gun_angle = get_gun_angle(cursorX, cursorY);
 
-                //target_point(cursorX, cursorY);
+        state.input.rs.x = cos(needed_gun_angle);
+        state.input.rs.y = sin(needed_gun_angle);
 
         state.input.buttons[ButtonName::A] = 0;
         state.input.buttons[ButtonName::B] = 0;
@@ -164,10 +164,9 @@ Bullet Player::spawn_bullet() const {
     return next_bullet;
 }
 
-void Player::target_point(double mouseX, double mouseY) {
-
+double Player::get_gun_angle(double mouseX, double mouseY) const {
     if (is_facing_right()) {
-        state.gun_angle = calculate_angle(
+        return calculate_angle(
                 mouseX, mouseY,
                 state.x * 60 + gun_rotation_x,
                 state.y * 60 + gun_rotation_y,
@@ -175,7 +174,7 @@ void Player::target_point(double mouseX, double mouseY) {
                 state.y * 60 + barrel_offset_y
         );
     } else {
-        state.gun_angle = calculate_angle(
+        return calculate_angle(
                 mouseX, mouseY,
                 state.x * 60 - gun_rotation_x,
                 state.y * 60 + gun_rotation_y,
