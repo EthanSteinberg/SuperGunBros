@@ -67,7 +67,7 @@ std::unique_ptr<Screen> ReadyScreen::update(GLFWwindow* window) {
         if (glfwJoystickPresent(index) && !contains_player_for_joystick(index)) {
         	int count;
         	const unsigned char* axes = glfwGetJoystickButtons(index, &count);
-          	
+
           	for (int i = 0; i < count ; i++) {
           		if (axes[i]) {
           			PlayerInfo joystickPlayer = {
@@ -76,7 +76,14 @@ std::unique_ptr<Screen> ReadyScreen::update(GLFWwindow* window) {
           				GamePad::getGamePad(index)
           			};
 
-          			players.push_back(joystickPlayer);
+                    if (players.size() == 1) {
+                        players.push_back(joystickPlayer);
+                    } else {
+                        joystickPlayer.color = PlayerColor::RED;
+                        players[0] = joystickPlayer;
+                    }
+
+
           			break;
           		}
           	}

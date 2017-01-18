@@ -224,9 +224,27 @@ void Player::render(RenderList& list) const {
         list.translate(0, -arm_y_offset);
     }
 
+    const char* body_color = nullptr;
 
+    switch (info.color) {
+        case PlayerColor::RED:
+            body_color = "redBody";
+            break;
 
-    list.add_image("blueBody", -11, -36);
+        case PlayerColor::YELLOW:
+            body_color = "yellowBody";
+            break;
+
+        case PlayerColor::BLUE:
+            body_color = "yellowBody";
+            break;
+
+        case PlayerColor::GREEN:
+            body_color = "yellowBody";
+            break;
+    }
+
+    list.add_image(body_color, -11, -36);
     list.add_image("head", -11, -55);
 
     {

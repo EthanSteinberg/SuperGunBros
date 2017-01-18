@@ -2,8 +2,8 @@
     "armPiece": {
         "sizex": 8,
         "sizey": 20,
-        "x": 530,
-        "y": 243
+        "x": 584,
+        "y": 194
     },
     "backToMenu": {
         "sizex": 529,
@@ -32,8 +32,8 @@
     "boot": {
         "sizex": 18,
         "sizey": 12,
-        "x": 530,
-        "y": 222
+        "x": 576,
+        "y": 267
     },
     "bullet": {
         "sizex": 10,
@@ -68,14 +68,20 @@
     "legPiece": {
         "sizex": 11,
         "sizey": 28,
-        "x": 549,
-        "y": 222
+        "x": 576,
+        "y": 228
     },
     "red": {
         "sizex": 1,
         "sizey": 1,
         "x": 561,
         "y": 145
+    },
+    "redBody": {
+        "sizex": 22,
+        "sizey": 44,
+        "x": 530,
+        "y": 222
     },
     "redWon": {
         "sizex": 510,
@@ -98,8 +104,8 @@
     "simpleGun": {
         "sizex": 13,
         "sizey": 7,
-        "x": 530,
-        "y": 235
+        "x": 576,
+        "y": 280
     },
     "sizex": 2048,
     "sizey": 2048,
@@ -144,6 +150,12 @@
         "sizey": 1,
         "x": 561,
         "y": 149
+    },
+    "yellowBody": {
+        "sizex": 22,
+        "sizey": 44,
+        "x": 553,
+        "y": 228
     },
     "yellowWon": {
         "sizex": 594,

@@ -135,6 +135,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 player.gun_angle = atan2(player_inputs.rs.y, player_inputs.rs.x);
             }
 
+
             //Checking inputs for later calculations
             attempting_jump = player_inputs.rb || player_inputs.lt || player_inputs.a; //TODO determine best input
             firing_bullet = player_inputs.rt;
