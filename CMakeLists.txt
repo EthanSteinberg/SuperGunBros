@@ -14,21 +14,22 @@ else()
 endif()
 
 
-set(LIBRARY_FILES 
-	lib/glad/src/glad.c 
+set(LIBRARY_FILES
+	lib/glad/src/glad.c
 	lib/png/lodepng.cpp
 )
 
-set(SOURCE_FILES 
-	src/main.cpp 
+set(SOURCE_FILES
+	src/main.cpp
 	src/renderlist.cpp
 	src/render.cpp
 	src/menuscreen.cpp
 	src/readyscreen.cpp
 	src/gamescreen.cpp
 	src/gameoverscreen.cpp
-		src/gamepad.cpp src/gamepad.h src/player.cpp src/player.h)
-	
+	src/gamepad.cpp
+    src/player.cpp)
+
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 

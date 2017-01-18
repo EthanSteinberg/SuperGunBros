@@ -9,16 +9,13 @@
 #define JUMP_STR 0.3
 #define GRAVITY 0.04
 #define X_ACCEL 0.02
-#define BULLET_VEL 0.3
 #define JUMP_DUR 12
 GameScreen::GameScreen(const std::vector<PlayerInfo>& infos) {
 
 	// Initialize the player state
 	for (unsigned int i = 0; i < infos.size(); i++) {
 		const auto& info = infos[i];
-		PlayerState player = {
-			0,8.5, 0, 0, false, info, 0, true, false, true, 0, 100
-		};
+		Player player(0, 8, info);
 		switch (i) {
 			case 0:
 				player.x = 1.25;
@@ -69,53 +66,7 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 
 	// Render the players.
 	for (const auto& player : players) {
-		const char* color = nullptr;
-
-		switch (player.info.color) {
-			case PlayerColor::RED:
-				color = "stickRed";
-				break;
-
-			case PlayerColor::BLUE:
-				color = "stickBlue";
-				break;
-
-			case PlayerColor::YELLOW:
-				color = "stickYellow";
-				break;
-
-			case PlayerColor::GREEN:
-				color = "stickGreen";
-				break;
-		}
-
-		list.translate(player.x * 60, player.y * 60);
-		list.add_image(color, -15, -30, 30, 60);
-
-		// Render the health bar
-		list.add_image("black", -15, -36, 30, 8);
-		list.add_image("red", -13, -34, 26, 4);
-		list.add_image("green", -13, -34, 26 * player.health / 100.0, 4);
-		
-		// Render the gun
-
-		if (!player.facing_right) {
-			list.scale(-1, 1);
-		}
-
-        double gun_angle = player.facing_right ? player.gun_angle : M_PI - player.gun_angle;
-
-		list.translate(-15 + 26, -30 + 35);
-		list.rotate(gun_angle);
-		list.add_image("simpleGun", -2, -5);
-		list.rotate(-gun_angle);
-		list.translate(-(-15 + 26), -(-30 + 35));
-
-		if (!player.facing_right) {
-			list.scale(-1, 1);
-		}
-
-		list.translate(-player.x * 60, -player.y * 60);
+        player.render(list);
 	}
 
 	// Render the bullets
@@ -124,9 +75,13 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 	}
 }
 
+const double player_height = 1.9;
+
 std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 	for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
+
+        player.update();
 
         bool firing_bullet = false;
         bool attempting_jump = false;
@@ -148,9 +103,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             double cursorX;
             double cursorY;
             glfwGetCursorPos(window, &cursorX, &cursorY);
-            double xdiff = cursorX - (player.x * 60);
-            double ydiff = cursorY - (player.y * 60);
-            player.gun_angle = atan2(ydiff, xdiff);
+            player.target_point(cursorX, cursorY);
 
             //Gather inputs for later calculations
             firing_bullet = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
@@ -174,7 +127,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 //This code changes it to the left stick controlling aim in the absence of right stick controls
                 //Still reverts to flat aim in previous direction if no input is provided
                 if (fabs(player_inputs.ls.x) < 0.3 && fabs(player_inputs.ls.y) < 0.3) {
-                    player.gun_angle = player.facing_right ? 0 : M_PI;
+                    player.gun_angle = 0; // TODO: This should be based on last movement!
                 } else {
                     player.gun_angle = atan2(player_inputs.ls.y, player_inputs.ls.x);
                 }
@@ -188,22 +141,15 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
         }
 
-        //Direction is based on way you're aiming if you're aiming
-        if (fabs(player.gun_angle) < M_PI / 2) {
-            player.facing_right = true;
-        } else {
-            player.facing_right = false;
-        }
-
         //X-Speed considerations for stopping and turning around on the ground
-        if (is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1)) {
+        if (is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, player_height - 0.1)) {
             if (accel == 0) {
                 player.dx = player.dx / 4;
                 if (fabs(player.dx) < 0.2 * X_ACCEL) {
                     player.dx = 0;
                 }
             } else if (fabs(player.dx + accel) < fabs(player.dx)) {
-                player.dx = player.dx = (player.dx / 4) + accel;
+                player.dx = (player.dx / 4) + accel;
             } else {
                 player.dx += accel;
             }
@@ -220,7 +166,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
         //Jumping/Gravity logic
         //Grounded
-        if(is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, 1 - 0.1)){
+        if(is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, player_height - 0.1)){
 
             //Reset jumps
             player.double_jump = false;
@@ -235,7 +181,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             }
 
         //Wall-Cling
-        } else if (is_colliding_with_ground(player.x + (accel > 0 ? 1 : -1), player.y, 0.5 - 0.1, 1 - 0.1)){
+        } else if (is_colliding_with_ground(player.x + (accel > 0 ? 1 : -1), player.y, 0.5 - 0.1, player_height - 0.1)){
 
             //Reset jumps
             player.double_jump = false;
@@ -296,9 +242,9 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         double mid = 0.5;
         double high = 1.0;
 
-        if(is_colliding_with_ground(player.x + player.dx, player.y + player.dy, 0.5 - 0.1, 1 - 0.1)){
+        if(is_colliding_with_ground(player.x + player.dx, player.y + player.dy, 0.5 - 0.1, player_height - 0.1)){
             while(high - low > 0.005){
-                if(is_colliding_with_ground(player.x + mid * player.dx, player.y + mid * player.dy, 0.5 - 0.1, 1-0.1)){
+                if(is_colliding_with_ground(player.x + mid * player.dx, player.y + mid * player.dy, 0.5 - 0.1, player_height -0.1)){
                     high = mid;
                 } else {
                     low = mid;
@@ -322,15 +268,8 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         } else if (firing_bullet) {
             player.ticks_till_next_bullet = 15;
 
-            Bullet next_bullet;
+            Bullet next_bullet = player.spawn_bullet();
             next_bullet.player_owner = i;
-
-            double scale_factor = player.facing_right ? 1 : -1;
-            next_bullet.x = player.x + scale_factor * ((-15 + 26)/60.0) + 15.0/60 * cos(-17.0 * M_PI / 180.0 + player.gun_angle);
-            next_bullet.y = player.y + (-30 + 35)/60.0 + 15.0/60 * sin(-17.0 * M_PI / 180.0 + player.gun_angle);
-
-            next_bullet.x_vel = BULLET_VEL * cos(player.gun_angle);
-            next_bullet.y_vel = BULLET_VEL * sin(player.gun_angle);
 
             bullets.push_back(next_bullet);
         }
@@ -416,7 +355,7 @@ bool GameScreen::rect_rect_colliding(double x1, double y1, double width1, double
 
 bool GameScreen::is_colliding_with_ground(double x, double y, double width, double height) {
 	return (
-		is_ground[(int)(x - width/2)][(int)(y - height/2)] || 
+		is_ground[(int)(x - width/2)][(int)(y - height/2)] ||
 		is_ground[(int)(x + width/2)][(int)(y - height/2)] ||
 		is_ground[(int)(x - width/2)][(int)(y + height/2)] ||
 		is_ground[(int)(x + width/2)][(int)(y + height/2)]);

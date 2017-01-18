@@ -1,11 +1,9 @@
-//
-// Created by Chris Brown on 12/20/16.
-//
-
 #ifndef SUPERGUNBROS_PLAYER_H
 #define SUPERGUNBROS_PLAYER_H
 
 #include "gamepad.h"
+#include "renderlist.h"
+#include "bullet.h"
 
 enum class PlayerType {
     KEYBOARD,
@@ -25,7 +23,23 @@ struct PlayerInfo {
     std::shared_ptr<GamePad> gamePad;
 };
 
-struct PlayerState {
+struct AnimationState {
+    double hip_angle[2];
+    double knee_angle[2];
+};
+
+struct Player {
+
+    Player(double start_x, double start_y, PlayerInfo info);
+
+    void render(RenderList& list) const;
+
+    void target_point(double mouseX, double mouseY);
+
+    void update();
+
+    Bullet spawn_bullet() const;
+
     double x;
     double y;
 
@@ -38,20 +52,23 @@ struct PlayerState {
 
     double gun_angle;
 
-    bool facing_right;
     bool is_jumping;
     bool double_jump;
 
     int ticks_till_next_bullet;
 
     int health;
+
+private:
+    AnimationState get_interpolated_frame() const;
+
+    bool is_facing_right() const;
+
+
+    std::vector<AnimationState> frames;
+    double current_time;
 };
 
-
-
-class player {
-
-};
 
 
 #endif //SUPERGUNBROS_PLAYER_H

@@ -5,15 +5,6 @@
 #include <vector>
 #include "player.h"
 
-struct Bullet {
-	unsigned int player_owner;
-
-	double x;
-	double y;
-	double x_vel;
-	double y_vel;
-};
-
 class GameScreen : public Screen {
 public:
 	GameScreen(const std::vector<PlayerInfo>& players);
@@ -24,7 +15,7 @@ public:
 	std::unique_ptr<Screen> on_key(int key, int action);
 
 private:
-	std::vector<PlayerState> players;
+	std::vector<Player> players;
 	std::vector<Bullet> bullets;
 
     // Is the rectangle at x,y with width and height colliding with the ground?

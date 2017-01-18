@@ -1,4 +1,10 @@
 {
+    "armPiece": {
+        "sizex": 8,
+        "sizey": 20,
+        "x": 530,
+        "y": 243
+    },
     "backToMenu": {
         "sizex": 529,
         "sizey": 192,
@@ -14,13 +20,25 @@
     "black": {
         "sizex": 1,
         "sizey": 1,
-        "x": 592,
-        "y": 122
+        "x": 561,
+        "y": 141
+    },
+    "blueBody": {
+        "sizex": 22,
+        "sizey": 44,
+        "x": 561,
+        "y": 183
+    },
+    "boot": {
+        "sizex": 18,
+        "sizey": 12,
+        "x": 530,
+        "y": 222
     },
     "bullet": {
         "sizex": 10,
         "sizey": 10,
-        "x": 575,
+        "x": 584,
         "y": 183
     },
     "gamepad": {
@@ -32,8 +50,14 @@
     "green": {
         "sizex": 1,
         "sizey": 1,
-        "x": 592,
-        "y": 124
+        "x": 561,
+        "y": 143
+    },
+    "head": {
+        "sizex": 22,
+        "sizey": 19,
+        "x": 530,
+        "y": 202
     },
     "keyboard": {
         "sizex": 237,
@@ -41,17 +65,29 @@
         "x": 1655,
         "y": 98
     },
+    "legPiece": {
+        "sizex": 11,
+        "sizey": 28,
+        "x": 549,
+        "y": 222
+    },
     "red": {
         "sizex": 1,
         "sizey": 1,
-        "x": 592,
-        "y": 126
+        "x": 561,
+        "y": 145
     },
     "redWon": {
         "sizex": 510,
         "sizey": 121,
         "x": 1125,
         "y": 0
+    },
+    "rifle": {
+        "sizex": 32,
+        "sizey": 18,
+        "x": 530,
+        "y": 122
     },
     "selectPlayers": {
         "sizex": 526,
@@ -62,8 +98,8 @@
     "simpleGun": {
         "sizex": 13,
         "sizey": 7,
-        "x": 561,
-        "y": 183
+        "x": 530,
+        "y": 235
     },
     "sizex": 2048,
     "sizey": 2048,
@@ -76,20 +112,20 @@
     "startButtonYellow": {
         "sizex": 529,
         "sizey": 192,
-        "x": 586,
+        "x": 595,
         "y": 193
     },
     "stickRed": {
         "sizex": 30,
         "sizey": 60,
-        "x": 530,
+        "x": 563,
         "y": 122
     },
     "stickYellow": {
         "sizex": 30,
         "sizey": 60,
-        "x": 561,
-        "y": 122
+        "x": 530,
+        "y": 141
     },
     "title": {
         "sizex": 529,
@@ -100,14 +136,14 @@
     "white": {
         "sizex": 1,
         "sizey": 1,
-        "x": 592,
-        "y": 128
+        "x": 561,
+        "y": 147
     },
     "yellow": {
         "sizex": 1,
         "sizey": 1,
-        "x": 592,
-        "y": 130
+        "x": 561,
+        "y": 149
     },
     "yellowWon": {
         "sizex": 594,
