@@ -61,53 +61,6 @@ public:
     int js;
 };
 
-class LogitechControllerLinux: public GamePad {
-public:
-    LogitechControllerLinux(int joy) {
-        js = joy;
-    }
-
-    inputs getInputs() const {
-        inputs status;
-        int count;
-        const float* natAxes = glfwGetJoystickAxes(js, &count);
-        const unsigned char* natButtons = glfwGetJoystickButtons(js, &count);
-
-        status.ls.x = natAxes[0];
-        status.ls.y = natAxes[1];
-        status.rs.x = natAxes[2];
-        status.rs.y = natAxes[3];
-
-        status.buttons[ButtonName::A] = natButtons[1];
-        status.buttons[ButtonName::B] = natButtons[2];
-        status.buttons[ButtonName::X] = natButtons[0];
-        status.buttons[ButtonName::Y] = natButtons[3];
-
-        status.buttons[ButtonName::LB] = natButtons[4];
-        status.buttons[ButtonName::RB] = natButtons[5];
-
-        status.buttons[ButtonName::LT] = natButtons[6];
-        status.buttons[ButtonName::RT] = natButtons[7];
-
-        status.buttons[ButtonName::BACK] = natButtons[8];
-        status.buttons[ButtonName::START] = natButtons[9];
-
-        status.buttons[ButtonName::L3] = natButtons[10];
-        status.buttons[ButtonName::R3] = natButtons[11];
-
-        status.buttons[ButtonName::UD] = (button_val) (natAxes[5] == -1);
-        status.buttons[ButtonName::DD] = (button_val) (natAxes[5] == 1);
-        status.buttons[ButtonName::LD] = (button_val) (natAxes[4] == -1);
-        status.buttons[ButtonName::RD] = (button_val) (natAxes[4] == 1);
-        return status;
-    }
-
-    int getIndex() const {return js;}
-
-  private:
-    int js;
-};
-
 class LogitechController: public GamePad {
 public:
     LogitechController(int joy) {
