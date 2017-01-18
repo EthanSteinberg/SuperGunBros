@@ -20,6 +20,8 @@ public:
 	// Width and height are optional, and default to the width and height of the source image.
 	void add_image(const char* name, float x, float y, float width = 0, float height = 0);
 
+	void add_line(const char* color, float x_1, float y_1, float x_2, float y_2);
+
 	// Perform a stateful translation by x and y.
 	void translate(float x, float y);
 

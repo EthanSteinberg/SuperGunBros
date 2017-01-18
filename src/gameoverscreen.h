@@ -6,7 +6,7 @@
 
 class GameOverScreen : public Screen {
 public:
-	GameOverScreen(const PlayerAttributes& winning_player);
+	GameOverScreen(const PlayerInfo& winning_player);
 
 	void render(RenderList& list, double mouseX, double mouseY);
 	std::unique_ptr<Screen> update(GLFWwindow* window);
@@ -14,7 +14,7 @@ public:
 	std::unique_ptr<Screen> on_key(int key, int action);
 
 private:
-	PlayerAttributes winning_player;
+	PlayerInfo winning_player;
 };
 
 #endif

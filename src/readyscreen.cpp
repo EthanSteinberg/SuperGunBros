@@ -4,8 +4,13 @@
 #include "gamescreen.h"
 
 ReadyScreen::ReadyScreen() {
-	players = std::make_shared<std::vector<Player>>();
-	//TODO init work moved to first pass of update because I need the window
+	PlayerInfo keyboardPlayer = {
+			PlayerType::KEYBOARD,
+			PlayerColor::RED,
+			NULL //TODO: build keyboard gamepad abstraction
+	};
+
+	players.push_back(keyboardPlayer);
 }
 
 void ReadyScreen::render(RenderList& list, double mouseX, double mouseY) {
@@ -18,13 +23,13 @@ void ReadyScreen::render(RenderList& list, double mouseX, double mouseY) {
 		list.add_image("startButton", (600 - 529)/2.0, 400);
 	}
 
-	for (unsigned int i = 0; i < players->size(); i++) {
-		Player& player = (*players)[i];
+	for (unsigned int i = 0; i < players.size(); i++) {
+		const PlayerInfo& player = players[i];
 
 		const char* type = nullptr;
 		const char* color = nullptr;
 
-		switch (player.getAttributes().type) {
+		switch (player.type) {
 			case PlayerType::KEYBOARD:
 				type = "keyboard";
 				break;
@@ -34,7 +39,7 @@ void ReadyScreen::render(RenderList& list, double mouseX, double mouseY) {
 				break;
 		}
 
-		switch (player.getAttributes().color) {
+		switch (player.color) {
 			case PlayerColor::RED:
 				color = "red";
 				break;
@@ -58,40 +63,32 @@ void ReadyScreen::render(RenderList& list, double mouseX, double mouseY) {
 }
 
 std::unique_ptr<Screen> ReadyScreen::update(GLFWwindow* window) {
+	for (int index = 0; index < GLFW_JOYSTICK_LAST; index++) {
+		if (glfwJoystickPresent(index) && !contains_player_for_joystick(index)) {
+			int count;
+			const unsigned char* axes = glfwGetJoystickButtons(index, &count);
 
-    if(players->size() < 1){
-        Player keyboardPlayer = KeyboardPlayer((PlayerAttributes){
-                PlayerType::KEYBOARD,
-                PlayerColor::RED,
-                -1,
-                0.5,
-                1
-        }, window);
+			for (int i = 0; i < count ; i++) {
+				if (axes[i]) {
+					PlayerInfo joystickPlayer = {
+							PlayerType::GAMEPAD,
+							PlayerColor::YELLOW,
+							GamePad::getGamePad(index)
+					};
 
-        players->push_back(keyboardPlayer);
-    }
+					if (players.size() == 1) {
+						players.push_back(joystickPlayer);
+					} else {
+						joystickPlayer.color = PlayerColor::RED;
+						players[0] = joystickPlayer;
+					}
 
-    for (int index = 0; index < GLFW_JOYSTICK_LAST; index++) {
-        if (glfwJoystickPresent(index) && !contains_player_for_joystick(index)) {
-        	int count;
-        	const unsigned char* axes = glfwGetJoystickButtons(index, &count);
-          	
-          	for (int i = 0; i < count ; i++) {
-          		if (axes[i]) {
-          			Player joystickPlayer = Player((PlayerAttributes){
-          				PlayerType::GAMEPAD,
-          				PlayerColor::YELLOW,
-          				index,
-                        0.5,
-                        1
-          			});
 
-          			players->push_back(joystickPlayer);
-          			break;
-          		}
-          	}
-        }
-    }
+					break;
+				}
+			}
+		}
+	}
 
 	return nullptr;
 }
@@ -109,9 +106,9 @@ std::unique_ptr<Screen> ReadyScreen::on_key(int key, int action) {
 }
 
 bool ReadyScreen::contains_player_for_joystick(int index) {
-	for (Player& player : *players) {
+	for (const PlayerInfo& info : players) {
 
-		if (player.getAttributes().js == index) {
+		if (info.gamePad && info.gamePad->getIndex() == index) {
 			return true;
 		}
 	}

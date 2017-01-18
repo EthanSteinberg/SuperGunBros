@@ -18,6 +18,17 @@ RenderList::RenderList(const char* filename) {
 	memcpy(transform, mat, sizeof(mat));
 }
 
+void RenderList::add_line(const char* color, float x_1, float y_1, float x_2, float y_2) {
+    double dist = sqrt((x_2 - x_1) * (x_2 - x_1) + (y_2 - y_1) * (y_2 - y_1));
+    double angle = atan2(y_2 - y_1, x_2 - x_1);
+
+    translate(x_1, y_1);
+    rotate(angle);
+    add_image("black", 0, -2, dist, 4);
+    rotate(-angle);
+    translate(-x_1, -y_1);
+}
+
 void RenderList::add_image(const char* name, float x, float y, float width, float height) {
 	auto& info = metadata[name];
 

@@ -49,8 +49,8 @@ GLint create_and_compile_shader(const char* source, GLenum type) {
     glCompileShader(shader);
 
     GLint success = 0;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);  
-    
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
     if (!success) {
         std::cerr << "Could not compile the required shader " << source << std::endl;
 
@@ -63,7 +63,7 @@ GLint create_and_compile_shader(const char* source, GLenum type) {
         exit(-1);
     }
 
-    return shader;  
+    return shader;
 }
 
 // Load the texture atlas for the program.
