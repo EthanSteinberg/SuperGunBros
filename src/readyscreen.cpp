@@ -76,6 +76,8 @@ std::unique_ptr<Screen> ReadyScreen::update(GLFWwindow* window) {
 							GamePad::getGamePad(index)
 					};
 
+					printf("JS: %d, name: %s\n", index, glfwGetJoystickName(index));
+
 					if (players.size() == 1) {
 						players.push_back(joystickPlayer);
 					} else {

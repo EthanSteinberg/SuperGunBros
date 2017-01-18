@@ -110,12 +110,15 @@ public:
 };
 
 std::shared_ptr<GamePad> GamePad::getGamePad(int joy){
-    if(joy == -1) return nullptr; //TODO fix for keyboards
+    if(joy == -1) {return nullptr;} //TODO fix for keyboards
     std::string jname = glfwGetJoystickName(joy);
-    if (jname == "Logitech Logitech Dual Action") {
+    if (jname == "Logitech Dual Action") {
         return std::make_shared<LogitechController>(joy);
-    } else {
+    } else if (jname == "Xbox 360 Wired Controller"){
         return std::make_shared<Xbox360Controller>(joy);
+    } else {
+        fprintf(stderr, "No gamepad for %s\n", jname.c_str());
+        exit(-1);
     }
 }
 
