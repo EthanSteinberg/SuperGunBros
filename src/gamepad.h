@@ -37,15 +37,30 @@ struct axes{
     float y;
 };
 
+enum ButtonName {
+    A = 0,
+    B,
+    X,
+    Y,
+    LB,
+    RB,
+    LT,
+    RT,
+    BACK,
+    START,
+    L3,
+    R3,
+    UD,
+    DD,
+    LD,
+    RD
+};
+
 //Canonical representation of controller inputs
-struct inputs{
+struct inputs {
     axes ls;
     axes rs;
-    button_val a, b, x, y;
-    button_val lb, rb, lt, rt;
-    button_val back, start;
-    button_val l3, r3;
-    button_val ud, dd, ld, rd;
+    button_val buttons[16];
 };
 
 

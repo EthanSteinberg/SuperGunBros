@@ -5,11 +5,12 @@
 #include <string>
 #include <cmath>
 
-#define DRAG_COEF 0.04
-#define JUMP_STR 0.3
+#define DRAG_COEF 0.08
+#define JUMP_STR 0.6
 #define GRAVITY 0.04
-#define X_ACCEL 0.02
+#define X_ACCEL 0.03
 #define JUMP_DUR 12
+#define SIGMA 0.0001
 #define PLAYER_WIDTH 0.5
 #define PLAYER_HEIGHT 0.5
 
@@ -18,14 +19,14 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos){
     // Initialize the player state
     for (unsigned int i = 0; i < infos.size(); i++) {
         const auto& info = infos[i];
-        Player player(0, 8, info);
+        Player player(0, 10, info);
         switch (i) {
             case 0:
-                player.x = 1.25;
+                player.state.x = 2.25;
                 break;
 
             case 1:
-                player.x = 18.75;
+                player.state.x = 19.75;
                 break;
         }
         players.push_back(player);
@@ -80,82 +81,64 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
     for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
 
-        player.update();
+        player.update(window);
 
         bool firing_bullet = false;
         bool attempting_jump = false;
 
         double accel = 0;
 
-        // Deal with player input.
-        if (player.info.type == PlayerType::KEYBOARD) {
+        //Threshold the motion so that you aren't creeping around at slow speed
+        float x_thresh = (fabs(player.state.input.ls.x) > 0.3) ? player.state.input.ls.x : 0;
+        accel += x_thresh * X_ACCEL;
 
-            //X-axis
-            if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-                accel -= X_ACCEL;
-            }
-            if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS|| glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-                accel += X_ACCEL;
-            }
+        //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
+        if (fabs(player.state.input.rs.x) < 0.3 && fabs(player.state.input.rs.y) < 0.3) {
 
-            //Directional Aiming
-            double cursorX;
-            double cursorY;
-            glfwGetCursorPos(window, &cursorX, &cursorY);
-            player.target_point(cursorX, cursorY);
+            //Original code
+            //This line is a travesty and I'm happy about that (direction of motion aim, keep direction if not moving)
+            //int right = (dx > 0) ? 1 : (dx < 0) ? 0 : (player.facing_right) ? 1 : 0;
+            //player.gun_angle = M_PI - right * M_PI;
 
-            //Gather inputs for later calculations
-            firing_bullet = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
-            attempting_jump = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS;
-
-        } else if (player.info.type == PlayerType::GAMEPAD) {
-            inputs player_inputs = player.info.gamePad->getInputs();
-
-            //Threshold the motion so that you aren't creeping around at slow speed
-            float x_thresh = (fabs(player_inputs.ls.x) > 0.3) ? player_inputs.ls.x : 0;
-            accel += x_thresh * X_ACCEL;
-
-            //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
-            if (fabs(player_inputs.rs.x) < 0.3 && fabs(player_inputs.rs.y) < 0.3) {
-
-                //Original code
-                //This line is a travesty and I'm happy about that (direction of motion aim, keep direction if not moving)
-                //int right = (dx > 0) ? 1 : (dx < 0) ? 0 : (player.facing_right) ? 1 : 0;
-                //player.gun_angle = M_PI - right * M_PI;
-
-                //This code changes it to the left stick controlling aim in the absence of right stick controls
-                //Still reverts to flat aim in previous direction if no input is provided
-                if (fabs(player_inputs.ls.x) < 0.3 && fabs(player_inputs.ls.y) < 0.3) {
-                    player.gun_angle = 0; // TODO: This should be based on last movement!
-                } else {
-                    player.gun_angle = atan2(player_inputs.ls.y, player_inputs.ls.x);
-                }
+            //This code changes it to the left stick controlling aim in the absence of right stick controls
+            //Still reverts to flat aim in previous direction if no input is provided
+            if (fabs(player.state.input.ls.x) < 0.3 && fabs(player.state.input.ls.y) < 0.3) {
+                player.state.gun_angle = 0; // TODO: This should be based on last movement!
             } else {
-                player.gun_angle = atan2(player_inputs.rs.y, player_inputs.rs.x);
+                player.state.gun_angle = atan2(player.state.input.ls.y, player.state.input.ls.x);
             }
-
-
-            //Checking inputs for later calculations
-            attempting_jump = player_inputs.rb || player_inputs.lt || player_inputs.a; //TODO determine best input
-            firing_bullet = player_inputs.rt;
-
+        } else {
+            player.state.gun_angle = atan2(player.state.input.rs.y, player.state.input.rs.x);
         }
 
+
+        //Checking inputs for later calculations
+        attempting_jump = player.state.input.buttons[ButtonName::RB] || player.state.input.buttons[ButtonName::LT] ||
+                player.state.input.buttons[ButtonName::A]; //TODO determine best inputs;
+        firing_bullet = player.state.input.buttons[ButtonName::RT];
+        //fprintf(stdout, "%d\n", player.state.input.buttons[ButtonName::RT]); //TODO determine why sometimes the gun won't fire if you hold it
+
+
         //X-Speed considerations for stopping and turning around on the ground
-        if (is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, player_height - 0.1)) {
+        if (player.state.grounded) {
             if (accel == 0) {
-                player.dx = player.dx / 4;
-                if (fabs(player.dx) < 0.2 * X_ACCEL) {
-                    player.dx = 0;
+                player.state.dx = player.state.dx / 4;
+                if (fabs(player.state.dx) < 0.2 * X_ACCEL) {
+                    player.state.dx = 0;
                 }
-            } else if (fabs(player.dx + accel) < fabs(player.dx)) {
-                player.dx = (player.dx / 4) + accel;
+            } else if (fabs(player.state.dx + accel) < fabs(player.state.dx)) {
+                player.state.dx = (player.state.dx / 4) + accel;
             } else {
-                player.dx += accel;
+                player.state.dx += accel;
             }
         } else {
             //X-Speed considerations for aerial motion
-            player.dx += accel;
+            player.state.dx += accel;
+        }
+
+        //Can't accelerate into the wall we're already on
+        if(player.state.pushing_wall && player.state.pushing_wall < 0 == player.state.dx < 0){
+            player.state.dx = 0;
         }
 
         //Speed cap for horizontal motion
@@ -166,63 +149,61 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
         //Jumping/Gravity logic
         //Grounded
-        if(is_colliding_with_ground(player.x, player.y + 0.05, 0.5 - 0.1, player_height - 0.1)){
+        if(player.state.grounded){
 
-            //Reset jumps
-            player.is_jumping = false;
-            player.dy = 0;
+            //player.state.dy = 0;
+            player.state.ticks_left_jumping = JUMP_DUR;
 
             //Standard-Jump
             if(attempting_jump){
-                player.is_jumping = true;
-                player.dy -= 1 * JUMP_STR;
-                player.ticks_left_jumping = JUMP_DUR;
+                player.state.jumping = true;
+                player.state.dy -= 1 * JUMP_STR;
             }
 
             //Wall-Cling
-        } else if (is_colliding_with_ground(player.x + (accel > 0 ? 1 : -1), player.y, 0.5 - 0.1, player_height - 0.1)){
+        } else if (player.state.pushing_wall){
 
-            //Reset jumps
-            player.is_jumping = false;
+            //Reset Jumps
+            player.state.ticks_left_jumping = JUMP_DUR/2;
 
             //Half speed fall with friction
             //TODO revisit formula
-            player.dy = (player.dy + GRAVITY)/2;
+            player.state.dy = (player.state.dy + GRAVITY)/2;
 
             //Wall-Jump
-            if(attempting_jump){
-                int dir = accel > 0 ? -1 : 1;
-                player.is_jumping = true;
-                player.dy -= 1 * JUMP_STR * cos(M_PI/2);
-                player.dx = dir * JUMP_STR * cos(M_PI/2);
-                player.ticks_left_jumping = JUMP_DUR;
+            if(attempting_jump){ //TODO handy controls for wall-jumping
+                int dir = -player.state.pushing_wall;
+                player.state.jumping = true;
+                player.state.pushing_wall = 0;
+                player.state.dy -= 1 * JUMP_STR * cos(M_PI/4);
+                player.state.dx = dir * JUMP_STR * cos(M_PI/4);
+                player.state.x += dir * 2 * SIGMA; //Get off that wall
             }
 
             //Aerial Logic
         } else {
             //Continued-Jump
-            if(player.is_jumping){
-                if(attempting_jump){
-                    if (player.ticks_left_jumping >= 0) {
-                        player.ticks_left_jumping--;
-                        //To smoothly counteract the falling motion
-                        player.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
-                    }
+            if(player.state.jumping){
+                if(attempting_jump && player.state.ticks_left_jumping > 0){
+                    player.state.ticks_left_jumping--;
+                    //To smoothly counteract the falling motion
+                    player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
+
                 } else {
-                    player.is_jumping = false;
-                    player.ticks_left_jumping = 0;
+                    player.state.jumping = false;
+                    player.state.ticks_left_jumping = 0;
                 }
             }
             //Gravity always has an effect in the air.
-            player.dy += GRAVITY;
+            player.state.dy += GRAVITY;
             //if (fabs(player.dy) > MAX_Y_SPEED){
             //    player.dy = (player.dy > 0) ? MAX_Y_SPEED : -MAX_Y_SPEED;
             //}
         }
 
         //Drag Calculations
-        player.dx -= player.dx * DRAG_COEF;
-        player.dy -= player.dy * DRAG_COEF;
+        player.state.dx -= player.state.dx * DRAG_COEF;
+        player.state.dy -= player.state.dy * DRAG_COEF;
 
         //Collision tracking super basic
 
@@ -230,9 +211,9 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         double mid = 0.5;
         double high = 1.0;
 
-        if(is_colliding_with_ground(player.x + player.dx, player.y + player.dy, 0.5 - 0.1, player_height - 0.1)){
-            while(high - low > 0.005){
-                if(is_colliding_with_ground(player.x + mid * player.dx, player.y + mid * player.dy, 0.5 - 0.1, player_height -0.1)){
+        if(is_colliding_with_ground(player.state.x + player.state.dx, player.state.y + player.state.dy, 0.5, player_height)){
+            while(high - low > SIGMA){
+                if(is_colliding_with_ground(player.state.x + mid * player.state.dx, player.state.y + mid * player.state.dy, 0.5, player_height)){
                     high = mid;
                 } else {
                     low = mid;
@@ -240,21 +221,50 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 mid = low + (high - low)/2;
             }
             //TODO logic that slides along colliding surface
-            player.x += mid * player.dx;
-            player.y += mid * player.dy;
+            player.state.x += low * player.state.dx;
+            player.state.y += low * player.state.dy;
         } else {
-            player.x += player.dx;
-            player.y += player.dy;
+            player.state.x += player.state.dx;
+            player.state.y += player.state.dy;
         }
+
+        if(is_colliding_with_ground(player.state.x, player.state.y + SIGMA, 0.5, player_height)){
+            player.state.grounded = true;
+            player.state.dy = 0;
+        } else {
+            player.state.grounded = false;
+        }
+
+        if(is_colliding_with_ground(player.state.x, player.state.y - SIGMA, 0.5, player_height)){
+            player.state.roofed = true;
+            player.state.jumping = false;
+            player.state.dy = 0;
+        } else {
+            player.state.roofed = false;
+        }
+
+        if(is_colliding_with_ground(player.state.x + SIGMA, player.state.y, 0.5, player_height)){
+            player.state.pushing_wall = 1;
+            //player.state.jumping = false;
+            player.state.dx = 0;
+        } else if (is_colliding_with_ground(player.state.x - SIGMA, player.state.y, 0.5, player_height)) {
+            player.state.pushing_wall = -1;
+            //player.state.jumping = false;
+            player.state.dx = 0;
+        } else {
+            player.state.pushing_wall = false;
+        }
+
+
 
         //Make motions as necessary
 
 
         //Bullet logic
-        if (player.ticks_till_next_bullet > 0) {
-            player.ticks_till_next_bullet --;
+        if (player.state.ticks_till_next_bullet > 0) {
+            player.state.ticks_till_next_bullet --;
         } else if (firing_bullet) {
-            player.ticks_till_next_bullet = 15;
+            player.state.ticks_till_next_bullet = 15;
 
             Bullet next_bullet = player.spawn_bullet();
             next_bullet.player_owner = i;
@@ -287,11 +297,11 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 continue; // Don't intersect with self
             }
 
-            if (rect_rect_colliding(bullet.x, bullet.y, 10/60.0, 10/60.0, player.x, player.y, 0.5, 1)) {
+            if (rect_rect_colliding(bullet.x, bullet.y, 10/60.0, 10/60.0, player.state.x, player.state.y, 0.5, player_height)) {
                 hit_a_player = true;
-                player.health -= 10;
+                player.state.health -= 10;
 
-                if (player.health == 0) {
+                if (player.state.health == 0) {
                     auto& otherPlayer = players[1 - i];
                     return std::make_unique<GameOverScreen>(otherPlayer.info);
                 }

@@ -29,26 +29,26 @@ public:
         status.rs.x = natAxes[2];
         status.rs.y = natAxes[3];
 
-        status.a = natButtons[11];
-        status.b = natButtons[12];
-        status.x = natButtons[13];
-        status.y = natButtons[14];
+        status.buttons[ButtonName::A] = natButtons[11];
+        status.buttons[ButtonName::B] = natButtons[12];
+        status.buttons[ButtonName::X] = natButtons[13];
+        status.buttons[ButtonName::Y] = natButtons[14];
 
-        status.lb = natButtons[8];
-        status.rb = natButtons[9];
+        status.buttons[ButtonName::LB] = natButtons[8];
+        status.buttons[ButtonName::RB] = natButtons[9];
 
-        status.lt = (button_val) (natAxes[4] > 0);
-        status.rt = (button_val) (natAxes[5] > 0);
+        status.buttons[ButtonName::LT] = (button_val) (natAxes[4] > 0);
+        status.buttons[ButtonName::RT] = (button_val) (natAxes[5] > 0);
 
-        status.back = natButtons[5];
-        status.start = natButtons[4];
-        status.l3 = natButtons[6];
-        status.r3 = natButtons[7];
+        status.buttons[ButtonName::BACK] = natButtons[5];
+        status.buttons[ButtonName::START] = natButtons[4];
+        status.buttons[ButtonName::L3] = natButtons[6];
+        status.buttons[ButtonName::R3] = natButtons[7];
 
-        status.ud = natButtons[0];
-        status.dd = natButtons[1];
-        status.ld = natButtons[2];
-        status.rd = natButtons[3];
+        status.buttons[ButtonName::UD] = natButtons[0];
+        status.buttons[ButtonName::DD] = natButtons[1];
+        status.buttons[ButtonName::LD] = natButtons[2];
+        status.buttons[ButtonName::RD] = natButtons[3];
 
         //natButtons[10] is the xbox button
 
@@ -78,26 +78,27 @@ public:
         status.rs.x = natAxes[2];
         status.rs.y = natAxes[3];
 
-        status.a = natButtons[1];
-        status.b = natButtons[2];
-        status.x = natButtons[0];
-        status.y = natButtons[3];
+        status.buttons[ButtonName::A] = natButtons[1];
+        status.buttons[ButtonName::B] = natButtons[2];
+        status.buttons[ButtonName::X] = natButtons[0];
+        status.buttons[ButtonName::Y] = natButtons[3];
 
-        status.lb = natButtons[4];
-        status.rb = natButtons[5];
+        status.buttons[ButtonName::LB] = natButtons[4];
+        status.buttons[ButtonName::RB] = natButtons[5];
 
-        status.lt = natButtons[6];
-        status.rt = natButtons[7];
+        status.buttons[ButtonName::LT] = natButtons[6];
+        status.buttons[ButtonName::RT] = natButtons[7];
 
-        status.back = natButtons[8];
-        status.start = natButtons[9];
-        status.l3 = natButtons[10];
-        status.r3 = natButtons[11];
+        status.buttons[ButtonName::BACK] = natButtons[8];
+        status.buttons[ButtonName::START] = natButtons[9];
 
-        status.ud = (button_val) (natAxes[5] == -1);
-        status.dd = (button_val) (natAxes[5] == 1);
-        status.ld = (button_val) (natAxes[4] == -1);
-        status.rd = (button_val) (natAxes[4] == 1);
+        status.buttons[ButtonName::L3] = natButtons[10];
+        status.buttons[ButtonName::R3] = natButtons[11];
+
+        status.buttons[ButtonName::UD] = (button_val) (natAxes[5] == -1);
+        status.buttons[ButtonName::DD] = (button_val) (natAxes[5] == 1);
+        status.buttons[ButtonName::LD] = (button_val) (natAxes[4] == -1);
+        status.buttons[ButtonName::RD] = (button_val) (natAxes[4] == 1);
         return status;
     }
 

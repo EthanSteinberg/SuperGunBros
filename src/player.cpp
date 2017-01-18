@@ -36,8 +36,9 @@ double calculate_angle(double target_x, double target_y, double center_x, double
     return starting_angle + far_angle;
 }
 
-Player::Player(double start_x, double start_y, PlayerInfo a_info) : x(start_x), y(start_y), info(a_info), health(100) {
-
+Player::Player(double start_x, double start_y, PlayerInfo a_info) : info(a_info){
+    state.x = start_x;
+    state.y = start_y;
     current_time = 0;
     AnimationState frames_init[] = {
             {
@@ -94,12 +95,57 @@ AnimationState Player::get_interpolated_frame() const {
     return interpolated;
 }
 
-void Player::update() {
-    current_time += 0.1;
+void Player::update(GLFWwindow* window) {
+    current_time += state.dx * (is_facing_right() ? 1 : -1) * .75;
+    prev_state = state;
+    // Deal with player input.
+    if (info.type == PlayerType::KEYBOARD) {
+
+        state.input.ls.x = 0;
+        state.input.ls.x -= (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS);
+        state.input.ls.x += (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS);
+
+        state.input.ls.y = 0;
+
+        //Directional Aiming
+        double cursorX;
+        double cursorY;
+        glfwGetCursorPos(window, &cursorX, &cursorY);
+
+        state.input.rs.x = (float)(cursorX - (prev_state.x * 60));
+        state.input.rs.y = (float)(cursorY - (prev_state.y * 60));
+
+                //target_point(cursorX, cursorY);
+
+        state.input.buttons[ButtonName::A] = 0;
+        state.input.buttons[ButtonName::B] = 0;
+        state.input.buttons[ButtonName::X] = 0;
+        state.input.buttons[ButtonName::Y] = 0;
+
+        state.input.buttons[ButtonName::LB] = 0;
+        state.input.buttons[ButtonName::RB] = (button_val)(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS ||
+                glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS ||
+                glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS);
+
+        state.input.buttons[ButtonName::LT] = 0;
+        state.input.buttons[ButtonName::RT] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS);
+
+        state.input.buttons[ButtonName::BACK] = 0;
+        state.input.buttons[ButtonName::START] = 0;
+        state.input.buttons[ButtonName::L3] = 0;
+        state.input.buttons[ButtonName::R3] = 0;
+
+        state.input.buttons[ButtonName::UD] = 0;
+        state.input.buttons[ButtonName::DD] = 0;
+        state.input.buttons[ButtonName::LD] = 0;
+        state.input.buttons[ButtonName::RD] = 0;
+    } else {
+        state.input = info.gamePad->getInputs();
+    }
 }
 
 bool Player::is_facing_right() const {
-    return fabs(gun_angle) < M_PI / 2;
+    return fabs(state.gun_angle) < M_PI / 2;
 }
 
 Bullet Player::spawn_bullet() const {
@@ -107,13 +153,13 @@ Bullet Player::spawn_bullet() const {
 
     double scaling_factor = is_facing_right() ? 1 : -1;
 
-    double scaled_gun_angle = is_facing_right() ? gun_angle : M_PI -gun_angle;
+    double scaled_gun_angle = is_facing_right() ? state.gun_angle : M_PI -state.gun_angle;
 
-    next_bullet.x = x + scaling_factor * (gun_rotation_x + cos(scaled_gun_angle) * (gun_offset_x + 20) - sin(scaled_gun_angle) * (gun_offset_y + 4))/60.0;
-    next_bullet.y = y + (gun_rotation_y + sin(scaled_gun_angle) * (gun_offset_x + 20) + cos(scaled_gun_angle) * (gun_offset_y + 4))/60.0;
+    next_bullet.x = state.x + scaling_factor * (gun_rotation_x + cos(scaled_gun_angle) * (gun_offset_x + 20) - sin(scaled_gun_angle) * (gun_offset_y + 4))/60.0;
+    next_bullet.y = state.y + (gun_rotation_y + sin(scaled_gun_angle) * (gun_offset_x + 20) + cos(scaled_gun_angle) * (gun_offset_y + 4))/60.0;
 
-    next_bullet.x_vel = BULLET_VEL * cos(gun_angle);
-    next_bullet.y_vel = BULLET_VEL * sin(gun_angle);
+    next_bullet.x_vel = BULLET_VEL * cos(state.gun_angle);
+    next_bullet.y_vel = BULLET_VEL * sin(state.gun_angle);
 
     return next_bullet;
 }
@@ -121,20 +167,20 @@ Bullet Player::spawn_bullet() const {
 void Player::target_point(double mouseX, double mouseY) {
 
     if (is_facing_right()) {
-        gun_angle = calculate_angle(
+        state.gun_angle = calculate_angle(
                 mouseX, mouseY,
-                x * 60 + gun_rotation_x,
-                y * 60 + gun_rotation_y,
-                x * 60 + barrel_offset_x,
-                y * 60 + barrel_offset_y
+                state.x * 60 + gun_rotation_x,
+                state.y * 60 + gun_rotation_y,
+                state.x * 60 + barrel_offset_x,
+                state.y * 60 + barrel_offset_y
         );
     } else {
-        gun_angle = calculate_angle(
+        state.gun_angle = calculate_angle(
                 mouseX, mouseY,
-                x * 60 - gun_rotation_x,
-                y * 60 + gun_rotation_y,
-                x * 60 - barrel_offset_x,
-                y * 60 + barrel_offset_y
+                state.x * 60 - gun_rotation_x,
+                state.y * 60 + gun_rotation_y,
+                state.x * 60 - barrel_offset_x,
+                state.y * 60 + barrel_offset_y
         );
     }
 
@@ -143,10 +189,10 @@ void Player::target_point(double mouseX, double mouseY) {
 void Player::render(RenderList& list) const {
     AnimationState interpolated = get_interpolated_frame();
 
-    double scaled_gun_angle = is_facing_right() ? gun_angle : (M_PI - gun_angle);
+    double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
 
-    double posX = x * 60;
-    double posY = y * 60;
+    double posX = state.x * 60;
+    double posY = state.y * 60;
 
     double grip1_dx = gun_offset_x + 2;
     double grip1_dy = gun_offset_y + 10;
@@ -180,7 +226,7 @@ void Player::render(RenderList& list) const {
 
     list.add_image("black", -20, -66, 40, 8);
     list.add_image("red", -18, -64, 36, 4);
-    list.add_image("green", -18, -64, 36 * health / 100.0, 4);
+    list.add_image("green", -18, -64, 36 * state.health / 100.0, 4);
 
     {
         list.rotate(interpolated.hip_angle[0] * M_PI/180);
