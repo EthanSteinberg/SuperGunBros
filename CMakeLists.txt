@@ -8,8 +8,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -g -Wno-unused-
 
 if(APPLE)
     set(GLFW_LIBRARY glfw3)
+	set(OS_DIR osx)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
 else()
+	set(OS_DIR linux)
     set(GLFW_LIBRARY glfw)
 endif()
 
@@ -27,7 +29,7 @@ set(SOURCE_FILES
 	src/readyscreen.cpp
 	src/gamescreen.cpp
 	src/gameoverscreen.cpp
-	src/gamepad.cpp
+	"src/${OS_DIR}/gamepad.cpp"
 	src/player.cpp
 	src/physicsengine.cpp
 	src/level.cpp

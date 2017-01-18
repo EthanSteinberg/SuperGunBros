@@ -106,6 +106,8 @@ void Player::update(GLFWwindow* window) {
         state.input.ls.x += (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS);
 
         state.input.ls.y = 0;
+        state.input.ls.y -= glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
+        state.input.ls.y += glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
 
         //Directional Aiming
         double cursorX;
@@ -115,6 +117,8 @@ void Player::update(GLFWwindow* window) {
         state.input.rs.x = (float)(cursorX - (prev_state.x * 60));
         state.input.rs.y = (float)(cursorY - (prev_state.y * 60));
 
+
+
                 //target_point(cursorX, cursorY);
 
         state.input.buttons[ButtonName::A] = 0;
@@ -122,12 +126,10 @@ void Player::update(GLFWwindow* window) {
         state.input.buttons[ButtonName::X] = 0;
         state.input.buttons[ButtonName::Y] = 0;
 
-        state.input.buttons[ButtonName::LB] = 0;
-        state.input.buttons[ButtonName::RB] = (button_val)(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS ||
-                glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS ||
-                glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS);
+        state.input.buttons[ButtonName::LB] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS);
+        state.input.buttons[ButtonName::RB] = (button_val) (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
 
-        state.input.buttons[ButtonName::LT] = 0;
+        state.input.buttons[ButtonName::LT] = (button_val) (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS);
         state.input.buttons[ButtonName::RT] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS);
 
         state.input.buttons[ButtonName::BACK] = 0;

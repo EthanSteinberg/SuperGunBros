@@ -11,6 +11,8 @@
 #define X_ACCEL 0.03
 #define JUMP_DUR 12
 #define SIGMA 0.0001
+#define BOOST_STR 0.5
+#define BOOST_DUR 10
 #define PLAYER_WIDTH 0.5
 #define PLAYER_HEIGHT 0.5
 
@@ -46,8 +48,8 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos){
             if (x == 0 || x == 21 || y == 0 || y == 11) {
                 // Add borders around the map
                 grid[x][y] = Terrain ::GROUND;
-            //} else if (x >=13 && x < 17 && y == 10){
-              //  grid[x][y] = Terrain ::GROUND;
+            } else if (x >=9 && x < 15 && y == 7){
+                grid[x][y] = Terrain ::GROUND;
             } else {
                 grid[x][y] = Terrain ::OPEN;
             }
@@ -113,9 +115,9 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
 
         //Checking inputs for later calculations
-        attempting_jump = player.state.input.buttons[ButtonName::RB] || player.state.input.buttons[ButtonName::LT] ||
-                player.state.input.buttons[ButtonName::A]; //TODO determine best inputs;
+        attempting_jump = player.state.input.buttons[ButtonName::LT];
         firing_bullet = player.state.input.buttons[ButtonName::RT];
+
         //fprintf(stdout, "%d\n", player.state.input.buttons[ButtonName::RT]); //TODO determine why sometimes the gun won't fire if you hold it
 
 

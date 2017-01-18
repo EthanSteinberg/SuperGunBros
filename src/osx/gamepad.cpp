@@ -2,7 +2,7 @@
 // Created by Chris Brown on 12/20/16.
 //
 
-#include "gamepad.h"
+#include "../gamepad.h"
 
 #include <GLFW/glfw3.h>
 
@@ -68,6 +68,7 @@ public:
     }
 
     inputs getInputs() const {
+
         inputs status;
         int count;
         const float* natAxes = glfwGetJoystickAxes(js, &count);
@@ -95,10 +96,10 @@ public:
         status.buttons[ButtonName::L3] = natButtons[10];
         status.buttons[ButtonName::R3] = natButtons[11];
 
-        status.buttons[ButtonName::UD] = (button_val) (natAxes[5] == -1);
-        status.buttons[ButtonName::DD] = (button_val) (natAxes[5] == 1);
-        status.buttons[ButtonName::LD] = (button_val) (natAxes[4] == -1);
-        status.buttons[ButtonName::RD] = (button_val) (natAxes[4] == 1);
+        status.buttons[ButtonName::UD] = natButtons[12];
+        status.buttons[ButtonName::DD] = natButtons[14];
+        status.buttons[ButtonName::LD] = natButtons[15];
+        status.buttons[ButtonName::RD] = natButtons[13];
         return status;
     }
 
