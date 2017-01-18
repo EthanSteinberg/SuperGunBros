@@ -22,14 +22,14 @@ double dist_sq(double x1, double y1, double x2, double y2) {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 }
 
-double calculate_angle(double target_x, double target_y, double center_x, double center_y, double b1_x, double b1_y) {
+double calculate_angle(double target_x, double target_y, double center_x, double center_y, double barrel_x, double barrel_y) {
 
-    double theta = atan2(center_y - b1_y, b1_x - center_x);
+    double theta = atan2(center_y - barrel_y, barrel_x - center_x);
 
-    double b1_offset_sq = dist_sq(b1_x, b1_y, center_x, center_y);
+    double barrel_offset_sq = dist_sq(barrel_x, barrel_y, center_x, center_y);
     double target_offset_sq = dist_sq(target_x, target_y, center_x, center_y);
 
-    double far_angle = asin(sqrt(b1_offset_sq) * sin(theta) / sqrt(target_offset_sq));
+    double far_angle = asin(sqrt(barrel_offset_sq) * sin(theta) / sqrt(target_offset_sq));
 
     double starting_angle = atan2(target_y - center_y, target_x - center_x);
 
