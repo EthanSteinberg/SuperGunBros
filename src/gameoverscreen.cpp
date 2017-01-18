@@ -2,7 +2,7 @@
 
 #include "menuscreen.h"
 
-GameOverScreen::GameOverScreen(const PlayerInfo& the_winning_player) : winning_player(the_winning_player) {
+GameOverScreen::GameOverScreen(const PlayerAttributes& the_winning_player) : winning_player(the_winning_player) {
 }
 
 void GameOverScreen::render(RenderList& list, double mouseX, double mouseY) {

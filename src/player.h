@@ -19,28 +19,24 @@ enum class PlayerColor {
     GREEN
 };
 
-struct PlayerInfo {
+struct PlayerAttributes {
     PlayerType type;
     PlayerColor color;
-    std::shared_ptr<GamePad> gamePad;
+    int js;
+    double width;
+    double height;
 };
 
 struct PlayerState {
-    double x;
-    double y;
-
-    double dx;
-    double dy;
+    axes position;
+    axes velocity;
 
     int ticks_left_jumping;
-
-    PlayerInfo info;
 
     double gun_angle;
 
     bool facing_right;
     bool is_jumping;
-    bool double_jump;
 
     int ticks_till_next_bullet;
 
@@ -49,8 +45,32 @@ struct PlayerState {
 
 
 
-class player {
+class Player {
+    PlayerAttributes attr;
+    PlayerState state;
+protected:
+    std::shared_ptr<GamePad> gamepad;
+public:
+    Player(PlayerAttributes attrib);
+    PlayerAttributes getAttributes();
+    PlayerState getState();
+    inputs getInputs();
+    void updateState(PlayerState newState);
+    void setPosition(float x, float y);
+};
 
+class KeyboardPlayer : public Player {
+public:
+    KeyboardPlayer(PlayerAttributes attrib, GLFWwindow* window);
+};
+
+class KeyboardController : public GamePad {
+    GLFWwindow* window;
+    Player* player;
+public:
+    virtual inputs getInputs() const;
+    int getIndex() const;
+    KeyboardController(Player* p, GLFWwindow* w);
 };
 
 

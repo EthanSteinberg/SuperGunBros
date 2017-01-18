@@ -39,7 +39,6 @@ struct axes{
 
 //Canonical representation of controller inputs
 struct inputs{
-
     axes ls;
     axes rs;
     button_val a, b, x, y;

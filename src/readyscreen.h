@@ -15,8 +15,7 @@ public:
 
 private:
 	bool contains_player_for_joystick(int index);
-
-	std::vector<PlayerInfo> players;
+	std::shared_ptr<std::vector<Player>> players;
 };
 
 #endif

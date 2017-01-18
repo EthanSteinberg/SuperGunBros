@@ -108,6 +108,7 @@ public:
 };
 
 std::shared_ptr<GamePad> GamePad::getGamePad(int joy){
+    if(joy == -1) return nullptr; //TODO fix for keyboards
     std::string jname = glfwGetJoystickName(joy);
     if (jname == "Logitech Logitech Dual Action") {
         return std::make_shared<LogitechController>(joy);
