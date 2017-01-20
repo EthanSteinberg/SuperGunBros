@@ -94,7 +94,6 @@ AnimationState Player::get_interpolated_frame() const {
 }
 
 void Player::update(GLFWwindow* window) {
-    std::cout<<current_time << std::endl;
     if (state.dx == 0 || !state.grounded) {
         double dist_to_forward_back = fmod(current_time - 0.86 + 8, 8);
         double dist_to_backward_back = fmod(current_time - 3.5 + 8, 8);

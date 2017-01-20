@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="0.66666669in"
@@ -18,6 +19,66 @@
    sodipodi:docname="artstyle.svg">
   <defs
      id="defs4209">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient6241">
+      <stop
+         id="stop6239"
+         offset="0"
+         style="stop-color:#ffff00;stop-opacity:1" />
+      <stop
+         id="stop6237"
+         offset="1"
+         style="stop-color:#ff0000;stop-opacity:1" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6219"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6215"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6211"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6207"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect6203"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect6199"
+       is_visible="true" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 60 : 1"
@@ -29,6 +90,17 @@
        effect="spiro"
        id="path-effect4888"
        is_visible="true" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6241"
+       id="radialGradient6243"
+       cx="10.695545"
+       cy="1011.5261"
+       fx="10.695545"
+       fy="1011.5261"
+       r="1.6825719"
+       gradientTransform="matrix(-1.0695312,-1.0979454e-7,0,-4.2139392,21.612341,5269.3922)"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -37,9 +109,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="6"
-     inkscape:cx="80.376171"
-     inkscape:cy="53.546241"
+     inkscape:zoom="1"
+     inkscape:cx="460.53842"
+     inkscape:cy="1.1719476"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -56,7 +128,7 @@
      inkscape:snap-center="false"
      inkscape:snap-nodes="false"
      units="in"
-     inkscape:snap-others="false"
+     inkscape:snap-others="true"
      inkscape:measure-start="82.3779,17.442"
      inkscape:measure-end="100.38,27.9602">
     <inkscape:grid
@@ -315,5 +387,16 @@
        height="16.5625"
        x="7.8124919"
        y="990.33093" />
+    <path
+       style="fill:url(#radialGradient6243);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.65716577;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 9.0114419,1006.8849 c -0.6535067,0.4381 -1.0900436,1.3152 -0.8729356,3.3037 0.217108,1.9884 1.0878925,5.0796 1.9591627,5.0817 0.87127,0 1.740718,-3.0867 1.957799,-5.0726 0.217081,-1.9859 -0.217735,-2.8686 -0.869189,-3.3098 -0.651454,-0.4411 -1.5213303,-0.4411 -2.1748371,-0 z"
+       id="path6217"
+       inkscape:connector-curvature="0"
+       inkscape:path-effect="#path-effect6219"
+       inkscape:original-d="m 8.7940315,1006.4468 c -0.4355569,0.8765 -0.8721277,1.7536 -1.3107303,2.6336 0.8738403,3.0962 1.7446393,6.1874 2.6152798,9.284 0.871199,-3.0918 1.740654,-6.1806 2.60913,-9.2692 -0.433585,-0.8842 -0.868448,-1.7669 -1.304564,-2.6484 -0.868322,0 -1.7381983,0 -2.6091155,0 z"
+       sodipodi:nodetypes="cccccc"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/fire.png"
+       inkscape:export-xdpi="91.020584"
+       inkscape:export-ydpi="91.020584" />
   </g>
 </svg>
