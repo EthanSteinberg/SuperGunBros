@@ -18,6 +18,13 @@
    sodipodi:docname="artstyle.svg">
   <defs
      id="defs4209">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 60 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="60.000001 : 60 : 1"
+       inkscape:persp3d-origin="30 : 40 : 1"
+       id="perspective5624" />
     <inkscape:path-effect
        effect="spiro"
        id="path-effect4888"
@@ -30,9 +37,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.2426407"
-     inkscape:cx="101.2755"
-     inkscape:cy="22.584706"
+     inkscape:zoom="6"
+     inkscape:cx="80.376171"
+     inkscape:cy="53.546241"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -213,7 +220,7 @@
        inkscape:export-ydpi="91.020584"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/armPiece.png" />
     <rect
-       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4757-2"
        width="12.952825"
        height="27.151375"
@@ -222,7 +229,7 @@
        ry="5.6007323"
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584"
-       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/redBody.png" />
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/yellowBody.png" />
     <g
        id="g5333"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/head.png"
@@ -301,5 +308,12 @@
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rifle.png" />
+    <rect
+       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1.32187498;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect5622"
+       width="4.53125"
+       height="16.5625"
+       x="7.8124919"
+       y="990.33093" />
   </g>
 </svg>

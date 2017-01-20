@@ -11,7 +11,7 @@
 #define X_ACCEL 0.25
 #define JUMP_DUR 12
 #define SIGMA 0.0001
-#define BOOST_STR 15
+#define BOOST_STR 7
 #define BOOST_DUR 10
 
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos){
@@ -71,9 +71,6 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
         player.update(window);
 
-        bool firing_bullet = false;
-        bool attempting_jump = false;
-
         double accel = 0;
 
         //Threshold the motion so that you aren't creeping around at slow speed
@@ -86,8 +83,22 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         }
 
         //Checking inputs for later calculations
-        attempting_jump = player.state.input.buttons[ButtonName::LT];
-        firing_bullet = player.state.input.buttons[ButtonName::RT];
+        bool attempting_jump = player.state.input.buttons[ButtonName::LT];
+        bool firing_bullet = player.state.input.buttons[ButtonName::RT];
+
+        bool attemping_boost = player.state.input.buttons[ButtonName::X];
+
+        if (attemping_boost && player.state.fuel_left > 0) {
+            player.state.dy -= BOOST_STR;
+            player.state.fuel_left -= 1.0/BOOST_DUR;
+            player.state.boosting = true;
+
+            if (player.state.fuel_left < 0) {
+                player.state.fuel_left = 0;
+            }
+        } else {
+            player.state.boosting = false;
+        }
 
         //X-Speed considerations for stopping and turning around on the ground
         if (player.state.grounded) {
@@ -120,6 +131,8 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         //Jumping/Gravity logic
         //Grounded
         if(player.state.grounded){
+
+            player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
 
             //player.state.dy = 0;
             player.state.ticks_left_jumping = JUMP_DUR;

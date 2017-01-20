@@ -118,7 +118,7 @@ void Player::update(GLFWwindow* window) {
 
         state.input.buttons[ButtonName::A] = 0;
         state.input.buttons[ButtonName::B] = 0;
-        state.input.buttons[ButtonName::X] = 0;
+        state.input.buttons[ButtonName::X] = (button_val) (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS);
         state.input.buttons[ButtonName::Y] = 0;
 
         state.input.buttons[ButtonName::LB] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS);
@@ -280,6 +280,13 @@ void Player::render(RenderList& list) const {
 
     list.add_image(body_color, -7, -23);
     list.add_image("head", -7, -36);
+
+    list.add_image("black", -14, -20, 6, 20);
+    list.add_image("red", -12, -2 + -16 * state.fuel_left, 2, 16 * state.fuel_left);
+
+    if (state.boosting) {
+       list.add_image("fire", -13.5, 0);
+    }
 
     {
         list.translate(0, arm_y_offset);
