@@ -24,7 +24,7 @@ void RenderList::add_line(const char* color, float x_1, float y_1, float x_2, fl
 
     translate(x_1, y_1);
     rotate(angle);
-    add_image("black", 0, -2, dist, 4);
+    add_image(color, 0, -2, dist, 4);
     rotate(-angle);
     translate(-x_1, -y_1);
 }

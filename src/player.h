@@ -18,12 +18,6 @@ enum class PlayerColor {
     GREEN
 };
 
-enum class GrappleState {
-    HELD,
-    FIRING,
-    STUCK
-};
-
 struct PlayerInfo {
     PlayerType type;
     PlayerColor color;
@@ -35,9 +29,11 @@ struct AnimationState {
     double knee_angle[2];
 };
 
-struct PlayerState{
-    double x;
-    double y;
+struct PlayerState {
+
+    PlayerState(double x, double y): pos(x, y, 35, 72) {}
+
+    Rectangle pos;
 
     double dx = 0;
     double dy = 0;
@@ -56,13 +52,7 @@ struct PlayerState{
     //-1 left 0 false 1 right
     int pushing_wall = 0;
 
-    GrappleState grapple = GrappleState::HELD;
-
-    double grapple_x = x;
-    double grapply_y = y;
-
     inputs input;
-
 };
 
 class Player {
@@ -74,7 +64,6 @@ public:
 
     PlayerInfo info;
 
-    PlayerState prev_state;
     PlayerState state;
 private:
     AnimationState get_interpolated_frame() const;

@@ -1,22 +1,22 @@
 
 #include "player.h"
 
-const double arm_length = 13;
-const double arm_radius = 4;
+const double arm_length = 9;
+const double arm_radius = 2.5;
 
-const double leg_length = 21;
-const double leg_radius = 5;
+const double leg_length = 13;
+const double leg_radius = 3;
 
 const double gun_rotation_x = 1;
-const double gun_rotation_y = -30;
+const double gun_rotation_y = -20;
 
 const double gun_offset_x = 3;
 const double gun_offset_y = -2;
 
 const double barrel_offset_x = gun_rotation_x + gun_offset_x;
-const double barrel_offset_y = gun_rotation_y + gun_offset_y + 4;
+const double barrel_offset_y = gun_rotation_y + gun_offset_y + 3;
 
-const double arm_y_offset = -25;
+const double arm_y_offset = -18;
 
 double dist_sq(double x1, double y1, double x2, double y2) {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
@@ -36,9 +36,7 @@ double calculate_angle(double target_x, double target_y, double center_x, double
     return starting_angle + far_angle;
 }
 
-Player::Player(double start_x, double start_y, PlayerInfo a_info) : info(a_info){
-    state.x = start_x;
-    state.y = start_y;
+Player::Player(double start_x, double start_y, PlayerInfo a_info) : info(a_info), state(start_x, start_y) {
     current_time = 0;
     AnimationState frames_init[] = {
             {
@@ -96,8 +94,7 @@ AnimationState Player::get_interpolated_frame() const {
 }
 
 void Player::update(GLFWwindow* window) {
-    current_time += state.dx * (is_facing_right() ? 1 : -1) * .75;
-    prev_state = state;
+    current_time += state.dx * (is_facing_right() ? 1 : -1) * 0.10;
     // Deal with player input.
     if (info.type == PlayerType::KEYBOARD) {
 
@@ -149,37 +146,32 @@ bool Player::is_facing_right() const {
 }
 
 Bullet Player::spawn_bullet() const {
-    Bullet next_bullet;
-
     double scaling_factor = is_facing_right() ? 1 : -1;
 
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : M_PI -state.gun_angle;
 
-    next_bullet.x = state.x + scaling_factor * (gun_rotation_x + cos(scaled_gun_angle) * (gun_offset_x + 20) - sin(scaled_gun_angle) * (gun_offset_y + 4))/60.0;
-    next_bullet.y = state.y + (gun_rotation_y + sin(scaled_gun_angle) * (gun_offset_x + 20) + cos(scaled_gun_angle) * (gun_offset_y + 4))/60.0;
+    double x = state.pos.x + scaling_factor * (gun_rotation_x + cos(scaled_gun_angle) * (gun_offset_x + 20) - sin(scaled_gun_angle) * (gun_offset_y + 3));
+    double y = state.pos.y + (gun_rotation_y + sin(scaled_gun_angle) * (gun_offset_x + 20) + cos(scaled_gun_angle) * (gun_offset_y + 3));
 
-    next_bullet.x_vel = BULLET_VEL * cos(state.gun_angle);
-    next_bullet.y_vel = BULLET_VEL * sin(state.gun_angle);
-
-    return next_bullet;
+    return Bullet(x, y, state.gun_angle);
 }
 
 double Player::get_gun_angle(double mouseX, double mouseY) const {
     if (is_facing_right()) {
         return calculate_angle(
                 mouseX, mouseY,
-                state.x * 60 + gun_rotation_x,
-                state.y * 60 + gun_rotation_y,
-                state.x * 60 + barrel_offset_x,
-                state.y * 60 + barrel_offset_y
+                state.pos.x + gun_rotation_x,
+                state.pos.y + gun_rotation_y,
+                state.pos.x + barrel_offset_x,
+                state.pos.y + barrel_offset_y
         );
     } else {
         return calculate_angle(
                 mouseX, mouseY,
-                state.x * 60 - gun_rotation_x,
-                state.y * 60 + gun_rotation_y,
-                state.x * 60 - barrel_offset_x,
-                state.y * 60 + barrel_offset_y
+                state.pos.x - gun_rotation_x,
+                state.pos.y + gun_rotation_y,
+                state.pos.x - barrel_offset_x,
+                state.pos.y + barrel_offset_y
         );
     }
 
@@ -190,11 +182,11 @@ void Player::render(RenderList& list) const {
 
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
 
-    double posX = state.x * 60;
-    double posY = state.y * 60;
+    double posX = state.pos.x;
+    double posY = state.pos.y;
 
     double grip1_dx = gun_offset_x + 2;
-    double grip1_dy = gun_offset_y + 10;
+    double grip1_dy = gun_offset_y + 7;
 
     double grip1_x = posX + gun_rotation_x + cos(scaled_gun_angle) * grip1_dx - sin(scaled_gun_angle) * grip1_dy;
     double grip1_y = posY + gun_rotation_y + sin(scaled_gun_angle) * grip1_dx + cos(scaled_gun_angle) * grip1_dy;
@@ -205,8 +197,8 @@ void Player::render(RenderList& list) const {
 
     double needed_angle1 = atan2(grip1_y - (posY + arm_y_offset), grip1_x - (posX)) - M_PI/2;
 
-    double grip2_dx = gun_offset_x + 15;
-    double grip2_dy = gun_offset_y + 10;
+    double grip2_dx = gun_offset_x + 12;
+    double grip2_dy = gun_offset_y + 5;
 
     double grip2_x = posX + gun_rotation_x + cos(scaled_gun_angle) * grip2_dx - sin(scaled_gun_angle) * grip2_dy;
     double grip2_y = posY + gun_rotation_y + sin(scaled_gun_angle) * grip2_dx + cos(scaled_gun_angle) * grip2_dy;
@@ -286,8 +278,8 @@ void Player::render(RenderList& list) const {
             break;
     }
 
-    list.add_image(body_color, -11, -36);
-    list.add_image("head", -11, -55);
+    list.add_image(body_color, -7, -23);
+    list.add_image("head", -7, -36);
 
     {
         list.translate(0, arm_y_offset);
@@ -335,7 +327,10 @@ void Player::render(RenderList& list) const {
 
         list.rotate(scaled_gun_angle);
 
-        list.add_line("red", barrel_offset_x, barrel_offset_y, barrel_offset_x + 100, barrel_offset_y);
+        list.translate(-gun_rotation_x, -gun_rotation_y);
+        list.add_line("red", barrel_offset_x, barrel_offset_y, barrel_offset_x + 600, barrel_offset_y);
+        list.translate(gun_rotation_x, gun_rotation_y);
+
         list.add_image("rifle", gun_offset_x, gun_offset_y);
 
         list.rotate(-scaled_gun_angle);

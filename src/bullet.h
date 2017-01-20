@@ -1,13 +1,17 @@
 #ifndef BULLET_H_INCLUDED
 #define BULLET_H_INCLUDED
 
-const double BULLET_VEL = 0.3;
+#include "rectangle.h"
+
+const double BULLET_VEL = 4;
 
 struct Bullet {
+    Bullet(double x, double y, double angle) : pos(x, y, 6, 6), x_vel(BULLET_VEL * cos(angle)), y_vel(BULLET_VEL * sin(angle)) {}
+
     unsigned int player_owner;
 
-    double x;
-    double y;
+    Rectangle pos;
+
     double x_vel;
     double y_vel;
 };

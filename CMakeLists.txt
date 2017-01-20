@@ -32,8 +32,8 @@ set(SOURCE_FILES
 	"src/${OS_DIR}/gamepad.cpp"
 	src/player.cpp
 	src/physicsengine.cpp
-	src/level.cpp
-    src/player.cpp)
+    src/player.cpp
+    src/rectangle.cpp)
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 
