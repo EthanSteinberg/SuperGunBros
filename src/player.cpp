@@ -94,7 +94,29 @@ AnimationState Player::get_interpolated_frame() const {
 }
 
 void Player::update(GLFWwindow* window) {
-    current_time += state.dx * (is_facing_right() ? 1 : -1) * 0.10;
+    std::cout<<current_time << std::endl;
+    if (state.dx == 0 || !state.grounded) {
+        double dist_to_forward_back = fmod(current_time - 0.86 + 8, 8);
+        double dist_to_backward_back = fmod(current_time - 3.5 + 8, 8);
+
+        double dist_to_forward_front = fmod(-current_time + 0.86 + 8, 8);
+        double dist_to_backward_front = fmod(-current_time + 3.5 + 8, 8);
+
+        double min_distance = std::min(dist_to_forward_back, std::min(dist_to_forward_front, std::min(dist_to_backward_front, dist_to_backward_back)));
+
+        if (dist_to_forward_front == min_distance) {
+            current_time = std::min(fmod(current_time + 0.5 + 8, 8), 0.86);
+        } else if (dist_to_forward_back == min_distance) {
+            current_time = std::max(fmod(current_time - 0.5 + 8, 8), 0.86);
+        } else if (dist_to_backward_front == min_distance) {
+            current_time = std::min(fmod(current_time + 0.5 + 8, 8), 3.5);
+        } else if (dist_to_backward_back == min_distance) {
+            current_time = std::max(fmod(current_time - 0.5 + 8, 8), 3.5);
+        }
+    } else {
+        current_time = fmod((current_time + state.dx * (is_facing_right() ? 1 : -1) * 0.10) + 8, 8);
+        last_time_diff = state.dx * (is_facing_right() ? 1 : -1) * 0.10;
+    }
     // Deal with player input.
     if (info.type == PlayerType::KEYBOARD) {
 

@@ -74,6 +74,8 @@ private:
     bool is_facing_right() const;
     std::vector<AnimationState> frames;
     double current_time;
+
+    double last_time_diff;
 };
 
 
