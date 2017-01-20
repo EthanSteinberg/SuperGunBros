@@ -236,9 +236,9 @@ void Player::render(RenderList& list) const {
         list.scale(-1, 1);
     }
 
-    list.add_image("black", -20, -66, 40, 8);
-    list.add_image("red", -18, -64, 36, 4);
-    list.add_image("green", -18, -64, 36 * state.health / 100.0, 4);
+    list.add_image("black", -20, -52, 40, 8);
+    list.add_image("red", -18, -50, 36, 4);
+    list.add_image("green", -18, -50, 36 * state.health / 100.0, 4);
 
     {
         list.rotate(interpolated.hip_angle[0] * M_PI/180);
