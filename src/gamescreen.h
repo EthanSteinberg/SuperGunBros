@@ -5,10 +5,11 @@
 #include <vector>
 #include "player.h"
 #include "rectangle.h"
+#include "level.h"
 
 class GameScreen : public Screen {
 public:
-    GameScreen(const std::vector<PlayerInfo>& players);
+    GameScreen(const std::vector<PlayerInfo>& players, const Level& level);
 
     void render(RenderList& list, double mouseX, double mouseY);
     std::unique_ptr<Screen> update(GLFWwindow* window);
@@ -16,9 +17,10 @@ public:
     std::unique_ptr<Screen> on_key(int key, int action);
 
 private:
+    Level level;
+
     std::vector<Player> players;
     std::vector<Bullet> bullets;
-    std::vector<Rectangle> obstacles;
 
     bool would_collide_with_ground(const Rectangle& rect, double dx, double dy) const;
 };

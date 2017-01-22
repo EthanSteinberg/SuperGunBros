@@ -33,7 +33,8 @@ set(SOURCE_FILES
 	src/player.cpp
 	src/physicsengine.cpp
     src/player.cpp
-    src/rectangle.cpp)
+    src/rectangle.cpp
+    src/level.cpp)
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 

@@ -10,11 +10,11 @@
 #define GRAVITY 0.5
 #define X_ACCEL 0.25
 #define JUMP_DUR 12
-#define SIGMA 0.0001
+#define SIGMA 0.001
 #define BOOST_STR 7
 #define BOOST_DUR 10
 
-GameScreen::GameScreen(const std::vector<PlayerInfo> &infos){
+GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level) {
 
     // Initialize the player state
     for (unsigned int i = 0; i < infos.size(); i++) {
@@ -31,22 +31,13 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos){
         }
         players.push_back(player);
     }
-
-    obstacles.push_back(Rectangle(1280/2.0, 720, 1280, 20));
-    obstacles.push_back(Rectangle(1280/2.0, 0, 1280, 20));
-
-
-    obstacles.push_back(Rectangle(0, 720/2, 20, 720));
-    obstacles.push_back(Rectangle(1280, 720/2, 20, 720));
-
-    obstacles.push_back(Rectangle(1280/2.0, 680, 600, 20));
 }
 
 void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 
-    for (const Rectangle& rect : obstacles) {
-        list.add_image("black", rect.x - rect.width/2, rect.y - rect.height/2, rect.width, rect.height);
-    }
+    list.add_image("background", 0, 0);
+
+    level.render(list);
 
 	// Render the players.
 
@@ -193,7 +184,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         if (would_collide_with_ground(player.state.pos, player.state.dx, player.state.dy)){
             double low = 0.0;
             double high = 1.0;
-            while(high - low > SIGMA/2 ){
+            while(high - low > SIGMA/10){
                 double mid = low + (high - low)/2;
                 if (would_collide_with_ground(player.state.pos, mid * player.state.dx, mid * player.state.dy)) {
                     high = mid;
@@ -309,11 +300,5 @@ bool GameScreen::would_collide_with_ground(const Rectangle& rect, double dx, dou
     temporary_rect.x += dx;
     temporary_rect.y += dy;
 
-    for (const Rectangle& obstacle : obstacles) {
-        if (obstacle.colliding_with(temporary_rect)) {
-            return true;
-        }
-    }
-
-    return false;
+    return level.colliding_with(temporary_rect);
 }

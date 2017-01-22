@@ -1,0 +1,48 @@
+{
+    "obstacles": [
+        {
+            "xLeft": -20,
+            "xRight": 1300,
+            "yTop": -20,
+            "yBottom": 30
+        },
+        {
+            "xLeft": -20,
+            "xRight": 1300,
+            "yTop": 690,
+            "yBottom": 740
+        },
+        {
+            "xLeft": -20,
+            "xRight": 30,
+            "yTop": -20,
+            "yBottom": 740
+        },
+        {
+            "xLeft": 1250,
+            "xRight": 1300,
+            "yTop": -20,
+            "yBottom": 740
+        },
+
+
+        {
+            "xLeft": 400,
+            "xRight": 880,
+            "yTop": 350,
+            "yBottom": 380
+        },
+        {
+            "xLeft": 730,
+            "xRight": 1080,
+            "yTop": 510,
+            "yBottom": 540
+        },
+        {
+            "xLeft": 200,
+            "xRight": 550,
+            "yTop": 510,
+            "yBottom": 540
+        }
+    ]
+}

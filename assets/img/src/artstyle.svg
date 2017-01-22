@@ -19,6 +19,24 @@
    sodipodi:docname="artstyle.svg">
   <defs
      id="defs4209">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect8109"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect8099"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect8091"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient6241">
@@ -101,6 +119,16 @@
        r="1.6825719"
        gradientTransform="matrix(-1.0695312,-1.0979454e-7,0,-4.2139392,21.612341,5269.3922)"
        gradientUnits="userSpaceOnUse" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect8040"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -110,14 +138,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="56.263575"
-     inkscape:cy="-11.437289"
+     inkscape:cx="129.6939"
+     inkscape:cy="-62.209167"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="679"
+     inkscape:window-width="1362"
      inkscape:window-height="729"
-     inkscape:window-x="683"
+     inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="0"
      inkscape:object-paths="false"
@@ -157,7 +185,10 @@
        d="m 26.281143,1015.5935 c 2.475166,4.119 4.331548,7.2082 1.757215,8.7552 -2.574332,1.5469 -4.430708,-1.5423 -6.905881,-5.6612 -2.5508,-4.2448 -4.331548,-7.2081 -1.757215,-8.7551 2.574332,-1.547 4.45096,1.5759 6.905881,5.6611 z"
        id="path4759-5-3"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <rect
        style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4757"
@@ -165,14 +196,20 @@
        height="27.151375"
        x="15.000539"
        y="986.15479"
-       ry="5.6007323" />
+       ry="5.6007323"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <ellipse
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="path4808"
        cx="21.780333"
        cy="980.78442"
        rx="6.0070796"
-       ry="4.4294624" />
+       ry="4.4294624"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4821"
@@ -180,11 +217,17 @@
        height="2.4271028"
        x="25.117594"
        y="978.66315"
-       ry="1.0315192" />
+       ry="1.0315192"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <g
        id="g4825"
        transform="matrix(0.12013546,0,0,0.12013546,-2.5513719,928.81223)"
-       style="stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434">
       <path
          transform="scale(1,-1)"
          d="m 253.54829,-417.98642 a 52.527931,43.436558 0 0 1 -51.95057,43.43393 52.527931,43.436558 0 0 1 -53.0926,-42.47911 l 52.51524,-0.95482 z"
@@ -213,7 +256,10 @@
        height="6.0677571"
        x="29.739449"
        y="990.30414"
-       ry="1.0315192" />
+       ry="1.0315192"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4878"
@@ -221,49 +267,73 @@
        height="3.8258352"
        x="26.881821"
        y="985.9386"
-       ry="1.4781643" />
+       ry="1.4781643"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 18.975812,998.5303 c -1.719028,-0.5406 -1.255042,-2.01665 0.263208,-6.84372 1.518293,-4.82704 2.194841,-4.97687 3.340858,-4.61646 1.146017,0.3604 1.615453,0.87061 0.0972,5.69769 -1.518293,4.82705 -1.982236,6.30311 -3.701265,5.76249 z"
        id="path4829-2"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sszss" />
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 19.74479,997.66308 c -0.720823,-1.65159 0.697171,-2.27068 5.334997,-4.2946 4.637843,-2.02387 5.195033,-1.61192 5.675582,-0.51086 0.480543,1.10105 0.403885,1.79012 -4.233942,3.81404 -4.637842,2.02388 -6.055819,2.64301 -6.776637,0.99142 z"
        id="path4829-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sszss" />
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 21.277646,1018.5143 c -1.716217,4.4885 -3.003386,7.8549 -5.808695,6.7822 -2.805315,-1.0726 -1.518151,-4.439 0.19807,-8.9275 1.768666,-4.6256 3.003391,-7.8549 5.808701,-6.7822 2.805314,1.0726 1.504101,4.4757 -0.198076,8.9275 z"
        id="path4759-5-0"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 19.073011,1031.2111 c 0,4.8055 6e-6,8.4096 -3.003385,8.4096 -3.003386,-10e-5 -3.003386,-3.6041 -3.003386,-8.4096 0,-4.9522 0,-8.4094 3.003386,-8.4094 3.003391,0 3.003385,3.6434 3.003385,8.4094 z"
        id="path4759-5-9"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 13.724324,1040.6088 c 0,0 2.627965,0.1502 4.204741,0 1.576781,-0.1501 0.171578,3.9473 1.973614,3.9473 1.80203,0 3.527822,0.147 3.552499,0.7894 l -0.07509,0.6607 c -0.09018,0.7936 -0.310419,1.3129 -1.109077,1.3129 h -7.894446 c -0.798658,0 -1.227521,-1.1179 -1.227521,-1.9166 v -0.7208 c 0,-0.7986 -0.223379,-4.0729 0.57528,-4.0729 z"
        id="rect4393"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ssscssssss" />
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 30.797006,1030.8198 c 0,4.8054 0,8.4094 -3.003386,8.4094 -3.003385,0 -3.003385,-3.604 -3.003385,-8.4094 0,-4.9523 0,-8.4096 3.003385,-8.4096 3.003386,0 3.003386,3.6434 3.003386,8.4096 z"
        id="path4759-5-06"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 26.592265,1040.2931 c 0,0 2.627965,0.1501 4.204741,0 1.576775,-0.1502 0.171579,3.9472 1.973608,3.9472 1.802036,0 3.527828,0.147 3.552499,0.7894 l -0.07508,0.6608 c -0.09018,0.7935 -0.310419,1.3129 -1.109083,1.3129 h -7.89444 c -0.798658,0 -1.227525,-1.118 -1.227525,-1.9166 v -0.7208 c 0,-0.7987 -0.223375,-4.0729 0.575283,-4.0729 z"
        id="rect4393-6"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ssscssssss" />
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 75.203654,1033.9775 c 0,0 2.627965,0.1502 4.204741,0 1.576781,-0.1502 0.171579,3.9472 1.973614,3.9472 1.802031,0 3.527818,0.1471 3.552502,0.7895 l -0.07509,0.6607 c -0.09018,0.7935 -0.310418,1.3129 -1.109078,1.3129 H 75.8559 c -0.798658,0 -1.22752,-1.118 -1.22752,-1.9166 v -0.7207 c 0,-0.7988 -0.22338,-4.073 0.575278,-4.073 z"
@@ -381,12 +451,15 @@
        inkscape:export-ydpi="91.020584"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rifle.png" />
     <rect
-       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1.32187498;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.32187498;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect5622"
        width="4.53125"
        height="16.5625"
        x="7.8124919"
-       y="990.33093" />
+       y="990.33093"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
        style="fill:url(#radialGradient6243);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.65716577;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 9.0114419,1006.8849 c -0.6535067,0.4381 -1.0900436,1.3152 -0.8729356,3.3037 0.217108,1.9884 1.0878925,5.0796 1.9591627,5.0817 0.87127,0 1.740718,-3.0867 1.957799,-5.0726 0.217081,-1.9859 -0.217735,-2.8686 -0.869189,-3.3098 -0.651454,-0.4411 -1.5213303,-0.4411 -2.1748371,-0 z"
@@ -395,8 +468,199 @@
        inkscape:path-effect="#path-effect6219"
        inkscape:original-d="m 8.7940315,1006.4468 c -0.4355569,0.8765 -0.8721277,1.7536 -1.3107303,2.6336 0.8738403,3.0962 1.7446393,6.1874 2.6152798,9.284 0.871199,-3.0918 1.740654,-6.1806 2.60913,-9.2692 -0.433585,-0.8842 -0.868448,-1.7669 -1.304564,-2.6484 -0.868322,0 -1.7381983,0 -2.6091155,0 z"
        sodipodi:nodetypes="cccccc"
-       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/fire.png"
-       inkscape:export-xdpi="91.020584"
-       inkscape:export-ydpi="91.020584" />
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 58.624894,1125.7497 c 2.475166,4.119 4.331548,7.2082 1.757216,8.7552 -2.574332,1.5469 -4.430709,-1.5423 -6.905881,-5.6612 -2.550801,-4.2448 -4.331549,-7.2081 -1.757216,-8.7551 2.574332,-1.547 4.450961,1.5759 6.905881,5.6611 z"
+       id="path4759-5-3-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <rect
+       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4757-7"
+       width="12.952826"
+       height="27.151377"
+       x="47.344292"
+       y="1096.311"
+       ry="5.6007328"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4808-7"
+       cx="54.124084"
+       cy="1090.9407"
+       rx="6.0070796"
+       ry="4.4294624"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4821-6"
+       width="2.7911687"
+       height="2.4271028"
+       x="57.461346"
+       y="1088.8195"
+       ry="1.0315193"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <g
+       id="g4825-7"
+       transform="matrix(0.12013546,0,0,0.12013546,29.792378,1038.9685)"
+       style="stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434">
+      <path
+         transform="scale(1,-1)"
+         d="m 253.54829,-417.98642 a 52.527931,43.436558 0 0 1 -51.95057,43.43393 52.527931,43.436558 0 0 1 -53.0926,-42.47911 l 52.51524,-0.95482 z"
+         sodipodi:end="3.1196089"
+         sodipodi:start="0"
+         sodipodi:ry="43.436558"
+         sodipodi:rx="52.527931"
+         sodipodi:cy="-417.98642"
+         sodipodi:cx="201.02036"
+         sodipodi:type="arc"
+         id="path4819-3"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none" />
+      <rect
+         ry="8.8137407"
+         y="416.4614"
+         x="144.86589"
+         height="41.47641"
+         width="30.364731"
+         id="rect4823-6"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none" />
+    </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4876-5"
+       width="2.5484583"
+       height="6.0677571"
+       x="-323.28778"
+       y="1055.0414"
+       ry="1.0315193"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434"
+       transform="rotate(-20.236803)" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4878-6"
+       width="19.72336"
+       height="3.8258355"
+       x="-326.14542"
+       y="1050.6758"
+       ry="1.4781644"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434"
+       transform="rotate(-20.236803)" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 51.319563,1108.6865 c -1.719028,-0.5406 -1.255042,-2.0166 0.263208,-6.8437 1.518293,-4.827 2.194841,-4.9768 3.340858,-4.6164 1.146017,0.3604 1.615453,0.8706 0.0972,5.6977 -1.518293,4.827 -1.982236,6.3031 -3.701266,5.7624 z"
+       id="path4829-2-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 51.314848,1107.2471 c -0.188623,-1.7921 1.350128,-1.9543 6.382557,-2.4837 5.032407,-0.5293 5.439285,0.032 5.564962,1.2264 0.125767,1.1947 -0.155351,1.8285 -5.18772,2.3578 -5.03244,0.5295 -6.571179,0.6917 -6.759799,-1.1005 z"
+       id="path4829-7-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 53.621398,1128.6705 c -1.716218,4.4885 -3.003387,7.8549 -5.808696,6.7822 -2.805316,-1.0726 -1.518151,-4.439 0.19807,-8.9275 1.768666,-4.6256 3.003391,-7.8549 5.808702,-6.7822 2.805314,1.0726 1.5041,4.4757 -0.198076,8.9275 z"
+       id="path4759-5-0-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 51.416762,1141.3673 c 0,4.8055 6e-6,8.4096 -3.003385,8.4096 -3.003386,-10e-5 -3.003386,-3.6041 -3.003386,-8.4096 0,-4.9522 0,-8.4094 3.003386,-8.4094 3.003391,0 3.003385,3.6434 3.003385,8.4094 z"
+       id="path4759-5-9-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 46.068075,1150.765 c 0,0 2.627965,0.1502 4.204741,0 1.576781,-0.1501 0.171578,3.9474 1.973614,3.9474 1.80203,0 3.527822,0.147 3.552499,0.7894 l -0.07509,0.6607 c -0.09018,0.7936 -0.310418,1.3129 -1.109076,1.3129 h -7.894447 c -0.798659,0 -1.227522,-1.1179 -1.227522,-1.9166 v -0.7208 c 0,-0.7986 -0.223379,-4.073 0.575281,-4.073 z"
+       id="rect4393-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 63.140758,1140.976 c 0,4.8054 0,8.4094 -3.003387,8.4094 -3.003385,0 -3.003385,-3.604 -3.003385,-8.4094 0,-4.9523 0,-8.4096 3.003385,-8.4096 3.003387,0 3.003387,3.6434 3.003387,8.4096 z"
+       id="path4759-5-06-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 58.936017,1150.4493 c 0,0 2.627964,0.1501 4.204741,0 1.576774,-0.1502 0.171578,3.9473 1.973608,3.9473 1.802036,0 3.527827,0.147 3.552499,0.7894 l -0.07508,0.6608 c -0.09018,0.7935 -0.310419,1.3129 -1.109083,1.3129 h -7.89444 c -0.798658,0 -1.227525,-1.118 -1.227525,-1.9166 v -0.7208 c 0,-0.7987 -0.223375,-4.073 0.575283,-4.073 z"
+       id="rect4393-6-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9375;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 86.675822,1089.1538 13.589708,-4.9718 v 0 l -6.629125,-4.6405 6.670555,4.7234 -1.118662,7.955"
+       id="path8093"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9375px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 93.056356,1083.2705 7.126314,1.0772 -3.646023,4.9718"
+       id="path8103"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <circle
+       style="fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:0.46875;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path8113"
+       cx="61.06028"
+       cy="1096.2908"
+       r="0.95293689"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#666666;stroke-width:0.65625;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 86.758687,1089.2367 c -7.209174,0.4143 -12.429611,1.3879 -15.847755,2.258 -3.418143,0.8701 -9.674382,4.2881 -9.674382,4.2881"
+       id="path8105"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csc"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
   </g>
 </svg>
