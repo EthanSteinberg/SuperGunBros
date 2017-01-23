@@ -1,29 +1,22 @@
-//
-// Created by Chris Brown on 1/13/17.
-//
+#ifndef LEVEL_H_INCLUDED
+#define LEVEL_H_INCLUDED
 
-#ifndef SUPERGUNBROS_LEVEL_H
-#define SUPERGUNBROS_LEVEL_H
-
+#include "rectangle.h"
+#include <vector>
 #include "renderlist.h"
 
-enum class Terrain {
-    OPEN,
-    GROUND
-};
-
-
 class Level {
-    int width;
-    int height;
-    std::vector<std::vector<Terrain>> grid;
 public:
-    Level();
-    Level(int w, int h, std::vector<std::vector<Terrain>> g);
-    bool is_obstacle(int x, int y);
-    Terrain get_terrain(int x, int y);
-    void draw(RenderList& r);
+    static Level load_from_file(const char* filename);
+
+    void render(RenderList& list, bool show_border = true) const;
+
+    bool colliding_with(const Rectangle& other) const;
+
+private:
+    Level(const std::vector<Rectangle>& obstacles);
+
+    const std::vector<Rectangle> obstacles;
 };
 
-
-#endif //SUPERGUNBROS_LEVEL_H
+#endif

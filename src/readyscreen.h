@@ -3,6 +3,7 @@
 
 #include "screen.h"
 #include "player.h"
+#include "level.h"
 
 class ReadyScreen : public Screen {
 public:
@@ -17,6 +18,9 @@ private:
 	bool contains_player_for_joystick(int index);
 
 	std::vector<PlayerInfo> players;
+
+    std::vector<Level> loaded_levels;
+    unsigned int selected_level_index = 0;
 };
 
 #endif

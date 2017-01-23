@@ -18,13 +18,13 @@ RenderList::RenderList(const char* filename) {
 	memcpy(transform, mat, sizeof(mat));
 }
 
-void RenderList::add_line(const char* color, float x_1, float y_1, float x_2, float y_2) {
+void RenderList::add_line(const char* color, float x_1, float y_1, float x_2, float y_2, double line_width) {
     double dist = sqrt((x_2 - x_1) * (x_2 - x_1) + (y_2 - y_1) * (y_2 - y_1));
     double angle = atan2(y_2 - y_1, x_2 - x_1);
 
     translate(x_1, y_1);
     rotate(angle);
-    add_image("black", 0, -2, dist, 4);
+    add_image(color, 0, -line_width/2, dist, line_width);
     rotate(-angle);
     translate(-x_1, -y_1);
 }
@@ -137,7 +137,7 @@ void RenderList::add_transfored_point(float x, float y) {
 }
 
 void RenderList::mmultiply(float other[][3]) {
-	float result[3][3] = {};
+    float result[3][3] = {};
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {

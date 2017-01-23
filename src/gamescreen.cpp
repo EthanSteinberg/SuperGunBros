@@ -5,65 +5,39 @@
 #include <string>
 #include <cmath>
 
-#define DRAG_COEF 0.08
-#define JUMP_STR 0.6
-#define GRAVITY 0.04
-#define X_ACCEL 0.03
-#define JUMP_DUR 12
-#define SIGMA 0.0001
-#define BOOST_STR 0.5
+#define DRAG_COEF 0.125
+#define JUMP_STR 15
+#define GRAVITY 0.4
+#define X_ACCEL 0.25
+#define JUMP_DUR 15
+#define SIGMA 0.001
+#define BOOST_STR 7
 #define BOOST_DUR 10
-#define PLAYER_WIDTH 0.5
-#define PLAYER_HEIGHT 0.5
 
-GameScreen::GameScreen(const std::vector<PlayerInfo> &infos){
+GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level) {
 
     // Initialize the player state
     for (unsigned int i = 0; i < infos.size(); i++) {
         const auto& info = infos[i];
-        Player player(0, 10, info);
+        Player player(0, 300, info);
         switch (i) {
             case 0:
-                player.state.x = 2.25;
+                player.state.pos.x = 200;
                 break;
 
             case 1:
-                player.state.x = 19.75;
+                player.state.pos.x = 800;
                 break;
         }
         players.push_back(player);
     }
-
-    // Initialize the level
-        std::vector<std::vector<Terrain>> grid;// = new std::vector<std::vector<Terrain>>;
-
-        // Set up sizes. (HEIGHT x WIDTH)
-        grid.resize(22);
-        for (int i = 0; i < 22; ++i)
-            grid[i].resize(12);
-
-    for (int x = 0; x < 22; x++) {
-        for (int y = 0; y < 12; y++) {
-
-            if (x == 0 || x == 21 || y == 0 || y == 11) {
-                // Add borders around the map
-                grid[x][y] = Terrain ::GROUND;
-            } else if (x >=9 && x < 15 && y == 7){
-                grid[x][y] = Terrain ::GROUND;
-            } else {
-                grid[x][y] = Terrain ::OPEN;
-            }
-
-        }
-    }
-
-    level = Level(22, 12, grid);
-
 }
 
 void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 
-	level.draw(list);
+    list.add_image("background", 0, 0);
+
+    level.render(list);
 
 	// Render the players.
 
@@ -73,20 +47,20 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
 
 	// Render the bullets
 	for (const auto& bullet: bullets) {
-		list.add_image("bullet", bullet.x * 60 - 5, bullet.y * 60 - 5);
+        list.translate(bullet.pos.x, bullet.pos.y);
+        double bullet_angle = atan2(bullet.y_vel, bullet.x_vel);
+        list.rotate(bullet_angle);
+		list.add_image("bullet", -bullet.pos.width/2, -bullet.pos.height/2);
+        list.rotate(-bullet_angle);
+        list.translate(-bullet.pos.x, -bullet.pos.y);
 	}
 }
-
-const double player_height = 1.9;
 
 std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
     for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
 
         player.update(window);
-
-        bool firing_bullet = false;
-        bool attempting_jump = false;
 
         double accel = 0;
 
@@ -95,31 +69,27 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         accel += x_thresh * X_ACCEL;
 
         //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
-        if (fabs(player.state.input.rs.x) < 0.3 && fabs(player.state.input.rs.y) < 0.3) {
-
-            //Original code
-            //This line is a travesty and I'm happy about that (direction of motion aim, keep direction if not moving)
-            //int right = (dx > 0) ? 1 : (dx < 0) ? 0 : (player.facing_right) ? 1 : 0;
-            //player.gun_angle = M_PI - right * M_PI;
-
-            //This code changes it to the left stick controlling aim in the absence of right stick controls
-            //Still reverts to flat aim in previous direction if no input is provided
-            if (fabs(player.state.input.ls.x) < 0.3 && fabs(player.state.input.ls.y) < 0.3) {
-                player.state.gun_angle = 0; // TODO: This should be based on last movement!
-            } else {
-                player.state.gun_angle = atan2(player.state.input.ls.y, player.state.input.ls.x);
-            }
-        } else {
+        if (fabs(player.state.input.rs.x) > 0.3 || fabs(player.state.input.rs.y) > 0.3) {
             player.state.gun_angle = atan2(player.state.input.rs.y, player.state.input.rs.x);
         }
 
-
         //Checking inputs for later calculations
-        attempting_jump = player.state.input.buttons[ButtonName::LT];
-        firing_bullet = player.state.input.buttons[ButtonName::RT];
+        bool attempting_jump = player.state.input.buttons[ButtonName::LT];
+        bool firing_bullet = player.state.input.buttons[ButtonName::RT];
 
-        //fprintf(stdout, "%d\n", player.state.input.buttons[ButtonName::RT]); //TODO determine why sometimes the gun won't fire if you hold it
+        bool attemping_boost = player.state.input.buttons[ButtonName::X];
 
+        if (attemping_boost && player.state.fuel_left > 0) {
+            player.state.dy -= BOOST_STR;
+            player.state.fuel_left -= 1.0/BOOST_DUR;
+            player.state.boosting = true;
+
+            if (player.state.fuel_left < 0) {
+                player.state.fuel_left = 0;
+            }
+        } else {
+            player.state.boosting = false;
+        }
 
         //X-Speed considerations for stopping and turning around on the ground
         if (player.state.grounded) {
@@ -139,7 +109,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         }
 
         //Can't accelerate into the wall we're already on
-        if(player.state.pushing_wall && player.state.pushing_wall < 0 == player.state.dx < 0){
+        if (player.state.pushing_wall && (player.state.pushing_wall < 0) == (player.state.dx < 0)) {
             player.state.dx = 0;
         }
 
@@ -152,6 +122,8 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         //Jumping/Gravity logic
         //Grounded
         if(player.state.grounded){
+
+            player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
 
             //player.state.dy = 0;
             player.state.ticks_left_jumping = JUMP_DUR;
@@ -179,7 +151,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 player.state.pushing_wall = 0;
                 player.state.dy -= 1 * JUMP_STR * cos(M_PI/4);
                 player.state.dx = dir * JUMP_STR * cos(M_PI/4);
-                player.state.x += dir * 2 * SIGMA; //Get off that wall
+                player.state.pos.x += dir * 2 * SIGMA; //Get off that wall
             }
 
             //Aerial Logic
@@ -209,35 +181,33 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
         //Collision tracking super basic
 
-        double low = 0.0;
-        double mid = 0.5;
-        double high = 1.0;
-
-        if(is_colliding_with_ground(player.state.x + player.state.dx, player.state.y + player.state.dy, 0.5, player_height)){
-            while(high - low > SIGMA){
-                if(is_colliding_with_ground(player.state.x + mid * player.state.dx, player.state.y + mid * player.state.dy, 0.5, player_height)){
+        if (would_collide_with_ground(player.state.pos, player.state.dx, player.state.dy)){
+            double low = 0.0;
+            double high = 1.0;
+            while(high - low > SIGMA/10){
+                double mid = low + (high - low)/2;
+                if (would_collide_with_ground(player.state.pos, mid * player.state.dx, mid * player.state.dy)) {
                     high = mid;
                 } else {
                     low = mid;
                 }
-                mid = low + (high - low)/2;
             }
             //TODO logic that slides along colliding surface
-            player.state.x += low * player.state.dx;
-            player.state.y += low * player.state.dy;
+            player.state.pos.x += low * player.state.dx;
+            player.state.pos.y += low * player.state.dy;
         } else {
-            player.state.x += player.state.dx;
-            player.state.y += player.state.dy;
+            player.state.pos.x += player.state.dx;
+            player.state.pos.y += player.state.dy;
         }
 
-        if(is_colliding_with_ground(player.state.x, player.state.y + SIGMA, 0.5, player_height)){
+        if (would_collide_with_ground(player.state.pos, 0, SIGMA)){
             player.state.grounded = true;
             player.state.dy = 0;
         } else {
             player.state.grounded = false;
         }
 
-        if(is_colliding_with_ground(player.state.x, player.state.y - SIGMA, 0.5, player_height)){
+        if (would_collide_with_ground(player.state.pos, 0, -SIGMA)) {
             player.state.roofed = true;
             player.state.jumping = false;
             player.state.dy = 0;
@@ -245,22 +215,17 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             player.state.roofed = false;
         }
 
-        if(is_colliding_with_ground(player.state.x + SIGMA, player.state.y, 0.5, player_height)){
+        if (would_collide_with_ground(player.state.pos, SIGMA, 0)) {
             player.state.pushing_wall = 1;
             //player.state.jumping = false;
             player.state.dx = 0;
-        } else if (is_colliding_with_ground(player.state.x - SIGMA, player.state.y, 0.5, player_height)) {
+        } else if (would_collide_with_ground(player.state.pos, -SIGMA, 0)) {
             player.state.pushing_wall = -1;
             //player.state.jumping = false;
             player.state.dx = 0;
         } else {
             player.state.pushing_wall = false;
         }
-
-
-
-        //Make motions as necessary
-
 
         //Bullet logic
         if (player.state.ticks_till_next_bullet > 0) {
@@ -280,17 +245,16 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
 
     // Update all the bullets
     for (auto& bullet : bullets) {
-        bullet.x += bullet.x_vel;
-        bullet.y += bullet.y_vel;
+        bullet.pos.x += bullet.x_vel;
+        bullet.pos.y += bullet.y_vel;
 
 
-        if (is_colliding_with_ground(bullet.x, bullet.y, 10/60.0, 10/60.0)) {
+        if (would_collide_with_ground(bullet.pos, 0, 0)) {
             // This bullet hit the ground.
             continue;
         }
 
         bool hit_a_player = false;
-        bool hit_a_bullet = false;
 
         for (unsigned int i = 0; i < players.size(); i++) {
             auto& player = players[i];
@@ -299,7 +263,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 continue; // Don't intersect with self
             }
 
-            if (rect_rect_colliding(bullet.x, bullet.y, 10/60.0, 10/60.0, player.state.x, player.state.y, 0.5, player_height)) {
+            if (bullet.pos.colliding_with(player.state.pos)) {
                 hit_a_player = true;
                 player.state.health -= 10;
 
@@ -310,18 +274,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             }
         }
 
-        //Not a good way to check for bullet collisions, but it's here for now.
-        //TODO make a fullproof method that doesn't risk destroying a single bullet and not the other one
-        //TODO make this all part of the projectile class logic to allow for some bullets to beat others etc.
-        for (auto& bullet2 : bullets) {
-            if (&bullet2 != &bullet && rect_rect_colliding(bullet.x, bullet.y, 10/60.0, 10/60.0, bullet2.x, bullet2.y, 10/60.0, 10/60.0)){
-                hit_a_bullet = true;
-            }
-        }
-
-
-
-        if (hit_a_player || hit_a_bullet) {
+        if (hit_a_player) {
             continue;
         }
 
@@ -342,17 +295,10 @@ std::unique_ptr<Screen> GameScreen::on_key(int key, int action) {
 	return nullptr;
 }
 
-bool GameScreen::rect_rect_colliding(double x1, double y1, double width1, double height1, double x2, double y2, double width2, double height2) {
-	double total_width = width1 + width2;
-	double total_height = height1 + height2;
+bool GameScreen::would_collide_with_ground(const Rectangle& rect, double dx, double dy) const {
+    Rectangle temporary_rect = rect;
+    temporary_rect.x += dx;
+    temporary_rect.y += dy;
 
-	return (fabs(x1 - x2) < total_width / 2 && fabs(y1 - y2) < total_height / 2);
-}
-
-bool GameScreen::is_colliding_with_ground(double x, double y, double width, double height) {
-	return (
-		level.is_obstacle((int)(x - width/2), (int)(y - height/2)) ||
-        level.is_obstacle((int)(x + width/2), (int)(y - height/2)) ||
-        level.is_obstacle((int)(x - width/2), (int)(y + height/2)) ||
-        level.is_obstacle((int)(x + width/2), (int)(y + height/2)));
+    return level.colliding_with(temporary_rect);
 }

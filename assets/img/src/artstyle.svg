@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="0.66666669in"
@@ -14,14 +15,120 @@
    viewBox="0 0 60.000001 120"
    id="svg4207"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.0 r15299"
    sodipodi:docname="artstyle.svg">
   <defs
      id="defs4209">
     <inkscape:path-effect
        effect="spiro"
+       id="path-effect8109"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect8099"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect8091"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient6241">
+      <stop
+         id="stop6239"
+         offset="0"
+         style="stop-color:#ffff00;stop-opacity:1" />
+      <stop
+         id="stop6237"
+         offset="1"
+         style="stop-color:#ff0000;stop-opacity:1" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6219"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6215"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6211"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect6207"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect6203"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect6199"
+       is_visible="true" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 60 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="60.000001 : 60 : 1"
+       inkscape:persp3d-origin="30 : 40 : 1"
+       id="perspective5624" />
+    <inkscape:path-effect
+       effect="spiro"
        id="path-effect4888"
        is_visible="true" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6241"
+       id="radialGradient6243"
+       cx="10.695545"
+       cy="1011.5261"
+       fx="10.695545"
+       fy="1011.5261"
+       r="1.6825719"
+       gradientTransform="matrix(-1.0695312,-1.0979454e-7,0,-4.2139392,21.612341,5269.3922)"
+       gradientUnits="userSpaceOnUse" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect8040"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -30,14 +137,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="48"
-     inkscape:cx="102.46864"
-     inkscape:cy="54.271548"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="129.6939"
+     inkscape:cy="-62.209167"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1916"
-     inkscape:window-height="1041"
+     inkscape:window-width="1362"
+     inkscape:window-height="729"
      inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="0"
@@ -49,7 +156,9 @@
      inkscape:snap-center="false"
      inkscape:snap-nodes="false"
      units="in"
-     inkscape:snap-others="false">
+     inkscape:snap-others="true"
+     inkscape:measure-start="82.3779,17.442"
+     inkscape:measure-end="100.38,27.9602">
     <inkscape:grid
        type="xygrid"
        id="grid4160" />
@@ -62,7 +171,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -72,38 +181,53 @@
      id="layer1"
      transform="translate(0,-932.36216)">
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 33.428864,998.91008 c 3.750252,6.24082 6.562952,10.92142 2.662448,13.26532 -3.900504,2.3439 -6.713195,-2.3367 -10.463456,-8.5775 -3.864849,-6.4315 -6.562952,-10.92141 -2.662448,-13.26532 3.900504,-2.34391 6.74388,2.38777 10.463456,8.5775 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 26.281143,1015.5935 c 2.475166,4.119 4.331548,7.2082 1.757215,8.7552 -2.574332,1.5469 -4.430708,-1.5423 -6.905881,-5.6612 -2.5508,-4.2448 -4.331548,-7.2081 -1.757215,-8.7551 2.574332,-1.547 4.45096,1.5759 6.905881,5.6611 z"
        id="path4759-5-3"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <rect
-       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4757"
-       width="19.625492"
-       height="41.138447"
-       x="16.33704"
-       y="954.30591"
-       ry="8.4859581" />
+       width="12.952825"
+       height="27.151375"
+       x="15.000539"
+       y="986.15479"
+       ry="5.6007323"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <ellipse
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="path4808"
-       cx="26.609455"
-       cy="946.16901"
-       rx="9.1016359"
-       ry="6.711307" />
+       cx="21.780333"
+       cy="980.78442"
+       rx="6.0070796"
+       ry="4.4294624"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4821"
-       width="4.229043"
-       height="3.6774285"
-       x="31.665913"
-       y="942.95496"
-       ry="1.5629078" />
+       width="2.7911685"
+       height="2.4271028"
+       x="25.117594"
+       y="978.66315"
+       ry="1.0315192"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <g
        id="g4825"
-       transform="matrix(0.18202343,0,0,0.18202343,-10.256764,867.42324)"
-       style="stroke-width:10.98759649;stroke-miterlimit:4;stroke-dasharray:none">
+       transform="matrix(0.12013546,0,0,0.12013546,-2.5513719,928.81223)"
+       style="stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434">
       <path
          transform="scale(1,-1)"
          d="m 253.54829,-417.98642 a 52.527931,43.436558 0 0 1 -51.95057,43.43393 52.527931,43.436558 0 0 1 -53.0926,-42.47911 l 52.51524,-0.95482 z"
@@ -115,7 +239,7 @@
          sodipodi:cx="201.02036"
          sodipodi:type="arc"
          id="path4819"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759649;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none" />
       <rect
          ry="8.8137407"
          y="416.4614"
@@ -123,69 +247,96 @@
          height="41.47641"
          width="30.364731"
          id="rect4823"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759649;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none" />
     </g>
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4876"
-       width="3.8613002"
-       height="9.1935711"
-       x="38.66872"
-       y="960.59277"
-       ry="1.5629078" />
+       width="2.5484581"
+       height="6.0677571"
+       x="29.739449"
+       y="990.30414"
+       ry="1.0315192"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4878"
-       width="29.883877"
-       height="5.79672"
-       x="34.338982"
-       y="953.97833"
-       ry="2.2396429" />
+       width="19.723358"
+       height="3.8258352"
+       x="26.881821"
+       y="985.9386"
+       ry="1.4781643"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 22.360182,973.05668 c -2.604589,-0.8191 -1.901579,-3.05553 0.398799,-10.36927 2.300444,-7.31371 3.325517,-7.54072 5.061907,-6.99465 1.736389,0.54607 2.447656,1.31912 0.14727,8.63287 -2.300444,7.31372 -3.003387,9.55016 -5.607976,8.73105 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 18.975812,998.5303 c -1.719028,-0.5406 -1.255042,-2.01665 0.263208,-6.84372 1.518293,-4.82704 2.194841,-4.97687 3.340858,-4.61646 1.146017,0.3604 1.615453,0.87061 0.0972,5.69769 -1.518293,4.82705 -1.982236,6.30311 -3.701265,5.76249 z"
        id="path4829-2"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sszss" />
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 23.5253,971.7427 c -1.092156,-2.5024 1.056319,-3.44042 8.083329,-6.50696 7.027034,-3.06648 7.871262,-2.44231 8.599366,-0.77404 0.728095,1.66827 0.611947,2.71231 -6.415063,5.77885 -7.027034,3.06649 -9.175484,4.00456 -10.267632,1.50215 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 19.74479,997.66308 c -0.720823,-1.65159 0.697171,-2.27068 5.334997,-4.2946 4.637843,-2.02387 5.195033,-1.61192 5.675582,-0.51086 0.480543,1.10105 0.403885,1.79012 -4.233942,3.81404 -4.637842,2.02388 -6.055819,2.64301 -6.776637,0.99142 z"
        id="path4829-7"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sszss" />
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 25.847808,1003.3354 c -2.600328,6.8008 -4.550584,11.9014 -8.801053,10.2761 -4.250477,-1.6252 -2.300229,-6.7257 0.300107,-13.5265 2.679797,-7.00853 4.550592,-11.9013 8.801061,-10.27609 4.250477,1.62521 2.278942,6.78142 -0.300115,13.52649 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 21.277646,1018.5143 c -1.716217,4.4885 -3.003386,7.8549 -5.808695,6.7822 -2.805315,-1.0726 -1.518151,-4.439 0.19807,-8.9275 1.768666,-4.6256 3.003391,-7.8549 5.808701,-6.7822 2.805314,1.0726 1.504101,4.4757 -0.198076,8.9275 z"
        id="path4759-5-0"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 22.507453,1022.5731 c 0,7.281 8e-6,12.7417 -4.550584,12.7417 -4.550584,-1e-4 -4.550584,-5.4607 -4.550584,-12.7417 0,-7.5034 0,-12.7416 4.550584,-12.7416 4.550592,0 4.550584,5.5203 4.550584,12.7416 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 19.073011,1031.2111 c 0,4.8055 6e-6,8.4096 -3.003385,8.4096 -3.003386,-10e-5 -3.003386,-3.6041 -3.003386,-8.4096 0,-4.9522 0,-8.4094 3.003386,-8.4094 3.003391,0 3.003385,3.6434 3.003385,8.4094 z"
        id="path4759-5-9"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 14.403382,1036.812 c 0,0 3.981765,0.2275 6.370819,0 2.389062,-0.2275 0.259967,5.9807 2.990324,5.9807 2.730349,0 5.345185,0.2228 5.382574,1.1961 l -0.11377,1.0011 c -0.136635,1.2024 -0.470333,1.9892 -1.680421,1.9892 l -11.961281,0 c -1.210088,0 -1.85988,-1.6938 -1.85988,-2.9039 l 0,-1.0921 c 0,-1.21 -0.338454,-6.1711 0.871635,-6.1711 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 13.724324,1040.6088 c 0,0 2.627965,0.1502 4.204741,0 1.576781,-0.1501 0.171578,3.9473 1.973614,3.9473 1.80203,0 3.527822,0.147 3.552499,0.7894 l -0.07509,0.6607 c -0.09018,0.7936 -0.310419,1.3129 -1.109077,1.3129 h -7.894446 c -0.798658,0 -1.227521,-1.1179 -1.227521,-1.9166 v -0.7208 c 0,-0.7986 -0.223379,-4.0729 0.57528,-4.0729 z"
        id="rect4393"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ssscssssss" />
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 40.271081,1021.9801 c 0,7.2809 0,12.7416 -4.550584,12.7416 -4.550584,0 -4.550584,-5.4607 -4.550584,-12.7416 0,-7.5034 0,-12.7417 4.550584,-12.7417 4.550584,0 4.550584,5.5203 4.550584,12.7417 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 30.797006,1030.8198 c 0,4.8054 0,8.4094 -3.003386,8.4094 -3.003385,0 -3.003385,-3.604 -3.003385,-8.4094 0,-4.9523 0,-8.4096 3.003385,-8.4096 3.003386,0 3.003386,3.6434 3.003386,8.4096 z"
        id="path4759-5-06"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssss" />
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 33.900262,1036.3336 c 0,0 3.981765,0.2275 6.370819,0 2.389054,-0.2276 0.259968,5.9806 2.990316,5.9806 2.730357,0 5.345193,0.2228 5.382574,1.1961 l -0.113762,1.0012 c -0.136635,1.2023 -0.470333,1.9892 -1.680429,1.9892 l -11.961273,0 c -1.210088,0 -1.859887,-1.6938 -1.859887,-2.9039 l 0,-1.0921 c 0,-1.2102 -0.338446,-6.1711 0.871642,-6.1711 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 26.592265,1040.2931 c 0,0 2.627965,0.1501 4.204741,0 1.576775,-0.1502 0.171579,3.9472 1.973608,3.9472 1.802036,0 3.527828,0.147 3.552499,0.7894 l -0.07508,0.6608 c -0.09018,0.7935 -0.310419,1.3129 -1.109083,1.3129 h -7.89444 c -0.798658,0 -1.227525,-1.118 -1.227525,-1.9166 v -0.7208 c 0,-0.7987 -0.223375,-4.0729 0.575283,-4.0729 z"
        id="rect4393-6"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ssscssssss" />
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 90.508427,1026.7646 c 0,0 3.981765,0.2275 6.37082,0 2.389062,-0.2276 0.259967,5.9806 2.990324,5.9806 2.730349,0 5.345179,0.2228 5.382579,1.1961 l -0.11378,1.0012 c -0.13663,1.2022 -0.47033,1.9892 -1.68042,1.9892 l -11.961278,0 c -1.210088,0 -1.859879,-1.6939 -1.859879,-2.9039 l 0,-1.0921 c 0,-1.2102 -0.338454,-6.1711 0.871634,-6.1711 z"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 75.203654,1033.9775 c 0,0 2.627965,0.1502 4.204741,0 1.576781,-0.1502 0.171579,3.9472 1.973614,3.9472 1.802031,0 3.527818,0.1471 3.552502,0.7895 l -0.07509,0.6607 c -0.09018,0.7935 -0.310418,1.3129 -1.109078,1.3129 H 75.8559 c -0.798658,0 -1.22752,-1.118 -1.22752,-1.9166 v -0.7207 c 0,-0.7988 -0.22338,-4.073 0.575278,-4.073 z"
        id="rect4393-6-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ssscssssss"
@@ -193,8 +344,8 @@
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 124,1024.3723 c 0,7.2809 0,12.7416 -4.55059,12.7416 -4.55058,0 -4.55058,-5.4607 -4.55058,-12.7416 0,-7.5034 0,-12.7416 4.55058,-12.7416 4.55059,0 4.55059,5.5203 4.55059,12.7416 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 97.308092,1032.3986 c 0,4.8054 0,8.4095 -3.003389,8.4095 -3.003383,0 -3.003383,-3.6041 -3.003383,-8.4095 0,-4.9522 0,-8.4094 3.003383,-8.4094 3.003389,0 3.003389,3.6434 3.003389,8.4094 z"
        id="path4759-5-06-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sssss"
@@ -202,8 +353,8 @@
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 88.710074,1001.7649 c -2.730344,-5e-4 -2.730105,-2.34491 -2.728057,-10.01188 0.0025,-7.66697 0.911988,-8.19085 2.732219,-8.19043 1.820235,3.4e-4 2.730539,0.5247 2.728483,8.19168 -0.0025,7.66698 -0.0025,10.01133 -2.732645,10.01063 z"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 74.016741,1017.4777 c -1.802027,-3e-4 -1.801869,-1.5476 -1.800517,-6.6078 0.0017,-5.0602 0.601912,-5.406 1.803264,-5.4057 1.201355,2e-4 1.802156,0.3463 1.800799,5.4065 -0.0016,5.0602 -0.0016,6.6075 -1.803546,6.607 z"
        id="path4829-2-9"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sszss"
@@ -211,21 +362,22 @@
        inkscape:export-ydpi="91.020584"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/armPiece.png" />
     <rect
-       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4757-2"
-       width="19.625492"
-       height="41.138447"
-       x="104.3745"
-       y="943.76172"
-       ry="8.4859581"
+       width="12.952825"
+       height="27.151375"
+       x="84.355263"
+       y="979.19562"
+       ry="5.6007323"
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584"
-       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/blueBody.png" />
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/yellowBody.png" />
     <g
        id="g5333"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/head.png"
        inkscape:export-xdpi="91.020584"
-       inkscape:export-ydpi="91.020584">
+       inkscape:export-ydpi="91.020584"
+       transform="matrix(0.66,0,0,0.66,15.468092,356.31289)">
       <ellipse
          inkscape:export-ydpi="91.020584"
          inkscape:export-xdpi="91.020584"
@@ -248,14 +400,14 @@
          id="rect4821-2"
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none" />
       <g
-         style="stroke-width:10.98759649;stroke-miterlimit:4;stroke-dasharray:none"
+         style="stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none"
          inkscape:export-ydpi="91.020584"
          inkscape:export-xdpi="91.020584"
          inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/head.png"
          transform="matrix(0.18202343,0,0,0.18202343,52.174131,863.82651)"
          id="g4825-3">
         <path
-           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759649;stroke-miterlimit:4;stroke-dasharray:none"
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none"
            id="path4819-7"
            sodipodi:type="arc"
            sodipodi:cx="201.02036"
@@ -267,7 +419,7 @@
            d="m 253.54829,-417.98642 a 52.527931,43.436558 0 0 1 -51.95057,43.43393 52.527931,43.436558 0 0 1 -53.0926,-42.47911 l 52.51524,-0.95482 z"
            transform="scale(1,-1)" />
         <rect
-           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759649;stroke-miterlimit:4;stroke-dasharray:none"
+           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none"
            id="rect4823-5"
            width="30.364731"
            height="41.47641"
@@ -277,26 +429,238 @@
       </g>
     </g>
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4876-9"
-       width="3.8613002"
-       height="9.1935711"
-       x="105.78518"
-       y="998.05756"
-       ry="1.5629078"
+       width="2.5484581"
+       height="6.0677571"
+       x="85.286308"
+       y="1015.0309"
+       ry="1.0315192"
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rifle.png" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4878-2"
-       width="29.883877"
-       height="5.79672"
-       x="101.45544"
-       y="991.44312"
-       ry="2.2396429"
+       width="19.723358"
+       height="3.8258352"
+       x="82.42868"
+       y="1010.6653"
+       ry="1.4781643"
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rifle.png" />
+    <rect
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.32187498;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect5622"
+       width="4.53125"
+       height="16.5625"
+       x="7.8124919"
+       y="990.33093"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:url(#radialGradient6243);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.65716577;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 9.0114419,1006.8849 c -0.6535067,0.4381 -1.0900436,1.3152 -0.8729356,3.3037 0.217108,1.9884 1.0878925,5.0796 1.9591627,5.0817 0.87127,0 1.740718,-3.0867 1.957799,-5.0726 0.217081,-1.9859 -0.217735,-2.8686 -0.869189,-3.3098 -0.651454,-0.4411 -1.5213303,-0.4411 -2.1748371,-0 z"
+       id="path6217"
+       inkscape:connector-curvature="0"
+       inkscape:path-effect="#path-effect6219"
+       inkscape:original-d="m 8.7940315,1006.4468 c -0.4355569,0.8765 -0.8721277,1.7536 -1.3107303,2.6336 0.8738403,3.0962 1.7446393,6.1874 2.6152798,9.284 0.871199,-3.0918 1.740654,-6.1806 2.60913,-9.2692 -0.433585,-0.8842 -0.868448,-1.7669 -1.304564,-2.6484 -0.868322,0 -1.7381983,0 -2.6091155,0 z"
+       sodipodi:nodetypes="cccccc"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 58.624894,1125.7497 c 2.475166,4.119 4.331548,7.2082 1.757216,8.7552 -2.574332,1.5469 -4.430709,-1.5423 -6.905881,-5.6612 -2.550801,-4.2448 -4.331549,-7.2081 -1.757216,-8.7551 2.574332,-1.547 4.450961,1.5759 6.905881,5.6611 z"
+       id="path4759-5-3-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <rect
+       style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4757-7"
+       width="12.952826"
+       height="27.151377"
+       x="47.344292"
+       y="1096.311"
+       ry="5.6007328"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4808-7"
+       cx="54.124084"
+       cy="1090.9407"
+       rx="6.0070796"
+       ry="4.4294624"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4821-6"
+       width="2.7911687"
+       height="2.4271028"
+       x="57.461346"
+       y="1088.8195"
+       ry="1.0315193"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <g
+       id="g4825-7"
+       transform="matrix(0.12013546,0,0,0.12013546,29.792378,1038.9685)"
+       style="stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434">
+      <path
+         transform="scale(1,-1)"
+         d="m 253.54829,-417.98642 a 52.527931,43.436558 0 0 1 -51.95057,43.43393 52.527931,43.436558 0 0 1 -53.0926,-42.47911 l 52.51524,-0.95482 z"
+         sodipodi:end="3.1196089"
+         sodipodi:start="0"
+         sodipodi:ry="43.436558"
+         sodipodi:rx="52.527931"
+         sodipodi:cy="-417.98642"
+         sodipodi:cx="201.02036"
+         sodipodi:type="arc"
+         id="path4819-3"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none" />
+      <rect
+         ry="8.8137407"
+         y="416.4614"
+         x="144.86589"
+         height="41.47641"
+         width="30.364731"
+         id="rect4823-6"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:10.98759651;stroke-miterlimit:4;stroke-dasharray:none" />
+    </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4876-5"
+       width="2.5484583"
+       height="6.0677571"
+       x="-323.28778"
+       y="1055.0414"
+       ry="1.0315193"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434"
+       transform="rotate(-20.236803)" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4878-6"
+       width="19.72336"
+       height="3.8258355"
+       x="-326.14542"
+       y="1050.6758"
+       ry="1.4781644"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434"
+       transform="rotate(-20.236803)" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 51.319563,1108.6865 c -1.719028,-0.5406 -1.255042,-2.0166 0.263208,-6.8437 1.518293,-4.827 2.194841,-4.9768 3.340858,-4.6164 1.146017,0.3604 1.615453,0.8706 0.0972,5.6977 -1.518293,4.827 -1.982236,6.3031 -3.701266,5.7624 z"
+       id="path4829-2-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 51.314848,1107.2471 c -0.188623,-1.7921 1.350128,-1.9543 6.382557,-2.4837 5.032407,-0.5293 5.439285,0.032 5.564962,1.2264 0.125767,1.1947 -0.155351,1.8285 -5.18772,2.3578 -5.03244,0.5295 -6.571179,0.6917 -6.759799,-1.1005 z"
+       id="path4829-7-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sszss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 53.621398,1128.6705 c -1.716218,4.4885 -3.003387,7.8549 -5.808696,6.7822 -2.805316,-1.0726 -1.518151,-4.439 0.19807,-8.9275 1.768666,-4.6256 3.003391,-7.8549 5.808702,-6.7822 2.805314,1.0726 1.5041,4.4757 -0.198076,8.9275 z"
+       id="path4759-5-0-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 51.416762,1141.3673 c 0,4.8055 6e-6,8.4096 -3.003385,8.4096 -3.003386,-10e-5 -3.003386,-3.6041 -3.003386,-8.4096 0,-4.9522 0,-8.4094 3.003386,-8.4094 3.003391,0 3.003385,3.6434 3.003385,8.4094 z"
+       id="path4759-5-9-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 46.068075,1150.765 c 0,0 2.627965,0.1502 4.204741,0 1.576781,-0.1501 0.171578,3.9474 1.973614,3.9474 1.80203,0 3.527822,0.147 3.552499,0.7894 l -0.07509,0.6607 c -0.09018,0.7936 -0.310418,1.3129 -1.109076,1.3129 h -7.894447 c -0.798659,0 -1.227522,-1.1179 -1.227522,-1.9166 v -0.7208 c 0,-0.7986 -0.223379,-4.073 0.575281,-4.073 z"
+       id="rect4393-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 63.140758,1140.976 c 0,4.8054 0,8.4094 -3.003387,8.4094 -3.003385,0 -3.003385,-3.604 -3.003385,-8.4094 0,-4.9523 0,-8.4096 3.003385,-8.4096 3.003387,0 3.003387,3.6434 3.003387,8.4096 z"
+       id="path4759-5-06-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 58.936017,1150.4493 c 0,0 2.627964,0.1501 4.204741,0 1.576774,-0.1502 0.171578,3.9473 1.973608,3.9473 1.802036,0 3.527827,0.147 3.552499,0.7894 l -0.07508,0.6608 c -0.09018,0.7935 -0.310419,1.3129 -1.109083,1.3129 h -7.89444 c -0.798658,0 -1.227525,-1.118 -1.227525,-1.9166 v -0.7208 c 0,-0.7987 -0.223375,-4.073 0.575283,-4.073 z"
+       id="rect4393-6-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscssssss"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9375;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 86.675822,1089.1538 13.589708,-4.9718 v 0 l -6.629125,-4.6405 6.670555,4.7234 -1.118662,7.955"
+       id="path8093"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9375px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 93.056356,1083.2705 7.126314,1.0772 -3.646023,4.9718"
+       id="path8103"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <circle
+       style="fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:0.46875;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path8113"
+       cx="61.06028"
+       cy="1096.2908"
+       r="0.95293689"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#666666;stroke-width:0.65625;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 86.758687,1089.2367 c -7.209174,0.4143 -12.429611,1.3879 -15.847755,2.258 -3.418143,0.8701 -9.674382,4.2881 -9.674382,4.2881"
+       id="path8105"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csc"
+       inkscape:export-filename="/home/ethan/grapplingHook.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
   </g>
 </svg>
