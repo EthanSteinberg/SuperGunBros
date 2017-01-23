@@ -6,10 +6,10 @@
 #include <cmath>
 
 #define DRAG_COEF 0.125
-#define JUMP_STR 12
-#define GRAVITY 0.5
+#define JUMP_STR 15
+#define GRAVITY 0.4
 #define X_ACCEL 0.25
-#define JUMP_DUR 12
+#define JUMP_DUR 15
 #define SIGMA 0.001
 #define BOOST_STR 7
 #define BOOST_DUR 10

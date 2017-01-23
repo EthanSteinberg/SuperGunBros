@@ -54,8 +54,8 @@
         {
             "xLeft": 0,
             "xRight": 230,
-            "yTop": 230,
-            "yBottom": 260
+            "yTop": 200,
+            "yBottom": 230
         },
 
 
@@ -89,8 +89,8 @@
         {
             "xLeft": 1050,
             "xRight": 1280,
-            "yTop": 230,
-            "yBottom": 260
+            "yTop": 200,
+            "yBottom": 230
         }
 
 

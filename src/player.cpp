@@ -356,7 +356,7 @@ void Player::render(RenderList& list) const {
         list.rotate(scaled_gun_angle);
 
         list.translate(-gun_rotation_x, -gun_rotation_y);
-        list.add_line("red", barrel_offset_x, barrel_offset_y, barrel_offset_x + 600, barrel_offset_y);
+        // list.add_line("red", barrel_offset_x, barrel_offset_y, barrel_offset_x + 600, barrel_offset_y);
         list.translate(gun_rotation_x, gun_rotation_y);
 
         list.add_image("rifle", gun_offset_x, gun_offset_y);
