@@ -5,13 +5,22 @@
 #include <string>
 #include <cmath>
 
-#define DRAG_COEF 0.125
-#define JUMP_STR 15
+//#define DRAG_COEF 0.125
+//#define JUMP_STR 15
+//#define GRAVITY 0.4
+//#define X_ACCEL 0.25
+//#define JUMP_DUR 15
+//#define SIGMA 0.001
+//#define BOOST_STR 7
+//#define BOOST_DUR 10
+
+#define DRAG_COEF 0.15
+#define JUMP_STR 16
 #define GRAVITY 0.4
-#define X_ACCEL 0.25
+#define X_ACCEL 0.5
 #define JUMP_DUR 15
 #define SIGMA 0.001
-#define BOOST_STR 7
+#define BOOST_STR 5
 #define BOOST_DUR 10
 
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level) {
@@ -77,7 +86,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         bool attempting_jump = player.state.input.buttons[ButtonName::LT];
         bool firing_bullet = player.state.input.buttons[ButtonName::RT];
 
-        bool attemping_boost = player.state.input.buttons[ButtonName::X];
+        bool attemping_boost = player.state.input.buttons[ButtonName::LB];
 
         if (attemping_boost && player.state.fuel_left > 0) {
             player.state.dy -= BOOST_STR;

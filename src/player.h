@@ -6,6 +6,8 @@
 #include "renderlist.h"
 #include "bullet.h"
 
+#define MAX_HEALTH 40.0
+
 enum class PlayerType {
     KEYBOARD,
     GAMEPAD
@@ -38,7 +40,7 @@ struct PlayerState {
     double dx = 0;
     double dy = 0;
 
-    int health = 100;
+    int health = MAX_HEALTH;
 
     int ticks_till_next_bullet = 0;
     int ticks_left_jumping = 0;

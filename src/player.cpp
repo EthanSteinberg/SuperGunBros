@@ -139,10 +139,10 @@ void Player::update(GLFWwindow* window) {
 
         state.input.buttons[ButtonName::A] = 0;
         state.input.buttons[ButtonName::B] = 0;
-        state.input.buttons[ButtonName::X] = (button_val) (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS);
+        state.input.buttons[ButtonName::X] = 0;
         state.input.buttons[ButtonName::Y] = 0;
 
-        state.input.buttons[ButtonName::LB] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS);
+        state.input.buttons[ButtonName::LB] = (button_val) (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS);
         state.input.buttons[ButtonName::RB] = (button_val) (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
 
         state.input.buttons[ButtonName::LT] = (button_val) (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS);
@@ -238,7 +238,7 @@ void Player::render(RenderList& list) const {
 
     list.add_image("black", -20, -52, 40, 8);
     list.add_image("red", -18, -50, 36, 4);
-    list.add_image("green", -18, -50, 36 * state.health / 100.0, 4);
+    list.add_image("green", -18, -50, 36 * state.health / MAX_HEALTH, 4);
 
     {
         list.rotate(interpolated.hip_angle[0] * M_PI/180);
