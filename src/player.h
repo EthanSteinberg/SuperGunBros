@@ -31,6 +31,11 @@ struct AnimationState {
     double knee_angle[2];
 };
 
+enum class PlayerWeapon {
+    PISTOL,
+    ROCKET,
+};
+
 struct PlayerState {
 
     PlayerState(double x, double y): pos(x, y, 35, 72) {}
@@ -41,6 +46,7 @@ struct PlayerState {
     double dy = 0;
 
     int health = MAX_HEALTH;
+    int lives_left = 3;
 
     int ticks_till_next_bullet = 0;
     int ticks_left_jumping = 0;
@@ -56,6 +62,10 @@ struct PlayerState {
     double fuel_left = 1;
 
     inputs input;
+
+    PlayerWeapon current_weapon = PlayerWeapon::PISTOL;
+
+    int ammo_left = -1;
 };
 
 class Player {
@@ -78,6 +88,21 @@ private:
     double current_time;
 
     double last_time_diff;
+
+    double gun_rotation_x() const;
+    double gun_rotation_y() const;
+
+    double gun_offset_x() const;
+    double gun_offset_y() const;
+
+    double barrel_offset_x() const;
+    double barrel_offset_y() const;
+
+    const char* gun_image_name() const;
+
+    bool gun_in_front() const;
+
+    void render_gun(RenderList& list) const;
 };
 
 

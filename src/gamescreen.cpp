@@ -35,7 +35,7 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_leve
                 break;
 
             case 1:
-                player.state.pos.x = 800;
+                player.state.pos.x = 1000;
                 break;
         }
         players.push_back(player);
@@ -63,6 +63,52 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
         list.rotate(-bullet_angle);
         list.translate(-bullet.pos.x, -bullet.pos.y);
 	}
+
+    for (unsigned int i = 0; i < players.size(); i++) {
+        const auto& player = players[i];
+
+        int x_offset = 0;
+
+        if (i == 0) {
+            x_offset = 300;
+        } else {
+            x_offset = 1280 - 300;
+        }
+
+        list.translate(x_offset, 0);
+
+        Rectangle info_box(0, 660, 250, 60);
+        list.add_rect("white", info_box);
+        list.add_outline("black", info_box);
+
+        const char* life_color = nullptr;
+
+        switch (player.info.color) {
+            case PlayerColor::RED:
+                life_color = "redLife";
+                break;
+
+            case PlayerColor::YELLOW:
+                life_color = "yellowLife";
+                break;
+
+            default:
+                std::cout<<"Invalid player color\n";
+                exit(-1);
+        }
+
+        const char* dead_color = "deadLife";
+
+        for (int i = 0; i < 3; i++) {
+            Rectangle life_box(-85 + i * 45, 660, 30, 30);
+            list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
+        }
+
+        Rectangle rifle_box(60, 660, 50, 28);
+        list.add_rect("largeRifle", rifle_box);
+
+        list.translate(-x_offset, 0);
+    }
 }
 
 std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
@@ -277,8 +323,26 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 player.state.health -= 10;
 
                 if (player.state.health == 0) {
-                    auto& otherPlayer = players[1 - i];
-                    return std::make_unique<GameOverScreen>(otherPlayer.info);
+                    player.state.lives_left--;
+
+                    player.state.health = 100;
+                    player.state.pos.y = 300;
+
+                    switch (i) {
+                        case 0:
+                            player.state.pos.x = 200;
+                            break;
+
+                        case 1:
+                            player.state.pos.x = 1000;
+                            break;
+                    }
+
+
+                    if (player.state.lives_left == 0) {
+                        auto& otherPlayer = players[1 - i];
+                        return std::make_unique<GameOverScreen>(otherPlayer.info);
+                    }
                 }
             }
         }

@@ -119,7 +119,7 @@ int main(void)
     // The main loop of the program. Just keeps rendering and updating.
 
     while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         RenderList list("../assets/img/pixelPacker.json");
 

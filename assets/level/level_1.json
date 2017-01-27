@@ -9,40 +9,40 @@
         {
             "xLeft": -20,
             "xRight": 1300,
-            "yTop": 690,
-            "yBottom": 740
+            "yTop": 570,
+            "yBottom": 600
         },
         {
             "xLeft": -20,
             "xRight": 30,
             "yTop": -20,
-            "yBottom": 740
+            "yBottom": 600
         },
         {
             "xLeft": 1250,
             "xRight": 1300,
             "yTop": -20,
-            "yBottom": 740
+            "yBottom": 600
         },
 
 
         {
             "xLeft": 400,
             "xRight": 880,
-            "yTop": 350,
-            "yBottom": 380
+            "yTop": 250,
+            "yBottom": 280
         },
         {
             "xLeft": 730,
             "xRight": 1080,
-            "yTop": 510,
-            "yBottom": 540
+            "yTop": 410,
+            "yBottom": 440
         },
         {
             "xLeft": 200,
             "xRight": 550,
-            "yTop": 510,
-            "yBottom": 540
+            "yTop": 410,
+            "yBottom": 440
         }
     ]
 }

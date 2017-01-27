@@ -35,10 +35,7 @@ void Level::render(RenderList& list, bool show_border) const {
 
     if (show_border) {
         for (const Rectangle& rect : obstacles) {
-            list.add_line("black", rect.x - rect.width/2, rect.y - rect.height/2 + line_width / 2, rect.x + rect.width/2, rect.y - rect.height/2 + line_width/2);
-            list.add_line("black", rect.x - rect.width/2, rect.y + rect.height/2 - line_width / 2, rect.x + rect.width/2, rect.y + rect.height/2 - line_width/2);
-            list.add_line("black", rect.x - rect.width/2 + line_width / 2, rect.y - rect.height/2, rect.x - rect.width/2 + line_width / 2, rect.y + rect.height/2);
-            list.add_line("black", rect.x + rect.width/2 - line_width / 2, rect.y - rect.height/2, rect.x + rect.width/2 - line_width / 2, rect.y + rect.height/2);
+            list.add_outline("black", rect, line_width);
         }
 
         for (const Rectangle& rect : obstacles) {

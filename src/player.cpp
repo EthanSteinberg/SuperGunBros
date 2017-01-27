@@ -7,15 +7,6 @@ const double arm_radius = 2.5;
 const double leg_length = 13;
 const double leg_radius = 3;
 
-const double gun_rotation_x = 1;
-const double gun_rotation_y = -20;
-
-const double gun_offset_x = 3;
-const double gun_offset_y = -2;
-
-const double barrel_offset_x = gun_rotation_x + gun_offset_x;
-const double barrel_offset_y = gun_rotation_y + gun_offset_y + 3;
-
 const double arm_y_offset = -18;
 
 double dist_sq(double x1, double y1, double x2, double y2) {
@@ -34,6 +25,112 @@ double calculate_angle(double target_x, double target_y, double center_x, double
     double starting_angle = atan2(target_y - center_y, target_x - center_x);
 
     return starting_angle + far_angle;
+}
+
+
+double Player::gun_rotation_x() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return 1;
+        case PlayerWeapon::ROCKET:
+            return 0;
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
+
+}
+
+double Player::gun_rotation_y() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return -20;
+        case PlayerWeapon::ROCKET:
+            return -20;
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
+}
+
+double Player::gun_offset_x() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return 3;
+        case PlayerWeapon::ROCKET:
+            return -10;
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
+}
+
+double Player::gun_offset_y() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return 2;
+        case PlayerWeapon::ROCKET:
+            return -8;
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
+}
+
+double Player::barrel_offset_x() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return 0;
+        case PlayerWeapon::ROCKET:
+            return 0;
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
+}
+
+double Player::barrel_offset_y() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return 3;
+        case PlayerWeapon::ROCKET:
+            return 3;
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
+}
+
+const char* Player::gun_image_name() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return "rifle";
+        case PlayerWeapon::ROCKET:
+            return "rocket";
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
+}
+
+bool Player::gun_in_front() const {
+    switch (state.current_weapon) {
+        case PlayerWeapon::PISTOL:
+            return true;
+        case PlayerWeapon::ROCKET:
+            return false;
+
+        default:
+            std::cout<<"Invalid weapon"<<std::endl;
+            exit(-1);
+    }
 }
 
 Player::Player(double start_x, double start_y, PlayerInfo a_info) : info(a_info), state(start_x, start_y) {
@@ -171,8 +268,8 @@ Bullet Player::spawn_bullet() const {
 
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : M_PI -state.gun_angle;
 
-    double x = state.pos.x + scaling_factor * (gun_rotation_x + cos(scaled_gun_angle) * (gun_offset_x + 20) - sin(scaled_gun_angle) * (gun_offset_y + 3));
-    double y = state.pos.y + (gun_rotation_y + sin(scaled_gun_angle) * (gun_offset_x + 20) + cos(scaled_gun_angle) * (gun_offset_y + 3));
+    double x = state.pos.x + scaling_factor * (gun_rotation_x() + cos(scaled_gun_angle) * (gun_offset_x() + barrel_offset_x() + 20) - sin(scaled_gun_angle) * (gun_offset_y() + barrel_offset_y()));
+    double y = state.pos.y + (gun_rotation_y() + sin(scaled_gun_angle) * (gun_offset_x() +barrel_offset_x() + 20) + cos(scaled_gun_angle) * (gun_offset_y() + barrel_offset_y()));
 
     return Bullet(x, y, state.gun_angle);
 }
@@ -181,18 +278,18 @@ double Player::get_gun_angle(double mouseX, double mouseY) const {
     if (is_facing_right()) {
         return calculate_angle(
                 mouseX, mouseY,
-                state.pos.x + gun_rotation_x,
-                state.pos.y + gun_rotation_y,
-                state.pos.x + barrel_offset_x,
-                state.pos.y + barrel_offset_y
+                state.pos.x + gun_rotation_x(),
+                state.pos.y + gun_rotation_y(),
+                state.pos.x + gun_rotation_x() + gun_offset_x() + barrel_offset_x(),
+                state.pos.y + gun_rotation_y() + gun_offset_y() + barrel_offset_y()
         );
     } else {
         return calculate_angle(
                 mouseX, mouseY,
-                state.pos.x - gun_rotation_x,
-                state.pos.y + gun_rotation_y,
-                state.pos.x - barrel_offset_x,
-                state.pos.y + barrel_offset_y
+                state.pos.x - gun_rotation_x(),
+                state.pos.y + gun_rotation_y(),
+                state.pos.x - (gun_rotation_x() + gun_offset_x() + barrel_offset_x()),
+                state.pos.y + gun_rotation_y() + gun_offset_y() + barrel_offset_y()
         );
     }
 
@@ -206,11 +303,11 @@ void Player::render(RenderList& list) const {
     double posX = state.pos.x;
     double posY = state.pos.y;
 
-    double grip1_dx = gun_offset_x + 2;
-    double grip1_dy = gun_offset_y + 7;
+    double grip1_dx = gun_offset_x() + 2;
+    double grip1_dy = gun_offset_y() + 7;
 
-    double grip1_x = posX + gun_rotation_x + cos(scaled_gun_angle) * grip1_dx - sin(scaled_gun_angle) * grip1_dy;
-    double grip1_y = posY + gun_rotation_y + sin(scaled_gun_angle) * grip1_dx + cos(scaled_gun_angle) * grip1_dy;
+    double grip1_x = posX + gun_rotation_x() + cos(scaled_gun_angle) * grip1_dx - sin(scaled_gun_angle) * grip1_dy;
+    double grip1_y = posY + gun_rotation_y() + sin(scaled_gun_angle) * grip1_dx + cos(scaled_gun_angle) * grip1_dy;
 
     double dist_to_grip1 = sqrt(dist_sq(grip1_x, grip1_y, posX, posY + arm_y_offset));
 
@@ -218,11 +315,11 @@ void Player::render(RenderList& list) const {
 
     double needed_angle1 = atan2(grip1_y - (posY + arm_y_offset), grip1_x - (posX)) - M_PI/2;
 
-    double grip2_dx = gun_offset_x + 12;
-    double grip2_dy = gun_offset_y + 5;
+    double grip2_dx = gun_offset_x() + 10;
+    double grip2_dy = gun_offset_y() + 6;
 
-    double grip2_x = posX + gun_rotation_x + cos(scaled_gun_angle) * grip2_dx - sin(scaled_gun_angle) * grip2_dy;
-    double grip2_y = posY + gun_rotation_y + sin(scaled_gun_angle) * grip2_dx + cos(scaled_gun_angle) * grip2_dy;
+    double grip2_x = posX + gun_rotation_x() + cos(scaled_gun_angle) * grip2_dx - sin(scaled_gun_angle) * grip2_dy;
+    double grip2_y = posY + gun_rotation_y() + sin(scaled_gun_angle) * grip2_dx + cos(scaled_gun_angle) * grip2_dy;
 
     double dist_to_grip2 = sqrt(dist_sq(grip2_x, grip2_y, posX, posY + arm_y_offset));
 
@@ -239,6 +336,11 @@ void Player::render(RenderList& list) const {
     list.add_image("black", -20, -52, 40, 8);
     list.add_image("red", -18, -50, 36, 4);
     list.add_image("green", -18, -50, 36 * state.health / MAX_HEALTH, 4);
+
+
+    if (!gun_in_front()) {
+        render_gun(list);
+    }
 
     {
         list.rotate(interpolated.hip_angle[0] * M_PI/180);
@@ -259,25 +361,25 @@ void Player::render(RenderList& list) const {
         list.rotate(-interpolated.hip_angle[0] * M_PI/180);
     }
 
-    {
-        list.translate(0, arm_y_offset);
+    // {
+    //     list.translate(0, arm_y_offset);
 
-        list.rotate(needed_angle2 + extra_angle2);
-        list.add_image("armPiece", -arm_radius, -arm_radius);
+    //     list.rotate(needed_angle2 + extra_angle2);
+    //     list.add_image("armPiece", -arm_radius, -arm_radius);
 
-        list.translate(0, arm_length);
+    //     list.translate(0, arm_length);
 
-        list.rotate(-2 * extra_angle2);
+    //     list.rotate(-2 * extra_angle2);
 
-        list.add_image("armPiece", -arm_radius, -arm_radius);
-        list.rotate(2 * extra_angle2);
+    //     list.add_image("armPiece", -arm_radius, -arm_radius);
+    //     list.rotate(2 * extra_angle2);
 
-        list.translate(0, -arm_length);
+    //     list.translate(0, -arm_length);
 
-        list.rotate(-(needed_angle2 + extra_angle2));
+    //     list.rotate(-(needed_angle2 + extra_angle2));
 
-        list.translate(0, -arm_y_offset);
-    }
+    //     list.translate(0, -arm_y_offset);
+    // }
 
     const char* body_color = nullptr;
 
@@ -309,25 +411,25 @@ void Player::render(RenderList& list) const {
        list.add_image("fire", -13.5, 0);
     }
 
-    {
-        list.translate(0, arm_y_offset);
+    // {
+    //     list.translate(0, arm_y_offset);
 
-        list.rotate(needed_angle1 + extra_angle1);
-        list.add_image("armPiece", -arm_radius, -arm_radius);
+    //     list.rotate(needed_angle1 + extra_angle1);
+    //     list.add_image("armPiece", -arm_radius, -arm_radius);
 
-        list.translate(0, arm_length);
+    //     list.translate(0, arm_length);
 
-        list.rotate(-2 * extra_angle1);
+    //     list.rotate(-2 * extra_angle1);
 
-        list.add_image("armPiece", -arm_radius, -arm_radius);
-        list.rotate(2 * extra_angle1);
+    //     list.add_image("armPiece", -arm_radius, -arm_radius);
+    //     list.rotate(2 * extra_angle1);
 
-        list.translate(0, -arm_length);
+    //     list.translate(0, -arm_length);
 
-        list.rotate(-(needed_angle1 + extra_angle1));
+    //     list.rotate(-(needed_angle1 + extra_angle1));
 
-        list.translate(0, -arm_y_offset);
-    }
+    //     list.translate(0, -arm_y_offset);
+    // }
 
     {
 
@@ -350,20 +452,8 @@ void Player::render(RenderList& list) const {
         list.rotate(-interpolated.hip_angle[1] * M_PI/180);
     }
 
-    {
-        list.translate(gun_rotation_x, gun_rotation_y);
-
-        list.rotate(scaled_gun_angle);
-
-        list.translate(-gun_rotation_x, -gun_rotation_y);
-        // list.add_line("red", barrel_offset_x, barrel_offset_y, barrel_offset_x + 600, barrel_offset_y);
-        list.translate(gun_rotation_x, gun_rotation_y);
-
-        list.add_image("rifle", gun_offset_x, gun_offset_y);
-
-        list.rotate(-scaled_gun_angle);
-
-        list.translate(-gun_rotation_x, -gun_rotation_y);
+    if (gun_in_front()) {
+        render_gun(list);
     }
 
     if (!is_facing_right()) {
@@ -371,4 +461,19 @@ void Player::render(RenderList& list) const {
     }
 
     list.translate(-posX, -posY);
+}
+
+void Player::render_gun(RenderList& list) const {
+
+    double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
+
+    list.translate(gun_rotation_x(), gun_rotation_y());
+
+    list.rotate(scaled_gun_angle);
+
+    list.add_image(gun_image_name(), gun_offset_x(), gun_offset_y());
+
+    list.rotate(-scaled_gun_angle);
+
+    list.translate(-gun_rotation_x(), -gun_rotation_y());
 }

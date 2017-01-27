@@ -4,6 +4,8 @@
 #include <json.hpp>
 #include <vector>
 
+#include "rectangle.h"
+
 /**
  * This class allows you to render images to the screen via OpenGL.
  * The basic idea is that you apply stateful transformations to the render list which affect all
@@ -21,6 +23,9 @@ public:
 	void add_image(const char* name, float x, float y, float width = 0, float height = 0);
 
 	void add_line(const char* color, float x_1, float y_1, float x_2, float y_2, double line_width = 4);
+
+	void add_outline(const char* color, const Rectangle& rect, double line_width = 4);
+	void add_rect(const char* color, const Rectangle& rect);
 
 	// Perform a stateful translation by x and y.
 	void translate(float x, float y);
@@ -43,6 +48,8 @@ private:
 	nlohmann::json metadata;
 
 	float transform[3][3];
+
+	float z_offset = 0;
 };
 
 #endif
