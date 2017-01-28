@@ -20,12 +20,14 @@ public:
 	// Render a single image with the given name.
 	// x and y are the coordinates to render to.
 	// Width and height are optional, and default to the width and height of the source image.
-	void add_image(const char* name, float x, float y, float width = 0, float height = 0);
+	void add_image(const char* name, float x, float y, float width = -1, float height = -1);
 
 	void add_line(const char* color, float x_1, float y_1, float x_2, float y_2, double line_width = 4);
 
 	void add_outline(const char* color, const Rectangle& rect, double line_width = 4);
 	void add_rect(const char* color, const Rectangle& rect);
+
+	void add_number(float x, float y, int num);
 
 	// Perform a stateful translation by x and y.
 	void translate(float x, float y);

@@ -40,6 +40,21 @@ void RenderList::add_line(const char* color, float x_1, float y_1, float x_2, fl
     translate(-x_1, -y_1);
 }
 
+void RenderList::add_number(float x, float y, int num) {
+    std::string num_text = std::to_string(num);
+
+    for (const char c : num_text) {
+        char blah[2] = "0";
+
+        blah[0] = c;
+
+        auto& info = metadata[blah];
+
+        add_image(blah, x, y - (double) info["sizey"]);
+        x += (double) info["sizex"] + 4;
+    }
+}
+
 void RenderList::add_image(const char* name, float x, float y, float width, float height) {
 	auto& info = metadata[name];
 
@@ -48,11 +63,11 @@ void RenderList::add_image(const char* name, float x, float y, float width, floa
         exit(-1);
     }
 
-	if (width == 0) {
+	if (width == -1) {
 		width = info["sizex"];
 	}
 
-	if (height == 0) {
+	if (height == -1) {
 		height = info["sizey"];
 	}
 

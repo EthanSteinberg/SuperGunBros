@@ -5,6 +5,9 @@
 #include "gamepad.h"
 #include "renderlist.h"
 #include "bullet.h"
+#include "gun.h"
+#include "pistol.h"
+#include "rocket.h"
 
 #define MAX_HEALTH 40.0
 
@@ -29,11 +32,6 @@ struct PlayerInfo {
 struct AnimationState {
     double hip_angle[2];
     double knee_angle[2];
-};
-
-enum class PlayerWeapon {
-    PISTOL,
-    ROCKET,
 };
 
 struct PlayerState {
@@ -63,7 +61,7 @@ struct PlayerState {
 
     inputs input;
 
-    PlayerWeapon current_weapon = PlayerWeapon::PISTOL;
+    std::shared_ptr<Gun> gun = std::make_shared<Pistol>();
 
     int ammo_left = -1;
 };
@@ -88,19 +86,6 @@ private:
     double current_time;
 
     double last_time_diff;
-
-    double gun_rotation_x() const;
-    double gun_rotation_y() const;
-
-    double gun_offset_x() const;
-    double gun_offset_y() const;
-
-    double barrel_offset_x() const;
-    double barrel_offset_y() const;
-
-    const char* gun_image_name() const;
-
-    bool gun_in_front() const;
 
     void render_gun(RenderList& list) const;
 };

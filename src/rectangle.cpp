@@ -15,3 +15,11 @@ bool Rectangle::colliding_with(const Rectangle& other) const {
 bool Rectangle::contains_point(double p_x, double p_y) const {
     return (fabs(x - p_x) < width / 2 && fabs(y - p_y) < height / 2);
 }
+
+Rectangle Rectangle::offset(double dx, double dy) const {
+    return Rectangle(x + dx, y + dy, width, height);
+}
+
+Point Rectangle::location() const {
+    return Point{x, y};
+}

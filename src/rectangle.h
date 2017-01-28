@@ -1,6 +1,8 @@
 #ifndef RECTANGLE_H_INCLUDED
 #define RECTANGLE_H_INCLUDED
 
+#include "point.h"
+
 class Rectangle {
 public:
     /**
@@ -11,6 +13,10 @@ public:
     bool colliding_with(const Rectangle& other) const;
 
     bool contains_point(double p_x, double p_y) const;
+
+    Rectangle offset(double dx, double dy) const;
+
+    Point location() const;
 
     double x;
     double y;

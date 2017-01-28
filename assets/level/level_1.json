@@ -44,5 +44,14 @@
             "yTop": 410,
             "yBottom": 440
         }
+    ],
+
+    "boxSpawnLocations": [
+        {
+            "xLeft": 400,
+            "xRight": 880,
+            "yTop": 150,
+            "yBottom": 200
+        }
     ]
 }
