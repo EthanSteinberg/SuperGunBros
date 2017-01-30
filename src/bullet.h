@@ -3,7 +3,7 @@
 
 #include "rectangle.h"
 
-const double BULLET_VEL = 4;
+const double BULLET_VEL = 16;
 
 struct Bullet {
     Bullet(double x, double y, double angle) : pos(x, y, 6, 6), x_vel(BULLET_VEL * cos(angle)), y_vel(BULLET_VEL * sin(angle)) {}

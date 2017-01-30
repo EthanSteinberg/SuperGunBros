@@ -14,9 +14,9 @@
 //#define BOOST_STR 7
 //#define BOOST_DUR 10
 
-#define DRAG_COEF 0.15
-#define JUMP_STR 16
-#define GRAVITY 0.4
+#define DRAG_COEF 0.1
+#define JUMP_STR 20
+#define GRAVITY 0.5
 #define X_ACCEL 0.5
 #define JUMP_DUR 15
 #define SIGMA 0.001
@@ -35,7 +35,7 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_leve
                 break;
 
             case 1:
-                player.state.pos.x = 1000;
+                player.state.pos.x = 1100;
                 break;
         }
         players.push_back(player);
@@ -73,20 +73,22 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
         list.translate(-bullet.pos.x, -bullet.pos.y);
 	}
 
+    list.add_image("black", 0, 660, 1280, 60);
+
     for (unsigned int i = 0; i < players.size(); i++) {
         const auto& player = players[i];
 
         int x_offset = 0;
 
         if (i == 0) {
-            x_offset = 300;
+            x_offset = 275/2.0;
         } else {
-            x_offset = 1280 - 300;
+            x_offset = 1280 - 275/2.0;
         }
 
         list.translate(x_offset, 0);
 
-        Rectangle info_box(0, 660, 275, 60);
+        Rectangle info_box(0, 690, 275, 60);
         list.add_rect("white", info_box);
         list.add_outline("black", info_box);
 
@@ -109,20 +111,20 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
         const char* dead_color = "deadLife";
 
         for (int i = 0; i < 3; i++) {
-            Rectangle life_box(-100 + i * 45, 660, 30, 30);
+            Rectangle life_box(-100 + i * 45, 690, 30, 30);
             list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
         }
 
         {
-            list.translate(40, 660);
+            list.translate(40, 690);
             player.state.gun->render_large(list);
-            list.translate(-40, -660);
+            list.translate(-40, -690);
         }
 
         if (player.state.ammo_left != -1) {
-            list.add_number(80, 675, player.state.ammo_left);
+            list.add_number(80, 705, player.state.ammo_left);
         } else {
-            list.add_image("inf", 80, 675 - 19);
+            list.add_image("inf", 80, 705 - 19);
         }
 
 
@@ -469,7 +471,7 @@ std::unique_ptr<Screen> GameScreen::damage_player(int player_index, int damage) 
                 break;
 
             case 1:
-                player.state.pos.x = 1000;
+                player.state.pos.x = 1100;
                 break;
         }
 
