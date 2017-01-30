@@ -269,8 +269,8 @@ void Player::render(RenderList& list) const {
         list.translate(0, -arm_y_offset);
     }
 
-    list.add_image("body", -7, -23);
-    list.add_image(head, -10, -41);
+    list.add_image("body", -7, -26);
+    list.add_image(head, -6, -40);
 
     list.add_image("black", -14, -20, 6, 20);
     list.add_image("red", -12, -2 + -16 * state.fuel_left, 2, 16 * state.fuel_left);
