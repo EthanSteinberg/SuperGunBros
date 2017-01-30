@@ -14,9 +14,9 @@
 //#define BOOST_STR 7
 //#define BOOST_DUR 10
 
-#define DRAG_COEF 0.15
-#define JUMP_STR 16
-#define GRAVITY 0.4
+#define DRAG_COEF 0.1
+#define JUMP_STR 20
+#define GRAVITY 0.5
 #define X_ACCEL 0.5
 #define JUMP_DUR 15
 #define SIGMA 0.001

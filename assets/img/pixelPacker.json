@@ -2,8 +2,8 @@
     "armPiece": {
         "sizex": 5,
         "sizey": 13,
-        "x": 248,
-        "y": 1002
+        "x": 256,
+        "y": 1005
     },
     "backToMenu": {
         "sizex": 529,
@@ -80,8 +80,14 @@
     "head": {
         "sizex": 15,
         "sizey": 13,
-        "x": 254,
-        "y": 1002
+        "x": 262,
+        "y": 1005
+    },
+    "head2": {
+        "sizex": 22,
+        "sizey": 21,
+        "x": 248,
+        "y": 983
     },
     "keyboard": {
         "sizex": 237,
@@ -93,6 +99,12 @@
         "sizex": 7,
         "sizey": 18,
         "x": 248,
+        "y": 1005
+    },
+    "pistol": {
+        "sizex": 24,
+        "sizey": 12,
+        "x": 271,
         "y": 983
     },
     "red": {
@@ -116,8 +128,8 @@
     "rifle": {
         "sizex": 21,
         "sizey": 12,
-        "x": 256,
-        "y": 983
+        "x": 278,
+        "y": 996
     },
     "selectLevel": {
         "sizex": 401,

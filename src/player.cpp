@@ -300,7 +300,7 @@ void Player::render(RenderList& list) const {
     }
 
     list.add_image(body_color, -7, -23);
-    list.add_image("head", -7, -36);
+    list.add_image("head2", -10, -41);
 
     list.add_image("black", -14, -20, 6, 20);
     list.add_image("red", -12, -2 + -16 * state.fuel_left, 2, 16 * state.fuel_left);
@@ -359,7 +359,7 @@ void Player::render(RenderList& list) const {
         // list.add_line("red", barrel_offset_x, barrel_offset_y, barrel_offset_x + 600, barrel_offset_y);
         list.translate(gun_rotation_x, gun_rotation_y);
 
-        list.add_image("rifle", gun_offset_x, gun_offset_y);
+        list.add_image("pistol", gun_offset_x, gun_offset_y);
 
         list.rotate(-scaled_gun_angle);
 
