@@ -18,6 +18,8 @@ struct Bullet {
 
     double x_vel;
     double y_vel;
+
+    bool is_explosive_bullet = false;
 };
 
 #endif

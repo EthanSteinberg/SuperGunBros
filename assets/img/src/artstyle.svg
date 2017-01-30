@@ -137,14 +137,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="129.6939"
-     inkscape:cy="-62.209167"
+     inkscape:zoom="2"
+     inkscape:cx="-38.274922"
+     inkscape:cy="88.328217"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1362"
-     inkscape:window-height="729"
+     inkscape:window-width="1916"
+     inkscape:window-height="1041"
      inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="0"
@@ -186,6 +186,17 @@
        id="path4759-5-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/ethan/jetpack.png"
+       inkscape:export-xdpi="899.69434"
+       inkscape:export-ydpi="899.69434" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.93701887;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4878"
+       width="44.78857"
+       height="8.3407583"
+       x="12.60907"
+       y="980.61511"
+       ry="3.2225668"
        inkscape:export-filename="/home/ethan/jetpack.png"
        inkscape:export-xdpi="899.69434"
        inkscape:export-ydpi="899.69434" />
@@ -257,17 +268,6 @@
        x="29.739449"
        y="990.30414"
        ry="1.0315192"
-       inkscape:export-filename="/home/ethan/jetpack.png"
-       inkscape:export-xdpi="899.69434"
-       inkscape:export-ydpi="899.69434" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect4878"
-       width="19.723358"
-       height="3.8258352"
-       x="26.881821"
-       y="985.9386"
-       ry="1.4781643"
        inkscape:export-filename="/home/ethan/jetpack.png"
        inkscape:export-xdpi="899.69434"
        inkscape:export-ydpi="899.69434" />
@@ -436,8 +436,8 @@
        x="85.286308"
        y="1015.0309"
        ry="1.0315192"
-       inkscape:export-xdpi="91.020584"
-       inkscape:export-ydpi="91.020584"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rifle.png" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
@@ -447,8 +447,8 @@
        x="82.42868"
        y="1010.6653"
        ry="1.4781643"
-       inkscape:export-xdpi="91.020584"
-       inkscape:export-ydpi="91.020584"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rifle.png" />
     <rect
        style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1.32187498;stroke-miterlimit:4;stroke-dasharray:none"
@@ -662,5 +662,58 @@
        inkscape:export-filename="/home/ethan/grapplingHook.png"
        inkscape:export-xdpi="899.69434"
        inkscape:export-ydpi="899.69434" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.93701887;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4878-3"
+       width="44.78857"
+       height="8.3407593"
+       x="73.572639"
+       y="948.96106"
+       ry="3.2225668"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rocket.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000017;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4876-6"
+       width="2.5484583"
+       height="6.0677571"
+       x="90.703018"
+       y="958.65009"
+       ry="1.0315193"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/rocket.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:#999999;fill-opacity:1;stroke:#000000;stroke-width:3.75000003;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4577"
+       cx="-41.25"
+       cy="1087.0497"
+       r="12.582237"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/deadLife.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.92984605;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4876-9-7"
+       width="5.6565075"
+       height="13.467873"
+       x="-134.60335"
+       y="1088.0741"
+       ry="2.2895398"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/largeRifle.png" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.92984605;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4878-2-5"
+       width="43.777576"
+       height="8.4917479"
+       x="-140.94609"
+       y="1078.3843"
+       ry="3.2809043"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/largeRifle.png" />
   </g>
 </svg>

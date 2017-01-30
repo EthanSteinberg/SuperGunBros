@@ -9,20 +9,20 @@
         {
             "xLeft": -20,
             "xRight": 1300,
-            "yTop": 690,
-            "yBottom": 740
+            "yTop": 570,
+            "yBottom": 600
         },
         {
             "xLeft": -20,
             "xRight": 30,
             "yTop": -20,
-            "yBottom": 740
+            "yBottom": 600
         },
         {
             "xLeft": 1250,
             "xRight": 1300,
             "yTop": -20,
-            "yBottom": 740
+            "yBottom": 600
         },
 
 
@@ -43,7 +43,7 @@
             "xLeft": 125,
             "xRight": 155,
             "yTop": 350,
-            "yBottom": 600
+            "yBottom": 480
         },
         {
             "xLeft": 290,
@@ -78,7 +78,7 @@
             "xLeft": 1125,
             "xRight": 1155,
             "yTop": 350,
-            "yBottom": 600
+            "yBottom": 480
         },
         {
             "xLeft": 940,
@@ -92,8 +92,14 @@
             "yTop": 200,
             "yBottom": 230
         }
+    ],
 
-
-
+    "boxSpawnLocations": [
+        {
+            "xLeft": 1050,
+            "xRight": 1280,
+            "yTop": 100,
+            "yBottom": 125
+        }
     ]
 }

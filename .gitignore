@@ -1,3 +1,6 @@
 cmake-build-debug
 .idea
 build
+
+#Pesky mac files
+**.DS_Store

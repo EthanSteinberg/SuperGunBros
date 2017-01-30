@@ -6,6 +6,8 @@
 #include "player.h"
 #include "rectangle.h"
 #include "level.h"
+#include "weaponbox.h"
+#include "explosion.h"
 
 class GameScreen : public Screen {
 public:
@@ -22,7 +24,24 @@ private:
     std::vector<Player> players;
     std::vector<Bullet> bullets;
 
-    bool would_collide_with_ground(const Rectangle& rect, double dx, double dy) const;
+    std::vector<WeaponBox> boxes;
+
+    std::vector<Explosion> explosions;
+
+    int ticks_till_next_box = 0;
+
+    std::mt19937 gen;
+
+    bool would_hit_ground(const Rectangle& rect) const;
+
+    bool would_collide_or_fall_on_any(const Rectangle& rect) const;
+
+    bool would_hit_player(const Rectangle& rect) const;
+    bool would_hit_box(const Rectangle& rect) const;
+
+    std::shared_ptr<Gun> attempt_pick_up(const Rectangle& rect);
+
+    std::unique_ptr<Screen> damage_player(int player_index, int damage);
 };
 
 #endif

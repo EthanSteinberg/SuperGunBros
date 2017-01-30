@@ -5,6 +5,9 @@
 #include "gamepad.h"
 #include "renderlist.h"
 #include "bullet.h"
+#include "gun.h"
+#include "pistol.h"
+#include "rocket.h"
 
 #define MAX_HEALTH 40.0
 
@@ -41,6 +44,7 @@ struct PlayerState {
     double dy = 0;
 
     int health = MAX_HEALTH;
+    int lives_left = 3;
 
     int ticks_till_next_bullet = 0;
     int ticks_left_jumping = 0;
@@ -56,6 +60,10 @@ struct PlayerState {
     double fuel_left = 1;
 
     inputs input;
+
+    std::shared_ptr<Gun> gun = std::make_shared<Pistol>();
+
+    int ammo_left = -1;
 };
 
 class Player {
@@ -78,6 +86,8 @@ private:
     double current_time;
 
     double last_time_diff;
+
+    void render_gun(RenderList& list) const;
 };
 
 
