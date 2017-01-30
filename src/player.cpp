@@ -190,6 +190,31 @@ void Player::render(RenderList& list) const {
 
     double needed_angle2 = atan2(grip2_y - arm_y_offset, grip2_x) - M_PI/2;
 
+    const char* head = nullptr;
+    const char* shoulder = nullptr;
+
+    switch (info.color) {
+        case PlayerColor::RED:
+            head = "red-head";
+            shoulder = "red-shoulder";
+            break;
+
+        case PlayerColor::YELLOW:
+            head = "yellow-head";
+            shoulder = "yellow-shoulder";
+            break;
+
+        case PlayerColor::BLUE:
+            head = "yellow-head";
+            shoulder = "yellow-shoulder";
+            break;
+
+        case PlayerColor::GREEN:
+            head = "yellow-head";
+            shoulder = "yellow-shoulder";
+            break;
+    }
+
     list.translate(posX, posY);
 
     if (!is_facing_right()) {
@@ -228,13 +253,13 @@ void Player::render(RenderList& list) const {
         list.translate(0, arm_y_offset);
 
         list.rotate(needed_angle2 + extra_angle2);
-        list.add_image("armPiece", -arm_radius, -arm_radius);
+        list.add_image("upper-arm", -arm_radius, -arm_radius);
 
         list.translate(0, arm_length);
 
         list.rotate(-2 * extra_angle2);
 
-        list.add_image("armPiece", -arm_radius, -arm_radius);
+        list.add_image("lower-arm", -arm_radius, -arm_radius);
         list.rotate(2 * extra_angle2);
 
         list.translate(0, -arm_length);
@@ -244,28 +269,8 @@ void Player::render(RenderList& list) const {
         list.translate(0, -arm_y_offset);
     }
 
-    const char* body_color = nullptr;
-
-    switch (info.color) {
-        case PlayerColor::RED:
-            body_color = "redBody";
-            break;
-
-        case PlayerColor::YELLOW:
-            body_color = "yellowBody";
-            break;
-
-        case PlayerColor::BLUE:
-            body_color = "yellowBody";
-            break;
-
-        case PlayerColor::GREEN:
-            body_color = "yellowBody";
-            break;
-    }
-
-    list.add_image(body_color, -7, -23);
-    list.add_image("head2", -10, -41);
+    list.add_image("body", -7, -23);
+    list.add_image(head, -10, -41);
 
     list.add_image("black", -14, -20, 6, 20);
     list.add_image("red", -12, -2 + -16 * state.fuel_left, 2, 16 * state.fuel_left);
@@ -278,13 +283,13 @@ void Player::render(RenderList& list) const {
         list.translate(0, arm_y_offset);
 
         list.rotate(needed_angle1 + extra_angle1);
-        list.add_image("armPiece", -arm_radius, -arm_radius);
+        list.add_image("upper-arm", -arm_radius, -arm_radius);
 
         list.translate(0, arm_length);
 
         list.rotate(-2 * extra_angle1);
 
-        list.add_image("armPiece", -arm_radius, -arm_radius);
+        list.add_image("lower-arm", -arm_radius, -arm_radius);
         list.rotate(2 * extra_angle1);
 
         list.translate(0, -arm_length);

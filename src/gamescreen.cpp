@@ -282,7 +282,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         //Collision tracking super basic
 
         auto would_collide = [&](double dx, double dy){
-            return would_hit_ground(player.state.pos.offset(dx, dy)) || would_hit_box(player.state.pos.offset(dx, dy));
+            return would_hit_ground(player.state.pos.offset(dx, dy)); //|| would_hit_box(player.state.pos.offset(dx, dy));
         };
 
         if (would_collide(player.state.dx, player.state.dy)){
@@ -320,12 +320,14 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         }
 
         if (would_collide(SIGMA, 0)) {
-            player.state.pushing_wall = 1;
-            //player.state.jumping = false;
+            if(accel > 0) {
+                player.state.pushing_wall = 1;
+            }
             player.state.dx = 0;
-        } else if (would_collide(-SIGMA, 0)) {
-            player.state.pushing_wall = -1;
-            //player.state.jumping = false;
+        } else if (would_collide(-SIGMA, 0) && accel < 0) {
+            if(accel < 0){
+                player.state.pushing_wall = -1;
+            }
             player.state.dx = 0;
         } else {
             player.state.pushing_wall = false;
