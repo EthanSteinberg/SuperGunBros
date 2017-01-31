@@ -5,23 +5,15 @@
 #include <string>
 #include <cmath>
 
-//#define DRAG_COEF 0.125
-//#define JUMP_STR 15
-//#define GRAVITY 0.4
-//#define X_ACCEL 0.25
-//#define JUMP_DUR 15
-//#define SIGMA 0.001
-//#define BOOST_STR 7
-//#define BOOST_DUR 10
-
-#define DRAG_COEF 0.1
-#define JUMP_STR 20
-#define GRAVITY 0.5
+#define DRAG_COEF 0.075
+#define JUMP_STR 15
+#define GRAVITY 0.75
 #define X_ACCEL 0.5
-#define JUMP_DUR 15
+#define JUMP_DUR 10
 #define SIGMA 0.001
-#define BOOST_STR 5
-#define BOOST_DUR 10
+#define BOOST_STR 1
+#define BOOST_DUR 180
+#define WALL_FRICTION 0.2
 
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level) {
 
@@ -211,7 +203,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
         }
 
         //Can't accelerate into the wall we're already on
-        if (player.state.pushing_wall && (player.state.pushing_wall < 0) == (player.state.dx < 0)) {
+        if (player.state.pushing_wall * player.state.dx > 0) {
             player.state.dx = 0;
         }
 
@@ -243,8 +235,11 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             player.state.ticks_left_jumping = JUMP_DUR/2;
 
             //Half speed fall with friction
-            //TODO revisit formula
-            player.state.dy = (player.state.dy + GRAVITY)/2;
+            player.state.dy += GRAVITY;
+            //But not if you're jetpacking or jumping
+            if (!(player.state.boosting || player.state.jumping)) {
+                player.state.dy -= player.state.dy * WALL_FRICTION;
+            }
 
             //Wall-Jump
             if(attempting_jump){ //TODO handy controls for wall-jumping
@@ -321,6 +316,9 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             player.state.roofed = false;
         }
 
+
+        //Default to false
+        player.state.pushing_wall = false;
         if (would_collide(SIGMA, 0)) {
             if(accel > 0) {
                 player.state.pushing_wall = 1;
@@ -331,8 +329,6 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
                 player.state.pushing_wall = -1;
             }
             player.state.dx = 0;
-        } else {
-            player.state.pushing_wall = false;
         }
 
         //Bullet logic
