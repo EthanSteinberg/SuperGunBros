@@ -18,24 +18,35 @@ RenderList::RenderList(const char* filename) {
 	memcpy(transform, mat, sizeof(mat));
 }
 
-void RenderList::add_outline(const char* color, const Rectangle& rect, double line_width) {
-    add_line(color, rect.x - rect.width/2, rect.y - rect.height/2 + line_width / 2, rect.x + rect.width/2, rect.y - rect.height/2 + line_width/2);
-    add_line(color, rect.x - rect.width/2, rect.y + rect.height/2 - line_width / 2, rect.x + rect.width/2, rect.y + rect.height/2 - line_width/2);
-    add_line(color, rect.x - rect.width/2 + line_width / 2, rect.y - rect.height/2, rect.x - rect.width/2 + line_width / 2, rect.y + rect.height/2);
-    add_line(color, rect.x + rect.width/2 - line_width / 2, rect.y - rect.height/2, rect.x + rect.width/2 - line_width / 2, rect.y + rect.height/2);
+Rectangle RenderList::get_image_dimensions(const std::string &name) const {
+    auto& info = metadata[name];
+
+    if (info.is_null()) {
+        std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
+        exit(-1);
+    }
+
+    return {0, 0, info["sizex"], info["sizey"]};
 }
 
-void RenderList::add_rect(const char* color, const Rectangle& rect) {
-    add_image(color, rect.x - rect.width/2, rect.y - rect.height/2, rect.width, rect.height);
+void RenderList::add_outline(const std::string &name, const Rectangle& rect, double line_width) {
+    add_line(name, rect.x - rect.width/2, rect.y - rect.height/2 + line_width / 2, rect.x + rect.width/2, rect.y - rect.height/2 + line_width/2);
+    add_line(name, rect.x - rect.width/2, rect.y + rect.height/2 - line_width / 2, rect.x + rect.width/2, rect.y + rect.height/2 - line_width/2);
+    add_line(name, rect.x - rect.width/2 + line_width / 2, rect.y - rect.height/2, rect.x - rect.width/2 + line_width / 2, rect.y + rect.height/2);
+    add_line(name, rect.x + rect.width/2 - line_width / 2, rect.y - rect.height/2, rect.x + rect.width/2 - line_width / 2, rect.y + rect.height/2);
 }
 
-void RenderList::add_line(const char* color, float x_1, float y_1, float x_2, float y_2, double line_width) {
+void RenderList::add_rect(const std::string &name, const Rectangle& rect) {
+    add_image(name, rect.x - rect.width/2, rect.y - rect.height/2, rect.width, rect.height);
+}
+
+void RenderList::add_line(const std::string &name, float x_1, float y_1, float x_2, float y_2, double line_width) {
     double dist = sqrt((x_2 - x_1) * (x_2 - x_1) + (y_2 - y_1) * (y_2 - y_1));
     double angle = atan2(y_2 - y_1, x_2 - x_1);
 
     translate(x_1, y_1);
     rotate(angle);
-    add_image(color, 0, -line_width/2, dist, line_width);
+    add_image(name, 0, -line_width/2, dist, line_width);
     rotate(-angle);
     translate(-x_1, -y_1);
 }
@@ -44,7 +55,7 @@ void RenderList::add_number(float x, float y, int num) {
     std::string num_text = std::to_string(num);
 
     for (const char c : num_text) {
-        char blah[2] = "0";
+        std::string blah = "0";
 
         blah[0] = c;
 
@@ -55,7 +66,7 @@ void RenderList::add_number(float x, float y, int num) {
     }
 }
 
-void RenderList::add_image(const char* name, float x, float y, float width, float height) {
+void RenderList::add_image(const std::string &name, float x, float y, float width, float height) {
 	auto& info = metadata[name];
 
     if (info.is_null()) {

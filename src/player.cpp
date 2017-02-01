@@ -71,7 +71,7 @@ AnimationState Player::get_interpolated_frame() const {
     return interpolated;
 }
 
-void Player::update(GLFWwindow* window) {
+void Player::update() {
     if (state.dx == 0 || !state.grounded) {
         double dist_to_forward_back = fmod(current_time - 0.86 + 8, 8);
         double dist_to_backward_back = fmod(current_time - 3.5 + 8, 8);
@@ -93,50 +93,6 @@ void Player::update(GLFWwindow* window) {
     } else {
         current_time = fmod((current_time + state.dx * (is_facing_right() ? 1 : -1) * 0.10) + 8, 8);
         last_time_diff = state.dx * (is_facing_right() ? 1 : -1) * 0.10;
-    }
-    // Deal with player input.
-    if (info.type == PlayerType::KEYBOARD) {
-
-        state.input.ls.x = 0;
-        state.input.ls.x -= (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS);
-        state.input.ls.x += (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS);
-
-        state.input.ls.y = 0;
-        state.input.ls.y -= glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
-        state.input.ls.y += glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
-
-        //Directional Aiming
-        double cursorX;
-        double cursorY;
-        glfwGetCursorPos(window, &cursorX, &cursorY);
-
-        double needed_gun_angle = get_gun_angle(cursorX, cursorY);
-
-        state.input.rs.x = cos(needed_gun_angle);
-        state.input.rs.y = sin(needed_gun_angle);
-
-        state.input.buttons[ButtonName::A] = 0;
-        state.input.buttons[ButtonName::B] = 0;
-        state.input.buttons[ButtonName::X] = (button_val) (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
-        state.input.buttons[ButtonName::Y] = 0;
-
-        state.input.buttons[ButtonName::LB] = (button_val) (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS);
-        state.input.buttons[ButtonName::RB] = (button_val) (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
-
-        state.input.buttons[ButtonName::LT] = (button_val) (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS);
-        state.input.buttons[ButtonName::RT] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS);
-
-        state.input.buttons[ButtonName::BACK] = 0;
-        state.input.buttons[ButtonName::START] = 0;
-        state.input.buttons[ButtonName::L3] = 0;
-        state.input.buttons[ButtonName::R3] = 0;
-
-        state.input.buttons[ButtonName::UD] = 0;
-        state.input.buttons[ButtonName::DD] = 0;
-        state.input.buttons[ButtonName::LD] = 0;
-        state.input.buttons[ButtonName::RD] = 0;
-    } else {
-        state.input = info.gamePad->getInputs();
     }
 }
 

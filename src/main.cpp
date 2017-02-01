@@ -9,9 +9,12 @@
 #include "renderlist.h"
 #include "render.h"
 #include "menuscreen.h"
+#include "gameoverscreen.h"
 
 const int screen_width = 1280;
 const int screen_height = 720;
+
+const bool debug_keyboard_player = true;
 
 struct MainData {
     std::unique_ptr<Screen> current_screen;
@@ -39,27 +42,69 @@ void opengl_error(GLenum /*source*/,
 void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
-    } else {
-        MainData* data = (MainData*) glfwGetWindowUserPointer(window);
-        std::unique_ptr<Screen> next_screen = data->current_screen->on_key(key, action);
-        if (next_screen) {
-            data->current_screen = std::move(next_screen);
-        }
     }
 }
 
-void click_callback(GLFWwindow* window, int button, int action, int /*mods*/) {
-    double xpos, ypos;
-    glfwGetCursorPos(window, &xpos, &ypos);
+inputs keyboard_debug_input(GLFWwindow* window) {
+    inputs input;
 
-    MainData* data = (MainData*) glfwGetWindowUserPointer(window);
-    std::unique_ptr<Screen> next_screen = data->current_screen->on_click(button, action, xpos, ypos);
-    if (next_screen) {
-        data->current_screen = std::move(next_screen);
-    }
+    input.ls.x = 0;
+    input.ls.x -= (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS);
+    input.ls.x += (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS);
+
+    input.ls.y = 0;
+    input.ls.y -= glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
+    input.ls.y += glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
+
+    //Directional Aiming
+    double cursorX;
+    double cursorY;
+    glfwGetCursorPos(window, &cursorX, &cursorY);
+
+    double needed_gun_angle = atan2(cursorY - 720.0/2, cursorX - 1280.0/2);
+
+    input.rs.x = cos(needed_gun_angle);
+    input.rs.y = sin(needed_gun_angle);
+
+    input.buttons[ButtonName::A] = 0;
+    input.buttons[ButtonName::B] = 0;
+    input.buttons[ButtonName::X] = (button_val) (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
+    input.buttons[ButtonName::Y] = 0;
+
+    input.buttons[ButtonName::LB] = (button_val) (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS);
+    input.buttons[ButtonName::RB] = (button_val) (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
+
+    input.buttons[ButtonName::LT] = (button_val) (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS);
+    input.buttons[ButtonName::RT] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS);
+
+    input.buttons[ButtonName::BACK] = 0;
+    input.buttons[ButtonName::START] = (button_val) (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS);
+    input.buttons[ButtonName::L3] = 0;
+    input.buttons[ButtonName::R3] = 0;
+
+    input.buttons[ButtonName::UD] = 0;
+    input.buttons[ButtonName::DD] = 0;
+    input.buttons[ButtonName::LD] = 0;
+    input.buttons[ButtonName::RD] = 0;
+
+    return input;
 }
 
 const double TIME_PER_TICK = 1.0/60;
+
+std::map<int, inputs> get_joystick_inputs(const std::vector<int>& connected_joysticks, GLFWwindow* window) {
+    std::map<int, inputs> joystick_inputs;
+
+    for (int i : connected_joysticks) {
+        joystick_inputs[i] = getInputs(i);
+    }
+
+    if (debug_keyboard_player) {
+        joystick_inputs[-1] = keyboard_debug_input(window);
+    }
+
+    return joystick_inputs;
+}
 
 int main(void)
 {
@@ -112,21 +157,27 @@ int main(void)
 
     glfwSetWindowUserPointer(window, &data);
     glfwSetKeyCallback(window, key_callback);
-    glfwSetMouseButtonCallback(window, click_callback);
 
     double start_time = glfwGetTime();
 
+    std::vector<int> connected_joysticks;
+
+    for (int i = GLFW_JOYSTICK_1; i <= GLFW_JOYSTICK_LAST; i++) {
+        if (glfwJoystickPresent(i)) {
+            connected_joysticks.push_back(i);
+        }
+    }
+
     // The main loop of the program. Just keeps rendering and updating.
+
+    std::map<int, inputs> last_inputs = get_joystick_inputs(connected_joysticks, window);
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         RenderList list("../assets/img/pixelPacker.json");
 
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-
-        data.current_screen->render(list, xpos, ypos);
+        data.current_screen->render(list);
         list.draw();
 
         glfwSwapBuffers(window);
@@ -135,11 +186,16 @@ int main(void)
         double current_time = glfwGetTime();
 
         while (current_time - start_time > TIME_PER_TICK) {
+
+            std::map<int, inputs> current_inputs = get_joystick_inputs(connected_joysticks, window);
+
             start_time += TIME_PER_TICK;
-            std::unique_ptr<Screen> next_screen = data.current_screen->update(window);
+            std::unique_ptr<Screen> next_screen = data.current_screen->update(current_inputs, last_inputs);
             if (next_screen) {
                 data.current_screen = std::move(next_screen);
             }
+
+            last_inputs = current_inputs;
         }
     }
     glfwDestroyWindow(window);

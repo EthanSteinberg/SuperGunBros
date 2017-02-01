@@ -137,9 +137,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="-38.274922"
-     inkscape:cy="88.328217"
+     inkscape:zoom="4"
+     inkscape:cx="-64.142295"
+     inkscape:cy="23.45343"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -685,12 +685,12 @@
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <circle
-       style="fill:#999999;fill-opacity:1;stroke:#000000;stroke-width:3.75000003;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:3.75000003;stroke-miterlimit:4;stroke-dasharray:none"
        id="path4577"
        cx="-41.25"
        cy="1087.0497"
        r="12.582237"
-       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/deadLife.png"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/life-yellow.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <rect

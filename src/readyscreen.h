@@ -7,17 +7,16 @@
 
 class ReadyScreen : public Screen {
 public:
-	ReadyScreen();
+	ReadyScreen(const std::vector<int>& joysticks);
 
-	void render(RenderList& list, double mouseX, double mouseY);
-	std::unique_ptr<Screen> update(GLFWwindow* window);
-	std::unique_ptr<Screen> on_click(int button, int action, double mouseX, double mouseY);
-	std::unique_ptr<Screen> on_key(int key, int action);
+	void render(RenderList& list) const;
+	std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs);
 
 private:
-	bool contains_player_for_joystick(int index);
-
 	std::vector<PlayerInfo> players;
+    std::vector<bool> player_ready;
+
+    std::vector<Player> player_icons;
 
     std::vector<Level> loaded_levels;
     unsigned int selected_level_index = 0;

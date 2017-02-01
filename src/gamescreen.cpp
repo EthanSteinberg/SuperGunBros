@@ -2,6 +2,7 @@
 
 #include "gameoverscreen.h"
 #include "rocket.h"
+#include "readyscreen.h"
 #include <string>
 #include <cmath>
 
@@ -34,7 +35,7 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_leve
     }
 }
 
-void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
+void GameScreen::render(RenderList& list) const {
 
     list.add_image("background", 0, 0);
 
@@ -84,21 +85,7 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
         list.add_rect("white", info_box);
         list.add_outline("black", info_box);
 
-        const char* life_color = nullptr;
-
-        switch (player.info.color) {
-            case PlayerColor::RED:
-                life_color = "redLife";
-                break;
-
-            case PlayerColor::YELLOW:
-                life_color = "yellowLife";
-                break;
-
-            default:
-                std::cout<<"Invalid player color\n";
-                exit(-1);
-        }
+        std::string life_color = "life-" + get_color_name(player.info.color);
 
         const char* dead_color = "deadLife";
 
@@ -126,7 +113,20 @@ void GameScreen::render(RenderList& list, double mouseX, double mouseY) {
     }
 }
 
-std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
+std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
+
+
+    for (auto& item : joystick_inputs) {
+        if (item.second.buttons[BACK]) {
+            std::vector<int> joysticks;
+
+            for (const auto& item : joystick_inputs) {
+                joysticks.push_back(item.first);
+            }
+
+            return std::make_unique<ReadyScreen>(joysticks);
+        }
+    }
 
     std::vector<Explosion> next_explosions;
 
@@ -143,26 +143,28 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
     for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
 
-        player.update(window);
+        player.update();
 
         double accel = 0;
 
+        inputs input = joystick_inputs.at(player.info.joystick_index);
+
         //Threshold the motion so that you aren't creeping around at slow speed
-        float x_thresh = (fabs(player.state.input.ls.x) > 0.3) ? player.state.input.ls.x : 0;
+        float x_thresh = (fabs(input.ls.x) > 0.3) ? input.ls.x : 0;
         accel += x_thresh * X_ACCEL;
 
         //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
-        if (fabs(player.state.input.rs.x) > 0.3 || fabs(player.state.input.rs.y) > 0.3) {
-            player.state.gun_angle = atan2(player.state.input.rs.y, player.state.input.rs.x);
+        if (fabs(input.rs.x) > 0.3 || fabs(input.rs.y) > 0.3) {
+            player.state.gun_angle = atan2(input.rs.y, input.rs.x);
         }
 
         //Checking inputs for later calculations
-        bool attempting_jump = player.state.input.buttons[ButtonName::LT];
-        bool firing_bullet = player.state.input.buttons[ButtonName::RT];
+        bool attempting_jump = input.buttons[ButtonName::LT];
+        bool firing_bullet = input.buttons[ButtonName::RT];
 
-        bool attemping_boost = player.state.input.buttons[ButtonName::LB];
+        bool attemping_boost = input.buttons[ButtonName::LB];
 
-        bool attempting_pickup = player.state.input.buttons[ButtonName::X];
+        bool attempting_pickup = input.buttons[ButtonName::X];
 
         if (attempting_pickup) {
             auto potential_gun = attempt_pick_up(player.state.pos);
@@ -229,7 +231,7 @@ std::unique_ptr<Screen> GameScreen::update(GLFWwindow* window) {
             }
 
             //Wall-Cling
-        } else if (player.state.pushing_wall){
+        } else if (player.state.pushing_wall) {
 
             //Reset Jumps
             player.state.ticks_left_jumping = JUMP_DUR/2;
@@ -481,14 +483,6 @@ std::unique_ptr<Screen> GameScreen::damage_player(int player_index, int damage) 
     }
 
     return nullptr;
-}
-
-std::unique_ptr<Screen> GameScreen::on_click(int button, int action, double mouseX, double mouseY) {
-    return nullptr;
-}
-
-std::unique_ptr<Screen> GameScreen::on_key(int key, int action) {
-	return nullptr;
 }
 
 bool GameScreen::would_hit_ground(const Rectangle& rect) const {

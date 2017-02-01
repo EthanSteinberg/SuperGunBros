@@ -1,6 +1,7 @@
 #include "readyscreen.h"
 
 #include <GLFW/glfw3.h>
+#include <cmath>
 #include "gamescreen.h"
 
 const char* level_names[] = {
@@ -8,14 +9,16 @@ const char* level_names[] = {
 	"../assets/level/level_2.json",
 };
 
-ReadyScreen::ReadyScreen() {
-	PlayerInfo keyboardPlayer = {
-			PlayerType::KEYBOARD,
-			PlayerColor::RED,
-			NULL //TODO: build keyboard gamepad abstraction
-	};
+ReadyScreen::ReadyScreen(const std::vector<int>& joysticks) {
+	for (unsigned int i = 0; i < joysticks.size(); i++) {
+		PlayerInfo info;
+		info.color = (PlayerColor) i;
+		info.joystick_index = joysticks[i];
+		players.push_back(info);
+		player_ready.push_back(false);
 
-	players.push_back(keyboardPlayer);
+		player_icons.push_back(Player(0, 0, info));
+	}
 
 	for (const auto& level_name : level_names) {
 		loaded_levels.push_back(Level::load_from_file(level_name));
@@ -24,57 +27,35 @@ ReadyScreen::ReadyScreen() {
 
 const double level_scale = 0.15;
 
-void ReadyScreen::render(RenderList& list, double mouseX, double mouseY) {
-	list.add_image("selectPlayers", (600 - 529)/2.0, 20);
+void ReadyScreen::render(RenderList& list) const {
+	list.add_image("background", 0, 0);
 
-	list.add_image("selectLevel", (600 - 529)/2.0 + 600, 20);
-
-	if (mouseX > (600 - 529)/2.0 && mouseX < (600 - 529)/2.0 + 529 && mouseY > 400 && mouseY < 400 + 192) {
-		list.add_image("startButtonYellow", (600 - 529)/2.0, 400);
-	} else {
-		list.add_image("startButton", (600 - 529)/2.0, 400);
-	}
+	list.add_image("ready-header", 10, 10);
 
 	for (unsigned int i = 0; i < players.size(); i++) {
+		list.translate(0, 275 + i * 140);
 		const PlayerInfo& player = players[i];
 
-		const char* type = nullptr;
-		const char* color = nullptr;
+		list.add_image("ready-box-outline", 10, 0);
+		list.add_image("number-" + get_color_name(player.color), 40, 12);
 
-		switch (player.type) {
-			case PlayerType::KEYBOARD:
-				type = "keyboard";
-				break;
-
-			case PlayerType::GAMEPAD:
-				type = "gamepad";
-				break;
+		{
+			list.translate(275, 70);
+			player_icons[i].render(list);
+			list.translate(-275, -70);
 		}
 
-		switch (player.color) {
-			case PlayerColor::RED:
-				color = "red";
-				break;
-
-			case PlayerColor::BLUE:
-				color = "blue";
-				break;
-
-			case PlayerColor::YELLOW:
-				color = "yellow";
-				break;
-
-			case PlayerColor::GREEN:
-				color = "green";
-				break;
+		if (player_ready[i]) {
+			list.add_image("ready-text", 400, 50);
+		} else {
+			list.add_image("not-ready-text", 325, 50);
 		}
 
-		list.add_image(type, 20, 100 + i * 100);
-		list.add_image(color, 320, 100 + i * 100, 100, 100);
+		list.translate(0, -(275 + i * 140.0));
 	}
 
 	for (unsigned int i = 0; i < loaded_levels.size(); i++) {
-		list.translate(650, 100 + 150 * i);
+		list.translate(900, 300 + 150 * i);
 
 		list.scale(level_scale, level_scale);
 
@@ -87,76 +68,46 @@ void ReadyScreen::render(RenderList& list, double mouseX, double mouseY) {
 
 		list.scale(1/level_scale, 1/level_scale);
 
-		list.translate(-650, -(100 + 150.0 * i));
+		list.translate(-900, -(300 + 150.0 * i));
 	}
 }
 
-std::unique_ptr<Screen> ReadyScreen::update(GLFWwindow* window) {
-	for (int index = 0; index < GLFW_JOYSTICK_LAST; index++) {
-		if (glfwJoystickPresent(index) && !contains_player_for_joystick(index)) {
-			int count;
-			const unsigned char* axes = glfwGetJoystickButtons(index, &count);
+std::unique_ptr<Screen> ReadyScreen::update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
 
-			for (int i = 0; i < count ; i++) {
-				if (axes[i]) {
-					PlayerInfo joystickPlayer = {
-							PlayerType::GAMEPAD,
-							PlayerColor::YELLOW,
-							GamePad::getGamePad(index)
-					};
+	for (unsigned int i = 0; i < players.size(); i++) {
 
-					printf("JS: %d, name: %s\n", index, glfwGetJoystickName(index));
+		Player& player = player_icons[i];
 
-					if (players.size() == 1) {
-						players.push_back(joystickPlayer);
-					} else {
-						joystickPlayer.color = PlayerColor::RED;
-						players[0] = joystickPlayer;
-					}
+		inputs input = joystick_inputs.at(players[i].joystick_index);
 
+		player.state.dx = input.ls.x * 2;
+		player.state.grounded = true;
 
-					break;
-				}
-			}
+		if (fabs(input.rs.x) > 0.3 || fabs(input.rs.y) > 0.3) {
+		    player.state.gun_angle = atan2(input.rs.y, input.rs.x);
+		}
+
+		player.update();
+
+		if (input.buttons[START] && !last_inputs.at(players[i].joystick_index).buttons[START]) {
+			player_ready[i] = true;
+		}
+
+		if (input.buttons[UD] && !last_inputs.at(players[i].joystick_index).buttons[UD]) {
+			// This handles the case when the selecte_level_index underflows (it is an unsigned integer)
+			selected_level_index = std::min(selected_level_index, selected_level_index - 1);
+		}
+
+		if (input.buttons[DD] && !last_inputs.at(players[i].joystick_index).buttons[DD]) {
+			selected_level_index = std::min((unsigned int) (loaded_levels.size() - 1), selected_level_index + 1);
 		}
 	}
 
-	return nullptr;
-}
+	bool all_ready = std::all_of(std::begin(player_ready), std::end(player_ready), [](bool b) {return b;});
 
-std::unique_ptr<Screen> ReadyScreen::on_click(int button, int action, double mouseX, double mouseY) {
-
-	for (unsigned int i = 0; i < loaded_levels.size(); i++) {
-		Rectangle level_rect(
-			650 + 1280 * level_scale / 2,
-			100 + 150 * i + 720 * level_scale / 2,
-			1480 * level_scale,
-			920 * level_scale);
-
-		if (level_rect.contains_point(mouseX, mouseY)) {
-			selected_level_index = i;
-			return nullptr;
-		}
-	}
-
-	if (mouseX > (600 - 529)/2.0 && mouseX < (600 - 529)/2.0 + 529 && mouseY > 400 && mouseY < 400 + 192) {
+	if (all_ready) {
 		return std::make_unique<GameScreen>(players, loaded_levels[selected_level_index]);
-	} else {
-		return nullptr;
 	}
-}
 
-std::unique_ptr<Screen> ReadyScreen::on_key(int key, int action) {
 	return nullptr;
-}
-
-bool ReadyScreen::contains_player_for_joystick(int index) {
-	for (const PlayerInfo& info : players) {
-
-		if (info.gamePad && info.gamePad->getIndex() == index) {
-			return true;
-		}
-	}
-
-	return false;
 }

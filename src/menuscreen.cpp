@@ -2,28 +2,30 @@
 
 #include "readyscreen.h"
 
-void MenuScreen::render(RenderList& list, double mouseX, double mouseY) {
-	list.add_image("title", (600 - 529)/2.0, 20);
+void MenuScreen::render(RenderList& list) const {
+	list.add_image("background", 0, 0);
+	Rectangle title_rectangle = list.get_image_dimensions("title");
+	list.add_rect("title", title_rectangle.offset(1280/2, 200));
 
-	if (mouseX > (600 - 529)/2.0 && mouseX < (600 - 529)/2.0 + 529 && mouseY > (600 - 192)/2.0 && mouseY < (600 - 192)/2.0 + 192) {
-		list.add_image("startButtonYellow", (600 - 529)/2.0, (600 - 192)/2.0);
-	} else {
-		list.add_image("startButton", (600 - 529)/2.0, (600 - 192)/2.0);
+
+	Rectangle start_rectangle = list.get_image_dimensions("start-indicator");
+	list.add_rect("start-indicator", start_rectangle.offset(1280/2, 500));
+}
+
+std::unique_ptr<Screen> MenuScreen::update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
+	std::vector<int> joysticks;
+
+	for (const auto& item : joystick_inputs) {
+		joysticks.push_back(item.first);
 	}
-}
 
-std::unique_ptr<Screen> MenuScreen::update(GLFWwindow* window) {
-	return nullptr;
-}
-
-std::unique_ptr<Screen> MenuScreen::on_click(int button, int action, double mouseX, double mouseY) {
-	if (mouseX > (600 - 529)/2.0 && mouseX < (600 - 529)/2.0 + 529 && mouseY > (600 - 192)/2.0 && mouseY < (600 - 192)/2.0 + 192) {
-		return std::make_unique<ReadyScreen>();
-	} else {
-		return nullptr;
+	for (const auto& item : joystick_inputs) {
+		for (int i = 0; i < NUM_BUTTONS; i++) {
+			if (item.second.buttons[i] && !last_inputs.at(item.first).buttons[i]) {
+				return std::make_unique<ReadyScreen>(joysticks);
+			}
+		}
 	}
-}
 
-std::unique_ptr<Screen> MenuScreen::on_key(int key, int action) {
 	return nullptr;
 }
