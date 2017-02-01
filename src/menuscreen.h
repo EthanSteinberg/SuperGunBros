@@ -5,11 +5,9 @@
 
 class MenuScreen : public Screen {
 public:
-	void render(RenderList& list, double mouseX, double mouseY);
-	std::unique_ptr<Screen> update(GLFWwindow* window);
-	std::unique_ptr<Screen> on_click(int button, int action, double mouseX, double mouseY);
-	std::unique_ptr<Screen> on_key(int key, int action);
 
+	void render(RenderList& list) const;
+	std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs);
 private:
 };
 

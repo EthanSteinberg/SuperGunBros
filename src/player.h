@@ -11,22 +11,36 @@
 
 #define MAX_HEALTH 40.0
 
-enum class PlayerType {
-    KEYBOARD,
-    GAMEPAD
-};
-
 enum class PlayerColor {
-    RED,
+    RED = 0,
     BLUE,
     YELLOW,
     GREEN
 };
 
+inline std::string get_color_name(PlayerColor color) {
+    switch (color) {
+        case PlayerColor::RED:
+            return "red";
+
+        case PlayerColor::BLUE:
+            return "blue";
+
+        case PlayerColor::YELLOW:
+            return "yellow";
+
+        case PlayerColor::GREEN:
+            return "green";
+
+        default:
+            std::cout<<"Invalid color " << (int)color << std::endl;
+            exit(-1);
+    }
+}
+
 struct PlayerInfo {
-    PlayerType type;
     PlayerColor color;
-    std::shared_ptr<GamePad> gamePad;
+    int joystick_index;
 };
 
 struct AnimationState {
@@ -59,8 +73,6 @@ struct PlayerState {
     bool boosting = false;
     double fuel_left = 1;
 
-    inputs input;
-
     std::shared_ptr<Gun> gun = std::make_shared<Pistol>();
 
     int ammo_left = -1;
@@ -70,7 +82,7 @@ class Player {
 public:
     Player(double start_x, double start_y, PlayerInfo info);
     void render(RenderList& list) const;
-    void update(GLFWwindow* window);
+    void update();
     Bullet spawn_bullet() const;
 
     PlayerInfo info;

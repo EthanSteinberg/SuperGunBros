@@ -10,19 +10,19 @@
             "xLeft": -20,
             "xRight": 1300,
             "yTop": 570,
-            "yBottom": 600
+            "yBottom": 720
         },
         {
             "xLeft": -20,
             "xRight": 30,
             "yTop": -20,
-            "yBottom": 600
+            "yBottom": 720
         },
         {
             "xLeft": 1250,
             "xRight": 1300,
             "yTop": -20,
-            "yBottom": 600
+            "yBottom": 720
         },
 
 

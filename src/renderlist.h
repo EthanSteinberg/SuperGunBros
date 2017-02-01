@@ -3,6 +3,7 @@
 
 #include <json.hpp>
 #include <vector>
+#include <string>
 
 #include "rectangle.h"
 
@@ -20,12 +21,12 @@ public:
 	// Render a single image with the given name.
 	// x and y are the coordinates to render to.
 	// Width and height are optional, and default to the width and height of the source image.
-	void add_image(const char* name, float x, float y, float width = -1, float height = -1);
+	void add_image(const std::string &name, float x, float y, float width = -1, float height = -1);
 
-	void add_line(const char* color, float x_1, float y_1, float x_2, float y_2, double line_width = 4);
+	void add_line(const std::string &name, float x_1, float y_1, float x_2, float y_2, double line_width = 4);
 
-	void add_outline(const char* color, const Rectangle& rect, double line_width = 4);
-	void add_rect(const char* color, const Rectangle& rect);
+	void add_outline(const std::string &name, const Rectangle& rect, double line_width = 4);
+	void add_rect(const std::string &name, const Rectangle& rect);
 
 	void add_number(float x, float y, int num);
 
@@ -38,8 +39,14 @@ public:
 	// Scale the image by the appropriate scaleX and scaleY.
 	void scale(float scaleX, float scaleY);
 
+	Rectangle get_image_dimensions(const std::string &name) const;
+
 	// Actually draw everything currently in the render list.
 	void draw();
+
+
+
+	float transform[3][3];
 private:
 	void add_transfored_point(float x, float y);
 
@@ -49,7 +56,6 @@ private:
 
 	nlohmann::json metadata;
 
-	float transform[3][3];
 
 	float z_offset = 0;
 };
