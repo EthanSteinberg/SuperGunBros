@@ -28,12 +28,19 @@ public:
         return {location.x + dx_dis(g), location.y + dy_dis(g)};
     }
 
+    std::vector<Point> get_player_spawn_locations() const;
+
 private:
-    Level(const std::vector<Rectangle>& obstacles, const std::vector<Rectangle>& box_spawn_locations);
+    Level(
+        const std::vector<Rectangle>& obstacles,
+        const std::vector<Rectangle>& box_spawn_locations,
+        const std::vector<Point>& player_spawn_locations);
 
     const std::vector<Rectangle> obstacles;
 
     const std::vector<Rectangle> box_spawn_locations;
+
+    const std::vector<Point> player_spawn_locations;
 };
 
 #endif
