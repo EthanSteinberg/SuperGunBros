@@ -37,6 +37,9 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_leve
 
 void GameScreen::render(RenderList& list) const {
 
+    list.push();
+    camera.transform(list);
+
     list.add_image("background", 0, 0);
 
     level.render(list);
@@ -65,6 +68,8 @@ void GameScreen::render(RenderList& list) const {
         list.rotate(-bullet_angle);
         list.translate(-bullet.pos.x, -bullet.pos.y);
 	}
+
+    list.pop();
 
     list.add_image("black", 0, 660, 1280, 60);
 
@@ -114,7 +119,13 @@ void GameScreen::render(RenderList& list) const {
 }
 
 std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
+    std::vector<Point> player_positions;
 
+    for (const Player& player : players) {
+        player_positions.push_back(player.state.pos.location());
+    }
+
+    camera.update(player_positions);
 
     for (auto& item : joystick_inputs) {
         if (item.second.buttons[BACK]) {

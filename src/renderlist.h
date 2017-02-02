@@ -4,6 +4,7 @@
 #include <json.hpp>
 #include <vector>
 #include <string>
+#include <stack>
 
 #include "rectangle.h"
 
@@ -45,9 +46,13 @@ public:
 	void draw();
 
 
-
-	float transform[3][3];
+	void push();
+	void pop();
 private:
+
+	std::array<std::array<float, 3>, 3> transform;
+	std::stack<std::array<std::array<float, 3>, 3>> prev_states;
+
 	void add_transfored_point(float x, float y);
 
 	void mmultiply(float other[][3]);
@@ -55,9 +60,6 @@ private:
 	std::vector<float> data;
 
 	nlohmann::json metadata;
-
-
-	float z_offset = 0;
 };
 
 #endif

@@ -40,7 +40,9 @@ set(SOURCE_FILES
     src/rocket.cpp
     src/weaponbox.cpp
     src/explosion.cpp
-    src/point.cpp)
+    src/point.cpp
+    src/camera.cpp
+)
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 
