@@ -21,21 +21,17 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_leve
     // Initialize the player state
     for (unsigned int i = 0; i < infos.size(); i++) {
         const auto& info = infos[i];
-        Player player(0, 300, info);
-        switch (i) {
-            case 0:
-                player.state.pos.x = 200;
-                break;
+        Point p = level.get_player_spawn_locations()[(int)info.color];
 
-            case 1:
-                player.state.pos.x = 1100;
-                break;
-        }
+        Player player(p.x, p.y, info);
         players.push_back(player);
     }
 }
 
 void GameScreen::render(RenderList& list) const {
+
+    list.push();
+    camera.transform(list);
 
     list.add_image("background", 0, 0);
 
@@ -65,6 +61,8 @@ void GameScreen::render(RenderList& list) const {
         list.rotate(-bullet_angle);
         list.translate(-bullet.pos.x, -bullet.pos.y);
 	}
+
+    list.pop();
 
     list.add_image("black", 0, 660, 1280, 60);
 
@@ -114,7 +112,13 @@ void GameScreen::render(RenderList& list) const {
 }
 
 std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
+    std::vector<Point> player_positions;
 
+    for (const Player& player : players) {
+        player_positions.push_back(player.state.pos.location());
+    }
+
+    camera.update(player_positions);
 
     for (auto& item : joystick_inputs) {
         if (item.second.buttons[BACK]) {
@@ -457,24 +461,26 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
 std::unique_ptr<Screen> GameScreen::damage_player(int player_index, int damage) {
     auto& player = players[player_index];
 
+    if (player.state.invincibility_ticks_left > 0) {
+        return nullptr;
+    }
+
     player.state.health -= damage;
 
     if (player.state.health <= 0) {
         player.state.lives_left--;
 
         player.state.health = MAX_HEALTH;
-        player.state.pos.y = 300;
 
-        switch (player_index) {
-            case 0:
-                player.state.pos.x = 200;
-                break;
+        Point spawn_location = level.get_random_player_spawn_location(gen);
 
-            case 1:
-                player.state.pos.x = 1100;
-                break;
-        }
+        player.state.pos.x = spawn_location.x;
+        player.state.pos.y = spawn_location.y;
 
+        player.state.gun = std::make_unique<Pistol>();
+        player.state.ammo_left = -1;
+
+        player.state.invincibility_ticks_left = 130;
 
         if (player.state.lives_left == 0) {
             auto& otherPlayer = players[1 - player_index];

@@ -28,12 +28,26 @@ public:
         return {location.x + dx_dis(g), location.y + dy_dis(g)};
     }
 
+    std::vector<Point> get_player_spawn_locations() const;
+
+    template<typename Generator>
+    Point get_random_player_spawn_location(Generator& g) const {
+        std::uniform_int_distribution<> box_dis(0, player_spawn_locations.size() - 1);
+
+        return player_spawn_locations[box_dis(g)];
+    }
+
 private:
-    Level(const std::vector<Rectangle>& obstacles, const std::vector<Rectangle>& box_spawn_locations);
+    Level(
+        const std::vector<Rectangle>& obstacles,
+        const std::vector<Rectangle>& box_spawn_locations,
+        const std::vector<Point>& player_spawn_locations);
 
     const std::vector<Rectangle> obstacles;
 
     const std::vector<Rectangle> box_spawn_locations;
+
+    const std::vector<Point> player_spawn_locations;
 };
 
 #endif

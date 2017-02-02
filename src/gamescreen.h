@@ -8,6 +8,7 @@
 #include "level.h"
 #include "weaponbox.h"
 #include "explosion.h"
+#include "camera.h"
 
 class GameScreen : public Screen {
 public:
@@ -28,6 +29,8 @@ private:
     int ticks_till_next_box = 0;
 
     std::mt19937 gen;
+
+    Camera camera;
 
     bool would_hit_ground(const Rectangle& rect) const;
 

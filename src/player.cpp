@@ -94,6 +94,10 @@ void Player::update() {
         current_time = fmod((current_time + state.dx * (is_facing_right() ? 1 : -1) * 0.10) + 8, 8);
         last_time_diff = state.dx * (is_facing_right() ? 1 : -1) * 0.10;
     }
+
+    if (state.invincibility_ticks_left > 0) {
+        state.invincibility_ticks_left--;
+    }
 }
 
 bool Player::is_facing_right() const {
@@ -176,6 +180,13 @@ void Player::render(RenderList& list) const {
     if (!is_facing_right()) {
         list.scale(-1, 1);
     }
+
+
+    if (state.invincibility_ticks_left > 0) {
+        Rectangle shield_rect = list.get_image_dimensions("shield");
+        list.add_rect("shield", shield_rect.offset(0, -2));
+    }
+
 
     list.add_image("black", -20, -52, 40, 8);
     list.add_image("red", -18, -50, 36, 4);

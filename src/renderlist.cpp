@@ -9,13 +9,13 @@ RenderList::RenderList(const char* filename) {
 
 	file >> metadata;
 
-	float mat[3][3] = {
+	std::array<std::array<float, 3>, 3> mat = {{
 		{1, 0, 0},
 		{0, 1, 0},
 		{0, 0, 1}
-	};
+	}};
 
-	memcpy(transform, mat, sizeof(mat));
+	transform = mat;
 }
 
 Rectangle RenderList::get_image_dimensions(const std::string &name) const {
@@ -174,7 +174,7 @@ void RenderList::add_transfored_point(float x, float y) {
 }
 
 void RenderList::mmultiply(float other[][3]) {
-    float result[3][3] = {};
+    std::array<std::array<float, 3>, 3> result = {};
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -184,7 +184,7 @@ void RenderList::mmultiply(float other[][3]) {
 		}
 	}
 
-	memcpy(transform, result, sizeof(result));
+	transform = result;
 }
 
 void RenderList::translate(float x, float y) {
@@ -216,4 +216,13 @@ void RenderList::scale(float scaleX, float scaleY) {
 	};
 
 	mmultiply(mat);
+}
+
+void RenderList::push() {
+    prev_states.push(transform);
+}
+
+void RenderList::pop() {
+    transform = prev_states.top();
+    prev_states.pop();
 }

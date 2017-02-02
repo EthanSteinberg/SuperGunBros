@@ -39,14 +39,22 @@ Level Level::load_from_file(const char* filename) {
         box_spawn_locations.push_back(rect);
     }
 
-    return Level(obstacles, box_spawn_locations);
+    std::vector<Point> player_spawn_locations;
+    for (const auto& spawn_location: level_data["spawnLocations"]) {
+        Point p = {spawn_location["x"].get<double>(), spawn_location["y"].get<double>()};
+        player_spawn_locations.push_back(p);
+    }
+
+    return Level(obstacles, box_spawn_locations, player_spawn_locations);
 }
 
-Level::Level(const std::vector<Rectangle>& a_obstacles, const std::vector<Rectangle>& a_box_spawns):
-    obstacles(a_obstacles), box_spawn_locations(a_box_spawns) {}
+Level::Level(
+    const std::vector<Rectangle>& a_obstacles,
+    const std::vector<Rectangle>& a_box_spawns,
+    const std::vector<Point>& a_player_spawns):
+    obstacles(a_obstacles), box_spawn_locations(a_box_spawns), player_spawn_locations(a_player_spawns) {}
 
 void Level::render(RenderList& list, bool show_border) const {
-
     if (show_border) {
         for (const Rectangle& rect : obstacles) {
             list.add_outline("black", rect, line_width);
@@ -70,4 +78,8 @@ bool Level::colliding_with(const Rectangle& other) const {
     }
 
     return false;
+}
+
+std::vector<Point> Level::get_player_spawn_locations() const {
+    return player_spawn_locations;
 }
