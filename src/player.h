@@ -76,6 +76,8 @@ struct PlayerState {
     std::shared_ptr<Gun> gun = std::make_shared<Pistol>();
 
     int ammo_left = -1;
+
+    int invincibility_ticks_left = 0;
 };
 
 class Player {
