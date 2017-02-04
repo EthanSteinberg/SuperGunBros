@@ -11,6 +11,11 @@
 
 #define MAX_HEALTH 40.0
 
+const int DEATH_TIME = 130;
+const int DEATH_ANIMATION_TIME = 30;
+
+const int DEATH_INVISIBLE_TIME = DEATH_TIME - DEATH_ANIMATION_TIME;
+
 enum class PlayerColor {
     RED = 0,
     BLUE,
@@ -78,6 +83,9 @@ struct PlayerState {
     int ammo_left = -1;
 
     int invincibility_ticks_left = 0;
+
+    bool is_dead = false;
+    int ticks_until_spawn = 0;
 };
 
 class Player {

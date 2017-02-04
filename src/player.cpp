@@ -125,6 +125,13 @@ double Player::get_gun_angle(double mouseX, double mouseY) const {
 }
 
 void Player::render(RenderList& list) const {
+
+    if (state.is_dead && state.ticks_until_spawn < DEATH_INVISIBLE_TIME) {
+        return;
+    }
+
+    list.push();
+
     AnimationState interpolated = get_interpolated_frame();
 
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
@@ -177,21 +184,29 @@ void Player::render(RenderList& list) const {
 
     list.translate(posX, posY);
 
+    list.add_image("black", -20, -52, 40, 8);
+    list.add_image("black", -18, -50, 36, 4);
+
+    double health = std::max(0, state.health);
+
+    list.add_image(get_color_name(info.color), -18, -50, 36 * health / MAX_HEALTH, 4);
+
+    if (state.is_dead) {
+        double angle = M_PI / 2.0 * (1.0 - ((state.ticks_until_spawn - DEATH_INVISIBLE_TIME) / (float)DEATH_ANIMATION_TIME));
+
+        list.translate(0, 30);
+        list.rotate(angle);
+        list.translate(0, -30);
+    }
+
     if (!is_facing_right()) {
         list.scale(-1, 1);
     }
-
 
     if (state.invincibility_ticks_left > 0) {
         Rectangle shield_rect = list.get_image_dimensions("shield");
         list.add_rect("shield", shield_rect.offset(0, -2));
     }
-
-
-    list.add_image("black", -20, -52, 40, 8);
-    list.add_image("red", -18, -50, 36, 4);
-    list.add_image("green", -18, -50, 36 * state.health / MAX_HEALTH, 4);
-
 
     if (!state.gun->in_front()) {
         state.gun->render(list, scaled_gun_angle);
@@ -239,11 +254,11 @@ void Player::render(RenderList& list) const {
     list.add_image("body", -7, -26);
     list.add_image(head, -6, -40);
 
-    list.add_image("black", -14, -20, 6, 20);
-    list.add_image("red", -12, -2 + -16 * state.fuel_left, 2, 16 * state.fuel_left);
+    list.add_image("black", -16, -20, 8, 24);
+    list.add_image("fuel-color", -14, -2 + -16 * state.fuel_left, 4, 20 * state.fuel_left);
 
     if (state.boosting) {
-       list.add_image("fire", -13.5, 0);
+       list.add_image("fire", -15.5, 4);
     }
 
     {
@@ -296,5 +311,7 @@ void Player::render(RenderList& list) const {
     }
 
     list.translate(-posX, -posY);
+
+    list.pop();
 }
 
