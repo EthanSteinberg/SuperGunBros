@@ -1,5 +1,8 @@
 #include "gun.h"
 
+//TODO: make a constants file for this, this base scale is going to be everywhere
+float base_scale = 0.4;
+
 inline double dist_sq(double x1, double y1, double x2, double y2) {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 }
@@ -9,7 +12,7 @@ void Gun::render(RenderList& list, double gun_angle) const {
 
     list.rotate(gun_angle);
 
-    list.add_image(gun_image_name(), gun_offset_x(), gun_offset_y());
+    list.add_scaled_image(gun_image_name(), gun_offset_x(), gun_offset_y(), 1);//base_scale);
 
     list.rotate(-gun_angle);
 

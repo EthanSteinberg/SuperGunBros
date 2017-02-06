@@ -2,16 +2,54 @@
 #include "player.h"
 #include "pistol.h"
 
-const double arm_length = 9;
-const double arm_radius = 2.5;
+//const double arm_length = 9;
+//const double arm_radius = 2.5;
+//
+//const double leg_length = 13;
+//const double leg_radius = 3;
+//
+//const double arm_y_offset = -18;
 
-const double leg_length = 13;
-const double leg_radius = 3;
+//TODO do i need the radius_2s? should they reflect the outline instead of the second radius?
 
-const double arm_y_offset = -18;
+const double arm_y_offset = -50 * base_scale;
+
+const double upper_arm_length = 32*base_scale;
+const double upper_arm_radius_1 = 8*base_scale;
+const double upper_arm_radius_2 = 5*base_scale;
+
+const double lower_arm_length = 32*base_scale;
+const double lower_arm_radius_1 = 5*base_scale;
+const double lower_arm_radius_2 = 0; //TODO: 4 was the sidewise dimension so keep that in mind
+
+const double upper_leg_length = 40*base_scale;
+const double upper_leg_radius_1 = 10*base_scale;
+const double upper_leg_radius_2 = 8*base_scale;
+
+const double lower_leg_length = 36*base_scale;
+const double lower_leg_radius_1 = 8*base_scale;
+const double lower_leg_radius_2 = 5*base_scale;
+
+const double head_x_offset = -15 * base_scale;
+const double head_y_offset = -100 * base_scale;
+
+const double shoulder_x_offset = 0 * base_scale;
+const double shoulder_y_offset = 0 * base_scale;
+const double shoulder_angle = 0;
+
+const double torso_x_offset = -16 * base_scale;
+const double torso_y_offset = -75 * base_scale;
+const double crotch_x_offset = -18 * base_scale;
+const double crotch_y_offset = 0 * base_scale;
 
 inline double dist_sq(double x1, double y1, double x2, double y2) {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+}
+
+//calculates the angle opposite c in a triangle with sides a, b, and c
+inline double calculate_angle_SSS(double a, double b, double c){
+    //Use Law of cosines to get cos(C) and acos to get C
+    return acos((a*a + b*b - (c * c))/(2*a*b));
 }
 
 Player::Player(double start_x, double start_y, PlayerInfo a_info) : info(a_info), state(start_x, start_y) {
@@ -140,7 +178,8 @@ void Player::render(RenderList& list) const {
 
     double dist_to_grip1 = sqrt(dist_sq(grip1_x, grip1_y, 0, arm_y_offset));
 
-    double extra_angle1 = acos(dist_to_grip1 / (arm_length * 2));
+    //Law of cosines
+    double extra_angle1 = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip1);
 
     double needed_angle1 = atan2(grip1_y - arm_y_offset, grip1_x) - M_PI/2;
 
@@ -149,7 +188,7 @@ void Player::render(RenderList& list) const {
 
     double dist_to_grip2 = sqrt(dist_sq(grip2_x, grip2_y, 0, arm_y_offset));
 
-    double extra_angle2 = acos(dist_to_grip2 / (arm_length * 2));
+    double extra_angle2 = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip2);
 
     double needed_angle2 = atan2(grip2_y - arm_y_offset, grip2_x) - M_PI/2;
 
@@ -202,19 +241,37 @@ void Player::render(RenderList& list) const {
         list.rotate(interpolated.hip_angle[0] * M_PI/180);
 
 
-        list.translate(0, leg_length);
+        list.translate(0, lower_leg_length);
 
         list.rotate(interpolated.knee_angle[0] * M_PI/180);
 
-        list.add_image("leg-upper-outline", -leg_radius, -leg_radius);
-        list.add_image("leg-upper-fill", -leg_radius, -leg_radius);
-        list.add_image("boot", -leg_radius, leg_length);
+        list.add_scaled_image("boot", -lower_leg_radius_1, lower_leg_length, base_scale);
+        list.add_scaled_image("leg-lower-outline", -lower_leg_radius_1, -lower_leg_radius_1, base_scale);
+
 
         list.rotate(-interpolated.knee_angle[0] * M_PI/180);
-        list.translate(0, -leg_length);
+        list.translate(0, -lower_leg_length);
 
-        list.add_image("leg-lower-outline", -leg_radius, -leg_radius);
-        list.add_image("leg-lower-fill", -leg_radius, -leg_radius);
+
+        list.add_scaled_image("leg-upper-outline", -upper_leg_radius_1, -upper_leg_radius_1, base_scale);
+
+        list.rotate(-interpolated.hip_angle[0] * M_PI/180);
+    }
+    {
+        list.rotate(interpolated.hip_angle[0] * M_PI/180);
+
+
+        list.translate(0, lower_leg_length);
+
+        list.rotate(interpolated.knee_angle[0] * M_PI/180);
+
+        list.add_scaled_image("leg-lower-fill", -lower_leg_radius_1, -lower_leg_radius_1, base_scale);
+
+
+        list.rotate(-interpolated.knee_angle[0] * M_PI/180);
+        list.translate(0, -lower_leg_length);
+
+        list.add_scaled_image("leg-upper-fill", -upper_leg_radius_1, -upper_leg_radius_1, base_scale);
 
         list.rotate(-interpolated.hip_angle[0] * M_PI/180);
     }
@@ -224,55 +281,89 @@ void Player::render(RenderList& list) const {
         list.translate(0, arm_y_offset);
 
         list.rotate(needed_angle2 + extra_angle2);
-        list.add_image("arm-upper-outline", -arm_radius, -arm_radius);
-        list.add_image("arm-upper-fill", -arm_radius, -arm_radius);
+        list.add_scaled_image("arm-upper-outline",-upper_arm_radius_1,-upper_arm_radius_1, base_scale);
 
-        list.translate(0, arm_length);
+        list.translate(0, upper_arm_length);
 
         list.rotate(-2 * extra_angle2);
 
-        list.add_image("hand", -arm_length, -arm_radius);
-        list.add_image("arm-lower-outline", -arm_radius, -arm_radius);
-        list.add_image("arm-lower-fill", -arm_radius, -arm_radius);
+        list.add_scaled_image("hand", -lower_arm_radius_1,lower_arm_length, base_scale);
+        list.add_scaled_image("arm-lower-outline",-lower_arm_radius_1,-lower_arm_radius_1, base_scale);
         list.rotate(2 * extra_angle2);
 
-        list.translate(0, -arm_length);
+        list.translate(0, -lower_arm_length);
+
+        list.rotate(-(needed_angle2 + extra_angle2));
+
+        list.translate(0, -arm_y_offset);
+    }
+    {
+        list.translate(0, arm_y_offset);
+
+        list.rotate(needed_angle2 + extra_angle2);
+        list.add_scaled_image("arm-upper-fill",-upper_arm_radius_1,-upper_arm_radius_1, base_scale);
+
+        list.translate(0, upper_arm_length);
+
+        list.rotate(-2 * extra_angle2);
+
+        list.add_scaled_image("arm-lower-fill",-lower_arm_radius_1,-lower_arm_radius_1, base_scale);
+        list.rotate(2 * extra_angle2);
+
+        list.translate(0, -lower_arm_length);
 
         list.rotate(-(needed_angle2 + extra_angle2));
 
         list.translate(0, -arm_y_offset);
     }
 
+    //TODO revisit the crotch, it's not visible RN and not worth tweaking
     //CROTCH
-    list.add_image("torso-crotch", -7, 30);
+    //list.add_scaled_image("torso-crotch", crotch_x_offset, crotch_y_offset, base_scale);
 
     //FRONT LEG
     {
         list.rotate(interpolated.hip_angle[1] * M_PI/180);
 
 
-        list.translate(0, leg_length);
+        list.translate(0, lower_leg_length);
 
         list.rotate(interpolated.knee_angle[1] * M_PI/180);
 
-        list.add_image("leg-upper-outline", -leg_radius, -leg_radius);
-        list.add_image("leg-upper-fill", -leg_radius, -leg_radius);
-        list.add_image("boot", -leg_radius, leg_length);
+        list.add_scaled_image("boot", -lower_leg_radius_1, lower_leg_length, base_scale);
+        list.add_scaled_image("leg-lower-outline", -lower_leg_radius_1, -lower_leg_radius_1, base_scale);
 
         list.rotate(-interpolated.knee_angle[1] * M_PI/180);
-        list.translate(0, -leg_length);
+        list.translate(0, -lower_leg_length);
 
-        list.add_image("leg-lower-outline", -leg_radius, -leg_radius);
-        list.add_image("leg-lower-fill", -leg_radius, -leg_radius);
+
+        list.add_scaled_image("leg-upper-outline", -upper_leg_radius_1, -upper_leg_radius_1, base_scale);
+
+        list.rotate(-interpolated.hip_angle[1] * M_PI/180);
+    }
+    {
+        list.rotate(interpolated.hip_angle[1] * M_PI/180);
+
+
+        list.translate(0, lower_leg_length);
+
+        list.rotate(interpolated.knee_angle[1] * M_PI/180);
+
+        list.add_scaled_image("leg-lower-fill", -lower_leg_radius_1, -lower_leg_radius_1, base_scale);
+
+        list.rotate(-interpolated.knee_angle[1] * M_PI/180);
+        list.translate(0, -lower_leg_length);
+
+        list.add_scaled_image("leg-upper-fill", -upper_leg_radius_1, -upper_leg_radius_1, base_scale);
 
         list.rotate(-interpolated.hip_angle[1] * M_PI/180);
     }
 
     //TORSO
-    list.add_image("torso-main", -7, -26);
+    list.add_scaled_image("torso-main", torso_x_offset, torso_y_offset, base_scale);
 
     //FACE
-    list.add_image(head, -6, -40);
+    list.add_scaled_image(head, head_x_offset, head_y_offset, base_scale);
 
     //JETPACK
     list.add_image("black", -14, -20, 6, 20);
@@ -290,22 +381,39 @@ void Player::render(RenderList& list) const {
     {
         list.translate(0, arm_y_offset);
 
-        list.rotate(needed_angle2 + extra_angle2);
-        list.add_image("arm-upper-outline", -arm_radius, -arm_radius);
-        list.add_image("arm-upper-fill", -arm_radius, -arm_radius);
+        list.rotate(needed_angle1 + extra_angle1);
+        list.add_scaled_image("arm-upper-outline",-upper_arm_radius_1,-upper_arm_radius_1, base_scale);
 
-        list.translate(0, arm_length);
+        list.translate(0, upper_arm_length);
 
-        list.rotate(-2 * extra_angle2);
+        list.rotate(-2 * extra_angle1);
 
-        list.add_image("hand", -arm_length, -arm_radius);
-        list.add_image("arm-lower-outline", -arm_radius, -arm_radius);
-        list.add_image("arm-lower-fill", -arm_radius, -arm_radius);
-        list.rotate(2 * extra_angle2);
+        list.add_scaled_image("hand", -lower_arm_radius_1,lower_arm_length, base_scale);
+        list.add_scaled_image("arm-lower-outline",-lower_arm_radius_1,-lower_arm_radius_1, base_scale);
+        list.rotate(2 * extra_angle1);
 
-        list.translate(0, -arm_length);
+        list.translate(0, -lower_arm_length);
 
-        list.rotate(-(needed_angle2 + extra_angle2));
+        list.rotate(-(needed_angle1 + extra_angle1));
+
+        list.translate(0, -arm_y_offset);
+    }
+    {
+        list.translate(0, arm_y_offset);
+
+        list.rotate(needed_angle1 + extra_angle1);
+        list.add_scaled_image("arm-upper-fill",-upper_arm_radius_1,-upper_arm_radius_1, base_scale);
+
+        list.translate(0, upper_arm_length);
+
+        list.rotate(-2 * extra_angle1);
+
+        list.add_scaled_image("arm-lower-fill",-lower_arm_radius_1,-lower_arm_radius_1, base_scale);
+        list.rotate(2 * extra_angle1);
+
+        list.translate(0, -lower_arm_length);
+
+        list.rotate(-(needed_angle1 + extra_angle1));
 
         list.translate(0, -arm_y_offset);
     }

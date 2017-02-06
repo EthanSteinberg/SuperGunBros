@@ -24,6 +24,9 @@ public:
 	// Width and height are optional, and default to the width and height of the source image.
 	void add_image(const std::string &name, float x, float y, float width = -1, float height = -1);
 
+    //Render a single image with width and height derived from one scale factor
+    void add_scaled_image(const std::string &name, float x, float y, float scale);
+
 	void add_line(const std::string &name, float x_1, float y_1, float x_2, float y_2, double line_width = 4);
 
 	void add_outline(const std::string &name, const Rectangle& rect, double line_width = 4);
@@ -49,6 +52,8 @@ public:
 	void push();
 	void pop();
 private:
+
+    void add_image_core(const std::string &name, float x, float y, float width, float height);
 
 	std::array<std::array<float, 3>, 3> transform;
 	std::stack<std::array<std::array<float, 3>, 3>> prev_states;

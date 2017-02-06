@@ -67,20 +67,47 @@ void RenderList::add_number(float x, float y, int num) {
 }
 
 void RenderList::add_image(const std::string &name, float x, float y, float width, float height) {
-	auto& info = metadata[name];
+    auto& info = metadata[name];
 
     if (info.is_null()) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
 
-	if (width == -1) {
-		width = info["sizex"];
-	}
+    if (width == -1) {
+        width = info["sizex"];
+    }
 
-	if (height == -1) {
-		height = info["sizey"];
-	}
+    if (height == -1) {
+        height = info["sizey"];
+    }
+
+    add_image_core(name, x, y, width, height);
+}
+
+void RenderList::add_scaled_image(const std::string &name, float x, float y, float scale) {
+    auto& info = metadata[name];
+
+    if (info.is_null()) {
+        std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
+        exit(-1);
+    }
+
+    float width = info["sizex"];
+    width = width * scale;
+    float height = info["sizey"];
+    height = height * scale;
+
+    add_image_core(name, x, y, width, height);
+}
+
+void RenderList::add_image_core(const std::string &name, float x, float y, float width, float height) {
+    auto& info = metadata[name];
+
+    if (info.is_null()) {
+        std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
+        exit(-1);
+    }
 
     int px = info["x"];
     int psizex = info["sizex"];

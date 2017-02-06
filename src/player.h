@@ -11,6 +11,12 @@
 
 #define MAX_HEALTH 40.0
 
+const double base_scale = 0.4;
+//const int player_width = 35;
+//const int player_height = 72;
+const int player_width = (int)(90 * base_scale);
+const int player_height = (int)(200 * base_scale);
+
 const int DEATH_TIME = 130;
 const int DEATH_ANIMATION_TIME = 30;
 
@@ -55,7 +61,7 @@ struct AnimationState {
 
 struct PlayerState {
 
-    PlayerState(double x, double y): pos(x, y, 35, 72) {}
+    PlayerState(double x, double y): pos(x, y, player_width, player_height) {}
 
     Rectangle pos;
 
