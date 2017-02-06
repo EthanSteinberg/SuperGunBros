@@ -41,13 +41,19 @@ private:
     Level(
         const std::vector<Rectangle>& obstacles,
         const std::vector<Rectangle>& box_spawn_locations,
-        const std::vector<Point>& player_spawn_locations);
+        const std::vector<Point>& player_spawn_locations,
+        double width,
+        double height);
 
     const std::vector<Rectangle> obstacles;
 
     const std::vector<Rectangle> box_spawn_locations;
 
     const std::vector<Point> player_spawn_locations;
+
+public:
+    const double width;
+    const double height;
 };
 
 #endif

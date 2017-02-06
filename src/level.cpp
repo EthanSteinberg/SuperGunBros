@@ -45,14 +45,22 @@ Level Level::load_from_file(const char* filename) {
         player_spawn_locations.push_back(p);
     }
 
-    return Level(obstacles, box_spawn_locations, player_spawn_locations);
+    double width = level_data["width"].get<double>();
+    double height = level_data["height"].get<double>();
+
+    return Level(obstacles, box_spawn_locations, player_spawn_locations, width, height);
 }
 
 Level::Level(
     const std::vector<Rectangle>& a_obstacles,
     const std::vector<Rectangle>& a_box_spawns,
-    const std::vector<Point>& a_player_spawns):
-    obstacles(a_obstacles), box_spawn_locations(a_box_spawns), player_spawn_locations(a_player_spawns) {}
+    const std::vector<Point>& a_player_spawns,
+    double a_width,
+    double a_height):
+    obstacles(a_obstacles), box_spawn_locations(a_box_spawns),
+    player_spawn_locations(a_player_spawns),
+    width(a_width),
+    height(a_height) {}
 
 void Level::render(RenderList& list, bool show_border) const {
     if (show_border) {

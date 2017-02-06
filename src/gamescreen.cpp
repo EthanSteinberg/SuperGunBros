@@ -15,7 +15,7 @@
 #define BOOST_DUR 180
 #define WALL_FRICTION 0.2
 
-GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level) {
+GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level), camera(level.width, level.height) {
 
     // Initialize the player state
     for (unsigned int i = 0; i < infos.size(); i++) {
