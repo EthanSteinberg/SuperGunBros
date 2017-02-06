@@ -41,7 +41,7 @@ set(SOURCE_FILES
     src/explosion.cpp
     src/point.cpp
     src/camera.cpp
-)
+		src/magic.h)
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 

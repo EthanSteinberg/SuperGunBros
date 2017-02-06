@@ -6,16 +6,14 @@
 #include "renderlist.h"
 #include "bullet.h"
 #include "gun.h"
+#include "magic.h"
 #include "pistol.h"
 #include "rocket.h"
 
 #define MAX_HEALTH 40.0
 
-const double base_scale = 0.4;
-//const int player_width = 35;
-//const int player_height = 72;
-const int player_width = (int)(90 * base_scale);
-const int player_height = (int)(200 * base_scale);
+const int player_width = (int)(90 * ASSET_SCALE);
+const int player_height = (int)(200 * ASSET_SCALE);
 
 const int DEATH_TIME = 130;
 const int DEATH_ANIMATION_TIME = 30;
