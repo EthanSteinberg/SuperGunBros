@@ -11,6 +11,11 @@ void Camera::transform(RenderList& list) const {
 }
 
 void Camera::update(const std::vector<Point>& player_positions) {
+    if (player_positions.size() == 0) {
+        // There are no players;
+        return;
+    }
+
     double minX = player_positions[0].x;
     double maxX = player_positions[0].x;
 

@@ -10,6 +10,11 @@
 #include "explosion.h"
 #include "camera.h"
 
+struct PlayerSpawnTimer {
+    int ticks_left_till_spawn;
+    int player_index;
+};
+
 class GameScreen : public Screen {
 public:
     GameScreen(const std::vector<PlayerInfo>& players, const Level& level);
@@ -42,6 +47,8 @@ private:
     std::shared_ptr<Gun> attempt_pick_up(const Rectangle& rect);
 
     std::unique_ptr<Screen> damage_player(int player_index, int damage);
+
+    bool game_over = false;
 };
 
 #endif

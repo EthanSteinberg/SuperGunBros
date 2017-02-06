@@ -28,7 +28,6 @@ set(SOURCE_FILES
 	src/menuscreen.cpp
 	src/readyscreen.cpp
 	src/gamescreen.cpp
-	src/gameoverscreen.cpp
 	"src/${OS_DIR}/gamepad.cpp"
 	src/player.cpp
 	src/physicsengine.cpp

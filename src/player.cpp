@@ -121,6 +121,13 @@ Bullet Player::spawn_bullet() const {
 }
 
 void Player::render(RenderList& list) const {
+
+    if (state.is_dead && state.ticks_until_spawn < DEATH_INVISIBLE_TIME) {
+        return;
+    }
+
+    list.push();
+
     AnimationState interpolated = get_interpolated_frame();
 
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
@@ -181,17 +188,10 @@ void Player::render(RenderList& list) const {
         list.scale(-1, 1);
     }
 
-
     if (state.invincibility_ticks_left > 0) {
         Rectangle shield_rect = list.get_image_dimensions("shield");
         list.add_rect("shield", shield_rect.offset(0, -2));
     }
-
-
-    list.add_image("black", -20, -52, 40, 8);
-    list.add_image("red", -18, -50, 36, 4);
-    list.add_image("green", -18, -50, 36 * state.health / MAX_HEALTH, 4);
-
 
     if (!state.gun->in_front()) {
         state.gun->render(list, scaled_gun_angle);
@@ -319,5 +319,7 @@ void Player::render(RenderList& list) const {
 
     //FIX THAT STUFF
     list.translate(-posX, -posY);
+
+    list.pop();
 }
 

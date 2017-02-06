@@ -9,7 +9,6 @@
 #include "renderlist.h"
 #include "render.h"
 #include "menuscreen.h"
-#include "gameoverscreen.h"
 
 const int screen_width = 1280;
 const int screen_height = 720;

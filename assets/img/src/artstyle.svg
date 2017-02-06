@@ -137,9 +137,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="-64.142295"
-     inkscape:cy="23.45343"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="-1.549932"
+     inkscape:cy="29.096814"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -289,6 +289,16 @@
        inkscape:export-filename="/home/ethan/jetpack.png"
        inkscape:export-xdpi="899.69434"
        inkscape:export-ydpi="899.69434" />
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#00ffff;stroke-width:2.97424984;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path4562"
+       cx="-54.121601"
+       cy="1018.605"
+       rx="28.230206"
+       ry="37.169201"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/shield.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32000005;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 21.277646,1018.5143 c -1.716217,4.4885 -3.003386,7.8549 -5.808695,6.7822 -2.805315,-1.0726 -1.518151,-4.439 0.19807,-8.9275 1.768666,-4.6256 3.003391,-7.8549 5.808701,-6.7822 2.805314,1.0726 1.504101,4.4757 -0.198076,8.9275 z"

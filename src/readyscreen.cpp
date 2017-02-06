@@ -80,7 +80,9 @@ std::unique_ptr<Screen> ReadyScreen::update(const std::map<int, inputs>& joystic
 
 		inputs input = joystick_inputs.at(players[i].joystick_index);
 
-		player.state.dx = input.ls.x * 2;
+		float x_thresh = (fabs(input.ls.x) > 0.3) ? input.ls.x : 0;
+
+		player.state.dx = x_thresh * 2;
 		player.state.grounded = true;
 
 		if (fabs(input.rs.x) > 0.3 || fabs(input.rs.y) > 0.3) {
