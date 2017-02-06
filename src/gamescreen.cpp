@@ -110,7 +110,7 @@ void GameScreen::render(RenderList& list) const {
         std::string winning_color = "tie";
 
         for (const auto& player: players) {
-            if (!player.state.is_dead) {
+            if (player.state.lives_left != 0) {
                 winning_color = get_color_name(player.info.color);
             }
         }
@@ -190,8 +190,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
     for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
 
-        player.update();
-
         if (player.state.is_dead) {
             player.state.ticks_until_spawn --;
 
@@ -211,6 +209,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 player.state.invincibility_ticks_left = DEATH_TIME;
             }
         } else {
+            player.update();
             double accel = 0;
 
             inputs input = joystick_inputs.at(player.info.joystick_index);
@@ -518,7 +517,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
 
     for (auto& box: boxes) {
         Rectangle new_pos = box.pos.offset(0, 1);
-        if (!would_hit_player(new_pos) && !would_hit_ground(new_pos)) {
+        if (!would_hit_ground(new_pos)) {
             box.pos = new_pos;;
         }
     }
