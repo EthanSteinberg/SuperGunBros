@@ -26,7 +26,7 @@ double Pistol::barrel_offset_y() const {
 }
 
 const char* Pistol::gun_image_name() const {
-    return "rifle";
+    return "pistol";
 }
 
 bool Pistol::in_front() const {
@@ -51,7 +51,7 @@ double Pistol::grip2_dy() const {
 
 void Pistol::render_large(RenderList& list) const {
     Rectangle rifle_box(0, 0, 50, 28);
-    list.add_rect("largeRifle", rifle_box);
+    list.add_rect("pistol", rifle_box);
 }
 
 bool Pistol::has_explosive_bullets() const {

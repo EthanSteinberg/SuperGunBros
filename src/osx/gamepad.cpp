@@ -78,7 +78,7 @@ static inputs logitech(int joy) {
 }
 
 inputs getInputs(int joy) {
-    if(joy == -1) {return nullptr;} //TODO fix for keyboards
+    //if(joy == -1) {return nullptr;} //TODO fix for keyboards
     std::string jname = glfwGetJoystickName(joy);
     if (jname == "Logitech Dual Action") {
         return logitech(joy);

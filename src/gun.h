@@ -7,7 +7,6 @@
 class Gun {
 public:
     void render(RenderList& list, double gun_angle) const;
-    double aim_at(double x, double y) const;
 
     double grip1_x(double gun_angle) const;
     double grip1_y(double gun_angle) const;

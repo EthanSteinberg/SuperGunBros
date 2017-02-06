@@ -4,44 +4,6 @@ inline double dist_sq(double x1, double y1, double x2, double y2) {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 }
 
-inline double calculate_angle(double target_x, double target_y, double center_x, double center_y, double barrel_x, double barrel_y) {
-
-    double theta = atan2(center_y - barrel_y, barrel_x - center_x);
-
-    double barrel_offset_sq = dist_sq(barrel_x, barrel_y, center_x, center_y);
-    double target_offset_sq = dist_sq(target_x, target_y, center_x, center_y);
-
-    double far_angle = asin(sqrt(barrel_offset_sq) * sin(theta) / sqrt(target_offset_sq));
-
-    double starting_angle = atan2(target_y - center_y, target_x - center_x);
-
-    return starting_angle + far_angle;
-}
-
-
-double Gun::aim_at(double mouseX, double mouseY) const {
-    double first_angle_assuming_right = calculate_angle(
-        mouseX, mouseY,
-        gun_rotation_x(),
-        gun_rotation_y(),
-        gun_rotation_x() + gun_offset_x() + barrel_offset_x(),
-        gun_rotation_y() + gun_offset_y() + barrel_offset_y()
-    );
-
-    if (fabs(first_angle_assuming_right) < M_PI / 2) {
-        return first_angle_assuming_right;
-    } else {
-        return calculate_angle(
-                    mouseX, mouseY,
-                    -gun_rotation_x(),
-                    gun_rotation_y(),
-                    -(gun_rotation_x() + gun_offset_x() + barrel_offset_x()),
-                    gun_rotation_y() + gun_offset_y() + barrel_offset_y()
-                );
-    }
-
-}
-
 void Gun::render(RenderList& list, double gun_angle) const {
     list.translate(gun_rotation_x(), gun_rotation_y());
 

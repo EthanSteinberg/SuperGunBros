@@ -120,10 +120,6 @@ Bullet Player::spawn_bullet() const {
     return b;
 }
 
-double Player::get_gun_angle(double mouseX, double mouseY) const {
-    return state.gun->aim_at(mouseX - state.pos.x, mouseY - state.pos.y);
-}
-
 void Player::render(RenderList& list) const {
     AnimationState interpolated = get_interpolated_frame();
 
@@ -165,17 +161,21 @@ void Player::render(RenderList& list) const {
             break;
 
         case PlayerColor::BLUE:
-            head = "yellow-head";
-            shoulder = "yellow-shoulder";
+            head = "blue-head";
+            shoulder = "blue-shoulder";
             break;
 
         case PlayerColor::GREEN:
-            head = "yellow-head";
-            shoulder = "yellow-shoulder";
+            head = "green-head";
+            shoulder = "green-shoulder";
             break;
     }
 
+
     list.translate(posX, posY);
+
+    //Make this stuff half size by default?
+    //list.scale(0.5, 0.5);
 
     if (!is_facing_right()) {
         list.scale(-1, 1);
@@ -197,6 +197,7 @@ void Player::render(RenderList& list) const {
         state.gun->render(list, scaled_gun_angle);
     }
 
+    //BACK LEG
     {
         list.rotate(interpolated.hip_angle[0] * M_PI/180);
 
@@ -205,28 +206,34 @@ void Player::render(RenderList& list) const {
 
         list.rotate(interpolated.knee_angle[0] * M_PI/180);
 
-        list.add_image("legPiece", -leg_radius, -leg_radius);
+        list.add_image("leg-upper-outline", -leg_radius, -leg_radius);
+        list.add_image("leg-upper-fill", -leg_radius, -leg_radius);
         list.add_image("boot", -leg_radius, leg_length);
 
         list.rotate(-interpolated.knee_angle[0] * M_PI/180);
         list.translate(0, -leg_length);
 
-        list.add_image("legPiece", -leg_radius, -leg_radius);
+        list.add_image("leg-lower-outline", -leg_radius, -leg_radius);
+        list.add_image("leg-lower-fill", -leg_radius, -leg_radius);
 
         list.rotate(-interpolated.hip_angle[0] * M_PI/180);
     }
 
+    //BACK ARM
     {
         list.translate(0, arm_y_offset);
 
         list.rotate(needed_angle2 + extra_angle2);
-        list.add_image("upper-arm", -arm_radius, -arm_radius);
+        list.add_image("arm-upper-outline", -arm_radius, -arm_radius);
+        list.add_image("arm-upper-fill", -arm_radius, -arm_radius);
 
         list.translate(0, arm_length);
 
         list.rotate(-2 * extra_angle2);
 
-        list.add_image("lower-arm", -arm_radius, -arm_radius);
+        list.add_image("hand", -arm_length, -arm_radius);
+        list.add_image("arm-lower-outline", -arm_radius, -arm_radius);
+        list.add_image("arm-lower-fill", -arm_radius, -arm_radius);
         list.rotate(2 * extra_angle2);
 
         list.translate(0, -arm_length);
@@ -236,65 +243,81 @@ void Player::render(RenderList& list) const {
         list.translate(0, -arm_y_offset);
     }
 
-    list.add_image("body", -7, -26);
-    list.add_image(head, -6, -40);
+    //CROTCH
+    list.add_image("torso-crotch", -7, 30);
 
-    list.add_image("black", -14, -20, 6, 20);
-    list.add_image("red", -12, -2 + -16 * state.fuel_left, 2, 16 * state.fuel_left);
-
-    if (state.boosting) {
-       list.add_image("fire", -13.5, 0);
-    }
-
+    //FRONT LEG
     {
-        list.translate(0, arm_y_offset);
-
-        list.rotate(needed_angle1 + extra_angle1);
-        list.add_image("upper-arm", -arm_radius, -arm_radius);
-
-        list.translate(0, arm_length);
-
-        list.rotate(-2 * extra_angle1);
-
-        list.add_image("lower-arm", -arm_radius, -arm_radius);
-        list.rotate(2 * extra_angle1);
-
-        list.translate(0, -arm_length);
-
-        list.rotate(-(needed_angle1 + extra_angle1));
-
-        list.translate(0, -arm_y_offset);
-    }
-
-    {
-
         list.rotate(interpolated.hip_angle[1] * M_PI/180);
-        list.add_image("legPiece", -leg_radius, -leg_radius);
+
 
         list.translate(0, leg_length);
 
         list.rotate(interpolated.knee_angle[1] * M_PI/180);
 
-        list.add_image("legPiece", -leg_radius, -leg_radius);
-
+        list.add_image("leg-upper-outline", -leg_radius, -leg_radius);
+        list.add_image("leg-upper-fill", -leg_radius, -leg_radius);
         list.add_image("boot", -leg_radius, leg_length);
 
         list.rotate(-interpolated.knee_angle[1] * M_PI/180);
-
-
         list.translate(0, -leg_length);
+
+        list.add_image("leg-lower-outline", -leg_radius, -leg_radius);
+        list.add_image("leg-lower-fill", -leg_radius, -leg_radius);
 
         list.rotate(-interpolated.hip_angle[1] * M_PI/180);
     }
 
+    //TORSO
+    list.add_image("torso-main", -7, -26);
+
+    //FACE
+    list.add_image(head, -6, -40);
+
+    //JETPACK
+    list.add_image("black", -14, -20, 6, 20);
+    list.add_image(get_color_name(info.color), -12, -2 + -16 * state.fuel_left, 2, 16 * state.fuel_left);
+    if (state.boosting) {
+       list.add_image("fire", -13.5, 0);
+    }
+
+    //GUN
     if (state.gun->in_front()) {
         state.gun->render(list, scaled_gun_angle);
     }
 
+    //FRONT ARM
+    {
+        list.translate(0, arm_y_offset);
+
+        list.rotate(needed_angle2 + extra_angle2);
+        list.add_image("arm-upper-outline", -arm_radius, -arm_radius);
+        list.add_image("arm-upper-fill", -arm_radius, -arm_radius);
+
+        list.translate(0, arm_length);
+
+        list.rotate(-2 * extra_angle2);
+
+        list.add_image("hand", -arm_length, -arm_radius);
+        list.add_image("arm-lower-outline", -arm_radius, -arm_radius);
+        list.add_image("arm-lower-fill", -arm_radius, -arm_radius);
+        list.rotate(2 * extra_angle2);
+
+        list.translate(0, -arm_length);
+
+        list.rotate(-(needed_angle2 + extra_angle2));
+
+        list.translate(0, -arm_y_offset);
+    }
+
+    //REVERSE REVERSE
     if (!is_facing_right()) {
         list.scale(-1, 1);
     }
 
+    //list.scale(2, 2);
+
+    //FIX THAT STUFF
     list.translate(-posX, -posY);
 }
 

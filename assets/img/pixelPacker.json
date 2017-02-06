@@ -2,80 +2,104 @@
     "0": {
         "sizex": 20,
         "sizey": 30,
-        "x": 1989,
-        "y": 383
+        "x": 1972,
+        "y": 421
     },
     "1": {
         "sizex": 16,
         "sizey": 29,
-        "x": 2031,
-        "y": 49
+        "x": 1264,
+        "y": 721
     },
     "2": {
         "sizex": 20,
         "sizey": 30,
-        "x": 1962,
-        "y": 403
+        "x": 1972,
+        "y": 452
     },
     "3": {
         "sizex": 19,
         "sizey": 30,
-        "x": 2028,
-        "y": 79
+        "x": 1844,
+        "y": 475
     },
     "4": {
         "sizex": 22,
         "sizey": 29,
-        "x": 2024,
-        "y": 377
+        "x": 2025,
+        "y": 405
     },
     "5": {
         "sizex": 19,
         "sizey": 30,
-        "x": 2028,
-        "y": 129
+        "x": 2000,
+        "y": 837
     },
     "6": {
         "sizex": 21,
         "sizey": 30,
-        "x": 2024,
-        "y": 341
+        "x": 2001,
+        "y": 776
     },
     "7": {
         "sizex": 20,
         "sizey": 29,
-        "x": 1989,
-        "y": 414
+        "x": 2000,
+        "y": 807
     },
     "8": {
         "sizex": 21,
         "sizey": 30,
-        "x": 1967,
-        "y": 372
+        "x": 2023,
+        "y": 776
     },
     "9": {
         "sizex": 21,
         "sizey": 30,
-        "x": 1940,
-        "y": 391
+        "x": 2023,
+        "y": 807
+    },
+    "arm-lower-fill": {
+        "sizex": 11,
+        "sizey": 41,
+        "x": 1832,
+        "y": 469
+    },
+    "arm-lower-outline": {
+        "sizex": 15,
+        "sizey": 45,
+        "x": 2032,
+        "y": 273
+    },
+    "arm-upper-fill": {
+        "sizex": 18,
+        "sizey": 48,
+        "x": 1974,
+        "y": 372
+    },
+    "arm-upper-outline": {
+        "sizex": 22,
+        "sizey": 52,
+        "x": 2025,
+        "y": 435
     },
     "armPiece": {
         "sizex": 5,
         "sizey": 13,
-        "x": 2018,
-        "y": 383
+        "x": 2025,
+        "y": 384
     },
     "backToMenu": {
         "sizex": 529,
         "sizey": 192,
         "x": 1281,
-        "y": 377
+        "y": 405
     },
     "backToMenuYellow": {
         "sizex": 529,
         "sizey": 192,
         "x": 1281,
-        "y": 570
+        "y": 598
     },
     "background": {
         "sizex": 1280,
@@ -92,56 +116,74 @@
     "black": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2028,
-        "y": 69
+        "x": 2043,
+        "y": 255
+    },
+    "blue": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2045,
+        "y": 249
+    },
+    "blue-head": {
+        "sizex": 51,
+        "sizey": 49,
+        "x": 1996,
+        "y": 0
+    },
+    "blue-shoulder": {
+        "sizex": 28,
+        "sizey": 40,
+        "x": 1875,
+        "y": 469
     },
     "blueBody": {
         "sizex": 14,
         "sizey": 29,
-        "x": 2028,
-        "y": 212
+        "x": 2032,
+        "y": 333
     },
     "body": {
         "sizex": 14,
         "sizey": 41,
-        "x": 2028,
-        "y": 255
+        "x": 2032,
+        "y": 363
     },
     "boot": {
-        "sizex": 12,
-        "sizey": 8,
-        "x": 2028,
-        "y": 242
+        "sizex": 28,
+        "sizey": 23,
+        "x": 1281,
+        "y": 377
     },
     "bullet": {
         "sizex": 11,
         "sizey": 6,
-        "x": 2036,
-        "y": 110
+        "x": 1331,
+        "y": 396
     },
     "current-players": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2028,
-        "y": 71
+        "x": 2043,
+        "y": 249
     },
     "darkGrey": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2028,
-        "y": 73
+        "x": 2043,
+        "y": 251
     },
     "deadLife": {
         "sizex": 31,
         "sizey": 31,
-        "x": 1996,
-        "y": 69
+        "x": 1940,
+        "y": 405
     },
     "fire": {
         "sizex": 5,
         "sizey": 9,
-        "x": 2036,
-        "y": 117
+        "x": 1343,
+        "y": 392
     },
     "game-over-header": {
         "sizex": 714,
@@ -153,37 +195,55 @@
         "sizex": 202,
         "sizey": 97,
         "x": 1811,
-        "y": 521
+        "y": 512
     },
     "green": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2028,
-        "y": 75
+        "x": 2043,
+        "y": 253
+    },
+    "green-head": {
+        "sizex": 51,
+        "sizey": 49,
+        "x": 1996,
+        "y": 50
+    },
+    "green-shoulder": {
+        "sizex": 28,
+        "sizey": 40,
+        "x": 1904,
+        "y": 469
     },
     "grey": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2028,
-        "y": 77
+        "x": 2045,
+        "y": 253
+    },
+    "hand": {
+        "sizex": 10,
+        "sizey": 14,
+        "x": 1342,
+        "y": 377
     },
     "head": {
         "sizex": 15,
         "sizey": 13,
-        "x": 2028,
-        "y": 198
+        "x": 2032,
+        "y": 319
     },
     "head2": {
         "sizex": 22,
         "sizey": 21,
-        "x": 2024,
-        "y": 407
+        "x": 2025,
+        "y": 488
     },
     "inf": {
         "sizex": 34,
         "sizey": 19,
-        "x": 1996,
-        "y": 49
+        "x": 1993,
+        "y": 364
     },
     "keyboard": {
         "sizex": 237,
@@ -195,73 +255,115 @@
         "sizex": 50,
         "sizey": 28,
         "x": 1996,
-        "y": 20
+        "y": 220
+    },
+    "leg-lower-fill": {
+        "sizex": 17,
+        "sizey": 52,
+        "x": 2020,
+        "y": 838
+    },
+    "leg-lower-outline": {
+        "sizex": 20,
+        "sizey": 56,
+        "x": 1811,
+        "y": 455
+    },
+    "leg-upper-fill": {
+        "sizex": 26,
+        "sizey": 62,
+        "x": 2001,
+        "y": 626
+    },
+    "leg-upper-outline": {
+        "sizex": 30,
+        "sizey": 65,
+        "x": 1844,
+        "y": 409
     },
     "legPiece": {
         "sizex": 7,
         "sizey": 18,
-        "x": 2028,
-        "y": 110
+        "x": 1317,
+        "y": 377
     },
     "legPieceHole": {
         "sizex": 5,
         "sizey": 14,
-        "x": 1983,
-        "y": 403
+        "x": 1933,
+        "y": 455
     },
     "legPieceOutline": {
         "sizex": 7,
         "sizey": 18,
-        "x": 2010,
-        "y": 383
+        "x": 1325,
+        "y": 377
     },
     "life-blue": {
         "sizex": 31,
         "sizey": 31,
-        "x": 1996,
-        "y": 101
+        "x": 1940,
+        "y": 437
+    },
+    "life-green": {
+        "sizex": 31,
+        "sizey": 31,
+        "x": 1993,
+        "y": 384
     },
     "life-red": {
         "sizex": 31,
         "sizey": 31,
-        "x": 1996,
-        "y": 133
+        "x": 1993,
+        "y": 416
     },
     "life-yellow": {
         "sizex": 31,
         "sizey": 31,
-        "x": 1996,
-        "y": 165
+        "x": 1993,
+        "y": 448
     },
     "lower-arm": {
         "sizex": 6,
         "sizey": 21,
-        "x": 1955,
-        "y": 422
+        "x": 1310,
+        "y": 377
     },
     "not-ready-text": {
         "sizex": 376,
         "sizey": 30,
         "x": 1662,
-        "y": 1169
+        "y": 1395
     },
     "number-blue": {
         "sizex": 188,
         "sizey": 103,
+        "x": 1811,
+        "y": 776
+    },
+    "number-green": {
+        "sizex": 188,
+        "sizey": 103,
         "x": 1794,
-        "y": 825
+        "y": 1012
     },
     "number-red": {
         "sizex": 189,
         "sizey": 103,
         "x": 1811,
-        "y": 721
+        "y": 610
+    },
+    "number-yellow": {
+        "sizex": 188,
+        "sizey": 103,
+        "x": 1662,
+        "y": 1270
     },
     "pistol": {
-        "sizex": 26,
-        "sizey": 13,
-        "x": 1940,
-        "y": 377
+        "sizex": 46,
+        "sizey": 23,
+        "x": 1996,
+        "y": 249
     },
     "player-won-blue": {
         "sizex": 1131,
@@ -297,67 +399,67 @@
         "sizex": 220,
         "sizey": 30,
         "x": 1811,
-        "y": 459
+        "y": 714
     },
     "red": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2036,
-        "y": 127
+        "x": 2045,
+        "y": 251
     },
     "red-head": {
-        "sizex": 19,
-        "sizey": 18,
-        "x": 2028,
-        "y": 160
+        "sizex": 51,
+        "sizey": 49,
+        "x": 1996,
+        "y": 100
     },
     "red-shoulder": {
-        "sizex": 10,
-        "sizey": 14,
-        "x": 2010,
-        "y": 411
+        "sizex": 28,
+        "sizey": 40,
+        "x": 1933,
+        "y": 470
     },
     "redBody": {
         "sizex": 14,
         "sizey": 29,
-        "x": 2028,
-        "y": 297
+        "x": 2032,
+        "y": 626
     },
     "redLife": {
         "sizex": 31,
         "sizey": 31,
-        "x": 1996,
-        "y": 197
+        "x": 1993,
+        "y": 480
     },
     "redWon": {
         "sizex": 510,
         "sizey": 121,
-        "x": 0,
-        "y": 1694
+        "x": 1132,
+        "y": 984
     },
     "rifle": {
         "sizex": 22,
         "sizey": 13,
-        "x": 2024,
-        "y": 327
+        "x": 2025,
+        "y": 510
     },
     "rocket": {
         "sizex": 51,
         "sizey": 19,
         "x": 1996,
-        "y": 0
+        "y": 150
     },
     "selectLevel": {
         "sizex": 401,
         "sizey": 46,
-        "x": 1132,
-        "y": 956
+        "x": 0,
+        "y": 1754
     },
     "selectPlayers": {
         "sizex": 526,
         "sizey": 59,
-        "x": 1132,
-        "y": 1359
+        "x": 0,
+        "y": 1694
     },
     "shield": {
         "sizex": 63,
@@ -368,8 +470,8 @@
     "simpleGun": {
         "sizex": 13,
         "sizey": 7,
-        "x": 2010,
-        "y": 403
+        "x": 1317,
+        "y": 396
     },
     "sizex": 2048,
     "sizey": 2048,
@@ -383,79 +485,91 @@
         "sizex": 529,
         "sizey": 192,
         "x": 1264,
-        "y": 763
+        "y": 791
     },
     "startButtonYellow": {
         "sizex": 529,
         "sizey": 192,
         "x": 1132,
-        "y": 1166
+        "y": 1270
     },
     "stickRed": {
         "sizex": 30,
         "sizey": 60,
-        "x": 1993,
-        "y": 261
+        "x": 1811,
+        "y": 377
     },
     "stickYellow": {
         "sizex": 30,
         "sizey": 60,
-        "x": 1993,
-        "y": 322
+        "x": 2014,
+        "y": 524
     },
     "text5936-9": {
         "sizex": 220,
         "sizey": 30,
         "x": 1811,
-        "y": 490
+        "y": 745
     },
     "title": {
         "sizex": 908,
         "sizey": 153,
         "x": 1132,
-        "y": 1012
+        "y": 1116
+    },
+    "torso-crotch": {
+        "sizex": 33,
+        "sizey": 21,
+        "x": 1940,
+        "y": 377
+    },
+    "torso-main": {
+        "sizex": 38,
+        "sizey": 90,
+        "x": 1993,
+        "y": 273
     },
     "upper-arm": {
         "sizex": 8,
         "sizey": 18,
-        "x": 1962,
-        "y": 434
+        "x": 1333,
+        "y": 377
     },
     "white": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2038,
-        "y": 127
+        "x": 2045,
+        "y": 255
     },
     "yellow": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2040,
-        "y": 127
+        "x": 2045,
+        "y": 257
     },
     "yellow-head": {
-        "sizex": 19,
-        "sizey": 18,
-        "x": 2028,
-        "y": 179
+        "sizex": 51,
+        "sizey": 49,
+        "x": 1996,
+        "y": 170
     },
     "yellow-shoulder": {
-        "sizex": 10,
-        "sizey": 14,
-        "x": 2010,
-        "y": 426
+        "sizex": 28,
+        "sizey": 40,
+        "x": 2014,
+        "y": 585
     },
     "yellowBody": {
         "sizex": 14,
         "sizey": 29,
-        "x": 1940,
-        "y": 429
+        "x": 2032,
+        "y": 656
     },
     "yellowLife": {
         "sizex": 31,
         "sizey": 31,
-        "x": 1996,
-        "y": 229
+        "x": 1844,
+        "y": 377
     },
     "yellowWon": {
         "sizex": 594,
