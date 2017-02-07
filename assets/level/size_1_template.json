@@ -1,0 +1,59 @@
+{
+    "width": 1280,
+    "height": 720,
+
+    "obstacles": [
+        {
+            "xLeft": -40,
+            "xRight": 1320,
+            "yTop": -40,
+            "yBottom": 10
+        },
+        {
+            "xLeft": -40,
+            "xRight": 1320,
+            "yTop": 710,
+            "yBottom": 760
+        },
+        {
+            "xLeft": -40,
+            "xRight": 10,
+            "yTop": -40,
+            "yBottom": 760
+        },
+        {
+            "xLeft": 1270,
+            "xRight": 1320,
+            "yTop": -40,
+            "yBottom": 760
+        }
+    ],
+
+    "boxSpawnLocations": [
+        {
+            "xLeft": 400,
+            "xRight": 800,
+            "yTop": 600,
+            "yBottom": 700
+        }
+    ],
+
+    "spawnLocations": [
+        {
+            "x": 40,
+            "y": 500
+        },
+        {
+            "x": 400,
+            "y": 500
+        },
+        {
+            "x": 800,
+            "y": 500
+        },
+        {
+            "x": 1240,
+            "y": 500
+        }
+    ]
+}
