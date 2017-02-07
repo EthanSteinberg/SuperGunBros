@@ -13,7 +13,7 @@
 const int screen_width = 1280;
 const int screen_height = 720;
 
-const bool debug_keyboard_player = false;
+const bool debug_keyboard_player = true;
 
 struct MainData {
     std::unique_ptr<Screen> current_screen;
@@ -48,8 +48,8 @@ inputs keyboard_debug_input(GLFWwindow* window) {
     inputs input;
 
     input.ls.x = 0;
-    input.ls.x -= (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS);
-    input.ls.x += (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS);
+    input.ls.x -= glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
+    input.ls.x += glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS;
 
     input.ls.y = 0;
     input.ls.y -= glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
@@ -81,10 +81,10 @@ inputs keyboard_debug_input(GLFWwindow* window) {
     input.buttons[ButtonName::L3] = 0;
     input.buttons[ButtonName::R3] = 0;
 
-    input.buttons[ButtonName::UD] = 0;
-    input.buttons[ButtonName::DD] = 0;
-    input.buttons[ButtonName::LD] = 0;
-    input.buttons[ButtonName::RD] = 0;
+    input.buttons[ButtonName::UD] = glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS;
+    input.buttons[ButtonName::DD] = glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS;
+    input.buttons[ButtonName::LD] = glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS;
+    input.buttons[ButtonName::RD] = glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS;
 
     return input;
 }

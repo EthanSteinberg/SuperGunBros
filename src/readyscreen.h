@@ -7,7 +7,7 @@
 
 class ReadyScreen : public Screen {
 public:
-	ReadyScreen(const std::vector<int>& joysticks);
+	ReadyScreen(const std::vector<int>& joysticks, unsigned int selected_level_index);
 
 	void render(RenderList& list) const;
 	std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs);
@@ -19,7 +19,7 @@ private:
     std::vector<Player> player_icons;
 
     std::vector<Level> loaded_levels;
-    unsigned int selected_level_index = 0;
+    unsigned int selected_level_index;
 };
 
 #endif

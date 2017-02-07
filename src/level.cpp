@@ -4,7 +4,7 @@
 
 const double line_width = 4;
 
-Level Level::load_from_file(const char* filename) {
+Level Level::load_from_file(const char* filename, unsigned int index) {
     std::ifstream file(filename);
 
     nlohmann::json level_data;
@@ -48,7 +48,7 @@ Level Level::load_from_file(const char* filename) {
     double width = level_data["width"].get<double>();
     double height = level_data["height"].get<double>();
 
-    return Level(obstacles, box_spawn_locations, player_spawn_locations, width, height);
+    return Level(obstacles, box_spawn_locations, player_spawn_locations, width, height, index);
 }
 
 Level::Level(
@@ -56,11 +56,13 @@ Level::Level(
     const std::vector<Rectangle>& a_box_spawns,
     const std::vector<Point>& a_player_spawns,
     double a_width,
-    double a_height):
+    double a_height,
+    unsigned int a_index):
     obstacles(a_obstacles), box_spawn_locations(a_box_spawns),
     player_spawn_locations(a_player_spawns),
     width(a_width),
-    height(a_height) {}
+    height(a_height),
+    index(a_index) {}
 
 void Level::render(RenderList& list, bool show_border) const {
     if (show_border) {

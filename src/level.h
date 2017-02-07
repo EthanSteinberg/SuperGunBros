@@ -10,7 +10,7 @@
 
 class Level {
 public:
-    static Level load_from_file(const char* filename);
+    static Level load_from_file(const char* filename, unsigned int index);
 
     void render(RenderList& list, bool show_border = true) const;
 
@@ -43,7 +43,8 @@ private:
         const std::vector<Rectangle>& box_spawn_locations,
         const std::vector<Point>& player_spawn_locations,
         double width,
-        double height);
+        double height,
+        unsigned int index);
 
     const std::vector<Rectangle> obstacles;
 
@@ -54,6 +55,7 @@ private:
 public:
     const double width;
     const double height;
+    const unsigned int index;
 };
 
 #endif

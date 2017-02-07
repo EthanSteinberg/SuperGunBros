@@ -147,7 +147,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                         joysticks.push_back(item.first);
                     }
 
-                    return std::make_unique<ReadyScreen>(joysticks);
+                    return std::make_unique<ReadyScreen>(joysticks, level.index);
                 }
             }
         }
@@ -171,7 +171,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 joysticks.push_back(item.first);
             }
 
-            return std::make_unique<ReadyScreen>(joysticks);
+            return std::make_unique<ReadyScreen>(joysticks, level.index);
         }
     }
 
