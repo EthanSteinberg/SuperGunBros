@@ -5,7 +5,7 @@
 
 class Camera {
 public:
-    Camera();
+    Camera(double level_width, double level_height);
 
     void transform(RenderList& list) const;
     void update(const std::vector<Point>& player_positions);
@@ -13,6 +13,8 @@ public:
 private:
     double x, y;
     double scale;
+
+    double level_width, level_height;
 };
 
 #endif

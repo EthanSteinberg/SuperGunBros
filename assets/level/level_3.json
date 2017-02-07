@@ -1,4 +1,7 @@
 {
+    "width": 2000,
+    "height": 720,
+
     "obstacles": [
         {
             "xLeft": -20,

@@ -1,10 +1,14 @@
 #include "camera.h"
 
-Camera::Camera() : x(1280/2), y(720/2), scale(1) {}
+const double SCREEN_WIDTH = 1280.0;
+const double SCREEN_HEIGHT = 720.0;
+
+Camera::Camera(double a_level_width, double a_level_hight)
+    : x(-1), y(-1), scale(1), level_width(a_level_width), level_height(a_level_hight) {}
 
 void Camera::transform(RenderList& list) const {
-    double width = 1280 * scale;
-    double height = 720 * scale;
+    double width = SCREEN_WIDTH * scale;
+    double height = SCREEN_HEIGHT * scale;
 
     list.scale(1.0/scale, 1.0/scale);
     list.translate(-(x - width/2), -(y - height/2));
@@ -31,27 +35,33 @@ void Camera::update(const std::vector<Point>& player_positions) {
     }
 
     minX = std::max(0.0, minX - 200);
-    maxX = std::min(1280.0, maxX + 200);
+    maxX = std::min(level_width, maxX + 200);
 
     minY = std::max(0.0, minY - 200);
-    maxY = std::min(720.0, maxY + 200);
+    maxY = std::min(level_height, maxY + 200);
 
     double desired_x = (minX + maxX)/2.0;
     double desired_y = (minY + maxY)/2.0;
 
-    double widthRatio = (maxX - minX)/1280.0;
-    double heightRatio = (maxY - minY)/720.0;
+    double widthRatio = (maxX - minX)/SCREEN_WIDTH;
+    double heightRatio = (maxY - minY)/SCREEN_HEIGHT;
 
     double desired_scale = std::max(widthRatio, heightRatio);
 
+    if (x == -1 || y == -1) {
+        // First update, do not interpolate
+        x = desired_x;
+        y = desired_y;
+        scale = desired_scale;
+    } else {
+        scale = 0.95 * scale + 0.05 * desired_scale;
+        x = 0.95 * x + 0.05 * desired_x;
+        y = 0.95 * y + 0.05 * desired_y;
 
-    scale = 0.95 * scale + 0.05 * desired_scale;
-    x = 0.95 * x + 0.05 * desired_x;
-    y = 0.95 * y + 0.05 * desired_y;
+        x = std::max(SCREEN_WIDTH * scale * 0.5, x);
+        x = std::min(level_width - SCREEN_WIDTH * scale * 0.5, x);
 
-    x = std::max(1280 * scale * 0.5, x);
-    x = std::min(1280 - 1280 * scale * 0.5, x);
-
-    y = std::max(720 * scale * 0.5, y);
-    y = std::min(720 -  720 * scale * 0.5, y);
+        y = std::max(SCREEN_HEIGHT * scale * 0.5, y);
+        y = std::min(level_height -  SCREEN_HEIGHT * scale * 0.5, y);
+    }
 }
