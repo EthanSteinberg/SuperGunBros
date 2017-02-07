@@ -5,6 +5,8 @@
 #include <vector>
 #include "renderlist.h"
 #include "point.h"
+#include "weaponbox.h"
+#include "boxspawn.h"
 
 #include <random>
 
@@ -17,15 +19,10 @@ public:
     bool colliding_with(const Rectangle& other) const;
 
     template<typename Generator>
-    Point get_random_box_spawn_location(Generator& g) const {
+    WeaponBox get_random_box_spawn(Generator& g) const {
         std::uniform_int_distribution<> box_dis(0, box_spawn_locations.size() - 1);
 
-        Rectangle location = box_spawn_locations[box_dis(g)];
-
-        std::uniform_real_distribution<> dx_dis(-location.width/2, location.width/2);
-        std::uniform_real_distribution<> dy_dis(-location.height/2, location.height/2);
-
-        return {location.x + dx_dis(g), location.y + dy_dis(g)};
+        return box_spawn_locations[box_dis(g)].get_random_spawn(g);
     }
 
     std::vector<Point> get_player_spawn_locations() const;
@@ -40,7 +37,7 @@ public:
 private:
     Level(
         const std::vector<Rectangle>& obstacles,
-        const std::vector<Rectangle>& box_spawn_locations,
+        const std::vector<BoxSpawn>& box_spawn_locations,
         const std::vector<Point>& player_spawn_locations,
         double width,
         double height,
@@ -48,7 +45,7 @@ private:
 
     const std::vector<Rectangle> obstacles;
 
-    const std::vector<Rectangle> box_spawn_locations;
+    const std::vector<BoxSpawn> box_spawn_locations;
 
     const std::vector<Point> player_spawn_locations;
 

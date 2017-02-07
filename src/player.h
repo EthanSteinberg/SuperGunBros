@@ -4,10 +4,8 @@
 #include <GLFW/glfw3.h>
 #include "gamepad.h"
 #include "renderlist.h"
-#include "bullet.h"
-#include "gun.h"
-#include "pistol.h"
-#include "rocket.h"
+#include "weapons/bullet.h"
+#include "weapons/gun.h"
 
 #define MAX_HEALTH 40.0
 
@@ -84,7 +82,7 @@ struct PlayerState {
     bool boosting = false;
     double fuel_left = 1;
 
-    std::shared_ptr<Gun> gun = std::make_shared<Pistol>();
+    std::unique_ptr<Gun> gun = create_gun("pistol");
 
     int ammo_left = -1;
 
@@ -99,7 +97,7 @@ public:
     Player(double start_x, double start_y, PlayerInfo info);
     void render(RenderList& list) const;
     void update();
-    Bullet spawn_bullet() const;
+    std::unique_ptr<Bullet> spawn_bullet() const;
 
     PlayerInfo info;
 

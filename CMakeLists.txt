@@ -21,7 +21,23 @@ set(LIBRARY_FILES
 	lib/png/lodepng.cpp
 )
 
+set(WEAPON_SOURCES
+    src/weapons/gun.cpp
+    src/weapons/bullet.cpp
+
+
+    src/weapons/pistol.cpp
+    src/weapons/pistolbullet.cpp
+
+    src/weapons/rocket.cpp
+    src/weapons/rocketbullet.cpp
+
+    src/weapons/pierce.cpp
+    src/weapons/piercebullet.cpp
+    )
+
 set(SOURCE_FILES
+    ${WEAPON_SOURCES}
 	src/main.cpp
 	src/renderlist.cpp
 	src/render.cpp
@@ -34,13 +50,11 @@ set(SOURCE_FILES
     src/player.cpp
     src/rectangle.cpp
     src/level.cpp
-    src/gun.cpp
-    src/pistol.cpp
-    src/rocket.cpp
     src/weaponbox.cpp
     src/explosion.cpp
     src/point.cpp
     src/camera.cpp
+    src/boxspawn.cpp
 )
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
@@ -49,3 +63,4 @@ target_link_libraries(SuperGunBros ${GLFW_LIBRARY} ${OPENGL_LIBRARIES})
 include_directories(lib/glad/include)
 include_directories(lib/json)
 include_directories(lib/png)
+include_directories(src)

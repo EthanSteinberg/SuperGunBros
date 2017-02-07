@@ -26,7 +26,7 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
     }
 
 
-    std::vector<Rectangle> box_spawn_locations;
+    std::vector<BoxSpawn> box_spawn_locations;
     for (const auto& spawn_location: level_data["boxSpawnLocations"]) {
         double width = spawn_location["xRight"].get<double>() - spawn_location["xLeft"].get<double>();
         double height = spawn_location["yBottom"].get<double>() - spawn_location["yTop"].get<double>();
@@ -36,7 +36,13 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
             width,
             height);
 
-        box_spawn_locations.push_back(rect);
+        std::vector<std::string> weapons;
+
+        for (const auto& weapon : spawn_location["weapons"]) {
+            weapons.push_back(weapon.get<std::string>());
+        }
+
+        box_spawn_locations.push_back(BoxSpawn(rect, weapons));
     }
 
     std::vector<Point> player_spawn_locations;
@@ -53,7 +59,7 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 
 Level::Level(
     const std::vector<Rectangle>& a_obstacles,
-    const std::vector<Rectangle>& a_box_spawns,
+    const std::vector<BoxSpawn>& a_box_spawns,
     const std::vector<Point>& a_player_spawns,
     double a_width,
     double a_height,

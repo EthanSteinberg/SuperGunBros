@@ -3,6 +3,7 @@
 
 #include "renderlist.h"
 #include "bullet.h"
+#include <memory>
 
 class Gun {
 public:
@@ -16,10 +17,11 @@ public:
 
     virtual bool in_front() const = 0;
 
-    Bullet spawn_bullet(double gun_angle) const;
+    std::unique_ptr<Bullet> spawn_bullet(double gun_angle) const;
 
+    void render_large(RenderList& list) const;
 
-    virtual void render_large(RenderList& list) const = 0;
+    virtual ~Gun();
 
 private:
     virtual double gun_rotation_x() const = 0;
@@ -40,7 +42,10 @@ private:
 
     virtual const char* gun_image_name() const = 0;
 
-    virtual bool has_explosive_bullets() const = 0;
+    virtual std::unique_ptr<Bullet> create_initial_bullet() const = 0;
 };
+
+
+std::unique_ptr<Gun> create_gun(const std::string& gun_name);
 
 #endif

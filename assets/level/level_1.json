@@ -54,7 +54,12 @@
             "xLeft": 400,
             "xRight": 880,
             "yTop": 150,
-            "yBottom": 200
+            "yBottom": 200,
+
+            "weapons": [
+                "pierce",
+                "rocket"
+            ]
         }
     ],
 

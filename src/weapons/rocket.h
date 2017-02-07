@@ -1,13 +1,11 @@
-#ifndef PISTOL_H_INCLUDED
-#define PISTOL_H_INCLUDED
+#ifndef ROCKET_H_INCLUDED
+#define ROCKET_H_INCLUDED
 
 #include "gun.h"
 
-class Pistol : public Gun {
+class Rocket : public Gun {
 public:
     virtual bool in_front() const;
-
-    virtual void render_large(RenderList& list) const;
 
 private:
     virtual double gun_rotation_x() const;
@@ -27,7 +25,7 @@ private:
 
     virtual const char* gun_image_name() const;
 
-    bool has_explosive_bullets() const;
+    virtual std::unique_ptr<Bullet> create_initial_bullet() const;
 };
 
 #endif

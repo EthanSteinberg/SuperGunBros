@@ -1,6 +1,5 @@
 #include "gamescreen.h"
 
-#include "rocket.h"
 #include "readyscreen.h"
 #include <string>
 #include <cmath>
@@ -23,7 +22,7 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_leve
         Point p = level.get_player_spawn_locations()[(int)info.color];
 
         Player player(p.x, p.y, info);
-        players.push_back(player);
+        players.push_back(std::move(player));
     }
 }
 
@@ -53,12 +52,7 @@ void GameScreen::render(RenderList& list) const {
 
 	// Render the bullets
 	for (const auto& bullet: bullets) {
-        list.translate(bullet.pos.x, bullet.pos.y);
-        double bullet_angle = atan2(bullet.y_vel, bullet.x_vel);
-        list.rotate(bullet_angle);
-		list.add_image("bullet", -bullet.pos.width/2, -bullet.pos.height/2);
-        list.rotate(-bullet_angle);
-        list.translate(-bullet.pos.x, -bullet.pos.y);
+        bullet->render(list);
 	}
 
     list.pop();
@@ -203,7 +197,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 player.state.pos.x = spawn_location.x;
                 player.state.pos.y = spawn_location.y;
 
-                player.state.gun = std::make_unique<Pistol>();
+                player.state.gun = create_gun("pistol");
                 player.state.ammo_left = -1;
 
                 player.state.invincibility_ticks_left = DEATH_TIME;
@@ -237,7 +231,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 auto potential_gun = attempt_pick_up(player.state.pos);
 
                 if (potential_gun != nullptr) {
-                    player.state.gun = potential_gun;
+                    player.state.gun = std::move(potential_gun);
                     player.state.ammo_left = 10;
                 }
             }
@@ -423,36 +417,48 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
             } else if (firing_bullet) {
                 player.state.ticks_till_next_bullet = 15;
 
-                Bullet next_bullet = player.spawn_bullet();
-                next_bullet.player_owner = i;
+                std::unique_ptr<Bullet> next_bullet = player.spawn_bullet();
+                next_bullet->player_owner = i;
 
                 if (player.state.ammo_left != -1) {
                     player.state.ammo_left --;
 
                     if (player.state.ammo_left <= 0) {
-                        player.state.gun = std::make_shared<Pistol>();
+                        player.state.gun = create_gun("pistol");
                         player.state.ammo_left = -1;
                     }
                 }
 
-                bullets.push_back(next_bullet);
+                bullets.push_back(std::move(next_bullet));
             }
         }
     }
 
-    std::vector<Bullet> next_bullets;
+    std::vector<std::unique_ptr<Bullet>> next_bullets;
+
+
+    std::vector<Rectangle> player_bounding_boxes;
+
+    for (const auto& player: players) {
+        if (!player.state.is_dead) {
+            player_bounding_boxes.push_back(player.state.pos);
+        }
+    }
+
+    auto damage_player_func = [&](int player_index, int damage) {
+        damage_player(player_index, damage);
+    };
 
     // Update all the bullets
     for (auto& bullet : bullets) {
-        bullet.pos.x += bullet.x_vel;
-        bullet.pos.y += bullet.y_vel;
+        bullet->pos.x += bullet->get_velocity() * cos(bullet->angle);
+        bullet->pos.y += bullet->get_velocity() * sin(bullet->angle);
 
+        bool is_dead = false;
 
-        bool hit_something = false;
-
-        if (would_hit_ground(bullet.pos)) {
+        if (would_hit_ground(bullet->pos)) {
             // This bullet hit the ground.
-            hit_something = true;
+            is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func);
         }
 
         for (unsigned int i = 0; i < players.size(); i++) {
@@ -462,57 +468,34 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 continue;
             }
 
-            if (i == bullet.player_owner) {
+            if (i == bullet->player_owner) {
                 continue; // Don't intersect with self
             }
 
-            if (bullet.pos.colliding_with(player.state.pos)) {
-                hit_something = true;
-                auto res = damage_player(i, 10);
-
-                if (res != nullptr) {
-                    return res;
-                }
+            if (bullet->pos.colliding_with(player.state.pos)) {
+                is_dead = bullet->on_player_collision(i, player_bounding_boxes, damage_player_func);
             }
         }
 
         for (unsigned int i = 0; i < boxes.size(); i++) {
             WeaponBox& box = boxes[i];
 
-            if (!box.opened && bullet.pos.colliding_with(box.pos)) {
-                hit_something = true;
+            if (!box.opened && bullet->pos.colliding_with(box.pos)) {
+                is_dead = true;
                 box.opened = true;
             }
         }
 
-        if (hit_something) {
-            // throw away the bullet if something is hit.
+        bool left_map = (bullet->pos.x < 0 || bullet->pos.x > level.width || bullet->pos.y < 0 || bullet->pos.y > level.height);
 
-            if (bullet.is_explosive_bullet) {
-                explosions.push_back(Explosion(bullet.pos.x, bullet.pos.y));
-
-
-                for (unsigned int i = 0; i < players.size(); i++) {
-                    auto& player = players[i];
-
-                    if (player.state.is_dead) continue;
-
-                    // TODO: Actual circle, rect intersection test
-                    if (bullet.pos.location().dist(player.state.pos.location()) < (EXPLOSION_RADIUS + player.state.pos.width)) {
-                        hit_something = true;
-                        auto res = damage_player(i, 15);
-
-                        if (res != nullptr) {
-                            return res;
-                        }
-                    }
-                }
+        if (!is_dead && !left_map) {
+            next_bullets.push_back(std::move(bullet));
+        } else {
+            if (bullet->create_explosion_after_destruction()) {
+                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y));
             }
-
-            continue;
         }
 
-        next_bullets.push_back(bullet);
     }
 
     for (auto& box: boxes) {
@@ -522,7 +505,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
         }
     }
 
-    bullets = next_bullets;
+    bullets = std::move(next_bullets);
 
     ticks_till_next_box--;
 
@@ -530,12 +513,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
         ticks_till_next_box = 600;
         for (int i = 0; i < 10; i++) {
             // Only try to spawn a box a maximum of 10 times ...
-            Point possible_location = level.get_random_box_spawn_location(gen);
+            WeaponBox possible_box = level.get_random_box_spawn(gen);
 
-            Rectangle possible_box(possible_location.x, possible_location.y, 40, 40);
-
-            if (!would_collide_or_fall_on_any(possible_box)) {
-                boxes.push_back(WeaponBox{possible_box, false});
+            if (!would_collide_or_fall_on_any(possible_box.pos)) {
+                boxes.push_back(possible_box);
                 break;
             }
         }
@@ -544,15 +525,15 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
     return nullptr;
 }
 
-std::unique_ptr<Screen> GameScreen::damage_player(int player_index, int damage) {
+void GameScreen::damage_player(int player_index, int damage) {
     if (game_over) {
-        return nullptr;
+        return;
     }
 
     auto& player = players[player_index];
 
     if (player.state.invincibility_ticks_left > 0) {
-        return nullptr;
+        return;
     }
 
     player.state.health -= damage;
@@ -578,8 +559,6 @@ std::unique_ptr<Screen> GameScreen::damage_player(int player_index, int damage) 
             player.state.ticks_until_spawn = 130;
         }
     }
-
-    return nullptr;
 }
 
 bool GameScreen::would_hit_ground(const Rectangle& rect) const {
@@ -616,14 +595,14 @@ bool GameScreen::would_collide_or_fall_on_any(const Rectangle& rect) const {
     return would_hit_ground(rect) || would_hit_player(rect);
 }
 
-std::shared_ptr<Gun> GameScreen::attempt_pick_up(const Rectangle& rect) {
+std::unique_ptr<Gun> GameScreen::attempt_pick_up(const Rectangle& rect) {
     std::vector<WeaponBox> next_boxes;
 
-    std::shared_ptr<Gun> result = nullptr;
+    std::unique_ptr<Gun> result = nullptr;
 
     for (const auto& box: boxes) {
         if (box.opened && box.pos.colliding_with(rect)) {
-            result = std::make_shared<Rocket>();
+            result = create_gun(box.weapon);
         } else {
             next_boxes.push_back(box);
         }
