@@ -1,38 +1,38 @@
 {
-    "width": 1280,
-    "height": 720,
+    "width": 3840,
+    "height": 2160,
 
     "obstacles": [
         {
             "xLeft": -40,
-            "xRight": 1320,
+            "xRight": 3880,
             "yTop": -40,
-            "yBottom": 10
+            "yBottom": 40
         },
         {
             "xLeft": -40,
-            "xRight": 1320,
-            "yTop": 710,
-            "yBottom": 760
+            "xRight": 3880,
+            "yTop": 2120,
+            "yBottom": 2200
         },
         {
             "xLeft": -40,
-            "xRight": 10,
+            "xRight": 40,
             "yTop": -40,
-            "yBottom": 760
+            "yBottom": 2200
         },
         {
-            "xLeft": 1270,
-            "xRight": 1320,
+            "xLeft": 3800,
+            "xRight": 3880,
             "yTop": -40,
-            "yBottom": 760
+            "yBottom": 2200
         }
     ],
 
     "boxSpawnLocations": [
         {
-            "xLeft": 400,
-            "xRight": 800,
+            "xLeft": 200,
+            "xRight": 1100,
             "yTop": 600,
             "yBottom": 700
         }
@@ -40,11 +40,11 @@
 
     "spawnLocations": [
         {
-            "x": 40,
+            "x": 200,
             "y": 500
         },
         {
-            "x": 400,
+            "x": 500,
             "y": 500
         },
         {
@@ -52,7 +52,7 @@
             "y": 500
         },
         {
-            "x": 1240,
+            "x": 1100,
             "y": 500
         }
     ]

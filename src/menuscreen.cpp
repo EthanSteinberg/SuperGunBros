@@ -22,7 +22,7 @@ std::unique_ptr<Screen> MenuScreen::update(const std::map<int, inputs>& joystick
 	for (const auto& item : joystick_inputs) {
 		for (int i = 0; i < NUM_BUTTONS; i++) {
 			if (item.second.buttons[i] && !last_inputs.at(item.first).buttons[i]) {
-				return std::make_unique<ReadyScreen>(joysticks);
+				return std::make_unique<ReadyScreen>(joysticks, 0);
 			}
 		}
 	}

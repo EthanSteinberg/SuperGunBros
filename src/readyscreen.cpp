@@ -13,7 +13,10 @@ const char* level_names[] = {
 	"../assets/level/size_3_template.json"
 };
 
-ReadyScreen::ReadyScreen(const std::vector<int>& joysticks) {
+const int LEVELS_PER_COLUMN = 3;
+
+ReadyScreen::ReadyScreen(const std::vector<int>& joysticks, unsigned int a_selected_level_index) :
+	selected_level_index(a_selected_level_index) {
 	for (unsigned int i = 0; i < joysticks.size(); i++) {
 		PlayerInfo info;
 		info.color = (PlayerColor) i;
@@ -25,11 +28,10 @@ ReadyScreen::ReadyScreen(const std::vector<int>& joysticks) {
 	}
 
 	for (const auto& level_name : level_names) {
-		loaded_levels.push_back(Level::load_from_file(level_name));
+		int i = loaded_levels.size();
+		loaded_levels.push_back(Level::load_from_file(level_name, i));
 	}
 }
-
-const double level_scale = 0.15;
 
 void ReadyScreen::render(RenderList& list) const {
 	list.add_image("background", 0, 0);
@@ -58,21 +60,46 @@ void ReadyScreen::render(RenderList& list) const {
 		list.translate(0, -(275 + i * 140.0));
 	}
 
-	for (unsigned int i = 0; i < loaded_levels.size(); i++) {
-		list.translate(900, 300 + 150 * i);
+	Rectangle level_border(995, 475, 270, 480);
+	list.add_rect("white", level_border);
+	list.add_outline("black", level_border);
+
+	unsigned int selected_column = selected_level_index / LEVELS_PER_COLUMN;
+
+	for (unsigned int offset = 0; offset < LEVELS_PER_COLUMN; offset++) {
+		list.push();
+		list.translate(900, 255 + 140 * offset);
+
+		unsigned int level_index = selected_column * LEVELS_PER_COLUMN + offset;
+		Level lev = loaded_levels[level_index];
+
+		const double width_ratio = 1280/lev.width;
+		const double height_ratio = 720/lev.height;
+
+		const double level_scale = 0.15 * std::min(width_ratio, height_ratio);
 
 		list.scale(level_scale, level_scale);
 
-		if (i == selected_level_index) {
+		if (level_index == selected_level_index) {
 			list.add_image("black", -100, -100, 1480, 920);
 		}
 
-		list.add_image("grey", 0, 0, 1280, 720);
-		loaded_levels[i].render(list, false);
+		//list.add_image("grey", 0, 0, 1280, 720);
+		lev.render(list, false);
+		list.pop();
+	}
 
-		list.scale(1/level_scale, 1/level_scale);
+	for (unsigned int column = 0; column < (loaded_levels.size() + LEVELS_PER_COLUMN - 1) / LEVELS_PER_COLUMN; column++) {
 
-		list.translate(-900, -(300 + 150.0 * i));
+		Rectangle column_number(890 + column * 50, 683, 40, 44);
+		list.add_rect("grey", column_number);
+		if (column == selected_column) {
+			list.add_outline("black", column_number);
+		}
+
+		std::string number = std::to_string(column + 1);
+		Rectangle column_number_text = list.get_image_dimensions(number);
+		list.add_rect(number, column_number_text.offset(890 + column * 50, 683));
 	}
 }
 
@@ -106,6 +133,15 @@ std::unique_ptr<Screen> ReadyScreen::update(const std::map<int, inputs>& joystic
 
 		if (input.buttons[DD] && !last_inputs.at(players[i].joystick_index).buttons[DD]) {
 			selected_level_index = std::min((unsigned int) (loaded_levels.size() - 1), selected_level_index + 1);
+		}
+
+		if (input.buttons[LD] && !last_inputs.at(players[i].joystick_index).buttons[LD]) {
+			// This handles the case when the selecte_level_index underflows (it is an unsigned integer)
+			selected_level_index = std::min(selected_level_index, selected_level_index - LEVELS_PER_COLUMN);
+		}
+
+		if (input.buttons[RD] && !last_inputs.at(players[i].joystick_index).buttons[RD]) {
+			selected_level_index = std::min((unsigned int) (loaded_levels.size() - 1), selected_level_index + LEVELS_PER_COLUMN);
 		}
 	}
 

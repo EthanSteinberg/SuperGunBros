@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="157.90251"
-     inkscape:cy="564.12691"
+     inkscape:zoom="1.979899"
+     inkscape:cx="242.35316"
+     inkscape:cy="433.83197"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -187,12 +187,12 @@
        id="text5211"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"
-       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/number-blue.png"><tspan
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/number-green.png"><tspan
          sodipodi:role="line"
          id="tspan5209"
          x="10.262052"
          y="190.75066"
-         style="font-size:16.93333244px;stroke-width:0.26458332px">2</tspan></text>
+         style="font-size:16.93333244px;stroke-width:0.26458332px">4</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.93333244px;line-height:6.61458349px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -374,7 +374,7 @@
          style="fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:0.13229166;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0" />
     </g>
     <rect
-       style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.13630104;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:1.13630104;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect5932"
        width="26.002699"
        height="26.002699"
@@ -382,7 +382,7 @@
        y="171.49245"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"
-       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/number-blue.png" />
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/number-green.png" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:6.61458302px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"

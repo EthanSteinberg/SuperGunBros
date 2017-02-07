@@ -32,7 +32,7 @@ void GameScreen::render(RenderList& list) const {
     list.push();
     camera.transform(list);
 
-    list.add_image("background", 0, 0);
+    //list.add_image("background", 0, 0);
 
     level.render(list);
 
@@ -63,48 +63,49 @@ void GameScreen::render(RenderList& list) const {
 
     list.pop();
 
-    list.add_image("black", 0, 660, 1280, 60);
+    //TODO: figure out what HUD elements are staying
+    //list.add_image("black", 0, 660, 1280, 60);
 
-    for (unsigned int i = 0; i < players.size(); i++) {
-        const auto& player = players[i];
-
-        int x_offset = 0;
-
-        if (i == 0) {
-            x_offset = 275/2.0;
-        } else {
-            x_offset = 1280 - 275/2.0;
-        }
-
-        list.translate(x_offset, 0);
-
-        Rectangle info_box(0, 690, 275, 60);
-        list.add_rect("white", info_box);
-        list.add_outline("black", info_box);
-
-        std::string life_color = "life-" + get_color_name(player.info.color);
-
-        const char* dead_color = "deadLife";
-
-        for (int i = 0; i < 3; i++) {
-            Rectangle life_box(-100 + i * 45, 690, 30, 30);
-            list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
-        }
-
-        {
-            list.translate(40, 690);
-            player.state.gun->render_large(list);
-            list.translate(-40, -690);
-        }
-
-        if (player.state.ammo_left != -1) {
-            list.add_number(80, 705, player.state.ammo_left);
-        } else {
-            list.add_image("inf", 80, 705 - 19);
-        }
-
-        list.translate(-x_offset, 0);
-    }
+//    for (unsigned int i = 0; i < players.size(); i++) {
+//        const auto& player = players[i];
+//
+//        int x_offset = 0;
+//
+//        if (i == 0) {
+//            x_offset = 275/2.0;
+//        } else {
+//            x_offset = 1280 - 275/2.0;
+//        }
+//
+//        list.translate(x_offset, 0);
+//
+//        Rectangle info_box(0, 690, 275, 60);
+//        list.add_rect("white", info_box);
+//        list.add_outline("black", info_box);
+//
+//        std::string life_color = "life-" + get_color_name(player.info.color);
+//
+//        const char* dead_color = "deadLife";
+//
+//        for (int i = 0; i < 3; i++) {
+//            Rectangle life_box(-100 + i * 45, 690, 30, 30);
+//            list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
+//        }
+//
+//        {
+//            list.translate(40, 690);
+//            player.state.gun->render_large(list);
+//            list.translate(-40, -690);
+//        }
+//
+//        if (player.state.ammo_left != -1) {
+//            list.add_number(80, 705, player.state.ammo_left);
+//        } else {
+//            list.add_image("inf", 80, 705 - 19);
+//        }
+//
+//        list.translate(-x_offset, 0);
+//    }
 
     if (game_over) {
         std::string winning_color = "tie";
@@ -147,7 +148,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                         joysticks.push_back(item.first);
                     }
 
-                    return std::make_unique<ReadyScreen>(joysticks);
+                    return std::make_unique<ReadyScreen>(joysticks, level.index);
                 }
             }
         }
@@ -171,7 +172,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 joysticks.push_back(item.first);
             }
 
-            return std::make_unique<ReadyScreen>(joysticks);
+            return std::make_unique<ReadyScreen>(joysticks, level.index);
         }
     }
 
