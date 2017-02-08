@@ -3,15 +3,15 @@
 #include <fstream>
 
 const char* const level_names[] = {
-    "../assets/level/level_1.json",
-    "../assets/level/level_2.json",
-    "../assets/level/level_3.json",
-    "../assets/level/level_1.json",
-    "../assets/level/level_2.json",
-    "../assets/level/level_1.json",
-    "../assets/level/level_2.json",
-    "../assets/level/level_1.json",
-    "../assets/level/level_2.json",
+        "../assets/level/level_1.json",
+        "../assets/level/level_2.json",
+        "../assets/level/level_3.json",
+
+        "../assets/level/level_4.json",
+
+        "../assets/level/size_1_template.json",
+        "../assets/level/size_2_template.json",
+        "../assets/level/size_3_template.json"
 };
 
 const double line_width = 4;

@@ -55,6 +55,11 @@ struct AnimationState {
     double knee_angle[2];
 };
 
+struct ArmState{
+    double needed_angle[2];
+    double extra_angle[2];
+};
+
 struct PlayerState {
 
     PlayerState(double x, double y): pos(x, y, player_width, player_height) {}
@@ -112,6 +117,9 @@ private:
     double last_time_diff;
 
     void render_gun(RenderList& list) const;
+
+    void draw_leg(int leg, RenderList& list, AnimationState interpolated) const;
+    void draw_arm(int arm, RenderList& list, ArmState arms) const;
 };
 
 

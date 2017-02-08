@@ -89,7 +89,7 @@ void RenderList::add_image(const std::string &name, float x, float y, float widt
     add_image_core(name, x, y, width, height);
 }
 
-void RenderList::add_scaled_image(const std::string &name, float x, float y, float scale) {
+void RenderList::add_scaled_image(const std::string &name, float x, float y, float scale, bool centered) {
     auto info_iter = metadata.find(name);
 
     if (info_iter == metadata.end()) {
@@ -103,6 +103,11 @@ void RenderList::add_scaled_image(const std::string &name, float x, float y, flo
     width = width * scale;
     float height = info["sizey"];
     height = height * scale;
+
+    if(centered){
+        x = x - width/2;
+        y = y - height/2;
+    }
 
     add_image_core(name, x, y, width, height);
 }

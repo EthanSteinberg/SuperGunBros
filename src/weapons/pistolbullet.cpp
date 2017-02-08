@@ -11,7 +11,7 @@ bool PistolBullet::on_player_collision(int hit_player, const std::vector<Rectang
 }
 
 double PistolBullet::get_velocity() const {
-    return 16;
+    return 24;
 }
 
 const char* PistolBullet::bullet_image_name() const {

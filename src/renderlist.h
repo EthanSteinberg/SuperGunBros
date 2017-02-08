@@ -25,7 +25,7 @@ public:
 	void add_image(const std::string &name, float x, float y, float width = -1, float height = -1);
 
     //Render a single image with width and height derived from one scale factor
-    void add_scaled_image(const std::string &name, float x, float y, float scale);
+    void add_scaled_image(const std::string &name, float x, float y, float scale, bool centered = false);
 
 	void add_line(const std::string &name, float x_1, float y_1, float x_2, float y_2, double line_width = 4);
 

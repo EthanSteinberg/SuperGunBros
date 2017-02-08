@@ -11,7 +11,7 @@ bool PierceBullet::on_player_collision(int hit_player, const std::vector<Rectang
 }
 
 double PierceBullet::get_velocity() const {
-    return 12;
+    return 28;
 }
 
 const char* PierceBullet::bullet_image_name() const {

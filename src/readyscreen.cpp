@@ -4,14 +4,6 @@
 #include <cmath>
 #include "gamescreen.h"
 
-const char* level_names[] = {
-	"../assets/level/level_1.json",
-	"../assets/level/level_2.json",
-	"../assets/level/level_3.json",
-	"../assets/level/size_1_template.json",
-	"../assets/level/size_2_template.json",
-	"../assets/level/size_3_template.json"
-};
 const int LEVELS_PER_COLUMN = 3;
 
 ReadyScreen::ReadyScreen(const std::vector<int>& joysticks, unsigned int a_selected_level_index) :
@@ -67,18 +59,26 @@ void ReadyScreen::render(RenderList& list) const {
 		list.translate(900, 255 + 140 * offset);
 
 		unsigned int level_index = selected_column * LEVELS_PER_COLUMN + offset;
+		if (level_index >= loaded_levels.size()){
+			list.pop();
+			break;
+		}
 		Level lev = loaded_levels[level_index];
 
-		const double width_ratio = 1280/lev.width;
-		const double height_ratio = 720/lev.height;
+		const double thumbnail_scale = 0.15;
 
-		const double level_scale = 0.15 * std::min(width_ratio, height_ratio);
-
-		list.scale(level_scale, level_scale);
+		list.scale(thumbnail_scale, thumbnail_scale);
 
 		if (level_index == selected_level_index) {
 			list.add_image("black", -100, -100, 1480, 920);
 		}
+
+		const double width_ratio = 1280/lev.width;
+		const double height_ratio = 720/lev.height;
+
+		const double level_scale = std::min(width_ratio, height_ratio);
+
+		list.scale(level_scale, level_scale);
 
 		//list.add_image("grey", 0, 0, 1280, 720);
 		lev.render(list, false);

@@ -3,33 +3,30 @@
 
 //TODO do i need the radius_2s? should they reflect the outline instead of the second radius?
 
-const double arm_y_offset = -50 * ASSET_SCALE;
+const double arm_y_offset = -55 * ASSET_SCALE;
 
 const double upper_arm_length = 32*ASSET_SCALE;
-const double upper_arm_radius_1 = 8*ASSET_SCALE;
-const double upper_arm_radius_2 = 5*ASSET_SCALE;
+const double upper_arm_radius = 8*ASSET_SCALE;
 
 const double lower_arm_length = 32*ASSET_SCALE;
-const double lower_arm_radius_1 = 5*ASSET_SCALE;
-const double lower_arm_radius_2 = 0; //TODO: 4 was the sidewise dimension so keep that in mind
+const double lower_arm_radius = 5*ASSET_SCALE;
 
 const double upper_leg_length = 40*ASSET_SCALE;
-const double upper_leg_radius_1 = 10*ASSET_SCALE;
-const double upper_leg_radius_2 = 8*ASSET_SCALE;
+const double upper_leg_radius = 10*ASSET_SCALE;
 
 const double lower_leg_length = 36*ASSET_SCALE;
-const double lower_leg_radius_1 = 8*ASSET_SCALE;
-const double lower_leg_radius_2 = 5*ASSET_SCALE;
+const double lower_leg_radius = 8*ASSET_SCALE;
 
-const double head_x_offset = -15 * ASSET_SCALE;
-const double head_y_offset = -100 * ASSET_SCALE;
+const double head_x_offset = 7 * ASSET_SCALE;
+const double head_y_offset = -97 * ASSET_SCALE;
 
-const double shoulder_x_offset = -10 * ASSET_SCALE;
-const double shoulder_y_offset = -10 * ASSET_SCALE;
-const double shoulder_angle = 0;
+const double shoulder_x_offset = -2 * ASSET_SCALE;
+const double shoulder_y_offset = -55 * ASSET_SCALE;
+const double shoulder_angle_offset = 0;
+const double shoulder_angle_coef = 0.2;
 
-const double torso_x_offset = -16 * ASSET_SCALE;
-const double torso_y_offset = -75 * ASSET_SCALE;
+const double torso_y_offset = -40 * ASSET_SCALE;
+
 const double crotch_x_offset = -18 * ASSET_SCALE;
 const double crotch_y_offset = 0 * ASSET_SCALE;
 
@@ -158,6 +155,7 @@ void Player::render(RenderList& list) const {
     list.push();
 
     AnimationState interpolated = get_interpolated_frame();
+    ArmState arms;
 
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
 
@@ -170,18 +168,16 @@ void Player::render(RenderList& list) const {
     double dist_to_grip1 = sqrt(dist_sq(grip1_x, grip1_y, 0, arm_y_offset));
 
     //Law of cosines
-    double extra_angle1 = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip1);
-
-    double needed_angle1 = atan2(grip1_y - arm_y_offset, grip1_x) - M_PI/2;
+    arms.extra_angle[0] = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip1);
+    arms.needed_angle[0] = atan2(grip1_y - arm_y_offset, grip1_x) - M_PI/2;
 
     double grip2_x = state.gun->grip2_x(scaled_gun_angle);
     double grip2_y = state.gun->grip2_y(scaled_gun_angle);
 
     double dist_to_grip2 = sqrt(dist_sq(grip2_x, grip2_y, 0, arm_y_offset));
 
-    double extra_angle2 = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip2);
-
-    double needed_angle2 = atan2(grip2_y - arm_y_offset, grip2_x) - M_PI/2;
+    arms.extra_angle[1] = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip2);
+    arms.needed_angle[1] = atan2(grip2_y - arm_y_offset, grip2_x) - M_PI/2;
 
     const char* head = nullptr;
     const char* shoulder = nullptr;
@@ -243,133 +239,23 @@ void Player::render(RenderList& list) const {
     }
 
     //BACK LEG
-    {
-        list.rotate(interpolated.hip_angle[0] * M_PI/180);
-
-
-        list.translate(0, lower_leg_length);
-
-        list.rotate(interpolated.knee_angle[0] * M_PI/180);
-
-        list.add_scaled_image("boot", -lower_leg_radius_1, lower_leg_length, ASSET_SCALE);
-        list.add_scaled_image("leg-lower-outline", -lower_leg_radius_1, -lower_leg_radius_1, ASSET_SCALE);
-
-
-        list.rotate(-interpolated.knee_angle[0] * M_PI/180);
-        list.translate(0, -lower_leg_length);
-
-
-        list.add_scaled_image("leg-upper-outline", -upper_leg_radius_1, -upper_leg_radius_1, ASSET_SCALE);
-
-        list.rotate(-interpolated.hip_angle[0] * M_PI/180);
-    }
-    {
-        list.rotate(interpolated.hip_angle[0] * M_PI/180);
-
-
-        list.translate(0, lower_leg_length);
-
-        list.rotate(interpolated.knee_angle[0] * M_PI/180);
-
-        list.add_scaled_image("leg-lower-fill", -lower_leg_radius_1, -lower_leg_radius_1, ASSET_SCALE);
-
-
-        list.rotate(-interpolated.knee_angle[0] * M_PI/180);
-        list.translate(0, -lower_leg_length);
-
-        list.add_scaled_image("leg-upper-fill", -upper_leg_radius_1, -upper_leg_radius_1, ASSET_SCALE);
-
-        list.rotate(-interpolated.hip_angle[0] * M_PI/180);
-    }
+    draw_leg(0, list, interpolated);
 
     //BACK ARM
-    {
-        list.translate(0, arm_y_offset);
-
-        list.rotate(needed_angle2 + extra_angle2);
-        list.add_scaled_image("arm-upper-outline",-upper_arm_radius_1,-upper_arm_radius_1, ASSET_SCALE);
-
-        list.translate(0, upper_arm_length);
-
-        list.rotate(-2 * extra_angle2);
-
-        list.add_scaled_image("hand", -lower_arm_radius_1,lower_arm_length, ASSET_SCALE);
-        list.add_scaled_image("arm-lower-outline",-lower_arm_radius_1,-lower_arm_radius_1, ASSET_SCALE);
-        list.rotate(2 * extra_angle2);
-
-        list.translate(0, -lower_arm_length);
-
-        list.rotate(-(needed_angle2 + extra_angle2));
-
-        list.translate(0, -arm_y_offset);
-    }
-    {
-        list.translate(0, arm_y_offset);
-
-        list.rotate(needed_angle2 + extra_angle2);
-        list.add_scaled_image("arm-upper-fill",-upper_arm_radius_1,-upper_arm_radius_1, ASSET_SCALE);
-
-        list.translate(0, upper_arm_length);
-
-        list.rotate(-2 * extra_angle2);
-
-        list.add_scaled_image("arm-lower-fill",-lower_arm_radius_1,-lower_arm_radius_1, ASSET_SCALE);
-        list.rotate(2 * extra_angle2);
-
-        list.translate(0, -lower_arm_length);
-
-        list.rotate(-(needed_angle2 + extra_angle2));
-
-        list.translate(0, -arm_y_offset);
-    }
+    draw_arm(1, list, arms);
 
     //TODO revisit the crotch, it's not visible RN and not worth tweaking
     //CROTCH
     //list.add_scaled_image("torso-crotch", crotch_x_offset, crotch_y_offset, ASSET_SCALE);
 
     //FRONT LEG
-    {
-        list.rotate(interpolated.hip_angle[1] * M_PI/180);
-
-
-        list.translate(0, lower_leg_length);
-
-        list.rotate(interpolated.knee_angle[1] * M_PI/180);
-
-        list.add_scaled_image("boot", -lower_leg_radius_1, lower_leg_length, ASSET_SCALE);
-        list.add_scaled_image("leg-lower-outline", -lower_leg_radius_1, -lower_leg_radius_1, ASSET_SCALE);
-
-        list.rotate(-interpolated.knee_angle[1] * M_PI/180);
-        list.translate(0, -lower_leg_length);
-
-
-        list.add_scaled_image("leg-upper-outline", -upper_leg_radius_1, -upper_leg_radius_1, ASSET_SCALE);
-
-        list.rotate(-interpolated.hip_angle[1] * M_PI/180);
-    }
-    {
-        list.rotate(interpolated.hip_angle[1] * M_PI/180);
-
-
-        list.translate(0, lower_leg_length);
-
-        list.rotate(interpolated.knee_angle[1] * M_PI/180);
-
-        list.add_scaled_image("leg-lower-fill", -lower_leg_radius_1, -lower_leg_radius_1, ASSET_SCALE);
-
-        list.rotate(-interpolated.knee_angle[1] * M_PI/180);
-        list.translate(0, -lower_leg_length);
-
-        list.add_scaled_image("leg-upper-fill", -upper_leg_radius_1, -upper_leg_radius_1, ASSET_SCALE);
-
-        list.rotate(-interpolated.hip_angle[1] * M_PI/180);
-    }
+    draw_leg(1, list, interpolated);
 
     //TORSO
-    list.add_scaled_image("torso-main", torso_x_offset, torso_y_offset, ASSET_SCALE);
+    list.add_scaled_image("torso-main", 0, torso_y_offset, ASSET_SCALE, true);
 
     //FACE
-    list.add_scaled_image(head, head_x_offset, head_y_offset, ASSET_SCALE);
+    list.add_scaled_image(head, head_x_offset, head_y_offset, ASSET_SCALE, true);
 
     //JETPACK
     list.add_image("black", -16, -20, 8, 24);
@@ -384,59 +270,96 @@ void Player::render(RenderList& list) const {
     }
 
     //FRONT ARM
-    {
-        list.translate(0, arm_y_offset);
+    draw_arm(0, list, arms);
 
-        list.rotate(needed_angle1 + extra_angle1);
-        list.add_scaled_image("arm-upper-outline",-upper_arm_radius_1,-upper_arm_radius_1, ASSET_SCALE);
-
-        list.translate(0, upper_arm_length);
-
-        list.rotate(-2 * extra_angle1);
-
-        list.add_scaled_image("hand", -lower_arm_radius_1,lower_arm_length, ASSET_SCALE);
-        list.add_scaled_image("arm-lower-outline",-lower_arm_radius_1,-lower_arm_radius_1, ASSET_SCALE);
-        list.rotate(2 * extra_angle1);
-
-        list.translate(0, -lower_arm_length);
-
-        list.rotate(-(needed_angle1 + extra_angle1));
-
-        list.translate(0, -arm_y_offset);
-    }
-    {
-        list.translate(0, arm_y_offset);
-
-        list.rotate(needed_angle1 + extra_angle1);
-        list.add_scaled_image("arm-upper-fill",-upper_arm_radius_1,-upper_arm_radius_1, ASSET_SCALE);
-
-        list.translate(0, upper_arm_length);
-
-        list.rotate(-2 * extra_angle1);
-
-        list.add_scaled_image("arm-lower-fill",-lower_arm_radius_1,-lower_arm_radius_1, ASSET_SCALE);
-        list.rotate(2 * extra_angle1);
-
-        list.translate(0, -lower_arm_length);
-
-        list.rotate(-(needed_angle1 + extra_angle1));
-
-        list.add_scaled_image(shoulder, shoulder_x_offset, shoulder_x_offset, ASSET_SCALE);
-
-        list.translate(0, -arm_y_offset);
-    }
-
-
-    //REVERSE REVERSE
-    if (!is_facing_right()) {
-        list.scale(-1, 1);
-    }
-
-    //list.scale(2, 2);
+    //SHOULDER
+    list.translate(shoulder_x_offset, shoulder_y_offset);
+    list.rotate(shoulder_angle_coef * arms.needed_angle[1]);
+    list.add_scaled_image(shoulder, 0, 0, ASSET_SCALE, true);
 
     //FIX THAT STUFF
-    list.translate(-posX, -posY);
+    list.pop();
+}
+
+void Player::draw_leg(int leg, RenderList &list, AnimationState interpolated) const {
+    list.push();
+
+    //OUTLINE
+    list.rotate(interpolated.hip_angle[leg] * M_PI/180);
+
+    list.translate(0, upper_leg_length);
+
+    list.rotate(interpolated.knee_angle[leg] * M_PI/180);
+
+    list.add_scaled_image("boot", 2.5, lower_leg_length + 5, ASSET_SCALE, true);
+    list.add_scaled_image("leg-lower-outline", 0, (lower_leg_length - lower_leg_radius)/2, ASSET_SCALE,  true);
+
+
+    list.rotate(-interpolated.knee_angle[leg] * M_PI/180);
+    list.translate(0, -upper_leg_length);
+
+
+    list.add_scaled_image("leg-upper-outline", 0, (upper_leg_length - upper_leg_radius)/2, ASSET_SCALE,  true);
+
+    //FILL
+
+    list.translate(0, upper_leg_length);
+
+    list.rotate(interpolated.knee_angle[leg] * M_PI/180);
+
+    list.add_scaled_image("leg-lower-fill", 0, (lower_leg_length - lower_leg_radius)/2, ASSET_SCALE,  true);
+
+
+    list.rotate(-interpolated.knee_angle[leg] * M_PI/180);
+    list.translate(0, -upper_leg_length);
+
+    list.add_scaled_image("leg-upper-fill", 0, (upper_leg_length - upper_leg_radius)/2, ASSET_SCALE,  true);
 
     list.pop();
+}
+
+void Player::draw_arm(int arm, RenderList& list, ArmState arms) const{
+    {
+        list.push();
+
+        list.translate(0, arm_y_offset);
+
+        list.rotate(arms.needed_angle[arm] + arms.extra_angle[arm]);
+
+        list.add_scaled_image("arm-upper-outline", 0, (upper_arm_length - upper_arm_radius)/2, ASSET_SCALE,  true);
+
+        list.translate(0, upper_arm_length);
+
+        list.rotate(-2 * arms.extra_angle[arm]);
+
+        list.add_scaled_image("hand", 0, lower_arm_length + 2 * lower_arm_radius, ASSET_SCALE,  true);
+        list.add_scaled_image("arm-lower-outline", 0, (lower_arm_length + lower_arm_radius)/2, ASSET_SCALE,  true);
+
+        list.rotate(2 * arms.extra_angle[arm]);
+
+        list.translate(0, -lower_arm_length);
+
+        list.rotate(-(arms.needed_angle[arm] + arms.extra_angle[arm]));
+
+
+    }
+    {
+
+
+        list.rotate(arms.needed_angle[arm] + arms.extra_angle[arm]);
+
+        list.add_scaled_image("arm-upper-fill", 0, (upper_arm_length - upper_arm_radius)/2, ASSET_SCALE,  true);
+        list.add_scaled_image("red", 0, 0, 3,  true);
+
+        list.translate(0, upper_arm_length);
+
+        list.rotate(-2 * arms.extra_angle[arm]);
+
+        list.add_scaled_image("arm-lower-fill", 0, (lower_arm_length + lower_arm_radius)/2, ASSET_SCALE,  true);
+        list.add_scaled_image("red", 0, 0, 3,  true);
+
+        list.pop();
+    }
+
 }
 

@@ -371,8 +371,11 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
             player.state.dx -= player.state.dx * DRAG_COEF;
             player.state.dy -= player.state.dy * DRAG_COEF;
 
-            //Collision tracking super basic
 
+
+            //Collision tracking super basic
+            //TODO: Current order of operations causes players to stick to ceiling when jetpacking instead of sliding
+            //TODO: This collision binary search would need to be significantly reworked to fix that.
             if (would_collide(player.state.dx, player.state.dy)){
                 double low = 0.0;
                 double high = 1.0;
@@ -397,14 +400,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 player.state.dy = 0;
             } else {
                 player.state.grounded = false;
-            }
-
-            if (would_collide(0, -SIGMA)) {
-                player.state.roofed = true;
-                player.state.jumping = false;
-                player.state.dy = 0;
-            } else {
-                player.state.roofed = false;
             }
 
 

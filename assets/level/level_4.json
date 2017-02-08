@@ -1,31 +1,39 @@
 {
-    "width": 3840,
-    "height": 2160,
+    "width": 2560,
+    "height": 1440,
 
     "obstacles": [
         {
             "xLeft": -40,
-            "xRight": 3880,
+            "xRight": 2600,
             "yTop": -40,
             "yBottom": 40
         },
         {
             "xLeft": -40,
-            "xRight": 3880,
-            "yTop": 2120,
-            "yBottom": 2200
+            "xRight": 2600,
+            "yTop": 1400,
+            "yBottom": 1480
         },
         {
             "xLeft": -40,
             "xRight": 40,
             "yTop": -40,
-            "yBottom": 2200
+            "yBottom": 1480
         },
         {
-            "xLeft": 3800,
-            "xRight": 3880,
+            "xLeft": 2520,
+            "xRight": 2600,
             "yTop": -40,
-            "yBottom": 2200
+            "yBottom": 1480
+        },
+
+
+        {
+            "xLeft": 2220,
+            "xRight": 2300,
+            "yTop": -40,
+            "yBottom": 1480
         }
     ],
 
