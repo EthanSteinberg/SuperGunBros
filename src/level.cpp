@@ -5,7 +5,6 @@
 const char* const level_names[] = {
         "../assets/level/level_1.json",
         "../assets/level/level_2.json",
-        "../assets/level/level_3.json",
 
         "../assets/level/level_4.json",
 
@@ -96,7 +95,13 @@ void Level::render(RenderList& list, bool show_border) const {
     //TODO: Better background logic
     for(int i = 0; i < width; i+= 1280){
         for(int j = 0; j < height; j+= 720){
-            list.add_image("background", i, j);
+
+            if (show_border) {
+                list.add_image("background", i, j);
+            } else {
+                list.add_image("grey", i, j, 1280, 720);
+            }
+
         }
     }
 

@@ -22,8 +22,8 @@ const double head_y_offset = -97 * ASSET_SCALE;
 
 const double shoulder_x_offset = -2 * ASSET_SCALE;
 const double shoulder_y_offset = -55 * ASSET_SCALE;
-const double shoulder_angle_offset = 0;
-const double shoulder_angle_coef = 0.2;
+const double shoulder_angle_offset = M_PI / 2 + - 0.2;
+const double shoulder_angle_coef = 1.0;
 
 const double torso_y_offset = -40 * ASSET_SCALE;
 
@@ -210,12 +210,12 @@ void Player::render(RenderList& list) const {
     //Make this stuff half size by default?
     //list.scale(0.5, 0.5);
 
-    list.add_image("black", -20, -52, 40, 8);
-    list.add_image("black", -18, -50, 36, 4);
+    list.add_image("black", -20, -62, 40, 8);
+    list.add_image("black", -18, -60, 36, 4);
 
     double health = std::max(0, state.health);
 
-    list.add_image(get_color_name(info.color), -18, -50, 36 * health / MAX_HEALTH, 4);
+    list.add_image(get_color_name(info.color), -18, -60, 36 * health / MAX_HEALTH, 4);
 
     if (state.is_dead) {
         double angle = M_PI / 2.0 * (1.0 - ((state.ticks_until_spawn - DEATH_INVISIBLE_TIME) / (float)DEATH_ANIMATION_TIME));
@@ -258,10 +258,10 @@ void Player::render(RenderList& list) const {
     list.add_scaled_image(head, head_x_offset, head_y_offset, ASSET_SCALE, true);
 
     //JETPACK
-    list.add_image("black", -16, -20, 8, 24);
-    list.add_image(get_color_name(info.color), -14, -2 + -16 * state.fuel_left, 4, 20 * state.fuel_left);
+    list.add_image("black", -18, -20, 8, 24);
+    list.add_image(get_color_name(info.color), -16, -2 + -16 * state.fuel_left, 4, 20 * state.fuel_left);
     if (state.boosting) {
-       list.add_image("fire", -15.5, 4);
+       list.add_image("fire", -17.5, 4);
     }
 
     //GUN
@@ -274,7 +274,7 @@ void Player::render(RenderList& list) const {
 
     //SHOULDER
     list.translate(shoulder_x_offset, shoulder_y_offset);
-    list.rotate(shoulder_angle_coef * arms.needed_angle[1]);
+    list.rotate(shoulder_angle_coef * arms.needed_angle[1] + shoulder_angle_offset);
     list.add_scaled_image(shoulder, 0, 0, ASSET_SCALE, true);
 
     //FIX THAT STUFF
@@ -345,18 +345,15 @@ void Player::draw_arm(int arm, RenderList& list, ArmState arms) const{
     }
     {
 
-
         list.rotate(arms.needed_angle[arm] + arms.extra_angle[arm]);
 
         list.add_scaled_image("arm-upper-fill", 0, (upper_arm_length - upper_arm_radius)/2, ASSET_SCALE,  true);
-        list.add_scaled_image("red", 0, 0, 3,  true);
 
         list.translate(0, upper_arm_length);
 
         list.rotate(-2 * arms.extra_angle[arm]);
 
         list.add_scaled_image("arm-lower-fill", 0, (lower_arm_length + lower_arm_radius)/2, ASSET_SCALE,  true);
-        list.add_scaled_image("red", 0, 0, 3,  true);
 
         list.pop();
     }
