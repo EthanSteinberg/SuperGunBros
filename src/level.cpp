@@ -2,7 +2,29 @@
 
 #include <fstream>
 
+const char* const level_names[] = {
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+    "../assets/level/level_3.json",
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+};
+
 const double line_width = 4;
+
+std::vector<Level> Level::load_all_levels() {
+    std::vector<Level> loaded_levels;
+    for (const auto& level: level_names) {
+        int i = loaded_levels.size();
+        loaded_levels.push_back(Level::load_from_file(level, i));
+    }
+
+    return loaded_levels;
+}
 
 Level Level::load_from_file(const char* filename, unsigned int index) {
     std::ifstream file(filename);

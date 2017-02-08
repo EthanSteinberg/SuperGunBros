@@ -117,6 +117,16 @@ void GameScreen::render(RenderList& list) const {
 
 std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
 
+    if (joystick_inputs.count(-1) == 1 && joystick_inputs.at(-1).buttons[ButtonName::L3] && !last_inputs.at(-1).buttons[ButtonName::L3]) {
+        // This is the signal to reload the map.
+        try {
+            level = Level::load_all_levels()[level.index];
+        } catch (const std::exception& ex) {
+            std::cout<<"Got error while reloading level " << ex.what() <<std::endl;
+        }
+
+    }
+
     if (game_over) {
         // When there is no-one alive, any player should be able to continue
         int winning_player_index = -1;
