@@ -2,7 +2,29 @@
 
 #include <fstream>
 
+const char* const level_names[] = {
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+    "../assets/level/level_3.json",
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
+};
+
 const double line_width = 4;
+
+std::vector<Level> Level::load_all_levels() {
+    std::vector<Level> loaded_levels;
+    for (const auto& level: level_names) {
+        int i = loaded_levels.size();
+        loaded_levels.push_back(Level::load_from_file(level, i));
+    }
+
+    return loaded_levels;
+}
 
 Level Level::load_from_file(const char* filename, unsigned int index) {
     std::ifstream file(filename);
@@ -26,7 +48,7 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
     }
 
 
-    std::vector<Rectangle> box_spawn_locations;
+    std::vector<BoxSpawn> box_spawn_locations;
     for (const auto& spawn_location: level_data["boxSpawnLocations"]) {
         double width = spawn_location["xRight"].get<double>() - spawn_location["xLeft"].get<double>();
         double height = spawn_location["yBottom"].get<double>() - spawn_location["yTop"].get<double>();
@@ -36,7 +58,13 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
             width,
             height);
 
-        box_spawn_locations.push_back(rect);
+        std::vector<std::string> weapons;
+
+        for (const auto& weapon : spawn_location["weapons"]) {
+            weapons.push_back(weapon.get<std::string>());
+        }
+
+        box_spawn_locations.push_back(BoxSpawn(rect, weapons));
     }
 
     std::vector<Point> player_spawn_locations;
@@ -53,7 +81,7 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 
 Level::Level(
     const std::vector<Rectangle>& a_obstacles,
-    const std::vector<Rectangle>& a_box_spawns,
+    const std::vector<BoxSpawn>& a_box_spawns,
     const std::vector<Point>& a_player_spawns,
     double a_width,
     double a_height,

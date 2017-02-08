@@ -12,7 +12,6 @@ const char* level_names[] = {
 	"../assets/level/size_2_template.json",
 	"../assets/level/size_3_template.json"
 };
-
 const int LEVELS_PER_COLUMN = 3;
 
 ReadyScreen::ReadyScreen(const std::vector<int>& joysticks, unsigned int a_selected_level_index) :
@@ -27,10 +26,7 @@ ReadyScreen::ReadyScreen(const std::vector<int>& joysticks, unsigned int a_selec
 		player_icons.push_back(Player(0, 0, info));
 	}
 
-	for (const auto& level_name : level_names) {
-		int i = loaded_levels.size();
-		loaded_levels.push_back(Level::load_from_file(level_name, i));
-	}
+	loaded_levels = Level::load_all_levels();
 }
 
 void ReadyScreen::render(RenderList& list) const {

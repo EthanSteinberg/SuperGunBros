@@ -1,4 +1,5 @@
 #include "rocket.h"
+#include "rocketbullet.h"
 
 double Rocket::gun_rotation_x() const {
     return 0;
@@ -48,11 +49,6 @@ double Rocket::grip2_dy() const {
     return gun_offset_y() + 13;
 }
 
-void Rocket::render_large(RenderList& list) const {
-    Rectangle rocket(0, 0, 51, 19);
-    list.add_rect("rocket", rocket);
-}
-
-bool Rocket::has_explosive_bullets() const {
-    return true;
+std::unique_ptr<Bullet> Rocket::create_initial_bullet() const {
+    return std::make_unique<RocketBullet>();
 }

@@ -1,6 +1,5 @@
 
 #include "player.h"
-#include "pistol.h"
 
 //TODO do i need the radius_2s? should they reflect the outline instead of the second radius?
 
@@ -134,18 +133,18 @@ bool Player::is_facing_right() const {
     return fabs(state.gun_angle) < M_PI / 2;
 }
 
-Bullet Player::spawn_bullet() const {
+std::unique_ptr<Bullet> Player::spawn_bullet() const {
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
 
-    Bullet b = state.gun->spawn_bullet(scaled_gun_angle);
+    std::unique_ptr<Bullet> b = state.gun->spawn_bullet(scaled_gun_angle);
 
     if (!is_facing_right()) {
-        b.pos.x *= -1;
-        b.x_vel *= -1;
+        b->pos.x *= -1;
     }
 
-    b.pos.x += state.pos.x;
-    b.pos.y += state.pos.y;
+    b->pos.x += state.pos.x;
+    b->pos.y += state.pos.y;
+    b->angle = state.gun_angle;
 
     return b;
 }

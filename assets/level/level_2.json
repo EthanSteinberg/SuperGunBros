@@ -102,7 +102,33 @@
             "xLeft": 1050,
             "xRight": 1280,
             "yTop": 100,
-            "yBottom": 125
+            "yBottom": 125,
+
+            "weapons": [
+                "rocket"
+            ]
+        },
+
+        {
+            "xLeft": 0,
+            "xRight": 130,
+            "yTop": 100,
+            "yBottom": 125,
+
+            "weapons": [
+                "rocket"
+            ]
+        },
+
+        {
+            "xLeft": 600,
+            "xRight": 680,
+            "yTop": 500,
+            "yBottom": 550,
+
+            "weapons": [
+                "pierce"
+            ]
         }
     ],
 

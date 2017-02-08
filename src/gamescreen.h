@@ -25,7 +25,7 @@ private:
     Level level;
 
     std::vector<Player> players;
-    std::vector<Bullet> bullets;
+    std::vector<std::unique_ptr<Bullet>> bullets;
 
     std::vector<WeaponBox> boxes;
 
@@ -44,9 +44,9 @@ private:
     bool would_hit_player(const Rectangle& rect) const;
     bool would_hit_box(const Rectangle& rect) const;
 
-    std::shared_ptr<Gun> attempt_pick_up(const Rectangle& rect);
+    std::unique_ptr<Gun> attempt_pick_up(const Rectangle& rect);
 
-    std::unique_ptr<Screen> damage_player(int player_index, int damage);
+    void damage_player(int player_index, int damage);
 
     bool game_over = false;
 };

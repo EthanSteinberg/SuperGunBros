@@ -19,12 +19,14 @@ RenderList::RenderList(const char* filename) {
 }
 
 Rectangle RenderList::get_image_dimensions(const std::string &name) const {
-    auto& info = metadata[name];
+    auto info_iter = metadata.find(name);
 
-    if (info.is_null()) {
+    if (info_iter == metadata.end()) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
+
+    auto& info = *info_iter;
 
     return {0, 0, info["sizex"], info["sizey"]};
 }
@@ -67,12 +69,14 @@ void RenderList::add_number(float x, float y, int num) {
 }
 
 void RenderList::add_image(const std::string &name, float x, float y, float width, float height) {
-    auto& info = metadata[name];
+    auto info_iter = metadata.find(name);
 
-    if (info.is_null()) {
+    if (info_iter == metadata.end()) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
+
+    auto& info = *info_iter;
 
     if (width == -1) {
         width = info["sizex"];
@@ -86,12 +90,14 @@ void RenderList::add_image(const std::string &name, float x, float y, float widt
 }
 
 void RenderList::add_scaled_image(const std::string &name, float x, float y, float scale) {
-    auto& info = metadata[name];
+    auto info_iter = metadata.find(name);
 
-    if (info.is_null()) {
+    if (info_iter == metadata.end()) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
+
+    auto& info = *info_iter;
 
     float width = info["sizex"];
     width = width * scale;

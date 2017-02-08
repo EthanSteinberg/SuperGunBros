@@ -1,5 +1,5 @@
 #include "pistol.h"
-
+#include "pistolbullet.h"
 
 double Pistol::gun_rotation_x() const {
     return 1;
@@ -49,11 +49,6 @@ double Pistol::grip2_dy() const {
     return gun_offset_y() + 6;
 }
 
-void Pistol::render_large(RenderList& list) const {
-    Rectangle rifle_box(0, 0, 50, 28);
-    list.add_rect("pistol", rifle_box);
-}
-
-bool Pistol::has_explosive_bullets() const {
-    return false;
+std::unique_ptr<Bullet> Pistol::create_initial_bullet() const {
+    return std::make_unique<PistolBullet>();
 }

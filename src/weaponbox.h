@@ -6,11 +6,16 @@
 
 class WeaponBox {
 public:
-    Rectangle pos;
+
+    WeaponBox(float x, float y, std::string weapon);
 
     bool opened;
 
+    Rectangle pos;
+
     void render(RenderList& list) const;
+
+    std::string weapon;
 };
 
 #endif
