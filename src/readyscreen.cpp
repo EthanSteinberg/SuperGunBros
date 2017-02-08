@@ -27,7 +27,8 @@ void ReadyScreen::render(RenderList& list) const {
 	list.add_image("ready-header", 10, 10);
 
 	for (unsigned int i = 0; i < players.size(); i++) {
-		list.translate(0, 275 + i * 140);
+		list.push();
+		list.translate(0, 225 + i * 122);
 		const PlayerInfo& player = players[i];
 
 		list.add_image("ready-box-outline", 10, 0);
@@ -45,10 +46,10 @@ void ReadyScreen::render(RenderList& list) const {
 			list.add_image("not-ready-text", 325, 50);
 		}
 
-		list.translate(0, -(275 + i * 140.0));
+		list.pop();
 	}
 
-	Rectangle level_border(995, 475, 270, 480);
+	Rectangle level_border(995, 470, 270, 490);
 	list.add_rect("white", level_border);
 	list.add_outline("black", level_border);
 

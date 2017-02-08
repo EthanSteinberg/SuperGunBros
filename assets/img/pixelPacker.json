@@ -38,26 +38,26 @@
     "6": {
         "sizex": 21,
         "sizey": 30,
-        "x": 2012,
-        "y": 934
+        "x": 1251,
+        "y": 762
     },
     "7": {
         "sizex": 20,
         "sizey": 29,
-        "x": 1983,
-        "y": 997
+        "x": 1251,
+        "y": 927
     },
     "8": {
         "sizex": 21,
         "sizey": 30,
-        "x": 2012,
-        "y": 965
+        "x": 1251,
+        "y": 865
     },
     "9": {
         "sizex": 21,
         "sizey": 30,
-        "x": 2012,
-        "y": 996
+        "x": 1251,
+        "y": 896
     },
     "arm-lower-fill": {
         "sizex": 11,
@@ -254,7 +254,7 @@
     "keyboard": {
         "sizex": 237,
         "sizey": 68,
-        "x": 1794,
+        "x": 1803,
         "y": 865
     },
     "largeRifle": {
@@ -272,8 +272,8 @@
     "leg-lower-outline": {
         "sizex": 20,
         "sizey": 56,
-        "x": 1983,
-        "y": 1027
+        "x": 1251,
+        "y": 793
     },
     "leg-upper-fill": {
         "sizex": 26,
@@ -339,12 +339,12 @@
         "sizex": 376,
         "sizey": 30,
         "x": 1659,
-        "y": 1306
+        "y": 1379
     },
     "number-blue": {
         "sizex": 188,
         "sizey": 103,
-        "x": 1794,
+        "x": 1803,
         "y": 934
     },
     "number-green": {
@@ -362,8 +362,8 @@
     "number-yellow": {
         "sizex": 188,
         "sizey": 103,
-        "x": 1662,
-        "y": 1038
+        "x": 1802,
+        "y": 1069
     },
     "pierce": {
         "sizex": 45,
@@ -387,37 +387,37 @@
         "sizex": 1131,
         "sizey": 88,
         "x": 0,
-        "y": 943
+        "y": 933
     },
     "player-won-green": {
         "sizex": 1131,
         "sizey": 88,
         "x": 0,
-        "y": 1038
+        "y": 1022
     },
     "player-won-red": {
         "sizex": 1131,
         "sizey": 88,
         "x": 0,
-        "y": 1127
+        "y": 1111
     },
     "player-won-tie": {
         "sizex": 1131,
         "sizey": 89,
         "x": 0,
-        "y": 1216
+        "y": 1200
     },
     "player-won-yellow": {
         "sizex": 1131,
         "sizey": 88,
         "x": 0,
-        "y": 1306
+        "y": 1290
     },
     "press-start-continue": {
         "sizex": 1112,
         "sizey": 102,
         "x": 0,
-        "y": 1395
+        "y": 1379
     },
     "ready-box-outline": {
         "sizex": 714,
@@ -426,8 +426,8 @@
         "y": 129
     },
     "ready-header": {
-        "sizex": 1263,
-        "sizey": 221,
+        "sizex": 1250,
+        "sizey": 211,
         "x": 0,
         "y": 721
     },
@@ -470,8 +470,8 @@
     "redWon": {
         "sizex": 510,
         "sizey": 121,
-        "x": 1132,
-        "y": 1363
+        "x": 1113,
+        "y": 1387
     },
     "rifle": {
         "sizex": 22,
@@ -488,14 +488,14 @@
     "selectLevel": {
         "sizex": 401,
         "sizey": 46,
-        "x": 1643,
-        "y": 1395
+        "x": 1624,
+        "y": 1410
     },
     "selectPlayers": {
         "sizex": 526,
         "sizey": 59,
         "x": 1132,
-        "y": 1303
+        "y": 1327
     },
     "shield": {
         "sizex": 63,
@@ -515,18 +515,18 @@
         "sizex": 951,
         "sizey": 195,
         "x": 0,
-        "y": 1498
+        "y": 1482
     },
     "startButton": {
         "sizex": 529,
         "sizey": 192,
-        "x": 1264,
+        "x": 1273,
         "y": 763
     },
     "startButtonYellow": {
         "sizex": 529,
         "sizey": 192,
-        "x": 1132,
+        "x": 1272,
         "y": 956
     },
     "stickRed": {
@@ -544,14 +544,14 @@
     "text5936-9": {
         "sizex": 220,
         "sizey": 30,
-        "x": 1659,
-        "y": 1337
+        "x": 1802,
+        "y": 1038
     },
     "title": {
         "sizex": 908,
         "sizey": 153,
         "x": 1132,
-        "y": 1149
+        "y": 1173
     },
     "torso-crotch": {
         "sizex": 33,
@@ -592,8 +592,8 @@
     "yellow-shoulder": {
         "sizex": 28,
         "sizey": 40,
-        "x": 1983,
-        "y": 956
+        "x": 1251,
+        "y": 721
     },
     "yellowBody": {
         "sizex": 14,
