@@ -80,7 +80,7 @@ inputs getInputs(int joy) {
     std::string jname = glfwGetJoystickName(joy);
     if (jname == "Logitech Logitech Dual Action") {
         return logitech(joy);
-    } else if (jname == "Microsoft X-Box 360 pad"){
+    } else if (jname == "Microsoft X-Box 360 pad" || jname == "Xbox 360 Wireless Receiver"){
         return xbox360(joy);
     } else {
         fprintf(stderr, "No gamepad for %s\n", jname.c_str());
