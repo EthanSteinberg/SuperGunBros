@@ -3,6 +3,7 @@
     "height": 720,
 
     "obstacles": [
+        // The main 4 corners of the map
         {
             "xLeft": -20,
             "xRight": 1300,
@@ -46,7 +47,7 @@
             "xRight": 550,
             "yTop": 410,
             "yBottom": 440
-        }
+        },
     ],
 
     "boxSpawnLocations": [
@@ -57,9 +58,8 @@
             "yBottom": 200,
 
             "weapons": [
-                "pierce",
-                "rocket"
-            ]
+                "flame",
+            ],
         }
     ],
 

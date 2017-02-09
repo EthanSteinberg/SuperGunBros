@@ -21,8 +21,12 @@ public:
     void render(RenderList& list) const;
 
     // Return true if the bullet should be marked dead
-    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, int)> damage_player) const = 0;
-    virtual bool on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, int)> damage_player) const = 0;
+    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, bool free_horizontal, bool free_vertical) {
+        return on_wall_collision(player_positions, damage_player);
+    }
+
+    virtual bool on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) = 0;
+    virtual bool on_no_collision() = 0;
 
     virtual double get_velocity() const = 0;
 
@@ -30,6 +34,9 @@ public:
 
 private:
     virtual const char* bullet_image_name() const = 0;
+
+    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {return false;}
+
 };
 
 #endif

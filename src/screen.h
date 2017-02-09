@@ -7,6 +7,8 @@
 #include "gamepad.h"
 #include <map>
 
+#include <memory>
+
 class Screen {
 public:
 	// Render the current screen.

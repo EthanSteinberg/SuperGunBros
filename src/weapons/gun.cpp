@@ -3,6 +3,11 @@
 #include "rocket.h"
 #include "pistol.h"
 #include "pierce.h"
+#include "bounce.h"
+#include "flame.h"
+
+#include <cmath>
+#include <iostream>
 
 inline double dist_sq(double x1, double y1, double x2, double y2) {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
@@ -38,16 +43,21 @@ double Gun::grip2_y(double gun_angle) const {
    return gun_rotation_y() + sin(gun_angle) * grip2_dx() + cos(gun_angle) * grip2_dy();
 }
 
-std::unique_ptr<Bullet> Gun::spawn_bullet(double gun_angle) const {
+std::vector<std::unique_ptr<Bullet>> Gun::spawn_bullets(double gun_angle) const {
 
-    double x = (gun_rotation_x() + cos(gun_angle) * (gun_offset_x() + barrel_offset_x() + 20) - sin(gun_angle) * (gun_offset_y() + barrel_offset_y()));
-    double y = (gun_rotation_y() + sin(gun_angle) * (gun_offset_x() + barrel_offset_x() + 20) + cos(gun_angle) * (gun_offset_y() + barrel_offset_y()));
+    std::vector<std::unique_ptr<Bullet>> results;
+
+    double x = (gun_rotation_x() + cos(gun_angle) * (gun_offset_x() + barrel_offset_x() + barrel_length()) - sin(gun_angle) * (gun_offset_y() + barrel_offset_y()));
+    double y = (gun_rotation_y() + sin(gun_angle) * (gun_offset_x() + barrel_offset_x() + barrel_length()) + cos(gun_angle) * (gun_offset_y() + barrel_offset_y()));
 
     std::unique_ptr<Bullet> result = create_initial_bullet();
     result->pos.x = x;
     result->pos.y = y;
+    result->angle = 0;
 
-    return result;
+    results.push_back(std::move(result));
+
+    return results;
 }
 
 std::unique_ptr<Gun> create_gun(const std::string& gun_name) {
@@ -57,6 +67,10 @@ std::unique_ptr<Gun> create_gun(const std::string& gun_name) {
         return std::make_unique<Pistol>();
     } else if (gun_name == "pierce") {
         return std::make_unique<Pierce>();
+    } else if (gun_name == "bounce") {
+        return std::make_unique<Bounce>();
+    } else if (gun_name == "flame") {
+        return std::make_unique<Flame>();
     } else {
         std::cout<<"Cannot create gun of name " << gun_name << std::endl;
         exit(-1);

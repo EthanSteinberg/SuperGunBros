@@ -4,6 +4,8 @@
 #include <cmath>
 #include "gamescreen.h"
 
+#include <algorithm>
+
 const int LEVELS_PER_COLUMN = 3;
 
 ReadyScreen::ReadyScreen(const std::vector<int>& joysticks, unsigned int a_selected_level_index) :

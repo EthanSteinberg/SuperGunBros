@@ -2,15 +2,23 @@
 
 #include <fstream>
 
+#include <rapidjson/document.h>
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/error/en.h>
+
+#include <iostream>
+
+#include <exception>
+
 const char* const level_names[] = {
-        "../assets/level/level_1.json",
-        "../assets/level/level_2.json",
+    "../assets/level/level_1.json",
+    "../assets/level/level_2.json",
 
-        "../assets/level/level_4.json",
+    "../assets/level/level_4.json",
 
-        "../assets/level/size_1_template.json",
-        "../assets/level/size_2_template.json",
-        "../assets/level/size_3_template.json"
+    "../assets/level/size_1_template.json",
+    "../assets/level/size_2_template.json",
+    "../assets/level/size_3_template.json"
 };
 
 const double line_width = 4;
@@ -28,18 +36,24 @@ std::vector<Level> Level::load_all_levels() {
 Level Level::load_from_file(const char* filename, unsigned int index) {
     std::ifstream file(filename);
 
-    nlohmann::json level_data;
+    rapidjson::BasicIStreamWrapper<std::ifstream> wrapper(file);
 
-    file >> level_data;
+    rapidjson::Document level_data;
+
+    level_data.ParseStream<rapidjson::kParseCommentsFlag | rapidjson::kParseTrailingCommasFlag>(wrapper);
+
+    if (level_data.HasParseError()) {
+        throw std::runtime_error(std::string("Could not parse ") + filename);
+    }
 
     std::vector<Rectangle> obstacles;
 
-    for (const auto& obstacle: level_data["obstacles"]) {
-        double width = obstacle["xRight"].get<double>() - obstacle["xLeft"].get<double>();
-        double height = obstacle["yBottom"].get<double>() - obstacle["yTop"].get<double>();
+    for (const auto& obstacle: level_data["obstacles"].GetArray()) {
+        double width = obstacle["xRight"].GetDouble() - obstacle["xLeft"].GetDouble();
+        double height = obstacle["yBottom"].GetDouble() - obstacle["yTop"].GetDouble();
         Rectangle rect(
-            obstacle["xRight"].get<double>() - width/2,
-            obstacle["yBottom"].get<double>() - height/2,
+            obstacle["xRight"].GetDouble() - width/2,
+            obstacle["yBottom"].GetDouble() - height/2,
             width,
             height);
 
@@ -48,32 +62,32 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 
 
     std::vector<BoxSpawn> box_spawn_locations;
-    for (const auto& spawn_location: level_data["boxSpawnLocations"]) {
-        double width = spawn_location["xRight"].get<double>() - spawn_location["xLeft"].get<double>();
-        double height = spawn_location["yBottom"].get<double>() - spawn_location["yTop"].get<double>();
+    for (const auto& spawn_location: level_data["boxSpawnLocations"].GetArray()) {
+        double width = spawn_location["xRight"].GetDouble() - spawn_location["xLeft"].GetDouble();
+        double height = spawn_location["yBottom"].GetDouble() - spawn_location["yTop"].GetDouble();
         Rectangle rect(
-            spawn_location["xRight"].get<double>() - width/2,
-            spawn_location["yBottom"].get<double>() - height/2,
+            spawn_location["xRight"].GetDouble() - width/2,
+            spawn_location["yBottom"].GetDouble() - height/2,
             width,
             height);
 
         std::vector<std::string> weapons;
 
-        for (const auto& weapon : spawn_location["weapons"]) {
-            weapons.push_back(weapon.get<std::string>());
+        for (const auto& weapon : spawn_location["weapons"].GetArray()) {
+            weapons.push_back(weapon.GetString());
         }
 
         box_spawn_locations.push_back(BoxSpawn(rect, weapons));
     }
 
     std::vector<Point> player_spawn_locations;
-    for (const auto& spawn_location: level_data["spawnLocations"]) {
-        Point p = {spawn_location["x"].get<double>(), spawn_location["y"].get<double>()};
+    for (const auto& spawn_location: level_data["spawnLocations"].GetArray()) {
+        Point p = {spawn_location["x"].GetDouble(), spawn_location["y"].GetDouble()};
         player_spawn_locations.push_back(p);
     }
 
-    double width = level_data["width"].get<double>();
-    double height = level_data["height"].get<double>();
+    double width = level_data["width"].GetDouble();
+    double height = level_data["height"].GetDouble();
 
     return Level(obstacles, box_spawn_locations, player_spawn_locations, width, height, index);
 }

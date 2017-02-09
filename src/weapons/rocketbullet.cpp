@@ -2,7 +2,7 @@
 
 #include "explosion.h"
 
-void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positions, std::function<void(int, int)> damage_player) const {
+void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) const {
     for (unsigned int i = 0; i < player_positions.size(); i++) {
         auto& player_pos = player_positions[i];
 
@@ -22,16 +22,22 @@ void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positi
     }
 }
 
-bool RocketBullet::on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, int)> damage_player) const {
+bool RocketBullet::on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
     perform_explosion(player_positions, damage_player);
     return true;
 }
 
-bool RocketBullet::on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, int)> damage_player) const {
+bool RocketBullet::on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
     perform_explosion(player_positions, damage_player);
     damage_player(hit_player, 10);
     return true;
 }
+
+
+bool RocketBullet::on_no_collision() {
+    return false;
+}
+
 
 double RocketBullet::get_velocity() const {
     return 16;

@@ -17,9 +17,17 @@ public:
 
     virtual bool in_front() const = 0;
 
-    std::unique_ptr<Bullet> spawn_bullet(double gun_angle) const;
+    virtual std::vector<std::unique_ptr<Bullet>> spawn_bullets(double gun_angle) const;
 
     void render_large(RenderList& list) const;
+
+    virtual int ticks_between_shots() const {
+        return 15;
+    }
+
+    virtual int initial_ammo() const {
+        return 10;
+    }
 
     virtual ~Gun();
 
@@ -39,6 +47,9 @@ private:
     virtual double grip2_dx() const = 0;
     virtual double grip2_dy() const = 0;
 
+    virtual double barrel_length() const {
+        return 20;
+    }
 
     virtual const char* gun_image_name() const = 0;
 

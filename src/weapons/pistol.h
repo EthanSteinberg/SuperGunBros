@@ -7,6 +7,10 @@ class Pistol : public Gun {
 public:
     virtual bool in_front() const;
 
+    virtual int initial_ammo() const {
+        return -1;
+    }
+
 private:
     virtual double gun_rotation_x() const;
     virtual double gun_rotation_y() const;

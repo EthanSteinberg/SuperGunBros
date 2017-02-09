@@ -10,10 +10,12 @@
 #include "render.h"
 #include "menuscreen.h"
 
+#include <cmath>
+
 const int screen_width = 1280;
 const int screen_height = 720;
 
-const bool debug_keyboard_player = false;
+const bool debug_keyboard_player = true;
 
 struct MainData {
     std::unique_ptr<Screen> current_screen;

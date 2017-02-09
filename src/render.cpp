@@ -146,7 +146,7 @@ void create_and_use_program(int pixel_width, int pixel_height, int screen_width,
 
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0, 1, 1, 1.0);
 
     update_size(program, pixel_width, pixel_height, screen_width, screen_height);

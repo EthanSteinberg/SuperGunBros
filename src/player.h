@@ -8,6 +8,8 @@
 #include "weapons/bullet.h"
 #include "weapons/gun.h"
 
+#include <iostream>
+
 #define MAX_HEALTH 40.0
 
 const int player_width = (int)(90 * ASSET_SCALE);
@@ -69,7 +71,7 @@ struct PlayerState {
     double dx = 0;
     double dy = 0;
 
-    int health = MAX_HEALTH;
+    double health = MAX_HEALTH;
     int lives_left = 3;
 
     int ticks_till_next_bullet = 0;
@@ -100,7 +102,10 @@ public:
     Player(double start_x, double start_y, PlayerInfo info);
     void render(RenderList& list) const;
     void update();
-    std::unique_ptr<Bullet> spawn_bullet() const;
+
+    void set_gun(std::unique_ptr<Gun> gun);
+
+    std::vector<std::unique_ptr<Bullet>> spawn_bullets() const;
 
     PlayerInfo info;
 

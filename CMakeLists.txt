@@ -34,6 +34,12 @@ set(WEAPON_SOURCES
 
     src/weapons/pierce.cpp
     src/weapons/piercebullet.cpp
+
+    src/weapons/bounce.cpp
+    src/weapons/bouncebullet.cpp
+
+    src/weapons/flame.cpp
+    src/weapons/flamebullet.cpp
     )
 
 set(SOURCE_FILES
@@ -62,6 +68,6 @@ add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 
 target_link_libraries(SuperGunBros ${GLFW_LIBRARY} ${OPENGL_LIBRARIES})
 include_directories(lib/glad/include)
-include_directories(lib/json)
+include_directories(lib/rapidjson)
 include_directories(lib/png)
 include_directories(src)

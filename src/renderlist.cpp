@@ -1,13 +1,14 @@
 #include "renderlist.h"
 
 #include <glad/glad.h>
+#include <cmath>
 
-#include <fstream>
+#include <iostream>
 
-RenderList::RenderList(const char* filename) {
-	std::ifstream file(filename);
+RenderList::RenderList(const char* filename): file(filename), wrapper(file) {
 
-	file >> metadata;
+
+    metadata.ParseStream(wrapper);
 
 	std::array<std::array<float, 3>, 3> mat = {{
 		{1, 0, 0},
@@ -19,16 +20,14 @@ RenderList::RenderList(const char* filename) {
 }
 
 Rectangle RenderList::get_image_dimensions(const std::string &name) const {
-    auto info_iter = metadata.find(name);
-
-    if (info_iter == metadata.end()) {
+    if (!metadata.HasMember(name.c_str())) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
 
-    auto& info = *info_iter;
+    auto& info = metadata[name.c_str()];
 
-    return {0, 0, info["sizex"], info["sizey"]};
+    return {0, 0, info["sizex"].GetDouble(), info["sizey"].GetDouble()};
 }
 
 void RenderList::add_outline(const std::string &name, const Rectangle& rect, double line_width) {
@@ -61,47 +60,43 @@ void RenderList::add_number(float x, float y, int num) {
 
         blah[0] = c;
 
-        auto& info = metadata[blah];
+        auto& info = metadata[blah.c_str()];
 
-        add_image(blah, x, y - (double) info["sizey"]);
-        x += (double) info["sizex"] + 4;
+        add_image(blah, x, y - info["sizey"].GetDouble());
+        x += (double) info["sizex"].GetDouble() + 4;
     }
 }
 
 void RenderList::add_image(const std::string &name, float x, float y, float width, float height) {
-    auto info_iter = metadata.find(name);
-
-    if (info_iter == metadata.end()) {
+    if (!metadata.HasMember(name.c_str())) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
 
-    auto& info = *info_iter;
+    auto& info = metadata[name.c_str()];
 
     if (width == -1) {
-        width = info["sizex"];
+        width = info["sizex"].GetDouble();
     }
 
     if (height == -1) {
-        height = info["sizey"];
+        height = info["sizey"].GetDouble();
     }
 
     add_image_core(name, x, y, width, height);
 }
 
 void RenderList::add_scaled_image(const std::string &name, float x, float y, float scale, bool centered) {
-    auto info_iter = metadata.find(name);
-
-    if (info_iter == metadata.end()) {
+    if (!metadata.HasMember(name.c_str())) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
 
-    auto& info = *info_iter;
+    auto& info = metadata[name.c_str()];
 
-    float width = info["sizex"];
+    float width = info["sizex"].GetDouble();
     width = width * scale;
-    float height = info["sizey"];
+    float height = info["sizey"].GetDouble();
     height = height * scale;
 
     if(centered){
@@ -113,18 +108,18 @@ void RenderList::add_scaled_image(const std::string &name, float x, float y, flo
 }
 
 void RenderList::add_image_core(const std::string &name, float x, float y, float width, float height) {
-    auto& info = metadata[name];
-
-    if (info.is_null()) {
+    if (!metadata.HasMember(name.c_str())) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
         exit(-1);
     }
 
-    int px = info["x"];
-    int psizex = info["sizex"];
+    auto& info = metadata[name.c_str()];
 
-    int py = info["y"];
-    int psizey = info["sizey"];
+    int px = info["x"].GetInt();
+    int psizex = info["sizex"].GetInt();
+
+    int py = info["y"].GetInt();
+    int psizey = info["sizey"].GetInt();
 
     add_transfored_point(x, y + height);
     data.push_back(0);

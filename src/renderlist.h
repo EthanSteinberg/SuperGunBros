@@ -1,12 +1,17 @@
 #ifndef RENDERLIST_H_INCLUDED
 #define RENDERLIST_H_INCLUDED
 
-#include <json.hpp>
+#include "rapidjson/document.h"
+#include <array>
 #include <vector>
 #include <string>
 #include <stack>
 
 #include "rectangle.h"
+
+#include <rapidjson/istreamwrapper.h>
+
+#include <fstream>
 
 /**
  * This class allows you to render images to the screen via OpenGL.
@@ -64,7 +69,11 @@ private:
 
 	std::vector<float> data;
 
-	nlohmann::json metadata;
+	rapidjson::Document metadata;
+
+	std::ifstream file;
+
+    rapidjson::BasicIStreamWrapper<std::ifstream> wrapper;
 };
 
 #endif

@@ -1,6 +1,8 @@
 
 #include "player.h"
 
+#include <cmath>
+
 //TODO do i need the radius_2s? should they reflect the outline instead of the second radius?
 
 const double arm_y_offset = -55 * ASSET_SCALE;
@@ -130,20 +132,22 @@ bool Player::is_facing_right() const {
     return fabs(state.gun_angle) < M_PI / 2;
 }
 
-std::unique_ptr<Bullet> Player::spawn_bullet() const {
+std::vector<std::unique_ptr<Bullet>> Player::spawn_bullets() const {
     double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
 
-    std::unique_ptr<Bullet> b = state.gun->spawn_bullet(scaled_gun_angle);
+    auto bullets = state.gun->spawn_bullets(scaled_gun_angle);
 
-    if (!is_facing_right()) {
-        b->pos.x *= -1;
+    for (auto& bullet : bullets) {
+        if (!is_facing_right()) {
+            bullet->pos.x *= -1;
+        }
+
+        bullet->pos.x += state.pos.x;
+        bullet->pos.y += state.pos.y;
+        bullet->angle += state.gun_angle;
     }
 
-    b->pos.x += state.pos.x;
-    b->pos.y += state.pos.y;
-    b->angle = state.gun_angle;
-
-    return b;
+    return bullets;
 }
 
 void Player::render(RenderList& list) const {
@@ -213,7 +217,7 @@ void Player::render(RenderList& list) const {
     list.add_image("black", -20, -62, 40, 8);
     list.add_image("black", -18, -60, 36, 4);
 
-    double health = std::max(0, state.health);
+    double health = std::max(0.0, state.health);
 
     list.add_image(get_color_name(info.color), -18, -60, 36 * health / MAX_HEALTH, 4);
 
@@ -360,3 +364,8 @@ void Player::draw_arm(int arm, RenderList& list, ArmState arms) const{
 
 }
 
+void Player::set_gun(std::unique_ptr<Gun> gun) {
+    state.gun = std::move(gun);
+    state.ammo_left = state.gun->initial_ammo();
+    state.ticks_till_next_bullet = state.gun->ticks_between_shots();
+}
