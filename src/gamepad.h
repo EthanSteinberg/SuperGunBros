@@ -36,6 +36,9 @@ struct inputs {
     button_val buttons[NUM_BUTTONS];
 };
 
+bool button_press(ButtonName b, inputs current, inputs prev);
+bool button_hold(ButtonName b, inputs current, inputs prev);
+bool button_release(ButtonName b, inputs current, inputs prev);
 
 inputs getInputs(int joy);
 

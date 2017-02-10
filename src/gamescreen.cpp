@@ -58,48 +58,50 @@ void GameScreen::render(RenderList& list) const {
     list.pop();
 
     // TODO: figure out what HUD elements are staying
-    list.add_image("black", 0, 660, 1280, 60);
+    //list.add_image("black", 0, 660, 1280, 60);
+//    for (unsigned int i = 0; i < players.size(); i++) {
+//        const auto& player = players[i];
+//
+//        int x_offset = 0;
+//
+//        if (i == 0) {
+//            x_offset = 275/2.0;
+//        } else {
+//            x_offset = 1280 - 275/2.0;
+//        }
+//
+//        list.translate(x_offset, 0);
+//
+//        Rectangle info_box(0, 690, 275, 60);
+//        list.add_rect("white", info_box);
+//        list.add_outline("black", info_box);
+//
+//        std::string life_color = "life-" + get_color_name(player.info.color);
+//
+//        const char* dead_color = "deadLife";
+//
+//        for (int i = 0; i < 3; i++) {
+//            Rectangle life_box(-100 + i * 45, 690, 30, 30);
+//            list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
+//        }
+//
+//        {
+//            list.translate(40, 690);
+//            player.state.gun->render_large(list);
+//            list.translate(-40, -690);
+//        }
+//
+//        if (player.state.ammo_left != -1) {
+//            list.add_number(80, 705, player.state.ammo_left);
+//        } else {
+//            list.add_image("inf", 80, 705 - 19);
+//        }
+//
+//        list.translate(-x_offset, 0);
+//    }
 
-   for (unsigned int i = 0; i < players.size(); i++) {
-       const auto& player = players[i];
 
-       int x_offset = 0;
 
-       if (i == 0) {
-           x_offset = 275/2.0;
-       } else {
-           x_offset = 1280 - 275/2.0;
-       }
-
-       list.translate(x_offset, 0);
-
-       Rectangle info_box(0, 690, 275, 60);
-       list.add_rect("white", info_box);
-       list.add_outline("black", info_box);
-
-       std::string life_color = "life-" + get_color_name(player.info.color);
-
-       const char* dead_color = "deadLife";
-
-       for (int i = 0; i < 3; i++) {
-           Rectangle life_box(-100 + i * 45, 690, 30, 30);
-           list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
-       }
-
-       {
-           list.translate(40, 690);
-           player.state.gun->render_large(list);
-           list.translate(-40, -690);
-       }
-
-       if (player.state.ammo_left != -1) {
-           list.add_number(80, 705, player.state.ammo_left);
-       } else {
-           list.add_image("inf", 80, 705 - 19);
-       }
-
-       list.translate(-x_offset, 0);
-   }
 
     if (game_over) {
         std::string winning_color = "tie";
@@ -116,9 +118,9 @@ void GameScreen::render(RenderList& list) const {
     }
 }
 
-std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
+std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joystick_inputs, const std::map<int, inputs>& all_last_inputs) {
 
-    if (joystick_inputs.count(-1) == 1 && joystick_inputs.at(-1).buttons[ButtonName::L3] && !last_inputs.at(-1).buttons[ButtonName::L3]) {
+    if (all_joystick_inputs.count(-1) == 1 && all_joystick_inputs.at(-1).buttons[ButtonName::L3] && !all_last_inputs.at(-1).buttons[ButtonName::L3]) {
         // This is the signal to reload the map.
         try {
             level = Level::load_all_levels()[level.index];
@@ -142,13 +144,13 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
         for (unsigned int i = 0; i < players.size(); i++) {
             const Player& player = players[i];
             if (winning_player_index == (int) i || winning_player_index == -1) {
-                inputs input = joystick_inputs.at(player.info.joystick_index);
-                inputs last_input = last_inputs.at(player.info.joystick_index);
+                inputs input = all_joystick_inputs.at(player.info.joystick_index);
+                inputs last_input = all_last_inputs.at(player.info.joystick_index);
 
                 if (input.buttons[ButtonName::START] && !last_input.buttons[ButtonName::START]) {
                     std::vector<int> joysticks;
 
-                    for (const auto& item : joystick_inputs) {
+                    for (const auto& item : all_joystick_inputs) {
                         joysticks.push_back(item.first);
                     }
 
@@ -168,11 +170,11 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
 
     camera.update(player_positions);
 
-    for (auto& item : joystick_inputs) {
+    for (auto& item : all_joystick_inputs) {
         if (item.second.buttons[BACK]) {
             std::vector<int> joysticks;
 
-            for (const auto& item : joystick_inputs) {
+            for (const auto& item : all_joystick_inputs) {
                 joysticks.push_back(item.first);
             }
 
@@ -216,26 +218,28 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
             player.update();
             double accel = 0;
 
-            inputs input = joystick_inputs.at(player.info.joystick_index);
+            int js = player.info.joystick_index;
+            inputs current_inputs = all_joystick_inputs.at(js);
+            inputs prev_inputs = all_last_inputs.at(js);
 
             //Threshold the motion so that you aren't creeping around at slow speed
-            float x_thresh = (fabs(input.ls.x) > 0.3) ? input.ls.x : 0;
+            float x_thresh = (fabs(current_inputs.ls.x) > 0.3) ? current_inputs.ls.x : 0;
             accel += x_thresh * X_ACCEL;
 
             //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
-            if (fabs(input.rs.x) > 0.3 || fabs(input.rs.y) > 0.3) {
-                player.state.gun_angle = atan2(input.rs.y, input.rs.x);
+            if (fabs(current_inputs.rs.x) > 0.3 || fabs(current_inputs.rs.y) > 0.3) {
+                player.state.gun_angle = atan2(current_inputs.rs.y, current_inputs.rs.x);
             }
 
             //Checking inputs for later calculations
-            bool attempting_jump = input.buttons[ButtonName::LT];
+            bool attempting_jump = button_press(ButtonName::LT, current_inputs, prev_inputs);
 
-            bool firing_bullet = input.buttons[ButtonName::RT];
+            bool firing_bullet = button_press(ButtonName::RT, current_inputs, prev_inputs);
 
-            bool starting_boost = input.buttons[ButtonName::LB] && !player.state.boosting;
-            bool continuing_boost = input.buttons[ButtonName::LB] && player.state.boosting;
+            bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs);
+            bool continuing_boost = button_hold(ButtonName::LB, current_inputs, prev_inputs) && player.state.boosting;
 
-            bool attempting_pickup = input.buttons[ButtonName::X];
+            bool attempting_pickup = current_inputs.buttons[ButtonName::X];
 
             if (attempting_pickup) {
                 auto potential_gun = attempt_pick_up(player.state.pos);
@@ -335,7 +339,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& joystick
                 }
 
                 //Wall-Jump
-                if(attempting_jump){ //TODO handy controls for wall-jumping
+                if(attempting_jump ||                                                   //Enter Jump Command OR
+                        (button_hold(ButtonName::LT, current_inputs, prev_inputs) &&    //Hold Jump AND
+                          player.state.pushing_wall * accel < 0)){                      //Move opposite the wall direction
+
                     int dir = -player.state.pushing_wall;
                     player.state.jumping = true;
                     player.state.pushing_wall = 0;
@@ -560,7 +567,7 @@ void GameScreen::damage_player(int player_index, double damage) {
 
     player.state.health -= damage;
 
-    if (player.state.health <= 0) {
+    if (player.state.health <= 0 && !player.state.is_dead) {
         player.state.lives_left--;
         player.state.is_dead = true;
 
@@ -634,3 +641,4 @@ std::unique_ptr<Gun> GameScreen::attempt_pick_up(const Rectangle& rect) {
 
     return result;
 }
+

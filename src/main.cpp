@@ -78,7 +78,7 @@ inputs keyboard_debug_input(GLFWwindow* window) {
     input.buttons[ButtonName::LT] = (button_val) (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS);
     input.buttons[ButtonName::RT] = (button_val)(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS);
 
-    input.buttons[ButtonName::BACK] = 0;
+    input.buttons[ButtonName::BACK] = (button_val) (glfwGetKey(window, GLFW_KEY_BACKSPACE) == GLFW_PRESS);;
     input.buttons[ButtonName::START] = (button_val) (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS);
     input.buttons[ButtonName::L3] = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
     input.buttons[ButtonName::R3] = 0;

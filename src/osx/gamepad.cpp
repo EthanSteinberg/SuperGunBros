@@ -89,3 +89,15 @@ inputs getInputs(int joy) {
         exit(-1);
     }
 }
+
+bool button_press(ButtonName b, inputs current, inputs prev) {
+    return current.buttons[b] && !prev.buttons[b];
+}
+
+bool button_hold(ButtonName b, inputs current, inputs prev) {
+    return current.buttons[b] && prev.buttons[b];
+}
+
+bool button_release(ButtonName b, inputs current, inputs prev) {
+    return !current.buttons[b] && prev.buttons[b];
+}

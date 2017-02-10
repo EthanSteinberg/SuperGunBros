@@ -14,14 +14,14 @@
     "2": {
         "sizex": 20,
         "sizey": 30,
-        "x": 1811,
+        "x": 1833,
         "y": 377
     },
     "3": {
         "sizex": 19,
         "sizey": 30,
-        "x": 2001,
-        "y": 686
+        "x": 1854,
+        "y": 377
     },
     "4": {
         "sizex": 22,
@@ -32,32 +32,32 @@
     "5": {
         "sizex": 19,
         "sizey": 30,
-        "x": 2021,
+        "x": 2001,
         "y": 686
     },
     "6": {
         "sizex": 21,
         "sizey": 30,
-        "x": 1840,
+        "x": 1811,
         "y": 377
     },
     "7": {
         "sizex": 20,
         "sizey": 29,
-        "x": 2027,
-        "y": 942
+        "x": 2021,
+        "y": 686
     },
     "8": {
         "sizex": 21,
         "sizey": 30,
-        "x": 1983,
-        "y": 956
+        "x": 1811,
+        "y": 408
     },
     "9": {
         "sizex": 21,
         "sizey": 30,
-        "x": 2005,
-        "y": 942
+        "x": 1811,
+        "y": 439
     },
     "arm-lower-fill": {
         "sizex": 11,
@@ -134,8 +134,8 @@
     "blue-shoulder": {
         "sizex": 28,
         "sizey": 40,
-        "x": 1811,
-        "y": 414
+        "x": 1865,
+        "y": 476
     },
     "body": {
         "sizex": 14,
@@ -197,35 +197,11 @@
         "x": 1996,
         "y": 70
     },
-    "flame-end": {
+    "flame-start": {
         "sizex": 10,
         "sizey": 10,
         "x": 2014,
         "y": 518
-    },
-    "flame-final": {
-        "sizex": 10,
-        "sizey": 10,
-        "x": 2014,
-        "y": 529
-    },
-    "flame-mid": {
-        "sizex": 10,
-        "sizey": 10,
-        "x": 2014,
-        "y": 540
-    },
-    "flame-quarter": {
-        "sizex": 10,
-        "sizey": 10,
-        "x": 1865,
-        "y": 377
-    },
-    "flame-start": {
-        "sizex": 10,
-        "sizey": 10,
-        "x": 1865,
-        "y": 388
     },
     "fuel-color": {
         "sizex": 1,
@@ -260,8 +236,8 @@
     "green-shoulder": {
         "sizex": 28,
         "sizey": 40,
-        "x": 1840,
-        "y": 414
+        "x": 1894,
+        "y": 476
     },
     "grey": {
         "sizex": 1,
@@ -272,8 +248,8 @@
     "hand": {
         "sizex": 10,
         "sizey": 14,
-        "x": 1865,
-        "y": 399
+        "x": 2014,
+        "y": 529
     },
     "head": {
         "sizex": 15,
@@ -314,8 +290,8 @@
     "leg-lower-outline": {
         "sizex": 20,
         "sizey": 56,
-        "x": 2027,
-        "y": 972
+        "x": 2012,
+        "y": 942
     },
     "leg-upper-fill": {
         "sizex": 26,
@@ -494,8 +470,8 @@
     "red-shoulder": {
         "sizex": 28,
         "sizey": 40,
-        "x": 1865,
-        "y": 476
+        "x": 1833,
+        "y": 408
     },
     "redBody": {
         "sizex": 14,
@@ -634,8 +610,8 @@
     "yellow-shoulder": {
         "sizex": 28,
         "sizey": 40,
-        "x": 1894,
-        "y": 476
+        "x": 1983,
+        "y": 956
     },
     "yellowBody": {
         "sizex": 14,
