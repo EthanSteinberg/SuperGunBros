@@ -80,9 +80,11 @@ struct PlayerState {
 
     bool jumping = false;
     bool grounded = false;
+    int grounded_grace = 0;
     bool roofed = false;
     //-1 left 0 false 1 right
     int pushing_wall = 0;
+    int wall_grace = 0;
 
     bool boosting = false;
     double fuel_left = 1;

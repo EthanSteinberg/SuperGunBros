@@ -13,6 +13,8 @@
 #define BOOST_STR 1
 #define BOOST_DUR 180
 #define WALL_FRICTION 0.2
+#define WALL_GRACE 3
+#define GROUND_GRACE 5
 
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level), camera(level.width, level.height) {
 
@@ -232,9 +234,11 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             }
 
             //Checking inputs for later calculations
-            bool attempting_jump = button_press(ButtonName::LT, current_inputs, prev_inputs);
+            bool starting_jump = button_press(ButtonName::LT, current_inputs, prev_inputs);
+            bool holding_jump = button_hold(ButtonName::LT, current_inputs, prev_inputs);
 
-            bool firing_bullet = button_press(ButtonName::RT, current_inputs, prev_inputs);
+            bool pull_trigger = button_press(ButtonName::RT, current_inputs, prev_inputs);
+            bool holding_trigger = button_press(ButtonName::RT, current_inputs, prev_inputs);
 
             bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs);
             bool continuing_boost = button_hold(ButtonName::LB, current_inputs, prev_inputs) && player.state.boosting;
@@ -293,26 +297,66 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             //    player.dx = (player.dx > 0) ? MAX_X_SPEED : -MAX_X_SPEED;
             //}
 
-            //Jumping/Gravity logic
+            printf("grounded     : %d\n", player.state.grounded);
+            printf("grace        : %d\n", player.state.grounded_grace);
+            printf("pushing_wall : %d\n", player.state.pushing_wall);
+            printf("grace        : %d\n", player.state.wall_grace);
+            printf("------------------------\n");
+
+            //Jumping logic (Grace Periods Enabled)
             //Grounded
-            if(player.state.grounded){
+            if(player.state.grounded_grace){
 
-                player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
-
-                //player.state.dy = 0;
                 player.state.ticks_left_jumping = JUMP_DUR;
 
                 //Standard-Jump
-                if(attempting_jump){
+                if(starting_jump) {
                     player.state.jumping = true;
                     player.state.dy -= 1 * JUMP_STR;
+                    player.state.grounded = false;
+                    player.state.grounded_grace = 0;
+                    player.state.pushing_wall = 0;
+                    player.state.wall_grace = 0;
+                    //HANDLING THIS ELSEWHERE
+//                } else {
+//                    player.state.grounded_grace--;
+//                }
                 }
 
-                //Wall-Cling
-            } else if (player.state.pushing_wall) {
+            //Wall-Cling
+            } if (player.state.wall_grace) {
 
                 //Reset Jumps
-                player.state.ticks_left_jumping = JUMP_DUR/2;
+                player.state.ticks_left_jumping = 2 * JUMP_DUR / 3;
+
+                //Wall-Jump
+                if (starting_jump ||                                                  //Enter Jump Command OR
+                    (holding_jump) && player.state.wall_grace * accel < 0) {          //Hold Jump and move opposite dir
+
+                    int dir = player.state.wall_grace < 0 ? 1 : -1;                   //Get that opposite dir
+                    player.state.jumping = true;
+                    player.state.pushing_wall = 0;
+                    player.state.wall_grace = 0;
+                    player.state.grounded = false;
+                    player.state.grounded_grace = 0;
+                    player.state.dy -= 1 * JUMP_STR * cos(M_PI / 4);
+                    player.state.dx = dir * JUMP_STR * cos(M_PI / 4);
+                    player.state.pos.x += dir * 2 * SIGMA; //Get off that wall
+                    //HANDLING THIS ELSEWHERE
+//                } else {
+//                    player.state.wall_grace
+//                }
+                }
+            }
+
+            //Gravity logic
+            //Grounded
+            if(player.state.grounded){
+                //player.state.dy = 0;
+                player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
+
+            //Wall-Cling
+            } else if (player.state.pushing_wall) {
 
                 int max_up = -80;
 
@@ -338,24 +382,12 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                     }
                 }
 
-                //Wall-Jump
-                if(attempting_jump ||                                                   //Enter Jump Command OR
-                        (button_hold(ButtonName::LT, current_inputs, prev_inputs) &&    //Hold Jump AND
-                          player.state.pushing_wall * accel < 0)){                      //Move opposite the wall direction
-
-                    int dir = -player.state.pushing_wall;
-                    player.state.jumping = true;
-                    player.state.pushing_wall = 0;
-                    player.state.dy -= 1 * JUMP_STR * cos(M_PI/4);
-                    player.state.dx = dir * JUMP_STR * cos(M_PI/4);
-                    player.state.pos.x += dir * 2 * SIGMA; //Get off that wall
-                }
-
-                //Aerial Logic
+            //Aerial Logic
             } else {
+
                 //Continued-Jump
                 if(player.state.jumping){
-                    if(attempting_jump && player.state.ticks_left_jumping > 0){
+                    if(holding_jump && player.state.ticks_left_jumping > 0){
                         player.state.ticks_left_jumping--;
                         //To smoothly counteract the falling motion
                         player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
@@ -365,6 +397,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                         player.state.ticks_left_jumping = 0;
                     }
                 }
+
                 //Gravity always has an effect in the air.
                 player.state.dy += GRAVITY;
                 //if (fabs(player.dy) > MAX_Y_SPEED){
@@ -402,30 +435,36 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
             if (would_collide(0, SIGMA)){
                 player.state.grounded = true;
+                player.state.grounded_grace = GROUND_GRACE;
                 player.state.dy = 0;
             } else {
                 player.state.grounded = false;
+                if (player.state.grounded_grace) player.state.grounded_grace--;
             }
 
 
-            //Default to false
-            player.state.pushing_wall = false;
+            //Count the frames
+            player.state.pushing_wall = 0;
             if (would_collide(SIGMA, 0)) {
                 if(accel > 0) {
                     player.state.pushing_wall = 1;
+                    player.state.wall_grace = WALL_GRACE;
                 }
                 player.state.dx = 0;
             } else if (would_collide(-SIGMA, 0) && accel < 0) {
                 if(accel < 0){
                     player.state.pushing_wall = -1;
+                    player.state.wall_grace = -WALL_GRACE;
                 }
                 player.state.dx = 0;
+            } else if (player.state.wall_grace) {
+                player.state.wall_grace -= player.state.wall_grace > 0 ? 1 : -1;
             }
 
             //Bullet logic
             if (player.state.ticks_till_next_bullet > 0) {
                 player.state.ticks_till_next_bullet --;
-            } else if (firing_bullet) {
+            } else if (pull_trigger) {
                 player.state.ticks_till_next_bullet = player.state.gun->ticks_between_shots();
 
                 std::vector<std::unique_ptr<Bullet>> next_bullets = player.spawn_bullets();
