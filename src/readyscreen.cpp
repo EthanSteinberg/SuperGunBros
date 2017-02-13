@@ -37,9 +37,10 @@ void ReadyScreen::render(RenderList& list) const {
 		list.add_image("number-" + get_color_name(player.color), 40, 12);
 
 		{
-			list.translate(275, 70);
+			list.push();
+			list.translate(275, 78);
 			player_icons[i].render(list);
-			list.translate(-275, -70);
+			list.pop();
 		}
 
 		if (player_ready[i]) {

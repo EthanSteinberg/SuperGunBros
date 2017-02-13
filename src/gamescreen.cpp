@@ -16,6 +16,8 @@
 #define WALL_GRACE 3
 #define GROUND_GRACE 5
 
+const int KILLS_TO_WIN = 5;
+
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level), camera(level.width, level.height) {
 
     // Initialize the player state
@@ -59,58 +61,16 @@ void GameScreen::render(RenderList& list) const {
 
     list.pop();
 
-    // TODO: figure out what HUD elements are staying
-    //list.add_image("black", 0, 660, 1280, 60);
-//    for (unsigned int i = 0; i < players.size(); i++) {
-//        const auto& player = players[i];
-//
-//        int x_offset = 0;
-//
-//        if (i == 0) {
-//            x_offset = 275/2.0;
-//        } else {
-//            x_offset = 1280 - 275/2.0;
-//        }
-//
-//        list.translate(x_offset, 0);
-//
-//        Rectangle info_box(0, 690, 275, 60);
-//        list.add_rect("white", info_box);
-//        list.add_outline("black", info_box);
-//
-//        std::string life_color = "life-" + get_color_name(player.info.color);
-//
-//        const char* dead_color = "deadLife";
-//
-//        for (int i = 0; i < 3; i++) {
-//            Rectangle life_box(-100 + i * 45, 690, 30, 30);
-//            list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
-//        }
-//
-//        {
-//            list.translate(40, 690);
-//            player.state.gun->render_large(list);
-//            list.translate(-40, -690);
-//        }
-//
-//        if (player.state.ammo_left != -1) {
-//            list.add_number(80, 705, player.state.ammo_left);
-//        } else {
-//            list.add_image("inf", 80, 705 - 19);
-//        }
-//
-//        list.translate(-x_offset, 0);
-//    }
-
-
-
-
     if (game_over) {
-        std::string winning_color = "tie";
+        std::string winning_color = "";
 
         for (const auto& player: players) {
-            if (player.state.lives_left != 0) {
-                winning_color = get_color_name(player.info.color);
+            if (player.state.kills == KILLS_TO_WIN) {
+                if (winning_color == "") {
+                    winning_color = get_color_name(player.info.color);
+                } else {
+                    winning_color = "tie";
+                }
             }
         }
 
@@ -507,16 +467,16 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         }
     }
 
-    auto damage_player_func = [&](int player_index, double damage) {
-        damage_player(player_index, damage);
-    };
-
     bool hit_something = false;
 
     // Update all the bullets
     for (auto& bullet : bullets) {
         double dx = bullet->get_velocity() * cos(bullet->angle);
         double dy = bullet->get_velocity() * sin(bullet->angle);
+
+        auto damage_player_func = [&](int player_index, double damage) {
+            damage_player(player_index, damage, bullet->player_owner);
+        };
 
         bool is_dead = false;
 
@@ -603,7 +563,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
     return nullptr;
 }
 
-void GameScreen::damage_player(int player_index, double damage) {
+void GameScreen::damage_player(int player_index, double damage, int shooter_index) {
     if (game_over) {
         return;
     }
@@ -617,24 +577,21 @@ void GameScreen::damage_player(int player_index, double damage) {
     player.state.health -= damage;
 
     if (player.state.health <= 0 && !player.state.is_dead) {
-        player.state.lives_left--;
-        player.state.is_dead = true;
 
-        if (player.state.lives_left == 0) {
-
-            int num_alive = 0;
-            for (const auto& other_player: players) {
-                if (other_player.state.lives_left > 0) {
-                    num_alive ++;
-                }
-            }
-
-            if (num_alive <= 1) {
-                // num alive can be 0 when we have a tie. Sometimes. It's a risk
-                game_over = true;
-            }
+        if (shooter_index == player_index) {
+            // why are you killing yourself?
+            player.state.kills = std::max(0, player.state.kills - 1);
         } else {
-            player.state.ticks_until_spawn = 130;
+            auto& shooter = players[shooter_index];
+            shooter.state.kills++;
+
+            player.state.is_dead = true;
+
+            if (shooter.state.kills == KILLS_TO_WIN) {
+                game_over = true;
+            } else {
+                player.state.ticks_until_spawn = 130;
+            }
         }
     }
 }

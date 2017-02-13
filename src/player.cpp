@@ -221,6 +221,11 @@ void Player::render(RenderList& list) const {
 
     list.add_image(get_color_name(info.color), -18, -60, 36 * health / MAX_HEALTH, 4);
 
+    for (int i = 0; i < state.kills; i++) {
+        Rectangle life_box(-15 + i * 10, -67, 8, 8);
+        list.add_rect("life-" + get_color_name(info.color), life_box);
+    }
+
     if (state.is_dead) {
         double angle = M_PI / 2.0 * (1.0 - ((state.ticks_until_spawn - DEATH_INVISIBLE_TIME) / (float)DEATH_ANIMATION_TIME));
 

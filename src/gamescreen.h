@@ -46,7 +46,7 @@ private:
 
     std::unique_ptr<Gun> attempt_pick_up(const Rectangle& rect);
 
-    void damage_player(int player_index, double damage);
+    void damage_player(int player_index, double damage, int shooter_index);
 
     bool game_over = false;
 };
