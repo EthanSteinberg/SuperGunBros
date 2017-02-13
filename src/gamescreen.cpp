@@ -238,7 +238,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             bool holding_jump = button_hold(ButtonName::LT, current_inputs, prev_inputs);
 
             bool pull_trigger = button_press(ButtonName::RT, current_inputs, prev_inputs);
-            bool holding_trigger = button_press(ButtonName::RT, current_inputs, prev_inputs);
+            bool holding_trigger = button_hold(ButtonName::RT, current_inputs, prev_inputs);
 
             bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs);
             bool continuing_boost = button_hold(ButtonName::LB, current_inputs, prev_inputs) && player.state.boosting;
@@ -331,7 +331,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                 //Wall-Jump
                 if (starting_jump ||                                                  //Enter Jump Command OR
-                    (holding_jump) && player.state.wall_grace * accel < 0) {          //Hold Jump and move opposite dir
+                    ((holding_jump) && player.state.wall_grace * accel < 0)) {          //Hold Jump and move opposite dir
 
                     int dir = player.state.wall_grace < 0 ? 1 : -1;                   //Get that opposite dir
                     player.state.jumping = true;
@@ -409,25 +409,35 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             player.state.dx -= player.state.dx * DRAG_COEF;
             player.state.dy -= player.state.dy * DRAG_COEF;
 
-
-
-            //Collision tracking super basic
-            //TODO: Current order of operations causes players to stick to ceiling when jetpacking instead of sliding
-            //TODO: This collision binary search would need to be significantly reworked to fix that.
             if (would_collide(player.state.dx, player.state.dy)){
-                double low = 0.0;
-                double high = 1.0;
-                while(high - low > SIGMA/10){
-                    double mid = low + (high - low)/2;
-                    if (would_collide(mid * player.state.dx, mid * player.state.dy)) {
-                        high = mid;
-                    } else {
-                        low = mid;
+
+                auto binary_search = [&](double dx, double dy) {
+                    double low = 0.0;
+                    double high = 1.0;
+                    while(high - low > SIGMA/10){
+                        double mid = low + (high - low)/2;
+                        if (would_collide(mid * dx, mid * dy)) {
+                            high = mid;
+                        } else {
+                            low = mid;
+                        }
                     }
+
+                    return Point { low * dx, low * dy };
+                };
+
+                Point motion = binary_search(player.state.dx, player.state.dy);
+
+                if (motion.x == 0 && motion.y == 0) {
+                    motion = binary_search(player.state.dx, 0);
                 }
-                //TODO logic that slides along colliding surface
-                player.state.pos.x += low * player.state.dx;
-                player.state.pos.y += low * player.state.dy;
+
+                if (motion.x == 0 && motion.y == 0) {
+                    motion = binary_search(0, player.state.dy);
+                }
+
+                player.state.pos.x += motion.x;
+                player.state.pos.y += motion.y;
             } else {
                 player.state.pos.x += player.state.dx;
                 player.state.pos.y += player.state.dy;
@@ -464,7 +474,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             //Bullet logic
             if (player.state.ticks_till_next_bullet > 0) {
                 player.state.ticks_till_next_bullet --;
-            } else if (pull_trigger) {
+            } else if (pull_trigger || holding_trigger) {
                 player.state.ticks_till_next_bullet = player.state.gun->ticks_between_shots();
 
                 std::vector<std::unique_ptr<Bullet>> next_bullets = player.spawn_bullets();
