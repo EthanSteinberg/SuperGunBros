@@ -57,14 +57,14 @@
 
 
         {
-            "xLeft": 680,
+            "xLeft": 580,
             "xRight": 1240,
             "yTop": 1270,
             "yBottom": 1300
         },
         {
             "xLeft": 1320,
-            "xRight": 1880,
+            "xRight": 1980,
             "yTop": 1270,
             "yBottom": 1300
         },
@@ -80,6 +80,19 @@
             "xRight": 1350,
             "yTop": 700,
             "yBottom": 1300
+        },
+
+        {
+            "xLeft": 780,
+            "xRight": 1240,
+            "yTop": 700,
+            "yBottom": 730
+        },
+        {
+            "xLeft": 1320,
+            "xRight": 1780,
+            "yTop": 700,
+            "yBottom": 730
         },
 
 

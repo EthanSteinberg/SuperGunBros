@@ -8,7 +8,7 @@
 #define JUMP_STR 15
 #define GRAVITY 0.75
 #define X_ACCEL 0.5
-#define JUMP_DUR 10
+#define JUMP_DUR 15
 #define SIGMA 0.001
 #define BOOST_STR 1
 #define BOOST_DUR 180
@@ -297,11 +297,67 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             //    player.dx = (player.dx > 0) ? MAX_X_SPEED : -MAX_X_SPEED;
             //}
 
-            printf("grounded     : %d\n", player.state.grounded);
-            printf("grace        : %d\n", player.state.grounded_grace);
-            printf("pushing_wall : %d\n", player.state.pushing_wall);
-            printf("grace        : %d\n", player.state.wall_grace);
-            printf("------------------------\n");
+            //printf("grounded     : %d\n", player.state.grounded);
+            //printf("grace        : %d\n", player.state.grounded_grace);
+            //printf("pushing_wall : %d\n", player.state.pushing_wall);
+            //printf("grace        : %d\n", player.state.wall_grace);
+            //printf("------------------------\n");
+
+            //Gravity logic
+            //Grounded
+            if(player.state.grounded){
+                //player.state.dy = 0;
+                player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
+
+                //Wall-Cling
+            } else if (player.state.pushing_wall) {
+
+                int max_up = -80;
+
+                // Basically see if you can go up to get over the current obstacle.
+                // This allows a simple mantle operation.
+                bool can_go_up = false;
+
+                for (int i = 0; i >= max_up; i -=5) {
+                    if  (!would_collide(player.state.pushing_wall * SIGMA, i)) {
+                        can_go_up = true;
+                        break;
+                    }
+                }
+                if (can_go_up) {
+                    // Do a mantle operation
+                    player.state.dy -= GRAVITY;
+                } else {
+                    //Half speed fall with friction
+                    player.state.dy += GRAVITY;
+                    //But not if you're jetpacking or jumping
+                    if (!(player.state.boosting || player.state.jumping)) {
+                        player.state.dy -= player.state.dy * WALL_FRICTION;
+                    }
+                }
+
+                //Aerial Logic
+            } else {
+
+                //Continued-Jump
+                if(player.state.jumping){
+                    if(holding_jump && player.state.ticks_left_jumping > 0){
+                        player.state.ticks_left_jumping--;
+                        //To smoothly counteract the falling motion
+                        player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
+
+                    } else {
+                        player.state.jumping = false;
+                        player.state.ticks_left_jumping = 0;
+                    }
+                }
+
+                //Gravity always has an effect in the air.
+                player.state.dy += GRAVITY;
+                //if (fabs(player.dy) > MAX_Y_SPEED){
+                //    player.dy = (player.dy > 0) ? MAX_Y_SPEED : -MAX_Y_SPEED;
+                //}
+            }
 
             //Jumping logic (Grace Periods Enabled)
             //Grounded
@@ -349,61 +405,11 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 }
             }
 
-            //Gravity logic
-            //Grounded
-            if(player.state.grounded){
-                //player.state.dy = 0;
-                player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
+//            printf("ground: %d\n", player.state.grounded);
+//            printf("push: %d\n", player.state.pushing_wall);
+//            printf("jumping: %d\n", player.state.jumping);
+//            printf("-----------------\n");
 
-            //Wall-Cling
-            } else if (player.state.pushing_wall) {
-
-                int max_up = -80;
-
-                // Basically see if you can go up to get over the current obstacle.
-                // This allows a simple mantle operation.
-                bool can_go_up = false;
-
-                for (int i = 0; i >= max_up; i -=5) {
-                    if  (!would_collide(player.state.pushing_wall * SIGMA, i)) {
-                        can_go_up = true;
-                        break;
-                    }
-                }
-                if (can_go_up) {
-                    // Do a mantle operation
-                    player.state.dy -= GRAVITY;
-                } else {
-                    //Half speed fall with friction
-                    player.state.dy += GRAVITY;
-                    //But not if you're jetpacking or jumping
-                    if (!(player.state.boosting || player.state.jumping)) {
-                        player.state.dy -= player.state.dy * WALL_FRICTION;
-                    }
-                }
-
-            //Aerial Logic
-            } else {
-
-                //Continued-Jump
-                if(player.state.jumping){
-                    if(holding_jump && player.state.ticks_left_jumping > 0){
-                        player.state.ticks_left_jumping--;
-                        //To smoothly counteract the falling motion
-                        player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
-
-                    } else {
-                        player.state.jumping = false;
-                        player.state.ticks_left_jumping = 0;
-                    }
-                }
-
-                //Gravity always has an effect in the air.
-                player.state.dy += GRAVITY;
-                //if (fabs(player.dy) > MAX_Y_SPEED){
-                //    player.dy = (player.dy > 0) ? MAX_Y_SPEED : -MAX_Y_SPEED;
-                //}
-            }
 
             //Drag Calculations
             player.state.dx -= player.state.dx * DRAG_COEF;
