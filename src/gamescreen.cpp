@@ -8,7 +8,7 @@
 #define JUMP_STR 15
 #define GRAVITY 0.75
 #define X_ACCEL 0.5
-#define JUMP_DUR 15
+#define JUMP_DUR 10
 #define SIGMA 0.001
 #define BOOST_STR 1
 #define BOOST_DUR 180
@@ -60,6 +60,55 @@ void GameScreen::render(RenderList& list) const {
 	}
 
     list.pop();
+
+    Rectangle kill_board_rect = list.get_image_dimensions("kill-board");
+    kill_board_rect = kill_board_rect.offset(1280/2, kill_board_rect.height/2);
+    list.add_rect("kill-board", kill_board_rect);
+
+    for (const auto& player : players) {
+        int x = 0;
+        int y = 0;
+        const int top_row_offset = 120;
+        const int top_row_y = 30;
+
+        const int bottom_row_offset = 80;
+        const int bottom_row_y = 60;
+
+        switch (player.info.color) {
+            case PlayerColor::RED:
+                x = 1280/2 - top_row_offset;
+                y = top_row_y;
+                break;
+
+            case PlayerColor::BLUE:
+                x = 1280/2 + top_row_offset;
+                y = top_row_y;
+                break;
+
+            case PlayerColor::YELLOW:
+                x = 1280/2 - bottom_row_offset;
+                y = bottom_row_y;
+                break;
+
+            case PlayerColor::GREEN:
+                x = 1280/2 + bottom_row_offset;
+                y = bottom_row_y;
+                break;
+
+            default:
+                std::cout<<"Invalid color " << (int)player.info.color << std::endl;
+                exit(-1);
+        }
+
+        Rectangle counter_rect(x, y, 40, 44);
+
+        list.add_rect(get_color_name(player.info.color), counter_rect);
+        list.add_outline("black", counter_rect);
+
+        std::string number = std::to_string(player.state.kills);
+        Rectangle column_number_text = list.get_image_dimensions(number);
+        list.add_rect(number, column_number_text.offset(x, y));
+    }
 
     if (game_over) {
         std::string winning_color = "";
@@ -264,6 +313,22 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
 
                 //Wall-Cling
+            } else if (player.state.jumping) {
+                // Jumping logic
+                if (would_collide(0, -2 * GRAVITY)) {
+                    // Would hit the ceiling. Stop jumping.
+                    player.state.jumping = false;
+                    player.state.ticks_left_jumping = 0;
+                    player.state.dy += GRAVITY;
+                } else if (holding_jump && player.state.ticks_left_jumping > 0){
+                    player.state.ticks_left_jumping--;
+                    //To smoothly counteract the falling motion
+                    player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
+
+                } else {
+                    player.state.jumping = false;
+                    player.state.ticks_left_jumping = 0;
+                }
             } else if (player.state.pushing_wall) {
 
                 int max_up = -80;
@@ -292,20 +357,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                 //Aerial Logic
             } else {
-
-                //Continued-Jump
-                if(player.state.jumping){
-                    if(holding_jump && player.state.ticks_left_jumping > 0){
-                        player.state.ticks_left_jumping--;
-                        //To smoothly counteract the falling motion
-                        player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
-
-                    } else {
-                        player.state.jumping = false;
-                        player.state.ticks_left_jumping = 0;
-                    }
-                }
-
                 //Gravity always has an effect in the air.
                 player.state.dy += GRAVITY;
                 //if (fabs(player.dy) > MAX_Y_SPEED){
@@ -341,7 +392,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                 //Wall-Jump
                 if (starting_jump ||                                                  //Enter Jump Command OR
-                    (holding_jump) && player.state.wall_grace * accel < 0) {          //Hold Jump and move opposite dir
+                    ((holding_jump) && player.state.wall_grace * accel < 0)) {          //Hold Jump and move opposite dir
 
                     int dir = player.state.wall_grace < 0 ? 1 : -1;                   //Get that opposite dir
                     player.state.jumping = true;
@@ -389,11 +440,12 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 Point motion = binary_search(player.state.dx, player.state.dy);
 
                 if (motion.x == 0 && motion.y == 0) {
-                    motion = binary_search(player.state.dx, 0);
+                    motion = binary_search(0, player.state.dy);
                 }
 
                 if (motion.x == 0 && motion.y == 0) {
-                    motion = binary_search(0, player.state.dy);
+                    // We can't go up, we can't continue jumping.
+                    motion = binary_search(player.state.dx, 0);
                 }
 
                 player.state.pos.x += motion.x;

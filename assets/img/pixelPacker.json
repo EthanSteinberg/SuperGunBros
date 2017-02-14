@@ -275,6 +275,12 @@
         "x": 1794,
         "y": 782
     },
+    "kill-board": {
+        "sizex": 372,
+        "sizey": 109,
+        "x": 1659,
+        "y": 1327
+    },
     "largeRifle": {
         "sizex": 50,
         "sizey": 28,
@@ -380,8 +386,8 @@
     "number-yellow": {
         "sizex": 188,
         "sizey": 103,
-        "x": 1659,
-        "y": 1327
+        "x": 1643,
+        "y": 1484
     },
     "pierce": {
         "sizex": 45,
@@ -513,7 +519,7 @@
         "sizex": 401,
         "sizey": 46,
         "x": 1643,
-        "y": 1431
+        "y": 1437
     },
     "selectPlayers": {
         "sizex": 526,
@@ -539,7 +545,7 @@
         "sizex": 951,
         "sizey": 195,
         "x": 0,
-        "y": 1519
+        "y": 1588
     },
     "startButton": {
         "sizex": 529,

@@ -59,6 +59,9 @@
 
             "weapons": [
                 "flame",
+                "bounce",
+                "pierce",
+                "rocket"
             ],
         }
     ],

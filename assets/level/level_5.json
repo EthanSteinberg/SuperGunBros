@@ -105,7 +105,6 @@
             "yBottom": 125,
 
             "weapons": [
-                "flame",
                 "rocket"
             ]
         },
@@ -117,7 +116,6 @@
             "yBottom": 125,
 
             "weapons": [
-                "flame",
                 "rocket"
             ]
         },
@@ -129,8 +127,7 @@
             "yBottom": 550,
 
             "weapons": [
-                "pierce",
-                "bounce",
+                "pierce"
             ]
         }
     ],
