@@ -2,6 +2,8 @@
     "width": 1280,
     "height": 720,
 
+    "title": "Platforms",
+
     "obstacles": [
         // The main 4 corners of the map
         {

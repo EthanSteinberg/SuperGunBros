@@ -89,7 +89,12 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
     double width = level_data["width"].GetDouble();
     double height = level_data["height"].GetDouble();
 
-    return Level(obstacles, box_spawn_locations, player_spawn_locations, width, height, index);
+    std::string title = "";
+    if (level_data.HasMember("title")) {
+        title = level_data["title"].GetString();
+    }
+
+    return Level(obstacles, box_spawn_locations, player_spawn_locations, width, height, index, title);
 }
 
 Level::Level(
@@ -98,12 +103,14 @@ Level::Level(
     const std::vector<Point>& a_player_spawns,
     double a_width,
     double a_height,
-    unsigned int a_index):
+    unsigned int a_index,
+    const std::string& a_title):
     obstacles(a_obstacles), box_spawn_locations(a_box_spawns),
     player_spawn_locations(a_player_spawns),
     width(a_width),
     height(a_height),
-    index(a_index) {}
+    index(a_index),
+    title(a_title) {}
 
 void Level::render(RenderList& list, bool show_border) const {
     //TODO: Better background logic
@@ -129,7 +136,14 @@ void Level::render(RenderList& list, bool show_border) const {
         }
     } else {
         for (const Rectangle& rect : obstacles) {
-            list.add_image("darkGrey", rect.x - rect.width/2, rect.y - rect.height/2, rect.width, rect.height);
+            double x1 = std::max(0.0, rect.x - rect.width/2);
+            double x2 = std::min(width, rect.x + rect.width/2);
+
+
+            double y1 = std::max(0.0, rect.y - rect.height/2);
+            double y2 = std::min(height, rect.y + rect.height/2);
+
+            list.add_image("darkGrey", x1, y1, (x2 - x1), (y2 - y1));
         }
     }
 }

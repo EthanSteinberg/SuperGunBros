@@ -2,6 +2,8 @@
     "width": 1280,
     "height": 720,
 
+    "title": "More Platforms",
+
     "obstacles": [
         {
             "xLeft": -20,

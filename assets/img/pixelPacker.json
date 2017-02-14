@@ -359,6 +359,12 @@
         "x": 2032,
         "y": 331
     },
+    "lowercase": {
+        "sizex": 286,
+        "sizey": 21,
+        "x": 377,
+        "y": 1022
+    },
     "not-ready-text": {
         "sizex": 376,
         "sizey": 30,
@@ -600,6 +606,12 @@
         "sizey": 18,
         "x": 2039,
         "y": 323
+    },
+    "uppercase": {
+        "sizex": 286,
+        "sizey": 21,
+        "x": 664,
+        "y": 1022
     },
     "white": {
         "sizex": 1,
