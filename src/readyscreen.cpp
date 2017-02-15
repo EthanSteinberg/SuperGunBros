@@ -37,9 +37,10 @@ void ReadyScreen::render(RenderList& list) const {
 		list.add_image("number-" + get_color_name(player.color), 40, 12);
 
 		{
-			list.translate(275, 70);
+			list.push();
+			list.translate(275, 78);
 			player_icons[i].render(list);
-			list.translate(-275, -70);
+			list.pop();
 		}
 
 		if (player_ready[i]) {
@@ -59,7 +60,9 @@ void ReadyScreen::render(RenderList& list) const {
 
 	for (unsigned int offset = 0; offset < LEVELS_PER_COLUMN; offset++) {
 		list.push();
-		list.translate(900, 255 + 140 * offset);
+		list.translate(900, 240 + 140 * offset);
+
+		list.push();
 
 		unsigned int level_index = selected_column * LEVELS_PER_COLUMN + offset;
 		if (level_index >= loaded_levels.size()){
@@ -68,23 +71,32 @@ void ReadyScreen::render(RenderList& list) const {
 		}
 		Level lev = loaded_levels[level_index];
 
-		const double thumbnail_scale = 0.15;
+		const double thumbnail_scale = 0.14;
 
 		list.scale(thumbnail_scale, thumbnail_scale);
 
 		if (level_index == selected_level_index) {
-			list.add_image("black", -100, -100, 1480, 920);
+			Rectangle border_box(1280/2, (720 + 25/thumbnail_scale)/2, 1280 + 120, 720 + 210 + 10 / thumbnail_scale);
+			list.add_outline("black", border_box, 60);
 		}
 
-		const double width_ratio = 1280/lev.width;
-		const double height_ratio = 720/lev.height;
+
+		list.translate(0, 25 / thumbnail_scale);
+
+		const double width_ratio = 1280/(lev.width);
+		const double height_ratio = 720/(lev.height);
 
 		const double level_scale = std::min(width_ratio, height_ratio);
 
 		list.scale(level_scale, level_scale);
 
-		//list.add_image("grey", 0, 0, 1280, 720);
 		lev.render(list, false);
+
+		list.pop();
+
+
+		list.add_text(lev.title, 3, 5);
+
 		list.pop();
 	}
 

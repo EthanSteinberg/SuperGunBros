@@ -43,7 +43,8 @@ private:
         const std::vector<Point>& player_spawn_locations,
         double width,
         double height,
-        unsigned int index);
+        unsigned int index,
+        const std::string& title);
 
     std::vector<Rectangle> obstacles;
 
@@ -55,6 +56,8 @@ public:
     double width;
     double height;
     unsigned int index;
+
+    std::string title;
 };
 
 #endif

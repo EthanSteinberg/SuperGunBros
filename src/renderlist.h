@@ -37,6 +37,8 @@ public:
 	void add_outline(const std::string &name, const Rectangle& rect, double line_width = 4);
 	void add_rect(const std::string &name, const Rectangle& rect);
 
+	void add_text(const std::string& text, float x, float y);
+
 	void add_number(float x, float y, int num);
 
 	// Perform a stateful translation by x and y.
@@ -59,6 +61,7 @@ public:
 private:
 
     void add_image_core(const std::string &name, float x, float y, float width, float height);
+    void add_image_core(const std::string &name, float x, float y, float width, float height, float subx, float suby, float subwidth, float subheight);
 
 	std::array<std::array<float, 3>, 3> transform;
 	std::stack<std::array<std::array<float, 3>, 3>> prev_states;

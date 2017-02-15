@@ -120,21 +120,24 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284272"
-     inkscape:cx="454.87639"
-     inkscape:cy="198.70031"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="693.05998"
+     inkscape:cy="818.09265"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
      units="px"
-     inkscape:window-width="1362"
-     inkscape:window-height="729"
+     inkscape:window-width="1916"
+     inkscape:window-height="1041"
      inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
-       id="grid10958" />
+       id="grid10958"
+       spacingx="1.0583334"
+       spacingy="1.0583334"
+       empspacing="8" />
   </sodipodi:namedview>
   <metadata
      id="metadata5087">
@@ -1270,5 +1273,127 @@
          d="m 176.19112,155.99588 c 0,0 -0.2059,0.42286 -0.56105,1.15218 -0.23675,0.48621 -0.81338,0.81014 -1.05014,1.29635 l -1.56259,3.20904 1.95861,0.9839 1.56258,-3.20903 c 0.23676,-0.48623 0.14994,-1.14505 0.3867,-1.63127 l 0.56821,-1.16692 c 0,0 -0.53504,0.022 -0.76882,-0.0919 -0.23379,-0.11382 -0.53355,-0.54231 -0.53355,-0.54231 z"
          style="fill:#b5a642;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.28743199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.26495039;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 155.36781,64.695803 H 256.96782 L 240.03448,93.799967 H 172.30114 Z"
+       id="rect4668"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/kill-board.png"
+       inkscape:export-xdpi="91.020584"
+       inkscape:export-ydpi="91.020584" />
+    <g
+       id="g4784"
+       transform="translate(62.441674,-39.15833)">
+      <rect
+         y="80.041634"
+         x="173.56668"
+         height="9.5249968"
+         width="9.5249968"
+         id="rect4671"
+         style="fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:0.86590868;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text4675"
+         y="88.231689"
+         x="173.50648"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.65908718px;line-height:5.41192865px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21647717px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.21647717px"
+           y="88.231689"
+           x="173.50648"
+           id="tspan4673"
+           sodipodi:role="line">2</tspan></text>
+    </g>
+    <g
+       id="g4722"
+       transform="translate(-7.4083266,-21.166665)">
+      <rect
+         y="67.341629"
+         x="169.33334"
+         height="9.5249968"
+         width="9.5249968"
+         id="rect4671-9"
+         style="fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:0.86590868;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text4675-6"
+         y="75.134811"
+         x="170.19923"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.65908813px;line-height:5.41192913px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21647717px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.21647717px"
+           y="75.134811"
+           x="170.19923"
+           id="tspan4673-3"
+           sodipodi:role="line">2</tspan></text>
+    </g>
+    <g
+       transform="translate(77.258345,-14.816664)"
+       id="g4722-8">
+      <rect
+         y="67.341629"
+         x="169.33334"
+         height="9.5249968"
+         width="9.5249968"
+         id="rect4671-9-5"
+         style="fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:0.86590868;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text4675-6-6"
+         y="75.134811"
+         x="170.19923"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.65908813px;line-height:5.41192913px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21647717px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.21647717px"
+           y="75.134811"
+           x="170.19923"
+           id="tspan4673-3-1"
+           sodipodi:role="line">2</tspan></text>
+    </g>
+    <g
+       transform="translate(94.19168,-1.0583235)"
+       id="g4722-8-1">
+      <rect
+         y="67.341629"
+         x="169.33334"
+         height="9.5249968"
+         width="9.5249968"
+         id="rect4671-9-5-5"
+         style="fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:0.86590868;stroke-miterlimit:4;stroke-dasharray:none" />
+      <text
+         id="text4675-6-6-9"
+         y="75.134811"
+         x="170.19923"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.65908813px;line-height:5.41192913px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21647717px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="stroke-width:0.21647717px"
+           y="75.134811"
+           x="170.19923"
+           id="tspan4673-3-1-8"
+           sodipodi:role="line">2</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:6.61458254px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="188.91251"
+       y="53.318714"
+       id="text4790"><tspan
+         sodipodi:role="line"
+         id="tspan4788"
+         x="188.91251"
+         y="53.318714"
+         style="stroke-width:0.26458332px">3:00</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:6.61458254px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="182.69481"
+       y="76.469757"
+       id="text7161"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/kill-board.png"
+       inkscape:export-xdpi="91.020584"
+       inkscape:export-ydpi="91.020584"><tspan
+         sodipodi:role="line"
+         id="tspan7159"
+         x="182.69481"
+         y="76.469757"
+         style="stroke-width:0.26458332px">KILLS</tspan></text>
   </g>
 </svg>

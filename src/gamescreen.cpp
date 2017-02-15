@@ -8,13 +8,15 @@
 #define JUMP_STR 15
 #define GRAVITY 0.75
 #define X_ACCEL 0.5
-#define JUMP_DUR 15
+#define JUMP_DUR 10
 #define SIGMA 0.001
 #define BOOST_STR 1
 #define BOOST_DUR 180
 #define WALL_FRICTION 0.2
 #define WALL_GRACE 3
 #define GROUND_GRACE 5
+
+const int KILLS_TO_WIN = 5;
 
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level), camera(level.width, level.height) {
 
@@ -59,58 +61,65 @@ void GameScreen::render(RenderList& list) const {
 
     list.pop();
 
-    // TODO: figure out what HUD elements are staying
-    //list.add_image("black", 0, 660, 1280, 60);
-//    for (unsigned int i = 0; i < players.size(); i++) {
-//        const auto& player = players[i];
-//
-//        int x_offset = 0;
-//
-//        if (i == 0) {
-//            x_offset = 275/2.0;
-//        } else {
-//            x_offset = 1280 - 275/2.0;
-//        }
-//
-//        list.translate(x_offset, 0);
-//
-//        Rectangle info_box(0, 690, 275, 60);
-//        list.add_rect("white", info_box);
-//        list.add_outline("black", info_box);
-//
-//        std::string life_color = "life-" + get_color_name(player.info.color);
-//
-//        const char* dead_color = "deadLife";
-//
-//        for (int i = 0; i < 3; i++) {
-//            Rectangle life_box(-100 + i * 45, 690, 30, 30);
-//            list.add_rect(player.state.lives_left > i ? life_color : dead_color, life_box);
-//        }
-//
-//        {
-//            list.translate(40, 690);
-//            player.state.gun->render_large(list);
-//            list.translate(-40, -690);
-//        }
-//
-//        if (player.state.ammo_left != -1) {
-//            list.add_number(80, 705, player.state.ammo_left);
-//        } else {
-//            list.add_image("inf", 80, 705 - 19);
-//        }
-//
-//        list.translate(-x_offset, 0);
-//    }
+    Rectangle kill_board_rect = list.get_image_dimensions("kill-board");
+    kill_board_rect = kill_board_rect.offset(1280/2, kill_board_rect.height/2);
+    list.add_rect("kill-board", kill_board_rect);
 
+    for (const auto& player : players) {
+        int x = 0;
+        int y = 0;
+        const int top_row_offset = 120;
+        const int top_row_y = 30;
 
+        const int bottom_row_offset = 80;
+        const int bottom_row_y = 60;
 
+        switch (player.info.color) {
+            case PlayerColor::RED:
+                x = 1280/2 - top_row_offset;
+                y = top_row_y;
+                break;
+
+            case PlayerColor::BLUE:
+                x = 1280/2 + top_row_offset;
+                y = top_row_y;
+                break;
+
+            case PlayerColor::YELLOW:
+                x = 1280/2 - bottom_row_offset;
+                y = bottom_row_y;
+                break;
+
+            case PlayerColor::GREEN:
+                x = 1280/2 + bottom_row_offset;
+                y = bottom_row_y;
+                break;
+
+            default:
+                std::cout<<"Invalid color " << (int)player.info.color << std::endl;
+                exit(-1);
+        }
+
+        Rectangle counter_rect(x, y, 40, 44);
+
+        list.add_rect(get_color_name(player.info.color), counter_rect);
+        list.add_outline("black", counter_rect);
+
+        std::string number = std::to_string(player.state.kills);
+        Rectangle column_number_text = list.get_image_dimensions(number);
+        list.add_rect(number, column_number_text.offset(x, y));
+    }
 
     if (game_over) {
-        std::string winning_color = "tie";
+        std::string winning_color = "";
 
         for (const auto& player: players) {
-            if (player.state.lives_left != 0) {
-                winning_color = get_color_name(player.info.color);
+            if (player.state.kills == KILLS_TO_WIN) {
+                if (winning_color == "") {
+                    winning_color = get_color_name(player.info.color);
+                } else {
+                    winning_color = "tie";
+                }
             }
         }
 
@@ -304,6 +313,22 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 player.state.fuel_left = std::min(player.state.fuel_left + 1.0/BOOST_DUR, 1.0);
 
                 //Wall-Cling
+            } else if (player.state.jumping) {
+                // Jumping logic
+                if (would_collide(0, -2 * GRAVITY)) {
+                    // Would hit the ceiling. Stop jumping.
+                    player.state.jumping = false;
+                    player.state.ticks_left_jumping = 0;
+                    player.state.dy += GRAVITY;
+                } else if (holding_jump && player.state.ticks_left_jumping > 0){
+                    player.state.ticks_left_jumping--;
+                    //To smoothly counteract the falling motion
+                    player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
+
+                } else {
+                    player.state.jumping = false;
+                    player.state.ticks_left_jumping = 0;
+                }
             } else if (player.state.pushing_wall) {
 
                 int max_up = -80;
@@ -332,20 +357,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                 //Aerial Logic
             } else {
-
-                //Continued-Jump
-                if(player.state.jumping){
-                    if(holding_jump && player.state.ticks_left_jumping > 0){
-                        player.state.ticks_left_jumping--;
-                        //To smoothly counteract the falling motion
-                        player.state.dy -= GRAVITY; // * (player.ticks_left_jumping/(double)JUMP_DIR);
-
-                    } else {
-                        player.state.jumping = false;
-                        player.state.ticks_left_jumping = 0;
-                    }
-                }
-
                 //Gravity always has an effect in the air.
                 player.state.dy += GRAVITY;
                 //if (fabs(player.dy) > MAX_Y_SPEED){
@@ -382,6 +393,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 //Wall-Jump
                 if (starting_jump ||                                                  //Enter Jump Command OR
                     (holding_jump && player.state.wall_grace * accel < 0)) {          //Hold Jump and move opposite dir
+
 
                     int dir = player.state.wall_grace < 0 ? 1 : -1;                   //Get that opposite dir
                     player.state.jumping = true;
@@ -429,11 +441,12 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 Point motion = binary_search(player.state.dx, player.state.dy);
 
                 if (motion.x == 0 && motion.y == 0) {
-                    motion = binary_search(player.state.dx, 0);
+                    motion = binary_search(0, player.state.dy);
                 }
 
                 if (motion.x == 0 && motion.y == 0) {
-                    motion = binary_search(0, player.state.dy);
+                    // We can't go up, we can't continue jumping.
+                    motion = binary_search(player.state.dx, 0);
                 }
 
                 player.state.pos.x += motion.x;
@@ -507,16 +520,16 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         }
     }
 
-    auto damage_player_func = [&](int player_index, double damage) {
-        damage_player(player_index, damage);
-    };
-
     bool hit_something = false;
 
     // Update all the bullets
     for (auto& bullet : bullets) {
         double dx = bullet->get_velocity() * cos(bullet->angle);
         double dy = bullet->get_velocity() * sin(bullet->angle);
+
+        auto damage_player_func = [&](int player_index, double damage) {
+            damage_player(player_index, damage, bullet->player_owner);
+        };
 
         bool is_dead = false;
 
@@ -603,7 +616,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
     return nullptr;
 }
 
-void GameScreen::damage_player(int player_index, double damage) {
+void GameScreen::damage_player(int player_index, double damage, int shooter_index) {
     if (game_over) {
         return;
     }
@@ -617,24 +630,21 @@ void GameScreen::damage_player(int player_index, double damage) {
     player.state.health -= damage;
 
     if (player.state.health <= 0 && !player.state.is_dead) {
-        player.state.lives_left--;
-        player.state.is_dead = true;
 
-        if (player.state.lives_left == 0) {
-
-            int num_alive = 0;
-            for (const auto& other_player: players) {
-                if (other_player.state.lives_left > 0) {
-                    num_alive ++;
-                }
-            }
-
-            if (num_alive <= 1) {
-                // num alive can be 0 when we have a tie. Sometimes. It's a risk
-                game_over = true;
-            }
+        if (shooter_index == player_index) {
+            // why are you killing yourself?
+            player.state.kills = std::max(0, player.state.kills - 1);
         } else {
-            player.state.ticks_until_spawn = 130;
+            auto& shooter = players[shooter_index];
+            shooter.state.kills++;
+
+            player.state.is_dead = true;
+
+            if (shooter.state.kills == KILLS_TO_WIN) {
+                game_over = true;
+            } else {
+                player.state.ticks_until_spawn = 130;
+            }
         }
     }
 }

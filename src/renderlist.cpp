@@ -31,10 +31,10 @@ Rectangle RenderList::get_image_dimensions(const std::string &name) const {
 }
 
 void RenderList::add_outline(const std::string &name, const Rectangle& rect, double line_width) {
-    add_line(name, rect.x - rect.width/2, rect.y - rect.height/2 + line_width / 2, rect.x + rect.width/2, rect.y - rect.height/2 + line_width/2);
-    add_line(name, rect.x - rect.width/2, rect.y + rect.height/2 - line_width / 2, rect.x + rect.width/2, rect.y + rect.height/2 - line_width/2);
-    add_line(name, rect.x - rect.width/2 + line_width / 2, rect.y - rect.height/2, rect.x - rect.width/2 + line_width / 2, rect.y + rect.height/2);
-    add_line(name, rect.x + rect.width/2 - line_width / 2, rect.y - rect.height/2, rect.x + rect.width/2 - line_width / 2, rect.y + rect.height/2);
+    add_line(name, rect.x - rect.width/2, rect.y - rect.height/2 + line_width / 2, rect.x + rect.width/2, rect.y - rect.height/2 + line_width/2, line_width);
+    add_line(name, rect.x - rect.width/2, rect.y + rect.height/2 - line_width / 2, rect.x + rect.width/2, rect.y + rect.height/2 - line_width/2, line_width);
+    add_line(name, rect.x - rect.width/2 + line_width / 2, rect.y - rect.height/2, rect.x - rect.width/2 + line_width / 2, rect.y + rect.height/2, line_width);
+    add_line(name, rect.x + rect.width/2 - line_width / 2, rect.y - rect.height/2, rect.x + rect.width/2 - line_width / 2, rect.y + rect.height/2, line_width);
 }
 
 void RenderList::add_rect(const std::string &name, const Rectangle& rect) {
@@ -107,6 +107,33 @@ void RenderList::add_scaled_image(const std::string &name, float x, float y, flo
     add_image_core(name, x, y, width, height);
 }
 
+void RenderList::add_text(const std::string& text, float x, float y) {
+
+    std::string lowercase = "abcdefghijklmnopqrstuvwxyz";
+    std::string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    const int advance = 11;
+    const int height = 20;
+
+    for (unsigned int i = 0; i < text.size(); i++) {
+        char current_char = text[i];
+
+        if (current_char == ' ') {
+            // Don't draw anything for a space
+        } else if (lowercase.find(current_char) != std::string::npos) {
+            int offset = lowercase.find(current_char);
+            add_image_core("lowercase", x, y, advance, height, offset * advance, 0, advance, height);
+        } else if (uppercase.find(current_char) != std::string::npos) {
+            int offset = uppercase.find(current_char);
+            add_image_core("uppercase", x, y, advance, height, offset * advance, 0, advance, height);
+        } else {
+            std::cout<<"Could not find image for character " << current_char << std::endl;
+        }
+
+        x += advance;
+    }
+}
+
 void RenderList::add_image_core(const std::string &name, float x, float y, float width, float height) {
     if (!metadata.HasMember(name.c_str())) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
@@ -114,12 +141,23 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     }
 
     auto& info = metadata[name.c_str()];
+    add_image_core(name, x, y, width, height, 0, 0,  info["sizex"].GetInt(),  info["sizey"].GetInt());
+}
 
-    int px = info["x"].GetInt();
-    int psizex = info["sizex"].GetInt();
 
-    int py = info["y"].GetInt();
-    int psizey = info["sizey"].GetInt();
+void RenderList::add_image_core(const std::string &name, float x, float y, float width, float height, float subx, float suby, float subwidth, float subheight) {
+    if (!metadata.HasMember(name.c_str())) {
+        std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
+        exit(-1);
+    }
+
+    auto& info = metadata[name.c_str()];
+
+    int px = info["x"].GetInt() + subx;
+    int psizex = subwidth;
+
+    int py = info["y"].GetInt() + suby;
+    int psizey = subheight;
 
     add_transfored_point(x, y + height);
     data.push_back(0);
