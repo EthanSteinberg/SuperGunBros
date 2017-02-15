@@ -1,135 +1,215 @@
 {
     "width": 2560,
     "height": 1440,
+    "mirrored": true,
 
     "obstacles": [
 
+        //Boundaries
+        //---------------
+        //Ceiling (two halves)
         {
             "xLeft": -40,
-            "xRight": 2600,
+            "xRight": 1300,
             "yTop": -40,
             "yBottom": 40
         },
         {
             "xLeft": -40,
-            "xRight": 2600,
+            "xRight": 1300,
             "yTop": 1400,
             "yBottom": 1480
         },
+        //Walls
         {
             "xLeft": -40,
             "xRight": 40,
             "yTop": -40,
             "yBottom": 1480
         },
-        {
-            "xLeft": 2520,
-            "xRight": 2600,
-            "yTop": -40,
-            "yBottom": 1480
-        },
+        //-----------------
 
 
+        //Spawn platforms
+        //----------------
+        //Lower
         {
             "xLeft": -40,
             "xRight": 300,
-            "yTop": 1160,
-            "yBottom": 1200
+            "yTop": 1230,
+            "yBottom": 1260
         },
-        {
-            "xLeft": 2260,
-            "xRight": 2600,
-            "yTop": 1160,
-            "yBottom": 1200
-        },
+        //Upper
         {
             "xLeft": -40,
             "xRight": 300,
-            "yTop": 280,
-            "yBottom": 320
+            "yTop": 180,
+            "yBottom": 210
         },
-        {
-            "xLeft": 2260,
-            "xRight": 2600,
-            "yTop": 280,
-            "yBottom": 320
-        },
+        //-----------------
 
 
+
+        //Center Shaft
+        //----------------
+        //Bottom
         {
-            "xLeft": 580,
+            "xLeft": 500,
             "xRight": 1240,
             "yTop": 1270,
             "yBottom": 1300
         },
-        {
-            "xLeft": 1320,
-            "xRight": 1980,
-            "yTop": 1270,
-            "yBottom": 1300
-        },
-
+        //Shaft
         {
             "xLeft": 1210,
             "xRight": 1240,
             "yTop": 700,
             "yBottom": 1300
         },
-        {
-            "xLeft": 1320,
-            "xRight": 1350,
-            "yTop": 700,
-            "yBottom": 1300
-        },
-
+        //Top
         {
             "xLeft": 780,
             "xRight": 1240,
             "yTop": 700,
             "yBottom": 730
         },
+        //-----------------
+
+
+        //Lower Rooms
+        //-----------------
+        //Shaft wall
         {
-            "xLeft": 1320,
-            "xRight": 1780,
-            "yTop": 700,
-            "yBottom": 730
+            "xLeft": 1050,
+            "xRight": 1080,
+            "yTop": 850,
+            "yBottom": 1150
         },
+        //Floor
+        {
+            "xLeft": 600,
+            "xRight": 1080,
+            "yTop": 1120,
+            "yBottom": 1150
+        },
+        //Ceiling
+        {
+            "xLeft": 200,
+            "xRight": 1080,
+            "yTop": 850,
+            "yBottom": 880
+        },
+        //-----------------
+
+
+        //Top
+        //-----------------
+        //high wall
+        {
+            "xLeft": 200,
+            "xRight": 230,
+            "yTop": 370,
+            "yBottom": 1050
+        },
+
+        //Floor
+        {
+            "xLeft": 200,
+            "xRight": 725,
+            "yTop": 370,
+            "yBottom": 400
+        },
+
+
+        //CenterBox
+        {
+            "xLeft": 1000,
+            "xRight": 1400,
+            "yTop": 300,
+            "yBottom": 400
+        },
+
+        //SideBox
+        {
+            "xLeft": 350,
+            "xRight": 600,
+            "yTop": 550,
+            "yBottom": 725
+        },
+
+
+
+
 
 
     ],
 
     "boxSpawnLocations": [
+
+        //Lower rooms
         {
-            "xLeft": 200,
-            "xRight": 1100,
-            "yTop": 600,
-            "yBottom": 700,
+            "xLeft": 800,
+            "xRight": 1000,
+            "yTop": 900,
+            "yBottom": 1050,
+
+            "weapons": [
+                "flame",
+                "bounce",
+            ]
+        },
+
+        //Upper rooms
+        {
+            "xLeft": 400,
+            "xRight": 550,
+            "yTop": 450,
+            "yBottom": 525,
 
             "weapons": [
                 "pierce",
-                "rocket"
+                "rocket",
             ]
-        }
+        },
+
+        //CenterBox
+        {
+            "xLeft": 1100,
+            "xRight": 1200,
+            "yTop": 200,
+            "yBottom": 300,
+
+            "weapons": [
+                "flame",
+                "rocket",
+            ]
+        },
+
+        //Bottom
+        {
+            "xLeft": 1200,
+            "xRight": 1270,
+            "yTop": 1180,
+            "yBottom": 1260,
+
+            "weapons": [
+                "flame",
+                "rocket",
+            ]
+        },
+
     ],
 
     "spawnLocations": [
 
         {
             "x": 170,
-            "y": 220
+            "y": 100
         },
         {
             "x": 2380,
             "y": 1340
         },
-        {
-            "x": 170,
-            "y": 1340
-        },
-        {
-            "x": 2380,
-            "y": 220
-        }
 
     ]
 }

@@ -381,7 +381,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                 //Wall-Jump
                 if (starting_jump ||                                                  //Enter Jump Command OR
-                    (holding_jump) && player.state.wall_grace * accel < 0) {          //Hold Jump and move opposite dir
+                    (holding_jump && player.state.wall_grace * accel < 0)) {          //Hold Jump and move opposite dir
 
                     int dir = player.state.wall_grace < 0 ? 1 : -1;                   //Get that opposite dir
                     player.state.jumping = true;
@@ -389,8 +389,8 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                     player.state.wall_grace = 0;
                     player.state.grounded = false;
                     player.state.grounded_grace = 0;
-                    player.state.dy -= 1 * JUMP_STR * cos(M_PI / 4);
-                    player.state.dx = dir * JUMP_STR * cos(M_PI / 4);
+                    player.state.dy -= 1 * JUMP_STR * sin(M_PI / 3);
+                    player.state.dx = dir * JUMP_STR * cos(M_PI / 3);
                     player.state.pos.x += dir * 2 * SIGMA; //Get off that wall
                     //HANDLING THIS ELSEWHERE
 //                } else {

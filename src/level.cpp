@@ -46,18 +46,41 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
         throw std::runtime_error(std::string("Could not parse ") + filename);
     }
 
+    double l_width = level_data["width"].GetDouble();
+    double l_height = level_data["height"].GetDouble();
+
+    bool mirrored = false;
+
+    if (level_data.HasMember("mirrored")){
+        mirrored = level_data["mirrored"].GetBool();
+    }
+
     std::vector<Rectangle> obstacles;
 
     for (const auto& obstacle: level_data["obstacles"].GetArray()) {
         double width = obstacle["xRight"].GetDouble() - obstacle["xLeft"].GetDouble();
         double height = obstacle["yBottom"].GetDouble() - obstacle["yTop"].GetDouble();
+
+        double x = obstacle["xRight"].GetDouble() - width/2;
+        double y = obstacle["yBottom"].GetDouble() - height/2;
+
         Rectangle rect(
-            obstacle["xRight"].GetDouble() - width/2,
-            obstacle["yBottom"].GetDouble() - height/2,
+            x,
+            y,
             width,
             height);
 
         obstacles.push_back(rect);
+
+        if (mirrored) {
+            Rectangle rect2(
+                    l_width - x,
+                    y,
+                    width,
+                    height);
+
+            obstacles.push_back(rect2);
+        }
     }
 
 
@@ -65,9 +88,13 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
     for (const auto& spawn_location: level_data["boxSpawnLocations"].GetArray()) {
         double width = spawn_location["xRight"].GetDouble() - spawn_location["xLeft"].GetDouble();
         double height = spawn_location["yBottom"].GetDouble() - spawn_location["yTop"].GetDouble();
+
+        double x = spawn_location["xRight"].GetDouble() - width/2;
+        double y = spawn_location["yBottom"].GetDouble() - height/2;
+
         Rectangle rect(
-            spawn_location["xRight"].GetDouble() - width/2,
-            spawn_location["yBottom"].GetDouble() - height/2,
+            x,
+            y,
             width,
             height);
 
@@ -78,18 +105,34 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
         }
 
         box_spawn_locations.push_back(BoxSpawn(rect, weapons));
+
+        if (mirrored) {
+            Rectangle rect2(
+                    l_width - x,
+                    y,
+                    width,
+                    height);
+
+            box_spawn_locations.push_back(BoxSpawn(rect2,weapons));
+        }
+
     }
 
     std::vector<Point> player_spawn_locations;
     for (const auto& spawn_location: level_data["spawnLocations"].GetArray()) {
-        Point p = {spawn_location["x"].GetDouble(), spawn_location["y"].GetDouble()};
+
+        double x = spawn_location["x"].GetDouble();
+        double y = spawn_location["y"].GetDouble();
+        Point p = {x, y};
         player_spawn_locations.push_back(p);
+
+        if (mirrored) {
+            Point p2 = {l_width-x, y};
+            player_spawn_locations.push_back(p2);
+        }
     }
 
-    double width = level_data["width"].GetDouble();
-    double height = level_data["height"].GetDouble();
-
-    return Level(obstacles, box_spawn_locations, player_spawn_locations, width, height, index);
+    return Level(obstacles, box_spawn_locations, player_spawn_locations, l_width, l_height, index);
 }
 
 Level::Level(
