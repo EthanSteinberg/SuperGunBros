@@ -75,8 +75,6 @@ std::vector<std::unique_ptr<Bullet>> Flame::spawn_bullets(double gun_angle) cons
 
         FlameBullet* foo = (FlameBullet*) result.get();
 
-        std::cout<<"Start " << foo->ticks_left<<std::endl;
-
         results.push_back(std::move(result));
     }
 
