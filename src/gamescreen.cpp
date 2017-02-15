@@ -387,9 +387,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             //Wall-Cling
             } if (player.state.wall_grace) {
 
-                //Reset Jumps
-                player.state.ticks_left_jumping = 2 * JUMP_DUR / 3;
-
                 //Wall-Jump
                 if (starting_jump ||                                                  //Enter Jump Command OR
                     (holding_jump && player.state.wall_grace * accel < 0)) {          //Hold Jump and move opposite dir
@@ -404,13 +401,13 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                     player.state.dy -= 1 * JUMP_STR * sin(M_PI / 3);
                     player.state.dx = dir * JUMP_STR * cos(M_PI / 3);
                     player.state.pos.x += dir * 2 * SIGMA; //Get off that wall
+                    player.state.ticks_left_jumping = 2 * JUMP_DUR / 3;
                     //HANDLING THIS ELSEWHERE
 //                } else {
 //                    player.state.wall_grace
 //                }
                 }
             }
-
 //            printf("ground: %d\n", player.state.grounded);
 //            printf("push: %d\n", player.state.pushing_wall);
 //            printf("jumping: %d\n", player.state.jumping);
