@@ -35,6 +35,27 @@
         //-----------
         //Outer
 
+        {
+            "xLeft": -40,
+            "xRight": 3880,
+            "yTop": -40,
+            "yBottom": 40
+        },
+        //Floor
+        {
+            "xLeft": -40,
+            "xRight": 3880,
+            "yTop": 2120,
+            "yBottom": 2200
+        },
+        //Walls
+        {
+            "xLeft": -40,
+            "xRight": 40,
+            "yTop": -40,
+            "yBottom": 2200
+        },
+
         //Inner
 
         //-----------
