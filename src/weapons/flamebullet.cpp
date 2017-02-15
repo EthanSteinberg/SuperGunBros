@@ -1,11 +1,12 @@
 #include "flamebullet.h"
 
 #include <cmath>
+#include <iostream>
 
 bool FlameBullet::count_down_life() {
     ticks_left -= 1;
 
-    return ticks_left == 0;
+    return ticks_left < 0;
 }
 
 bool FlameBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>) {

@@ -12,9 +12,10 @@ public:
 
     virtual double get_velocity() const;
 
-private:
+// private:
 
     int ticks_left = 40;
+private:
 
     bool count_down_life();
 
