@@ -20,7 +20,7 @@ public:
     GameScreen(const std::vector<PlayerInfo>& players, const Level& level);
 
     void render(RenderList& list) const;
-    std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs);
+    std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs, SoundThread& thread);
 private:
     Level level;
 

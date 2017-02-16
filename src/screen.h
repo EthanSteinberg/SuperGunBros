@@ -9,6 +9,8 @@
 
 #include <memory>
 
+class SoundThread;
+
 class Screen {
 public:
 	// Render the current screen.
@@ -17,7 +19,14 @@ public:
 
 	// Update the state of the game by one tick
 	// Return a new Screen if you want to transition, otherwise return nullptr.
-	virtual std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) = 0;
+	virtual std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs) {
+        return nullptr;
+    }
+
+
+    virtual std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs, SoundThread& sounds) {
+        return update(joystick_inputs, last_inputs);
+    }
 
 	virtual ~Screen() {}
 };

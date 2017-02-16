@@ -27,6 +27,8 @@ enum class PlayerColor {
     GREEN
 };
 
+class SoundThread;
+
 inline std::string get_color_name(PlayerColor color) {
     switch (color) {
         case PlayerColor::RED:

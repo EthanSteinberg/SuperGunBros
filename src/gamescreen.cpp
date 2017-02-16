@@ -4,6 +4,8 @@
 #include <string>
 #include <cmath>
 
+#include "soundthread.h"
+
 #define DRAG_COEF 0.075
 #define JUMP_STR 15
 #define GRAVITY 0.75
@@ -133,7 +135,7 @@ void GameScreen::render(RenderList& list) const {
     }
 }
 
-std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joystick_inputs, const std::map<int, inputs>& all_last_inputs) {
+std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joystick_inputs, const std::map<int, inputs>& all_last_inputs, SoundThread& sounds) {
 
     if (all_joystick_inputs.count(-1) == 1 && all_joystick_inputs.at(-1).buttons[ButtonName::L3] && !all_last_inputs.at(-1).buttons[ButtonName::L3]) {
         // This is the signal to reload the map.
@@ -498,6 +500,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             if (player.state.ticks_till_next_bullet > 0) {
                 player.state.ticks_till_next_bullet --;
             } else if (pull_trigger || holding_trigger) {
+                sounds.play_sound("../assets/sound/shoot.wav");
                 player.state.ticks_till_next_bullet = player.state.gun->ticks_between_shots();
 
                 std::vector<std::unique_ptr<Bullet>> next_bullets = player.spawn_bullets();
@@ -594,6 +597,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             next_bullets.push_back(std::move(bullet));
         } else {
             if (bullet->create_explosion_after_destruction()) {
+                sounds.play_sound("../assets/sound/explosion.wav");
                 explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y));
             }
         }

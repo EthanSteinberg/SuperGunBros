@@ -12,7 +12,7 @@ if(APPLE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
 else()
 	set(OS_DIR linux)
-    set(GLFW_LIBRARY glfw)
+    set(GLFW_LIBRARY glfw portaudio sndfile pthread)
 endif()
 
 
@@ -62,6 +62,7 @@ set(SOURCE_FILES
     src/camera.cpp
 	src/magic.h
     src/boxspawn.cpp
+    src/soundthread.cpp
 )
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})

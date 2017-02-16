@@ -12,6 +12,8 @@
 
 #include <cmath>
 
+#include "soundthread.h"
+
 const int screen_width = 1280;
 const int screen_height = 720;
 
@@ -119,6 +121,9 @@ std::map<int, inputs> get_joystick_inputs(const std::vector<int>& connected_joys
 
 int main(void)
 {
+    SoundThread sounds;
+    sounds.start();
+
     glfwSetErrorCallback(error_callback);
     if (!glfwInit()) {
         exit(EXIT_FAILURE);
@@ -204,7 +209,7 @@ int main(void)
             std::map<int, inputs> current_inputs = get_joystick_inputs(connected_joysticks, window);
 
             start_time += TIME_PER_TICK;
-            std::unique_ptr<Screen> next_screen = data.current_screen->update(current_inputs, last_inputs);
+            std::unique_ptr<Screen> next_screen = data.current_screen->update(current_inputs, last_inputs, sounds);
             if (next_screen) {
                 data.current_screen = std::move(next_screen);
             }
