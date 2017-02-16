@@ -101,10 +101,8 @@
 
     "boxSpawnLocations": [
         {
-            "xLeft": 1050,
-            "xRight": 1280,
-            "yTop": 100,
-            "yBottom": 125,
+            "x": 1050,
+            "y": 100,
 
             "weapons": [
                 "flame",
@@ -113,10 +111,8 @@
         },
 
         {
-            "xLeft": 0,
-            "xRight": 130,
-            "yTop": 100,
-            "yBottom": 125,
+            "x": 0,
+            "y": 100,
 
             "weapons": [
                 "flame",
@@ -125,10 +121,8 @@
         },
 
         {
-            "xLeft": 600,
-            "xRight": 680,
-            "yTop": 500,
-            "yBottom": 550,
+            "x": 600,
+            "y": 500,
 
             "weapons": [
                 "pierce",

@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#include <iostream>
+
 double Flame::gun_rotation_x() const {
     return 0;
 }
@@ -66,7 +68,8 @@ std::vector<std::unique_ptr<Bullet>> Flame::spawn_bullets(double gun_angle) cons
     double y = (gun_rotation_y() + sin(gun_angle) * (gun_offset_x() + barrel_offset_x() + barrel_length()) + cos(gun_angle) * (gun_offset_y() + barrel_offset_y()));
 
     for (int i = -10; i <= 10; i++) {
-        std::unique_ptr<Bullet> result = create_initial_bullet();
+        std::unique_ptr<FlameBullet> result = std::make_unique<FlameBullet>();
+        result->ticks_left = 40 - (std::abs(i));
         result->pos.x = x;
         result->pos.y = y;
         result->angle = i/10.0 * 15.0 * M_PI/180.0;

@@ -52,9 +52,12 @@ public:
 
 	Rectangle get_image_dimensions(const std::string &name) const;
 
+	void add_flame(float x, float y, float r, float g, float b);
+
 	// Actually draw everything currently in the render list.
 	void draw();
 
+	void draw_flame();
 
 	void push();
 	void pop();
@@ -66,11 +69,12 @@ private:
 	std::array<std::array<float, 3>, 3> transform;
 	std::stack<std::array<std::array<float, 3>, 3>> prev_states;
 
-	void add_transfored_point(float x, float y);
+	void add_transformed_point(std::vector<float>& data, float x, float y);
 
 	void mmultiply(float other[][3]);
 
 	std::vector<float> data;
+	std::vector<float> flame_data;
 
 	rapidjson::Document metadata;
 

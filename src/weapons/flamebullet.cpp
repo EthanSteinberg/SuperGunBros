@@ -1,11 +1,12 @@
 #include "flamebullet.h"
 
 #include <cmath>
+#include <iostream>
 
 bool FlameBullet::count_down_life() {
     ticks_left -= 1;
 
-    return ticks_left == 0;
+    return ticks_left < 0;
 }
 
 bool FlameBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>) {
@@ -28,4 +29,21 @@ double FlameBullet::get_velocity() const {
 
 const char* FlameBullet::bullet_image_name() const {
     return "flame-start";
+}
+
+void FlameBullet::render(RenderList& list) const {
+
+    double yellow = 1 - std::pow(1 - (ticks_left / 40.0), 2.0);
+
+    list.add_flame(pos.x, pos.y, 1, yellow, 0);
+
+    // list.push();
+
+    // list.translate(pos.x, pos.y);
+    // list.rotate(angle);
+
+    // Rectangle image = list.get_image_dimensions(bullet_image_name());
+    // list.add_rect(bullet_image_name(), image);
+
+    // list.pop();
 }

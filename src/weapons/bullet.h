@@ -18,7 +18,7 @@ public:
 
     double angle;
 
-    void render(RenderList& list) const;
+    virtual void render(RenderList& list) const;
 
     // Return true if the bullet should be marked dead
     virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, bool free_horizontal, bool free_vertical) {

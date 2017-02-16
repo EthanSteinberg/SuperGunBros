@@ -12,9 +12,12 @@ public:
 
     virtual double get_velocity() const;
 
-private:
+    virtual void render(RenderList& list) const;
+
+// private:
 
     int ticks_left = 40;
+private:
 
     bool count_down_life();
 

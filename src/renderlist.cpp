@@ -159,7 +159,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     int py = info["y"].GetInt() + suby;
     int psizey = subheight;
 
-    add_transfored_point(x, y + height);
+    add_transformed_point(data, x, y + height);
     data.push_back(0);
 
     data.push_back(px);
@@ -171,7 +171,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     data.push_back(psizey);
 
 
-    add_transfored_point(x + width, y);
+    add_transformed_point(data, x + width, y);
     data.push_back(0);
 
     data.push_back(px + psizex);
@@ -183,7 +183,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     data.push_back(psizey);
 
 
-    add_transfored_point(x + width, y + height);
+    add_transformed_point(data, x + width, y + height);
     data.push_back(0);
 
     data.push_back(px + psizex);
@@ -195,7 +195,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     data.push_back(psizey);
 
 
-    add_transfored_point(x, y + height);
+    add_transformed_point(data, x, y + height);
     data.push_back(0);
 
     data.push_back(px);
@@ -207,7 +207,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     data.push_back(psizey);
 
 
-    add_transfored_point(x + width, y);
+    add_transformed_point(data, x + width, y);
     data.push_back(0);
 
     data.push_back(px + psizex);
@@ -219,7 +219,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     data.push_back(psizey);
 
 
-    add_transfored_point(x, y);
+    add_transformed_point(data, x, y);
     data.push_back(0);
 
     data.push_back(px);
@@ -229,6 +229,73 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     data.push_back(py);
     data.push_back(psizex);
     data.push_back(psizey);
+}
+
+void RenderList::add_flame(float center_x, float center_y, float r, float g, float b) {
+    double height = 20;
+    double width = 20;
+
+    double x = center_x - width / 2;
+    double y = center_y - height / 2;
+
+    add_transformed_point(flame_data, x, y + height);
+    flame_data.push_back(0);
+
+    flame_data.push_back(r);
+    flame_data.push_back(g);
+    flame_data.push_back(b);
+
+    add_transformed_point(flame_data, center_x, center_y);
+
+
+    add_transformed_point(flame_data, x + width, y);
+    flame_data.push_back(0);
+
+    flame_data.push_back(r);
+    flame_data.push_back(g);
+    flame_data.push_back(b);
+
+    add_transformed_point(flame_data, center_x, center_y);
+
+
+    add_transformed_point(flame_data, x + width, y + height);
+    flame_data.push_back(0);
+
+    flame_data.push_back(r);
+    flame_data.push_back(g);
+    flame_data.push_back(b);
+
+    add_transformed_point(flame_data, center_x, center_y);
+
+
+    add_transformed_point(flame_data, x, y + height);
+    flame_data.push_back(0);
+
+    flame_data.push_back(r);
+    flame_data.push_back(g);
+    flame_data.push_back(b);
+
+    add_transformed_point(flame_data, center_x, center_y);
+
+
+    add_transformed_point(flame_data, x + width, y);
+    flame_data.push_back(0);
+
+    flame_data.push_back(r);
+    flame_data.push_back(g);
+    flame_data.push_back(b);
+
+    add_transformed_point(flame_data, center_x, center_y);
+
+
+    add_transformed_point(flame_data, x, y);
+    flame_data.push_back(0);
+
+    flame_data.push_back(r);
+    flame_data.push_back(g);
+    flame_data.push_back(b);
+
+    add_transformed_point(flame_data, center_x, center_y);
 }
 
 void RenderList::draw() {
@@ -236,12 +303,17 @@ void RenderList::draw() {
 	glDrawArrays(GL_TRIANGLES, 0, data.size() / 9);
 }
 
-void RenderList::add_transfored_point(float x, float y) {
+void RenderList::draw_flame() {
+    glBufferData(GL_ARRAY_BUFFER, 4 * flame_data.size(), flame_data.data(), GL_STREAM_DRAW);
+    glDrawArrays(GL_TRIANGLES, 0, flame_data.size() / 6);
+}
+
+void RenderList::add_transformed_point(std::vector<float>& vec, float x, float y) {
 	float finalX = transform[0][0] * x + transform[0][1] * y + transform[0][2];
 	float finalY = transform[1][0] * x + transform[1][1] * y + transform[1][2];
 
-	data.push_back(finalX);
-	data.push_back(finalY);
+	vec.push_back(finalX);
+	vec.push_back(finalY);
 }
 
 void RenderList::mmultiply(float other[][3]) {

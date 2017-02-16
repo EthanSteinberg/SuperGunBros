@@ -54,16 +54,17 @@
 
     "boxSpawnLocations": [
         {
-            "xLeft": 400,
-            "xRight": 880,
-            "yTop": 150,
-            "yBottom": 200,
+            "x": 400,
+            "y": 150,
+
+            "initialSpawnDelay": 20,
+            "respawnDelay": 100,
 
             "weapons": [
                 "flame",
-                "bounce",
-                "pierce",
-                "rocket"
+                // "bounce",
+                // "pierce",
+                // "rocket",
             ],
         }
     ],
