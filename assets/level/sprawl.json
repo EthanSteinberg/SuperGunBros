@@ -33,27 +33,30 @@
 
         //Upper Level
         //-----------
-        //Outer
 
         {
             "xLeft": -40,
-            "xRight": 3880,
-            "yTop": -40,
-            "yBottom": 40
+            "xRight": 400,
+            "yTop": 600,
+            "yBottom": 630
         },
-        //Floor
         {
             "xLeft": -40,
-            "xRight": 3880,
-            "yTop": 2120,
-            "yBottom": 2200
+            "xRight": 600,
+            "yTop": 800,
+            "yBottom": 830
         },
-        //Walls
         {
             "xLeft": -40,
-            "xRight": 40,
-            "yTop": -40,
-            "yBottom": 2200
+            "xRight": 800,
+            "yTop": 1000,
+            "yBottom": 1030
+        },
+        {
+            "xLeft": -40,
+            "xRight": 1200,
+            "yTop": 1200,
+            "yBottom": 1230
         },
 
         //Inner

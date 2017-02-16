@@ -15,7 +15,7 @@
 const int screen_width = 1280;
 const int screen_height = 720;
 
-const bool debug_keyboard_player = true;
+const bool debug_keyboard_player = false;
 
 struct MainData {
     std::unique_ptr<Screen> current_screen;
