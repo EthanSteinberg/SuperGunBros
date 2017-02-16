@@ -8,7 +8,7 @@ public:
     virtual bool in_front() const;
 
     virtual int ticks_between_shots() const {
-        return 8;
+        return 0;
     }
 
     virtual int initial_ammo() const {

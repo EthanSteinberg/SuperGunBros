@@ -232,8 +232,8 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
 }
 
 void RenderList::add_flame(float center_x, float center_y, float r, float g, float b) {
-    double height = 300;
-    double width = 300;
+    double height = 20;
+    double width = 20;
 
     double x = center_x - width / 2;
     double y = center_y - height / 2;

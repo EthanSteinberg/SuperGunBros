@@ -17,6 +17,9 @@ const int screen_height = 720;
 
 const bool debug_keyboard_player = true;
 
+const bool debug_other_player = true;
+bool other_player_start_button = true;
+
 struct MainData {
     std::unique_ptr<Screen> current_screen;
 };
@@ -102,6 +105,13 @@ std::map<int, inputs> get_joystick_inputs(const std::vector<int>& connected_joys
 
     if (debug_keyboard_player) {
         joystick_inputs[-1] = keyboard_debug_input(window);
+    }
+
+    if (debug_other_player) {
+        inputs blah = {};
+        blah.buttons[ButtonName::START] = other_player_start_button;
+        other_player_start_button = !other_player_start_button;
+        joystick_inputs[-2] = blah;
     }
 
     return joystick_inputs;
