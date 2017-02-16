@@ -7,7 +7,7 @@
 class WeaponBox {
 public:
 
-    WeaponBox(float x, float y, std::string weapon);
+    WeaponBox(float x, float y, std::string weapon, int ticks_until_active, int spawn_index);
 
     bool opened;
 
@@ -16,6 +16,9 @@ public:
     void render(RenderList& list) const;
 
     std::string weapon;
+
+    int ticks_until_active;
+    int spawn_index;
 };
 
 #endif

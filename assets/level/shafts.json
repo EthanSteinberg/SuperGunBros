@@ -150,11 +150,8 @@
 
         //Lower rooms
         {
-            "xLeft": 800,
-            "xRight": 1000,
-            "yTop": 900,
-            "yBottom": 1050,
-
+            "x": 800,
+            "y": 900,
             "weapons": [
                 "flame",
                 "bounce",
@@ -163,10 +160,8 @@
 
         //Upper rooms
         {
-            "xLeft": 400,
-            "xRight": 550,
-            "yTop": 450,
-            "yBottom": 525,
+            "x": 400,
+            "y": 450,
 
             "weapons": [
                 "pierce",
@@ -176,10 +171,8 @@
 
         //CenterBox
         {
-            "xLeft": 1100,
-            "xRight": 1200,
-            "yTop": 200,
-            "yBottom": 300,
+            "x": 1100,
+            "y": 200,
 
             "weapons": [
                 "flame",
@@ -189,10 +182,8 @@
 
         //Bottom
         {
-            "xLeft": 1200,
-            "xRight": 1270,
-            "yTop": 1180,
-            "yBottom": 1260,
+            "x": 1200,
+            "y": 1180,
 
             "weapons": [
                 "flame",

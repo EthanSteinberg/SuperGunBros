@@ -18,12 +18,7 @@ public:
 
     bool colliding_with(const Rectangle& other) const;
 
-    template<typename Generator>
-    WeaponBox get_random_box_spawn(Generator& g) const {
-        std::uniform_int_distribution<> box_dis(0, box_spawn_locations.size() - 1);
-
-        return box_spawn_locations[box_dis(g)].get_random_spawn(g);
-    }
+    const std::vector<BoxSpawn>& get_box_spawns() const;
 
     std::vector<Point> get_player_spawn_locations() const;
 

@@ -28,6 +28,10 @@ GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_leve
         Player player(p.x, p.y, info);
         players.push_back(std::move(player));
     }
+
+    for (const auto& box_spawn : level.get_box_spawns()) {
+        boxes.push_back(box_spawn.get_random_spawn(gen, true));
+    }
 }
 
 void GameScreen::render(RenderList& list) const {
@@ -573,7 +577,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         for (unsigned int i = 0; i < boxes.size(); i++) {
             WeaponBox& box = boxes[i];
 
-            if (!box.opened && bullet->pos.colliding_with(box.pos)) {
+            if (box.ticks_until_active == 0 && !box.opened && bullet->pos.colliding_with(box.pos)) {
                 is_dead = true;
                 hit_something = true;
                 box.opened = true;
@@ -596,27 +600,15 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
     }
 
-    for (auto& box: boxes) {
-        Rectangle new_pos = box.pos.offset(0, 1);
-        if (!would_hit_ground(new_pos)) {
-            box.pos = new_pos;;
-        }
-    }
-
     bullets = std::move(next_bullets);
 
-    ticks_till_next_box--;
-
-    if (ticks_till_next_box <= 0) {
-        ticks_till_next_box = 600;
-        for (int i = 0; i < 10; i++) {
-            // Only try to spawn a box a maximum of 10 times ...
-            WeaponBox possible_box = level.get_random_box_spawn(gen);
-
-            if (!would_collide_or_fall_on_any(possible_box.pos)) {
-                boxes.push_back(possible_box);
-                break;
-            }
+    for (auto& box: boxes) {
+        Rectangle new_pos = box.pos.offset(0, 1);
+        if (box.ticks_until_active > 0) {
+            box.ticks_until_active--;
+        }
+        if (!would_hit_ground(new_pos)) {
+            box.pos = new_pos;;
         }
     }
 
@@ -680,30 +672,15 @@ bool GameScreen::would_hit_box(const Rectangle& rect) const {
     return false;
 }
 
-bool GameScreen::would_collide_or_fall_on_any(const Rectangle& rect) const {
-    for (const auto& box : boxes) {
-        if (fabs(rect.x - box.pos.x) < (rect.width + box.pos.width)) {
-            return true;
-        }
-    }
-
-    return would_hit_ground(rect) || would_hit_player(rect);
-}
-
 std::unique_ptr<Gun> GameScreen::attempt_pick_up(const Rectangle& rect) {
-    std::vector<WeaponBox> next_boxes;
-
     std::unique_ptr<Gun> result = nullptr;
 
-    for (const auto& box: boxes) {
+    for (auto& box: boxes) {
         if (box.opened && box.pos.colliding_with(rect)) {
             result = create_gun(box.weapon);
-        } else {
-            next_boxes.push_back(box);
+            box = level.get_box_spawns()[box.spawn_index].get_random_spawn(gen, false);
         }
     }
-
-    boxes = next_boxes;
 
     return result;
 }

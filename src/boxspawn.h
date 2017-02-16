@@ -7,21 +7,26 @@
 
 class BoxSpawn {
 public:
-    BoxSpawn(Rectangle spawn_location, std::vector<std::string> weapons_to_choose);
+    BoxSpawn(Point spawn_location, std::vector<std::string> weapons_to_choose, int ticks_until_first_spawn, int ticks_respawn, int index);
 
     template<typename Generator>
-    WeaponBox get_random_spawn(Generator& g) const {
-        std::uniform_real_distribution<> dx_dist(-spawn_location.width/2, spawn_location.width/2);
-        std::uniform_real_distribution<> dy_dist(-spawn_location.height/2, spawn_location.height/2);
-
+    WeaponBox get_random_spawn(Generator& g, bool first_spawn) const {
         std::uniform_int_distribution<> weapon_dist(0, weapons_to_choose.size() - 1);
 
-        return WeaponBox(spawn_location.x + dx_dist(g), spawn_location.y + dy_dist(g), weapons_to_choose[weapon_dist(g)]);
+        int ticks = first_spawn ? ticks_until_first_spawn : ticks_respawn;
+
+        return WeaponBox(spawn_location.x, spawn_location.y, weapons_to_choose[weapon_dist(g)], ticks, index);
     }
 
 private:
-    Rectangle spawn_location;
+
+    Point spawn_location;
     std::vector<std::string> weapons_to_choose;
+
+public:
+    int ticks_until_first_spawn;
+    int ticks_respawn;
+    int index;
 };
 
 #endif

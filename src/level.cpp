@@ -23,7 +23,13 @@ std::vector<Level> Level::load_all_levels() {
     std::vector<Level> loaded_levels;
     for (const auto& level: level_names) {
         int i = loaded_levels.size();
-        loaded_levels.push_back(Level::load_from_file(level, i));
+        try {
+            Level loaded_level = Level::load_from_file(level, i);
+            loaded_levels.push_back(std::move(loaded_level));
+        } catch (const std::exception& ex) {
+            std::cout<<"Got error while reloading " << level << ":" << ex.what() <<std::endl;
+        }
+
     }
 
     return loaded_levels;
@@ -68,7 +74,9 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 
         obstacles.push_back(rect);
 
-        if (mirrored) {
+        bool mirror_exception = obstacle.HasMember("mirrored") && !obstacle["mirrored"].GetBool();
+
+        if (mirrored && !mirror_exception) {
             Rectangle rect2(
                     l_width - x,
                     y,
@@ -82,17 +90,13 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 
     std::vector<BoxSpawn> box_spawn_locations;
     for (const auto& spawn_location: level_data["boxSpawnLocations"].GetArray()) {
-        double width = spawn_location["xRight"].GetDouble() - spawn_location["xLeft"].GetDouble();
-        double height = spawn_location["yBottom"].GetDouble() - spawn_location["yTop"].GetDouble();
 
-        double x = spawn_location["xRight"].GetDouble() - width/2;
-        double y = spawn_location["yBottom"].GetDouble() - height/2;
+        double x = spawn_location["x"].GetDouble();
+        double y = spawn_location["y"].GetDouble();
 
-        Rectangle rect(
+        Point pos{
             x,
-            y,
-            width,
-            height);
+            y};
 
         std::vector<std::string> weapons;
 
@@ -100,16 +104,27 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
             weapons.push_back(weapon.GetString());
         }
 
-        box_spawn_locations.push_back(BoxSpawn(rect, weapons));
+        int initial_spawn_delay = 100;
+        int respawn_delay = 100;
 
-        if (mirrored) {
-            Rectangle rect2(
+        if (spawn_location.HasMember("initialSpawnDelay")) {
+            initial_spawn_delay = spawn_location["initialSpawnDelay"].GetInt();
+        }
+
+        if (spawn_location.HasMember("respawnDelay")) {
+            respawn_delay = spawn_location["respawnDelay"].GetInt();
+        }
+
+        box_spawn_locations.push_back(BoxSpawn(pos, weapons, initial_spawn_delay, respawn_delay, box_spawn_locations.size()));
+
+        bool mirror_exception = spawn_location.HasMember("mirrored") && !spawn_location["mirrored"].GetBool();
+
+        if (mirrored  && !mirror_exception) {
+            Point pos2{
                     l_width - x,
-                    y,
-                    width,
-                    height);
+                    y};
 
-            box_spawn_locations.push_back(BoxSpawn(rect2,weapons));
+            box_spawn_locations.push_back(BoxSpawn(pos2,weapons, initial_spawn_delay, respawn_delay, box_spawn_locations.size()));
         }
 
     }
@@ -122,7 +137,9 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
         Point p = {x, y};
         player_spawn_locations.push_back(p);
 
-        if (mirrored) {
+        bool mirror_exception = spawn_location.HasMember("mirrored") && !spawn_location["mirrored"].GetBool();
+
+        if (mirrored && !mirror_exception) {
             Point p2 = {l_width-x, y};
             player_spawn_locations.push_back(p2);
         }
@@ -199,4 +216,8 @@ bool Level::colliding_with(const Rectangle& other) const {
 
 std::vector<Point> Level::get_player_spawn_locations() const {
     return player_spawn_locations;
+}
+
+const std::vector<BoxSpawn>& Level::get_box_spawns() const {
+    return box_spawn_locations;
 }
