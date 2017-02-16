@@ -151,7 +151,7 @@ int main(void)
     int pixel_width, pixel_height;
     glfwGetFramebufferSize(window, &pixel_width, &pixel_height);
 
-    create_and_use_program(pixel_width, pixel_height, screen_width, screen_height);
+    auto setups = create_and_use_program(pixel_width, pixel_height, screen_width, screen_height);
 
     MainData data;
     data.current_screen = std::make_unique<MenuScreen>();
@@ -179,7 +179,10 @@ int main(void)
         RenderList list("../assets/img/pixelPacker.json");
 
         data.current_screen->render(list);
+        setups[0]();
         list.draw();
+        setups[1]();
+        list.draw_flame();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

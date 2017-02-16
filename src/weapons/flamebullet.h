@@ -12,6 +12,8 @@ public:
 
     virtual double get_velocity() const;
 
+    virtual void render(RenderList& list) const;
+
 // private:
 
     int ticks_left = 40;

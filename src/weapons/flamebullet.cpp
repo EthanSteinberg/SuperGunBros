@@ -30,3 +30,17 @@ double FlameBullet::get_velocity() const {
 const char* FlameBullet::bullet_image_name() const {
     return "flame-start";
 }
+
+void FlameBullet::render(RenderList& list) const {
+    list.add_flame(pos.x, pos.y, 1, 0, 0);
+
+    // list.push();
+
+    // list.translate(pos.x, pos.y);
+    // list.rotate(angle);
+
+    // Rectangle image = list.get_image_dimensions(bullet_image_name());
+    // list.add_rect(bullet_image_name(), image);
+
+    // list.pop();
+}

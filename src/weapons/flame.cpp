@@ -73,8 +73,6 @@ std::vector<std::unique_ptr<Bullet>> Flame::spawn_bullets(double gun_angle) cons
         result->pos.y = y;
         result->angle = i/10.0 * 15.0 * M_PI/180.0;
 
-        FlameBullet* foo = (FlameBullet*) result.get();
-
         results.push_back(std::move(result));
     }
 

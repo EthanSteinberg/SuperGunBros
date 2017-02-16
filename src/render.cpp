@@ -7,7 +7,7 @@
 
 #include <glad/glad.h>
 
-const char* vertex_shader_source = R"(
+const char* vertex_shader1_source = R"(
     #version 100
     attribute vec3 position;
     attribute vec2 a_texcoord;
@@ -27,7 +27,7 @@ const char* vertex_shader_source = R"(
     }
   )";
 
-const char* fragment_shader_source = R"(
+const char* fragment_shader1_source = R"(
     #version 100
     precision mediump float;
     uniform sampler2D atlas;
@@ -40,6 +40,46 @@ const char* fragment_shader_source = R"(
       gl_FragColor = texture2D(atlas, clamp(v_texcoord, v_texpos + vec2(0.5, 0.5), v_texpos + v_texsize - vec2(0.5, 0.5)) / atlas_size);
     }
    )";
+
+
+const char* vertex_shader2_source = R"(
+    #version 100
+    attribute vec3 position;
+    attribute vec3 a_color;
+    attribute vec2 a_center;
+    varying vec3 v_color;
+    varying vec2 v_center;
+    varying vec3 v_position;
+    uniform vec2 screen_size;
+    void main()
+    {
+      v_position = position;
+      v_color = a_color;
+      vec2 temp = vec2(2, -2) * position.xy / screen_size + vec2(-1, 1);
+      gl_Position = vec4(temp, position.z, 1.0);
+
+      v_center = a_center;
+    }
+  )";
+
+const char* fragment_shader2_source = R"(
+    #version 100
+    precision mediump float;
+    varying vec3 v_color;
+    varying vec2 v_center;
+    varying vec3 v_position;
+    void main()
+    {
+      vec2 pos = v_position.xy - v_center;
+
+      float dist =  dot(pos, pos);
+
+      float alpha = 1.0 - smoothstep(8.0 * 8.0, 9.0 * 9.0, dist);
+
+      gl_FragColor = vec4(v_color * alpha, alpha);
+    }
+   )";
+
 
 // Create and compile an OpenGL shader of the given type.
 // Also checks for errors and prints as necessary.
@@ -105,49 +145,98 @@ void update_size(int program, int pixel_width, int pixel_height,
 }
 
 // Create and initialize the OpenGL program.
-void create_and_use_program(int pixel_width, int pixel_height, int screen_width, int screen_height){
-    int program = glCreateProgram();
+std::array<std::function<void(void)>, 2>  create_and_use_program(int pixel_width, int pixel_height, int screen_width, int screen_height) {
+    int main_program = glCreateProgram();
+    {
+        int vertex_shader = create_and_compile_shader(vertex_shader1_source, GL_VERTEX_SHADER);
+        int fragment_shader = create_and_compile_shader(fragment_shader1_source, GL_FRAGMENT_SHADER);
 
-    int vertex_shader = create_and_compile_shader(vertex_shader_source, GL_VERTEX_SHADER);
-    int fragment_shader = create_and_compile_shader(fragment_shader_source, GL_FRAGMENT_SHADER);
+        glAttachShader(main_program, vertex_shader);
+        glAttachShader(main_program, fragment_shader);
+        glLinkProgram(main_program);
+    }
 
-    glAttachShader(program, vertex_shader);
-    glAttachShader(program, fragment_shader);
-    glLinkProgram(program);
+    int flame_program = glCreateProgram();
+    {
+        int vertex_shader = create_and_compile_shader(vertex_shader2_source, GL_VERTEX_SHADER);
+       int fragment_shader = create_and_compile_shader(fragment_shader2_source, GL_FRAGMENT_SHADER);
 
-    glUseProgram(program);
+       glAttachShader(flame_program, vertex_shader);
+       glAttachShader(flame_program, fragment_shader);
+       glLinkProgram(flame_program);
+    }
 
-    unsigned int vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    std::array<unsigned int, 2> buffers;
+    glGenBuffers(2, buffers.data());
 
-    unsigned int buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    std::array<unsigned int, 2> vao;
+    glGenVertexArrays(2, vao.data());
 
-    int position_location = glGetAttribLocation(program, "position");
-    int tex_location = glGetAttribLocation(program, "a_texcoord");
-    int tex_pos = glGetAttribLocation(program, "a_texpos");
-    int tex_size = glGetAttribLocation(program, "a_texsize");
+    {
+        glUseProgram(main_program);
+        glBindVertexArray(vao[0]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 
-    glEnableVertexAttribArray(position_location);
-    glVertexAttribPointer(position_location, 3, GL_FLOAT, false, 4 * 9, 0);
+        int position_location = glGetAttribLocation(main_program, "position");
+        int tex_location = glGetAttribLocation(main_program, "a_texcoord");
+        int tex_pos = glGetAttribLocation(main_program, "a_texpos");
+        int tex_size = glGetAttribLocation(main_program, "a_texsize");
 
-    glEnableVertexAttribArray(tex_location);
-    glVertexAttribPointer(tex_location, 2, GL_FLOAT, false, 4 * 9, (void *)(4 * 3));
+        glEnableVertexAttribArray(position_location);
+        glVertexAttribPointer(position_location, 3, GL_FLOAT, false, 4 * 9, 0);
 
-    glEnableVertexAttribArray(tex_pos);
-    glVertexAttribPointer(tex_pos, 2, GL_FLOAT, false, 4 * 9, (void *)(4 * 5));
+        glEnableVertexAttribArray(tex_location);
+        glVertexAttribPointer(tex_location, 2, GL_FLOAT, false, 4 * 9, (void *)(4 * 3));
 
-    glEnableVertexAttribArray(tex_size);
-    glVertexAttribPointer(tex_size, 2, GL_FLOAT, false, 4 * 9, (void *)(4 * 7));
+        glEnableVertexAttribArray(tex_pos);
+        glVertexAttribPointer(tex_pos, 2, GL_FLOAT, false, 4 * 9, (void *)(4 * 5));
 
-    load_texture_atlas(program);
+        glEnableVertexAttribArray(tex_size);
+        glVertexAttribPointer(tex_size, 2, GL_FLOAT, false, 4 * 9, (void *)(4 * 7));
+
+        load_texture_atlas(main_program);
+
+        update_size(main_program, pixel_width, pixel_height, screen_width, screen_height);
+    }
+
+    {
+        glUseProgram(flame_program);
+        glBindVertexArray(vao[1]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+
+        int position_location = glGetAttribLocation(flame_program, "position");
+        int color_location = glGetAttribLocation(flame_program, "a_color");
+        int center_location = glGetAttribLocation(flame_program, "a_center");
+
+        glEnableVertexAttribArray(position_location);
+        glVertexAttribPointer(position_location, 3, GL_FLOAT, false, 4 * 8, 0);
+
+        glEnableVertexAttribArray(color_location);
+        glVertexAttribPointer(color_location, 3, GL_FLOAT, false, 4 * 8, (void *)(4 * 3));
+
+        glEnableVertexAttribArray(center_location);
+        glVertexAttribPointer(center_location, 2, GL_FLOAT, false, 4 * 8, (void *)(4 * 6));
+
+        update_size(flame_program, pixel_width, pixel_height, screen_width, screen_height);
+    }
+
 
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0, 1, 1, 1.0);
 
-    update_size(program, pixel_width, pixel_height, screen_width, screen_height);
+    auto main_setup = [=]() {
+        glUseProgram(main_program);
+        glBindVertexArray(vao[0]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+    };
+
+    auto flame_setup = [=]() {
+        glUseProgram(flame_program);
+        glBindVertexArray(vao[1]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+    };
+
+    return {main_setup, flame_setup};
 }
