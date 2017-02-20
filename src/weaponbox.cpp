@@ -20,9 +20,6 @@ void WeaponBox::render(RenderList& list) const {
     if (!opened) {
         list.add_scaled_image("box", pos.x, pos.y, ASSET_SCALE, true);
     } else {
-        list.push();
-        list.translate(pos.x, pos.y);
-        weapon->render(list, 0);
-        list.pop();
+        list.add_scaled_image(weapon->gun_image_name(), pos.x, pos.y, ASSET_SCALE, true);
     }
 }
