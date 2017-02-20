@@ -681,7 +681,7 @@ std::unique_ptr<Gun> GameScreen::attempt_pick_up(const Rectangle& rect) {
 
     for (auto& box: boxes) {
         if (box.opened && box.pos.colliding_with(rect)) {
-            result = create_gun(box.weapon);
+            result = std::move(box.weapon);
             box = level.get_box_spawns()[box.spawn_index].get_random_spawn(gen, false);
         }
     }
