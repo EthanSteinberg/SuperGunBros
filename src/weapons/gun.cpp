@@ -5,6 +5,7 @@
 #include "pierce.h"
 #include "bounce.h"
 #include "flame.h"
+#include "magic.h"
 
 #include <cmath>
 #include <iostream>
@@ -16,15 +17,13 @@ inline double dist_sq(double x1, double y1, double x2, double y2) {
 Gun::~Gun() {}
 
 void Gun::render(RenderList& list, double gun_angle) const {
+    list.push();
     list.translate(gun_rotation_x(), gun_rotation_y());
 
     list.rotate(gun_angle);
 
-    list.add_scaled_image(gun_image_name(), gun_offset_x(), gun_offset_y(), 1);//base_scale);
-
-    list.rotate(-gun_angle);
-
-    list.translate(-gun_rotation_x(), -gun_rotation_y());
+    list.add_scaled_image(gun_image_name(), gun_offset_x(), gun_offset_y(), ASSET_SCALE);//base_scale);
+    list.pop();
 }
 
 double Gun::grip1_x(double gun_angle) const {
@@ -75,9 +74,4 @@ std::unique_ptr<Gun> create_gun(const std::string& gun_name) {
         std::cout<<"Cannot create gun of name " << gun_name << std::endl;
         exit(-1);
     }
-}
-
-void Gun::render_large(RenderList& list) const {
-    Rectangle image = list.get_image_dimensions(gun_image_name());
-    list.add_rect(gun_image_name(), image);
 }

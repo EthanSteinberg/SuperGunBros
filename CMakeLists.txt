@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -g -Wno-unused-
 
 
 if(APPLE)
-    set(GLFW_LIBRARY glfw3)
+    set(GLFW_LIBRARY glfw3 portaudio sndfile pthread)
 	set(OS_DIR osx)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
 else()
