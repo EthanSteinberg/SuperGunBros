@@ -26,7 +26,7 @@ double Rocket::barrel_offset_y() const {
 }
 
 const char* Rocket::gun_image_name() const {
-    return "rocket";
+    return "rocket_launcher";
 }
 
 bool Rocket::in_front() const {

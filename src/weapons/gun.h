@@ -25,10 +25,7 @@ public:
         return 15;
     }
 
-    virtual int initial_ammo() const {
-        return 10;
-    }
-
+    virtual int initial_ammo() const = 0;
     virtual ~Gun();
 
 private:

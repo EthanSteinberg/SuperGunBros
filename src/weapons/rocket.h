@@ -6,6 +6,9 @@
 class Rocket : public Gun {
 public:
     virtual bool in_front() const;
+    virtual int initial_ammo() const {
+        return 3;
+    }
 
 private:
     virtual double gun_rotation_x() const;

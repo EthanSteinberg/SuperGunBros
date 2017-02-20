@@ -26,7 +26,7 @@ double Pierce::barrel_offset_y() const {
 }
 
 const char* Pierce::gun_image_name() const {
-    return "pierce";
+    return "piercer";
 }
 
 bool Pierce::in_front() const {

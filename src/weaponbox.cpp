@@ -1,5 +1,6 @@
 #include "weaponbox.h"
 #include "magic.h"
+#include "weapons/gun.h"
 
 #include <iostream>
 
@@ -20,6 +21,9 @@ void WeaponBox::render(RenderList& list) const {
         list.add_scaled_image("box", pos.x, pos.y, ASSET_SCALE, true);
     } else {
         Rectangle weapon_rectangle = list.get_image_dimensions(weapon);
+
+        //TODO: fix this stupid nonsense. We need to instantiate the weapon object to use its render method ideally,
+        //or get_image_name at the very least. weapon is a string, but the name of the weapon, not the image. These might not be constant
         list.add_rect(weapon, weapon_rectangle.offset(pos.x, pos.y));
     }
 }
