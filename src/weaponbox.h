@@ -4,10 +4,13 @@
 #include "rectangle.h"
 #include "renderlist.h"
 
+#include <memory>
+#include "weapons/gun.h"
+
 class WeaponBox {
 public:
 
-    WeaponBox(float x, float y, std::string weapon, int ticks_until_active, int spawn_index);
+    WeaponBox(float x, float y, std::unique_ptr<Gun> weapon, int ticks_until_active, int spawn_index);
 
     bool opened;
 
@@ -15,7 +18,7 @@ public:
 
     void render(RenderList& list) const;
 
-    std::string weapon;
+    std::unique_ptr<Gun> weapon;
 
     int ticks_until_active;
     int spawn_index;

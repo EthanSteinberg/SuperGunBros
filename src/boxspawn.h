@@ -4,6 +4,7 @@
 #include "rectangle.h"
 #include "weaponbox.h"
 #include <random>
+#include "weapons/gun.h"
 
 class BoxSpawn {
 public:
@@ -15,7 +16,7 @@ public:
 
         int ticks = first_spawn ? ticks_until_first_spawn : ticks_respawn;
 
-        return WeaponBox(spawn_location.x, spawn_location.y, weapons_to_choose[weapon_dist(g)], ticks, index);
+        return WeaponBox(spawn_location.x, spawn_location.y, create_gun(weapons_to_choose[weapon_dist(g)]), ticks, index);
     }
 
 private:

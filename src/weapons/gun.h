@@ -26,6 +26,8 @@ public:
     virtual int initial_ammo() const = 0;
     virtual ~Gun();
 
+    virtual const char* gun_image_name() const = 0;
+
 private:
     virtual double gun_rotation_x() const = 0;
     virtual double gun_rotation_y() const = 0;
@@ -45,8 +47,6 @@ private:
     virtual double barrel_length() const {
         return 20;
     }
-
-    virtual const char* gun_image_name() const = 0;
 
     virtual std::unique_ptr<Bullet> create_initial_bullet() const = 0;
 };
