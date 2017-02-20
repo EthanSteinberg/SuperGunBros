@@ -39,6 +39,9 @@ inline double dist_sq(double x1, double y1, double x2, double y2) {
 //calculates the angle opposite c in a triangle with sides a, b, and c
 inline double calculate_angle_SSS(double a, double b, double c){
     //Use Law of cosines to get cos(C) and acos to get C
+    if (c > a + b){
+        printf("%f greater than %f+%f\n", c, a, b);
+    }
     return acos((a*a + b*b - (c * c))/(2*a*b));
 }
 
@@ -173,7 +176,7 @@ void Player::render(RenderList& list) const {
 
     //Law of cosines
     arms.extra_angle[0] = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip1);
-    arms.needed_angle[0] = atan2(grip1_y - arm_y_offset, grip1_x) - M_PI/2;
+    arms.needed_angle[0] = atan2(grip1_y - arm_y_offset, grip1_x);
 
     double grip2_x = state.gun->grip2_x(scaled_gun_angle);
     double grip2_y = state.gun->grip2_y(scaled_gun_angle);
@@ -182,6 +185,8 @@ void Player::render(RenderList& list) const {
 
     arms.extra_angle[1] = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip2);
     arms.needed_angle[1] = atan2(grip2_y - arm_y_offset, grip2_x) - M_PI/2;
+
+    printf("DEBUG: grip1(x,y): (%f, %f), scaled_gun_angle: %f\n", grip1_x, grip1_y, scaled_gun_angle);
 
     const char* head = nullptr;
     const char* shoulder = nullptr;
@@ -251,7 +256,7 @@ void Player::render(RenderList& list) const {
     draw_leg(0, list, interpolated);
 
     //BACK ARM
-    draw_arm(1, list, arms);
+    //draw_arm(1, list, arms);
 
     //TODO revisit the crotch, it's not visible RN and not worth tweaking
     //CROTCH
@@ -328,39 +333,33 @@ void Player::draw_leg(int leg, RenderList &list, AnimationState interpolated) co
 }
 
 void Player::draw_arm(int arm, RenderList& list, ArmState arms) const{
+    double shoulder_angle = arms.needed_angle[arm] - (M_PI - arms.extra_angle[arm])/2;
     {
         list.push();
 
         list.translate(0, arm_y_offset);
-
-        list.rotate(arms.needed_angle[arm] + arms.extra_angle[arm]);
+        list.rotate(shoulder_angle);
 
         list.add_scaled_image("arm-upper-outline", 0, (upper_arm_length - upper_arm_radius)/2, ASSET_SCALE,  true);
 
         list.translate(0, upper_arm_length);
-
-        list.rotate(-2 * arms.extra_angle[arm]);
+        list.rotate(M_PI + arms.extra_angle[arm]);
 
         list.add_scaled_image("hand", 0, lower_arm_length + 2 * lower_arm_radius, ASSET_SCALE,  true);
         list.add_scaled_image("arm-lower-outline", 0, (lower_arm_length + lower_arm_radius)/2, ASSET_SCALE,  true);
 
-        list.rotate(2 * arms.extra_angle[arm]);
-
-        list.translate(0, -lower_arm_length);
-
-        list.rotate(-(arms.needed_angle[arm] + arms.extra_angle[arm]));
-
-
+        list.pop();
     }
     {
+        list.push();
 
-        list.rotate(arms.needed_angle[arm] + arms.extra_angle[arm]);
+        list.translate(0, arm_y_offset);
+        list.rotate(shoulder_angle);
 
         list.add_scaled_image("arm-upper-fill", 0, (upper_arm_length - upper_arm_radius)/2, ASSET_SCALE,  true);
 
         list.translate(0, upper_arm_length);
-
-        list.rotate(-2 * arms.extra_angle[arm]);
+        list.rotate(M_PI + arms.extra_angle[arm]);
 
         list.add_scaled_image("arm-lower-fill", 0, (lower_arm_length + lower_arm_radius)/2, ASSET_SCALE,  true);
 

@@ -10,7 +10,7 @@ double Pierce::gun_rotation_y() const {
 }
 
 double Pierce::gun_offset_x() const {
-    return -10;
+    return 10;
 }
 
 double Pierce::gun_offset_y() const {
@@ -34,19 +34,19 @@ bool Pierce::in_front() const {
 }
 
 double Pierce::grip1_dx() const {
-    return gun_offset_x() + 25;
+    return gun_offset_x() + 12;
 }
 
 double Pierce::grip1_dy() const {
-    return gun_offset_y() + 13;
+    return gun_offset_y() + 12;
 }
 
 double Pierce::grip2_dx() const {
-    return gun_offset_x() + 20;
+    return gun_offset_x() + 12;
 }
 
 double Pierce::grip2_dy() const {
-    return gun_offset_y() + 13;
+    return gun_offset_y() + 14;
 }
 
 std::unique_ptr<Bullet> Pierce::create_initial_bullet() const {
