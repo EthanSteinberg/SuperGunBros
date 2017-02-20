@@ -1,0 +1,108 @@
+{
+    "width": 1280,
+    "height": 720,
+
+    "title": "Close Quarters",
+
+    "mirrored": true,
+
+    "obstacles": [
+        // The main 4 corners of the map
+        {
+            "xLeft": -20,
+            "xRight": 1300,
+            "yTop": -20,
+            "yBottom": 20
+        },
+        {
+            "xLeft": -20,
+            "xRight": 1300,
+            "yTop": 700,
+            "yBottom": 740
+        },
+        {
+            "xLeft": -20,
+            "xRight": 20,
+            "yTop": -20,
+            "yBottom": 740
+        },
+        {
+            "xLeft": 1270,
+            "xRight": 1300,
+            "yTop": -20,
+            "yBottom": 740
+        },
+
+
+        {
+            "xLeft": 120,
+            "xRight": 650,
+            "yTop": 170,
+            "yBottom": 200
+        },
+
+        {
+            "xLeft": 0,
+            "xRight": 450,
+            "yTop": 300,
+            "yBottom": 330
+        },
+
+        {
+            "xLeft": 450,
+            "xRight": 650,
+            "yTop": 570,
+            "yBottom": 600
+        },
+
+        {
+            "xLeft": 150,
+            "xRight": 520,
+            "yTop": 420,
+            "yBottom": 450
+        },
+
+        {
+            "xLeft": 150,
+            "xRight": 180,
+            "yTop": 420,
+            "yBottom": 650
+        },
+    ],
+
+    "boxSpawnLocations": [
+        // {
+        //     "x": 400,
+        //     "y": 150,
+
+        //     "initialSpawnDelay": 20,
+        //     "respawnDelay": 100,
+
+        //     "weapons": [
+        //         // "flame",
+        //         // "bounce",
+        //         // "pierce",
+        //         "rocket",
+        //     ],
+        // }
+    ],
+
+    "spawnLocations": [
+        {
+            "x": 100,
+            "y": 600
+        },
+        {
+            "x": 1080,
+            "y": 300
+        },
+        {
+            "x": 300,
+            "y": 300
+        },
+        {
+            "x": 980,
+            "y": 300
+        }
+    ]
+}

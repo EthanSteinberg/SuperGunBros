@@ -15,6 +15,7 @@ const char* const level_names[] = {
     "../assets/level/more_platforms.json",
     "../assets/level/shafts.json",
     "../assets/level/sprawl.json",
+    "../assets/level/close_quarters.json"
 };
 
 const double line_width = 4;
