@@ -19,7 +19,7 @@ const int screen_height = 720;
 
 const bool debug_keyboard_player = true;
 
-const bool debug_other_player = false;
+const bool debug_other_player = true;
 bool other_player_start_button = true;
 
 struct MainData {
