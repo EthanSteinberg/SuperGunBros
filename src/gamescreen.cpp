@@ -607,7 +607,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 hit_something = true;
                 if (player.state.invincibility_ticks_left == 0) {
                     std::uniform_real_distribution<> number(0, 1);
-                    if (number(gen) < FIRE_TRANSMIT_PROBABILITY) {
+                    if (bullet->catch_on_fire() && number(gen) < FIRE_TRANSMIT_PROBABILITY) {
                         player.state.source_fire_player = bullet->player_owner;
                         player.state.ticks_fire_left = FIRE_LENGTH;
                     }

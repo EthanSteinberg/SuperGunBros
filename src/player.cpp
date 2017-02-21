@@ -24,7 +24,7 @@ const double head_y_offset = -97 * ASSET_SCALE;
 
 const double shoulder_x_offset = -2 * ASSET_SCALE;
 const double shoulder_y_offset = -55 * ASSET_SCALE;
-const double shoulder_angle_offset = M_PI / 2 + - 0.2;
+const double shoulder_angle_offset = 0;//M_PI / 2 + - 0.2;
 const double shoulder_angle_coef = 1.0;
 
 const double torso_y_offset = -40 * ASSET_SCALE;
@@ -251,15 +251,15 @@ void Player::render(RenderList& list) const {
         list.add_rect("shield", shield_rect.offset(0, -2));
     }
 
-    if (!state.gun->in_front()) {
-        state.gun->render(list, scaled_gun_angle);
-    }
-
     //BACK LEG
     draw_leg(0, list, interpolated);
 
     //BACK ARM
     draw_arm(1, list, arms);
+
+    if (!state.gun->in_front()) {
+        state.gun->render(list, scaled_gun_angle);
+    }
 
     //TODO revisit the crotch, it's not visible RN and not worth tweaking
     //CROTCH

@@ -10,11 +10,11 @@ double Rocket::gun_rotation_y() const {
 }
 
 double Rocket::gun_offset_x() const {
-    return -30;
+    return -25;
 }
 
 double Rocket::gun_offset_y() const {
-    return -15;
+    return -23;
 }
 
 double Rocket::barrel_offset_x() const {
@@ -34,19 +34,19 @@ bool Rocket::in_front() const {
 }
 
 double Rocket::grip1_dx() const {
-    return gun_offset_x() + 50;
+    return gun_offset_x() + 45;
 }
 
 double Rocket::grip1_dy() const {
-    return gun_offset_y() + 15;
+    return gun_offset_y() + 20;
 }
 
 double Rocket::grip2_dx() const {
-    return gun_offset_x() + 40;
+    return gun_offset_x() + 35;
 }
 
 double Rocket::grip2_dy() const {
-    return gun_offset_y() + 10;
+    return gun_offset_y() + 2;
 }
 
 std::unique_ptr<Bullet> Rocket::create_initial_bullet() const {

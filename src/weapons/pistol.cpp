@@ -10,11 +10,11 @@ double Pistol::gun_rotation_y() const {
 }
 
 double Pistol::gun_offset_x() const {
-    return 10;
+    return 20;
 }
 
 double Pistol::gun_offset_y() const {
-    return -10;
+    return -7;
 }
 
 double Pistol::barrel_offset_x() const {
@@ -34,19 +34,19 @@ bool Pistol::in_front() const {
 }
 
 double Pistol::grip1_dx() const {
-    return gun_offset_x() + 2;
+    return gun_offset_x() + 4;
 }
 
 double Pistol::grip1_dy() const {
-    return gun_offset_y() + 3;
+    return gun_offset_y() + 7;
 }
 
 double Pistol::grip2_dx() const {
-    return gun_offset_x() + 0;
+    return gun_offset_x() + 2;
 }
 
 double Pistol::grip2_dy() const {
-    return gun_offset_y() + 0;
+    return gun_offset_y() + 11;
 }
 
 std::unique_ptr<Bullet> Pistol::create_initial_bullet() const {

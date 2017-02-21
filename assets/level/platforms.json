@@ -15,8 +15,8 @@
         {
             "xLeft": -20,
             "xRight": 1300,
-            "yTop": 630,
-            "yBottom": 720
+            "yTop": 690,
+            "yBottom": 740
         },
         {
             "xLeft": -20,
@@ -61,10 +61,10 @@
             "respawnDelay": 100,
 
             "weapons": [
-                "flame",
+                //"flame",
                 // "bounce",
                 // "pierce",
-                // "rocket",
+                 "rocket",
             ],
         }
     ],
