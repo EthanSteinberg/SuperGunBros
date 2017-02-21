@@ -20,6 +20,10 @@
 
 const int KILLS_TO_WIN = 5;
 
+const int FIRE_LENGTH = 200;
+
+const double FIRE_TRANSMIT_PROBABILITY = 0.1;
+
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level), camera(level.width, level.height) {
 
     // Initialize the player state
@@ -40,8 +44,6 @@ void GameScreen::render(RenderList& list) const {
 
     list.push();
     camera.transform(list);
-
-    //list.add_image("background", 0, 0);
 
     level.render(list);
 
@@ -66,6 +68,9 @@ void GameScreen::render(RenderList& list) const {
 	}
 
     list.pop();
+
+    list.push();
+    list.set_z(80);
 
     Rectangle kill_board_rect = list.get_image_dimensions("kill-board");
     kill_board_rect = kill_board_rect.offset(1280/2, kill_board_rect.height/2);
@@ -133,6 +138,8 @@ void GameScreen::render(RenderList& list) const {
 
         list.add_image("press-start-continue", (1280 - 1112)/2, 500);
     }
+
+    list.pop();
 }
 
 std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joystick_inputs, const std::map<int, inputs>& all_last_inputs, SoundThread& sounds) {
@@ -227,6 +234,8 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 player.state.pos.x = spawn_location.x;
                 player.state.pos.y = spawn_location.y;
 
+                player.state.ticks_fire_left = 0;
+
                 player.set_gun(create_gun("pistol"));
 
                 player.state.invincibility_ticks_left = DEATH_TIME;
@@ -234,6 +243,29 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         } else {
             player.update();
             double accel = 0;
+
+            if (player.state.ticks_fire_left > 0) {
+                damage_player(i, FIRE_DMG_PER_TICK, player.state.source_fire_player);
+
+                player.state.ticks_fire_left--;
+                if (player.state.ticks_till_next_flame_particle == 0) {
+                    std::uniform_real_distribution<> dist(-10, 10);
+
+                    auto next_bullet = std::make_unique<FlameBullet>();
+
+                    next_bullet->ticks_left = 20 + dist(gen);
+
+                    next_bullet->pos.x = player.state.pos.x + dist(gen);
+                    next_bullet->pos.y = player.state.pos.y + dist(gen) * 3;
+                    next_bullet->angle = -M_PI / 2 + dist(gen)/20;
+                    next_bullet->player_owner = i;
+                    bullets.push_back(std::move(next_bullet));
+
+                    player.state.ticks_till_next_flame_particle = 3;
+                } else {
+                    player.state.ticks_till_next_flame_particle --;
+                }
+            }
 
             int js = player.info.joystick_index;
             inputs current_inputs = all_joystick_inputs.at(js);
@@ -573,6 +605,13 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
             if (bullet->pos.colliding_with(player.state.pos)) {
                 hit_something = true;
+                if (player.state.invincibility_ticks_left == 0) {
+                    std::uniform_real_distribution<> number(0, 1);
+                    if (number(gen) < FIRE_TRANSMIT_PROBABILITY) {
+                        player.state.source_fire_player = bullet->player_owner;
+                        player.state.ticks_fire_left = FIRE_LENGTH;
+                    }
+                }
                 is_dead = bullet->on_player_collision(i, player_bounding_boxes, damage_player_func);
             }
         }

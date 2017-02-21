@@ -61,13 +61,21 @@ public:
 
 	void push();
 	void pop();
+
+	void set_z(float z_value);
 private:
+
+	struct RenderState {
+		std::array<std::array<float, 3>, 3> transform;
+		float z_offset;;
+	};
 
     void add_image_core(const std::string &name, float x, float y, float width, float height);
     void add_image_core(const std::string &name, float x, float y, float width, float height, float subx, float suby, float subwidth, float subheight);
 
-	std::array<std::array<float, 3>, 3> transform;
-	std::stack<std::array<std::array<float, 3>, 3>> prev_states;
+	std::stack<RenderState> prev_states;
+
+	RenderState state;
 
 	void add_transformed_point(std::vector<float>& data, float x, float y);
 

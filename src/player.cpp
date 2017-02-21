@@ -175,18 +175,16 @@ void Player::render(RenderList& list) const {
     double dist_to_grip1 = sqrt(dist_sq(grip1_x, grip1_y, 0, arm_y_offset));
 
     //Law of cosines
-    arms.extra_angle[0] = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip1);
-    arms.needed_angle[0] = atan2(grip1_y - arm_y_offset, grip1_x);
+    arms.extra_angle[0] = -calculate_angle_SSS(upper_arm_length, lower_arm_length + lower_arm_radius, dist_to_grip1);
+    arms.needed_angle[0] = atan2(grip1_y - arm_y_offset, grip1_x) + calculate_angle_SSS(dist_to_grip1, upper_arm_length, lower_arm_length + lower_arm_radius);
 
     double grip2_x = state.gun->grip2_x(scaled_gun_angle);
     double grip2_y = state.gun->grip2_y(scaled_gun_angle);
 
     double dist_to_grip2 = sqrt(dist_sq(grip2_x, grip2_y, 0, arm_y_offset));
 
-    arms.extra_angle[1] = calculate_angle_SSS(upper_arm_length, lower_arm_length, dist_to_grip2);
-    arms.needed_angle[1] = atan2(grip2_y - arm_y_offset, grip2_x) - M_PI/2;
-
-    printf("DEBUG: grip1(x,y): (%f, %f), scaled_gun_angle: %f\n", grip1_x, grip1_y, scaled_gun_angle);
+    arms.extra_angle[1] = -calculate_angle_SSS(upper_arm_length, lower_arm_length + lower_arm_radius, dist_to_grip2);
+    arms.needed_angle[1] = atan2(grip2_y - arm_y_offset, grip2_x) + calculate_angle_SSS(dist_to_grip2, upper_arm_length, lower_arm_length + lower_arm_radius);
 
     const char* head = nullptr;
     const char* shoulder = nullptr;
@@ -215,6 +213,7 @@ void Player::render(RenderList& list) const {
 
 
     list.translate(posX, posY);
+    list.set_z(10);
 
     //Make this stuff half size by default?
     //list.scale(0.5, 0.5);
@@ -222,9 +221,13 @@ void Player::render(RenderList& list) const {
     list.add_image("black", -20, -62, 40, 8);
     list.add_image("black", -18, -60, 36, 4);
 
+    double fire_damage_to_inflict = FIRE_DMG_PER_TICK * state.ticks_fire_left;
+    double eventual_health = std::max(0.0, state.health - fire_damage_to_inflict);
+
     double health = std::max(0.0, state.health);
 
-    list.add_image(get_color_name(info.color), -18, -60, 36 * health / MAX_HEALTH, 4);
+    list.add_image("orange", -18, -60, 36 * health / MAX_HEALTH, 4);
+    list.add_image(get_color_name(info.color), -18, -60, 36 * eventual_health / MAX_HEALTH, 4);
 
     for (int i = 0; i < state.kills; i++) {
         Rectangle life_box(-15 + i * 10, -67, 8, 8);
@@ -256,7 +259,7 @@ void Player::render(RenderList& list) const {
     draw_leg(0, list, interpolated);
 
     //BACK ARM
-    //draw_arm(1, list, arms);
+    draw_arm(1, list, arms);
 
     //TODO revisit the crotch, it's not visible RN and not worth tweaking
     //CROTCH
@@ -286,7 +289,7 @@ void Player::render(RenderList& list) const {
     //FRONT ARM
     draw_arm(0, list, arms);
 
-    //SHOULDER
+    // //SHOULDER
     list.translate(shoulder_x_offset, shoulder_y_offset);
     list.rotate(shoulder_angle_coef * arms.needed_angle[1] + shoulder_angle_offset);
     list.add_scaled_image(shoulder, 0, 0, ASSET_SCALE, true);
@@ -333,17 +336,18 @@ void Player::draw_leg(int leg, RenderList &list, AnimationState interpolated) co
 }
 
 void Player::draw_arm(int arm, RenderList& list, ArmState arms) const{
-    double shoulder_angle = arms.needed_angle[arm] - (M_PI - arms.extra_angle[arm])/2;
+    double shoulder_angle = arms.needed_angle[arm];
     {
         list.push();
 
         list.translate(0, arm_y_offset);
+        list.rotate(-M_PI / 2);
         list.rotate(shoulder_angle);
 
         list.add_scaled_image("arm-upper-outline", 0, (upper_arm_length - upper_arm_radius)/2, ASSET_SCALE,  true);
 
         list.translate(0, upper_arm_length);
-        list.rotate(M_PI + arms.extra_angle[arm]);
+        list.rotate(M_PI - arms.extra_angle[arm]);
 
         list.add_scaled_image("hand", 0, lower_arm_length + 2 * lower_arm_radius, ASSET_SCALE,  true);
         list.add_scaled_image("arm-lower-outline", 0, (lower_arm_length + lower_arm_radius)/2, ASSET_SCALE,  true);
@@ -354,12 +358,14 @@ void Player::draw_arm(int arm, RenderList& list, ArmState arms) const{
         list.push();
 
         list.translate(0, arm_y_offset);
+        list.rotate(-M_PI / 2);
         list.rotate(shoulder_angle);
 
         list.add_scaled_image("arm-upper-fill", 0, (upper_arm_length - upper_arm_radius)/2, ASSET_SCALE,  true);
+        list.add_image("black", -2.5, -2.5, 5, 5);
 
         list.translate(0, upper_arm_length);
-        list.rotate(M_PI + arms.extra_angle[arm]);
+        list.rotate(M_PI - arms.extra_angle[arm]);
 
         list.add_scaled_image("arm-lower-fill", 0, (lower_arm_length + lower_arm_radius)/2, ASSET_SCALE,  true);
 

@@ -35,15 +35,12 @@ void FlameBullet::render(RenderList& list) const {
 
     double yellow = 1 - std::pow(1 - (ticks_left / 40.0), 2.0);
 
+    list.push();
+    list.set_z(30);
     list.add_flame(pos.x, pos.y, 1, yellow, 0);
+    list.pop();
+}
 
-    // list.push();
-
-    // list.translate(pos.x, pos.y);
-    // list.rotate(angle);
-
-    // Rectangle image = list.get_image_dimensions(bullet_image_name());
-    // list.add_rect(bullet_image_name(), image);
-
-    // list.pop();
+bool FlameBullet::catch_on_fire() const {
+    return true;
 }

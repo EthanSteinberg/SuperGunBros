@@ -19,3 +19,7 @@ void Bullet::render(RenderList& list) const {
 bool Bullet::create_explosion_after_destruction() const {
     return false;
 }
+
+bool Bullet::catch_on_fire() const {
+    return false;
+}

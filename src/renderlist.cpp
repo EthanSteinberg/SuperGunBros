@@ -16,7 +16,8 @@ RenderList::RenderList(const char* filename): file(filename), wrapper(file) {
 		{0, 0, 1}
 	}};
 
-	transform = mat;
+    state.transform = mat;
+    state.z_offset = 0;
 }
 
 Rectangle RenderList::get_image_dimensions(const std::string &name) const {
@@ -160,7 +161,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     int psizey = subheight;
 
     add_transformed_point(data, x, y + height);
-    data.push_back(0);
+    data.push_back(state.z_offset);
 
     data.push_back(px);
     data.push_back(py + psizey);
@@ -172,7 +173,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
 
 
     add_transformed_point(data, x + width, y);
-    data.push_back(0);
+    data.push_back(state.z_offset);
 
     data.push_back(px + psizex);
     data.push_back(py);
@@ -184,7 +185,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
 
 
     add_transformed_point(data, x + width, y + height);
-    data.push_back(0);
+    data.push_back(state.z_offset);
 
     data.push_back(px + psizex);
     data.push_back(py + psizey);
@@ -196,7 +197,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
 
 
     add_transformed_point(data, x, y + height);
-    data.push_back(0);
+    data.push_back(state.z_offset);
 
     data.push_back(px);
     data.push_back(py + psizey);
@@ -208,7 +209,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
 
 
     add_transformed_point(data, x + width, y);
-    data.push_back(0);
+    data.push_back(state.z_offset);
 
     data.push_back(px + psizex);
     data.push_back(py);
@@ -220,7 +221,7 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
 
 
     add_transformed_point(data, x, y);
-    data.push_back(0);
+    data.push_back(state.z_offset);
 
     data.push_back(px);
     data.push_back(py);
@@ -239,7 +240,7 @@ void RenderList::add_flame(float center_x, float center_y, float r, float g, flo
     double y = center_y - height / 2;
 
     add_transformed_point(flame_data, x, y + height);
-    flame_data.push_back(0);
+    flame_data.push_back(state.z_offset);
 
     flame_data.push_back(r);
     flame_data.push_back(g);
@@ -249,7 +250,7 @@ void RenderList::add_flame(float center_x, float center_y, float r, float g, flo
 
 
     add_transformed_point(flame_data, x + width, y);
-    flame_data.push_back(0);
+    flame_data.push_back(state.z_offset);
 
     flame_data.push_back(r);
     flame_data.push_back(g);
@@ -259,7 +260,7 @@ void RenderList::add_flame(float center_x, float center_y, float r, float g, flo
 
 
     add_transformed_point(flame_data, x + width, y + height);
-    flame_data.push_back(0);
+    flame_data.push_back(state.z_offset);
 
     flame_data.push_back(r);
     flame_data.push_back(g);
@@ -269,7 +270,7 @@ void RenderList::add_flame(float center_x, float center_y, float r, float g, flo
 
 
     add_transformed_point(flame_data, x, y + height);
-    flame_data.push_back(0);
+    flame_data.push_back(state.z_offset);
 
     flame_data.push_back(r);
     flame_data.push_back(g);
@@ -279,7 +280,7 @@ void RenderList::add_flame(float center_x, float center_y, float r, float g, flo
 
 
     add_transformed_point(flame_data, x + width, y);
-    flame_data.push_back(0);
+    flame_data.push_back(state.z_offset);
 
     flame_data.push_back(r);
     flame_data.push_back(g);
@@ -289,7 +290,7 @@ void RenderList::add_flame(float center_x, float center_y, float r, float g, flo
 
 
     add_transformed_point(flame_data, x, y);
-    flame_data.push_back(0);
+    flame_data.push_back(state.z_offset);
 
     flame_data.push_back(r);
     flame_data.push_back(g);
@@ -305,12 +306,12 @@ void RenderList::draw() {
 
 void RenderList::draw_flame() {
     glBufferData(GL_ARRAY_BUFFER, 4 * flame_data.size(), flame_data.data(), GL_STREAM_DRAW);
-    glDrawArrays(GL_TRIANGLES, 0, flame_data.size() / 6);
+    glDrawArrays(GL_TRIANGLES, 0, flame_data.size() / 8);
 }
 
 void RenderList::add_transformed_point(std::vector<float>& vec, float x, float y) {
-	float finalX = transform[0][0] * x + transform[0][1] * y + transform[0][2];
-	float finalY = transform[1][0] * x + transform[1][1] * y + transform[1][2];
+	float finalX = state.transform[0][0] * x + state.transform[0][1] * y + state.transform[0][2];
+	float finalY = state.transform[1][0] * x + state.transform[1][1] * y + state.transform[1][2];
 
 	vec.push_back(finalX);
 	vec.push_back(finalY);
@@ -322,12 +323,12 @@ void RenderList::mmultiply(float other[][3]) {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			for (int k = 0; k < 3; k++) {
-				result[i][j] += transform[i][k] * other[k][j];
+				result[i][j] += state.transform[i][k] * other[k][j];
 			}
 		}
 	}
 
-	transform = result;
+	state.transform = result;
 }
 
 void RenderList::translate(float x, float y) {
@@ -362,10 +363,14 @@ void RenderList::scale(float scaleX, float scaleY) {
 }
 
 void RenderList::push() {
-    prev_states.push(transform);
+    prev_states.push(state);
 }
 
 void RenderList::pop() {
-    transform = prev_states.top();
+    state = prev_states.top();
     prev_states.pop();
+}
+
+void RenderList::set_z(float z) {
+    state.z_offset = z;
 }
