@@ -213,6 +213,7 @@ void Player::render(RenderList& list) const {
 
 
     list.translate(posX, posY);
+    list.set_z(10);
 
     //Make this stuff half size by default?
     //list.scale(0.5, 0.5);
@@ -220,9 +221,13 @@ void Player::render(RenderList& list) const {
     list.add_image("black", -20, -62, 40, 8);
     list.add_image("black", -18, -60, 36, 4);
 
+    double fire_damage_to_inflict = FIRE_DMG_PER_TICK * state.ticks_fire_left;
+    double eventual_health = std::max(0.0, state.health - fire_damage_to_inflict);
+
     double health = std::max(0.0, state.health);
 
-    list.add_image(get_color_name(info.color), -18, -60, 36 * health / MAX_HEALTH, 4);
+    list.add_image("orange", -18, -60, 36 * health / MAX_HEALTH, 4);
+    list.add_image(get_color_name(info.color), -18, -60, 36 * eventual_health / MAX_HEALTH, 4);
 
     for (int i = 0; i < state.kills; i++) {
         Rectangle life_box(-15 + i * 10, -67, 8, 8);

@@ -7,4 +7,6 @@
 
 const double ASSET_SCALE = 0.4;
 
+const double FIRE_DMG_PER_TICK = 0.1;
+
 #endif //SUPERGUNBROS_MAGIC_H

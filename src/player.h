@@ -7,6 +7,7 @@
 #include "magic.h"
 #include "weapons/bullet.h"
 #include "weapons/gun.h"
+#include "weapons/flamebullet.h"
 
 #include <iostream>
 
@@ -99,6 +100,12 @@ struct PlayerState {
 
     bool is_dead = false;
     int ticks_until_spawn = 0;
+
+    int ticks_fire_left = 0;
+
+    int source_fire_player = 0;
+
+    int ticks_till_next_flame_particle = 0;
 };
 
 class Player {

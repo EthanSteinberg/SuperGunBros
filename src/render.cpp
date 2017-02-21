@@ -23,7 +23,7 @@ const char* vertex_shader1_source = R"(
       v_texpos = a_texpos;
       v_texsize = a_texsize;
       vec2 temp = vec2(2, -2) * position.xy / screen_size + vec2(-1, 1);
-      gl_Position = vec4(temp, position.z, 1.0);
+      gl_Position = vec4(temp, -position.z/100.0, 1.0);
     }
   )";
 
@@ -56,7 +56,7 @@ const char* vertex_shader2_source = R"(
       v_position = position;
       v_color = a_color;
       vec2 temp = vec2(2, -2) * position.xy / screen_size + vec2(-1, 1);
-      gl_Position = vec4(temp, position.z, 1.0);
+      gl_Position = vec4(temp, -position.z/100.0, 1.0);
 
       v_center = a_center;
     }
@@ -225,6 +225,9 @@ std::array<std::function<void(void)>, 2>  create_and_use_program(int pixel_width
     glBlendEquation(GL_FUNC_ADD);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(1.0, 1, 1, 1.0);
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
 
     auto main_setup = [=]() {
         glUseProgram(main_program);

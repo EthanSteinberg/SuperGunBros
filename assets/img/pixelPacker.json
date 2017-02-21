@@ -401,6 +401,12 @@
         "x": 1851,
         "y": 1363
     },
+    "orange": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2046,
+        "y": 301
+    },
     "pierce": {
         "sizex": 45,
         "sizey": 17,
@@ -489,7 +495,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2046,
-        "y": 301
+        "y": 303
     },
     "red-head": {
         "sizex": 51,
@@ -635,13 +641,13 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2046,
-        "y": 303
+        "y": 305
     },
     "yellow": {
         "sizex": 1,
         "sizey": 1,
         "x": 2046,
-        "y": 305
+        "y": 307
     },
     "yellow-head": {
         "sizex": 51,

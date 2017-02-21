@@ -14,6 +14,8 @@ public:
 
     virtual void render(RenderList& list) const;
 
+    virtual bool catch_on_fire() const;
+
 // private:
 
     int ticks_left = 40;

@@ -32,6 +32,8 @@ public:
 
     virtual bool create_explosion_after_destruction() const;
 
+    virtual bool catch_on_fire() const;
+
 private:
     virtual const char* bullet_image_name() const = 0;
 
