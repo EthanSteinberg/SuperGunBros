@@ -126,9 +126,11 @@
         //CenterBox
         {
             "xLeft": 1000,
-            "xRight": 1400,
+            "xRight": 1560,
             "yTop": 300,
-            "yBottom": 400
+            "yBottom": 400,
+
+            "mirrored": false,
         },
 
         //SideBox
@@ -140,27 +142,24 @@
         },
 
 
-
-
-
-
     ],
 
     "boxSpawnLocations": [
 
         //Lower rooms
         {
-            "x": 800,
+            "x": 900,
             "y": 900,
             "weapons": [
                 "flame",
                 "bounce",
-            ]
+            ],
+
         },
 
         //Upper rooms
         {
-            "x": 400,
+            "x": 470,
             "y": 450,
 
             "weapons": [
@@ -171,24 +170,28 @@
 
         //CenterBox
         {
-            "x": 1100,
+            "x": 1280,
             "y": 200,
 
             "weapons": [
                 "flame",
                 "rocket",
-            ]
+            ],
+
+            "mirrored": false,
         },
 
         //Bottom
         {
-            "x": 1200,
-            "y": 1180,
+            "x": 1280,
+            "y": 1350,
 
             "weapons": [
                 "flame",
                 "rocket",
-            ]
+            ],
+
+            "mirrored": false,
         },
 
     ],

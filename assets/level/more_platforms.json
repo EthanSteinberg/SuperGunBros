@@ -5,6 +5,7 @@
     "title": "More Platforms",
 
     "obstacles": [
+        //Walls
         {
             "xLeft": -20,
             "xRight": 1300,
@@ -14,8 +15,8 @@
         {
             "xLeft": -20,
             "xRight": 1300,
-            "yTop": 570,
-            "yBottom": 720
+            "yTop": 690,
+            "yBottom": 740
         },
         {
             "xLeft": -20,
@@ -31,6 +32,7 @@
         },
 
 
+        //
         {
             "xLeft": 400,
             "xRight": 880,
@@ -48,14 +50,9 @@
             "xLeft": 125,
             "xRight": 155,
             "yTop": 350,
-            "yBottom": 480
+            "yBottom": 550
         },
-        {
-            "xLeft": 290,
-            "xRight": 340,
-            "yTop": 290,
-            "yBottom": 320
-        },
+
         {
             "xLeft": 0,
             "xRight": 230,
@@ -83,14 +80,9 @@
             "xLeft": 1125,
             "xRight": 1155,
             "yTop": 350,
-            "yBottom": 480
+            "yBottom": 550
         },
-        {
-            "xLeft": 940,
-            "xRight": 990,
-            "yTop": 290,
-            "yBottom": 320
-        },
+
         {
             "xLeft": 1050,
             "xRight": 1280,
@@ -101,7 +93,7 @@
 
     "boxSpawnLocations": [
         {
-            "x": 1050,
+            "x": 1180,
             "y": 100,
 
             "weapons": [
@@ -111,7 +103,7 @@
         },
 
         {
-            "x": 0,
+            "x": 100,
             "y": 100,
 
             "weapons": [
@@ -121,8 +113,8 @@
         },
 
         {
-            "x": 600,
-            "y": 500,
+            "x": 640,
+            "y": 650,
 
             "weapons": [
                 "pierce",
@@ -141,12 +133,12 @@
             "y": 300
         },
         {
-            "x": 205,
-            "y": 300
+            "x": 300,
+            "y": 600
         },
         {
-            "x": 1075,
-            "y": 300
+            "x": 980,
+            "y": 600
         }
     ]
 }

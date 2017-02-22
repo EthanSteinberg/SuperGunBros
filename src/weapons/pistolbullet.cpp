@@ -5,7 +5,7 @@ bool PistolBullet::on_wall_collision(const std::vector<Rectangle>&, std::functio
 }
 
 bool PistolBullet::on_player_collision(int hit_player, const std::vector<Rectangle>&, std::function<void(int, double)> damage_player) {
-    damage_player(hit_player, 10);
+    damage_player(hit_player, 8);
 
     return true;
 }
@@ -19,5 +19,5 @@ double PistolBullet::get_velocity() const {
 }
 
 const char* PistolBullet::bullet_image_name() const {
-    return "bullet";
+    return "9mil";
 }

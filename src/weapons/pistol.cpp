@@ -18,7 +18,7 @@ double Pistol::gun_offset_y() const {
 }
 
 double Pistol::barrel_offset_x() const {
-    return 0;
+    return -5;
 }
 
 double Pistol::barrel_offset_y() const {

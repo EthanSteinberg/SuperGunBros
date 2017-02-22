@@ -44,7 +44,7 @@ double RocketBullet::get_velocity() const {
 }
 
 const char* RocketBullet::bullet_image_name() const {
-    return "bullet";
+    return "missile";
 }
 
 bool RocketBullet::create_explosion_after_destruction() const {

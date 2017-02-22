@@ -46,7 +46,7 @@ double Flame::grip1_dy() const {
 }
 
 double Flame::grip2_dx() const {
-    return gun_offset_x() +20;
+    return gun_offset_x() +18;
 }
 
 double Flame::grip2_dy() const {

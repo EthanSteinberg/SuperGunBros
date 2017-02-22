@@ -22,7 +22,7 @@ bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::functio
 }
 
 bool BounceBullet::on_player_collision(int hit_player, const std::vector<Rectangle>&, std::function<void(int, double)> damage_player) {
-    damage_player(hit_player, 10);
+    damage_player(hit_player, 7);
 
     return true;
 }

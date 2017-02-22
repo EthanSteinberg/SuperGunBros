@@ -71,20 +71,41 @@
     ],
 
     "boxSpawnLocations": [
-        // {
-        //     "x": 400,
-        //     "y": 150,
+         {
+             "x": 640,
+             "y": 120,
 
-        //     "initialSpawnDelay": 20,
-        //     "respawnDelay": 100,
+             "initialSpawnDelay": 20,
+             "respawnDelay": 100,
 
-        //     "weapons": [
-        //         // "flame",
-        //         // "bounce",
-        //         // "pierce",
-        //         "rocket",
-        //     ],
-        // }
+             "weapons": [
+                 "flame",
+                 "bounce",
+                 // "pierce",
+                 //"rocket",
+             ],
+
+             "mirrored": false
+
+         },
+
+        {
+            "x": 640,
+            "y": 520,
+
+            "initialSpawnDelay": 20,
+            "respawnDelay": 100,
+
+            "weapons": [
+                "flame",
+                "bounce",
+                // "pierce",
+                //"rocket",
+            ],
+
+            "mirrored": false
+
+        },
     ],
 
     "spawnLocations": [
@@ -92,17 +113,10 @@
             "x": 100,
             "y": 600
         },
-        {
-            "x": 1080,
-            "y": 300
-        },
+
         {
             "x": 300,
-            "y": 300
+            "y": 245
         },
-        {
-            "x": 980,
-            "y": 300
-        }
     ]
 }

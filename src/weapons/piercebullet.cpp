@@ -21,7 +21,7 @@ bool PierceBullet::on_wall_collision(const std::vector<Rectangle>&, std::functio
 }
 
 bool PierceBullet::on_player_collision(int hit_player, const std::vector<Rectangle>&, std::function<void(int, double)> damage_player) {
-    damage_player(hit_player, 20);
+    damage_player(hit_player, 15);
 
     return true;
 }
@@ -49,5 +49,5 @@ double PierceBullet::get_velocity() const {
 }
 
 const char* PierceBullet::bullet_image_name() const {
-    return "pierce-bullet";
+    return "piercing-round";
 }

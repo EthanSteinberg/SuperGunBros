@@ -46,7 +46,7 @@ double Rocket::grip2_dx() const {
 }
 
 double Rocket::grip2_dy() const {
-    return gun_offset_y() + 2;
+    return gun_offset_y() + 3;
 }
 
 std::unique_ptr<Bullet> Rocket::create_initial_bullet() const {
