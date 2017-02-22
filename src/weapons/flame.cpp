@@ -14,23 +14,23 @@ double Flame::gun_rotation_y() const {
 }
 
 double Flame::gun_offset_x() const {
-    return -10;
+    return 5;
 }
 
 double Flame::gun_offset_y() const {
-    return -8;
+    return -10;
 }
 
 double Flame::barrel_offset_x() const {
-    return 0;
+    return 19;
 }
 
 double Flame::barrel_offset_y() const {
-    return 7;
+    return 10;
 }
 
 const char* Flame::gun_image_name() const {
-    return "flame";
+    return "flamethrower";
 }
 
 bool Flame::in_front() const {
@@ -38,19 +38,19 @@ bool Flame::in_front() const {
 }
 
 double Flame::grip1_dx() const {
-    return gun_offset_x() + 25;
+    return gun_offset_x() + 9;
 }
 
 double Flame::grip1_dy() const {
-    return gun_offset_y() + 13;
+    return gun_offset_y() + 19;
 }
 
 double Flame::grip2_dx() const {
-    return gun_offset_x() + 20;
+    return gun_offset_x() +20;
 }
 
 double Flame::grip2_dy() const {
-    return gun_offset_y() + 13;
+    return gun_offset_y() +16;
 }
 
 std::unique_ptr<Bullet> Flame::create_initial_bullet() const {
@@ -69,7 +69,7 @@ std::vector<std::unique_ptr<Bullet>> Flame::spawn_bullets(double gun_angle) cons
 
     for (int i = -10; i <= 10; i++) {
         std::unique_ptr<FlameBullet> result = std::make_unique<FlameBullet>();
-        result->ticks_left = 40 - (std::abs(i));
+        result->ticks_left = 45 - (std::abs(i));
         result->pos.x = x;
         result->pos.y = y;
         result->angle = i/10.0 * 15.0 * M_PI/180.0;
