@@ -233,6 +233,8 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
 }
 
 void RenderList::add_flame(float center_x, float center_y, float r, float g, float b) {
+
+    double radius = 8;
     double height = 20;
     double width = 20;
 
@@ -241,62 +243,52 @@ void RenderList::add_flame(float center_x, float center_y, float r, float g, flo
 
     add_transformed_point(flame_data, x, y + height);
     flame_data.push_back(state.z_offset);
-
     flame_data.push_back(r);
     flame_data.push_back(g);
     flame_data.push_back(b);
-
     add_transformed_point(flame_data, center_x, center_y);
+    flame_data.push_back(radius * state.transform[0][0]);
 
 
     add_transformed_point(flame_data, x + width, y);
     flame_data.push_back(state.z_offset);
-
     flame_data.push_back(r);
     flame_data.push_back(g);
     flame_data.push_back(b);
-
     add_transformed_point(flame_data, center_x, center_y);
-
+    flame_data.push_back(radius * state.transform[0][0]);
 
     add_transformed_point(flame_data, x + width, y + height);
     flame_data.push_back(state.z_offset);
-
     flame_data.push_back(r);
     flame_data.push_back(g);
     flame_data.push_back(b);
-
     add_transformed_point(flame_data, center_x, center_y);
-
+    flame_data.push_back(radius * state.transform[0][0]);
 
     add_transformed_point(flame_data, x, y + height);
     flame_data.push_back(state.z_offset);
-
     flame_data.push_back(r);
     flame_data.push_back(g);
     flame_data.push_back(b);
-
     add_transformed_point(flame_data, center_x, center_y);
-
+    flame_data.push_back(radius * state.transform[0][0]);
 
     add_transformed_point(flame_data, x + width, y);
     flame_data.push_back(state.z_offset);
-
     flame_data.push_back(r);
     flame_data.push_back(g);
     flame_data.push_back(b);
-
     add_transformed_point(flame_data, center_x, center_y);
-
+    flame_data.push_back(radius * state.transform[0][0]);
 
     add_transformed_point(flame_data, x, y);
     flame_data.push_back(state.z_offset);
-
     flame_data.push_back(r);
     flame_data.push_back(g);
     flame_data.push_back(b);
-
     add_transformed_point(flame_data, center_x, center_y);
+    flame_data.push_back(radius * state.transform[0][0]);
 }
 
 void RenderList::draw() {
@@ -306,7 +298,7 @@ void RenderList::draw() {
 
 void RenderList::draw_flame() {
     glBufferData(GL_ARRAY_BUFFER, 4 * flame_data.size(), flame_data.data(), GL_STREAM_DRAW);
-    glDrawArrays(GL_TRIANGLES, 0, flame_data.size() / 8);
+    glDrawArrays(GL_TRIANGLES, 0, flame_data.size() / 9);
 }
 
 void RenderList::add_transformed_point(std::vector<float>& vec, float x, float y) {
