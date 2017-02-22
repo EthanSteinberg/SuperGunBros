@@ -61,8 +61,8 @@
             "respawnDelay": 100,
 
             "weapons": [
-                "flame",
-                // "bounce",
+                //"flame",
+                 "bounce",
                 // "pierce",
                 // "rocket",
             ],

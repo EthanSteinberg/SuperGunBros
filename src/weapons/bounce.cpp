@@ -10,11 +10,11 @@ double Bounce::gun_rotation_y() const {
 }
 
 double Bounce::gun_offset_x() const {
-    return -10;
+    return 4;
 }
 
 double Bounce::gun_offset_y() const {
-    return -8;
+    return -10;
 }
 
 double Bounce::barrel_offset_x() const {
@@ -22,31 +22,31 @@ double Bounce::barrel_offset_x() const {
 }
 
 double Bounce::barrel_offset_y() const {
-    return 7;
+    return 0;
 }
 
 const char* Bounce::gun_image_name() const {
-    return "bounce";
+    return "ricochet-rifle";
 }
 
 bool Bounce::in_front() const {
-    return false;
+    return true;
 }
 
 double Bounce::grip1_dx() const {
-    return gun_offset_x() + 25;
+    return gun_offset_x() + 15;
 }
 
 double Bounce::grip1_dy() const {
-    return gun_offset_y() + 13;
+    return gun_offset_y() + 10;
 }
 
 double Bounce::grip2_dx() const {
-    return gun_offset_x() + 20;
+    return gun_offset_x() + 21;
 }
 
 double Bounce::grip2_dy() const {
-    return gun_offset_y() + 13;
+    return gun_offset_y() + 8;
 }
 
 std::unique_ptr<Bullet> Bounce::create_initial_bullet() const {

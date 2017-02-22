@@ -32,9 +32,9 @@ bool BounceBullet::on_no_collision() {
 }
 
 double BounceBullet::get_velocity() const {
-    return 24;
+    return 18;
 }
 
 const char* BounceBullet::bullet_image_name() const {
-    return "bullet";
+    return "ricochet-round";
 }
