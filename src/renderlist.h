@@ -59,6 +59,8 @@ public:
 
 	void draw_flame();
 
+	void draw_top();
+
 	void push();
 	void pop();
 
@@ -83,6 +85,8 @@ private:
 
 	std::vector<float> data;
 	std::vector<float> flame_data;
+
+	std::vector<float> top_data;
 
 	rapidjson::Document metadata;
 

@@ -70,7 +70,7 @@ void GameScreen::render(RenderList& list) const {
     list.pop();
 
     list.push();
-    list.set_z(80);
+    list.set_z(100);
 
     Rectangle kill_board_rect = list.get_image_dimensions("kill-board");
     kill_board_rect = kill_board_rect.offset(1280/2, kill_board_rect.height/2);
@@ -222,6 +222,12 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         auto &player = players[i];
 
         if (player.state.is_dead) {
+
+            if (player.state.current_player_shooting_sound_filename != nullptr) {
+                player.state.current_player_shooting_sound_filename = nullptr;
+                sounds.stop_sound(player.state.current_player_shooting_sound);
+            }
+
             player.state.ticks_until_spawn --;
 
             if (player.state.ticks_until_spawn == 0) {
@@ -280,13 +286,23 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 player.state.gun_angle = atan2(current_inputs.rs.y, current_inputs.rs.x);
             }
 
-            if (button_press(ButtonName::L3, current_inputs, prev_inputs) || button_hold(ButtonName::L3, current_inputs, prev_inputs)) {
-                const int num_stops = 36;
+            if (player.state.sticky_shooting) {
+                const int num_stops = 16;
                 double rads_per_stop = (2 * M_PI / num_stops);
 
                 double index = std::round(player.state.gun_angle / rads_per_stop);
 
                 player.state.gun_angle = rads_per_stop * index;
+            } else {
+                if (std::abs(player.state.gun_angle) < 10 * M_PI/180.0) {
+                    player.state.gun_angle = 0;
+                } else if ((M_PI - std::abs(player.state.gun_angle) < 10 * M_PI/180.0)) {
+                    player.state.gun_angle = M_PI;
+                }
+            }
+
+            if (button_press(ButtonName::R3, current_inputs, prev_inputs)) {
+                player.state.sticky_shooting = !player.state.sticky_shooting;
             }
 
             //Checking inputs for later calculations
@@ -299,7 +315,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs);
             bool continuing_boost = button_hold(ButtonName::LB, current_inputs, prev_inputs) && player.state.boosting;
 
-            bool attempting_pickup = current_inputs.buttons[ButtonName::X];
+            bool attempting_pickup = button_press(ButtonName::X, current_inputs, prev_inputs);
 
             if (attempting_pickup) {
                 auto potential_gun = attempt_pick_up(player.state.pos);
@@ -532,7 +548,11 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             if (player.state.ticks_till_next_bullet > 0) {
                 player.state.ticks_till_next_bullet --;
             } else if (pull_trigger || holding_trigger) {
-                sounds.play_sound("../assets/sound/shoot.wav");
+
+                if (player.state.gun->shoot_sound() != nullptr) {
+                    sounds.play_sound(player.state.gun->shoot_sound());
+                }
+
                 player.state.ticks_till_next_bullet = player.state.gun->ticks_between_shots();
 
                 std::vector<std::unique_ptr<Bullet>> next_bullets = player.spawn_bullets();
@@ -550,6 +570,24 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                         player.set_gun(create_gun("pistol"));
                     }
                 }
+            }
+
+            const char* desired_shooting_sound = nullptr;
+
+            if (pull_trigger || holding_trigger) {
+                desired_shooting_sound = player.state.gun->holding_shoot_sound();
+            }
+
+            if (desired_shooting_sound != player.state.current_player_shooting_sound_filename) {
+                if (player.state.current_player_shooting_sound_filename != nullptr) {
+                    sounds.stop_sound(player.state.current_player_shooting_sound);
+                }
+
+                if (desired_shooting_sound != nullptr) {
+                    player.state.current_player_shooting_sound = sounds.play_sound(desired_shooting_sound, true);
+                }
+
+                player.state.current_player_shooting_sound_filename = desired_shooting_sound;
             }
         }
     }
@@ -585,7 +623,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
             bool vertical_free = !would_hit_ground(bullet->pos.offset(0, dy));
             bool horizontal_free = !would_hit_ground(bullet->pos.offset(dx, 0));
-            is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, vertical_free, horizontal_free);
+            is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, vertical_free, horizontal_free, sounds);
         }
 
 
@@ -719,9 +757,17 @@ std::unique_ptr<Gun> GameScreen::attempt_pick_up(const Rectangle& rect) {
     std::unique_ptr<Gun> result = nullptr;
 
     for (auto& box: boxes) {
-        if (box.opened && box.pos.colliding_with(rect)) {
-            result = std::move(box.weapon);
-            box = level.get_box_spawns()[box.spawn_index].get_random_spawn(gen, false);
+        if (box.ticks_until_active != 0) {
+            continue;
+        }
+
+        if (box.pos.colliding_with(rect)) {
+            if (box.opened) {
+                result = std::move(box.weapon);
+                box = level.get_box_spawns()[box.spawn_index].get_random_spawn(gen, false);
+            } else {
+                box.opened = true;
+            }
         }
     }
 

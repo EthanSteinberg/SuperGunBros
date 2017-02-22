@@ -19,7 +19,7 @@ const int screen_height = 720;
 
 const bool debug_keyboard_player = true;
 
-const bool debug_other_player = true;
+const bool debug_other_player = false;
 bool other_player_start_button = true;
 
 struct MainData {
@@ -198,6 +198,8 @@ int main(void)
         list.draw();
         setups[1]();
         list.draw_flame();
+        setups[0]();
+        list.draw_top();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

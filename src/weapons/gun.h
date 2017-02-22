@@ -15,6 +15,14 @@ public:
     double grip2_x(double gun_angle) const;
     double grip2_y(double gun_angle) const;
 
+    virtual const char* shoot_sound() {
+        return "../assets/sound/shoot.wav";
+    }
+
+    virtual const char* holding_shoot_sound() {
+        return nullptr;
+    }
+
     virtual bool in_front() const = 0;
 
     virtual std::vector<std::unique_ptr<Bullet>> spawn_bullets(double gun_angle) const;

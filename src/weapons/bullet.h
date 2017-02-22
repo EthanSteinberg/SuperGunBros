@@ -6,6 +6,8 @@
 #include <functional>
 #include "renderlist.h"
 
+class SoundThread;
+
 class Bullet {
 public:
     Bullet();
@@ -21,7 +23,7 @@ public:
     virtual void render(RenderList& list) const;
 
     // Return true if the bullet should be marked dead
-    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, bool free_horizontal, bool free_vertical) {
+    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, bool free_horizontal, bool free_vertical, SoundThread& sounds) {
         return on_wall_collision(player_positions, damage_player);
     }
 

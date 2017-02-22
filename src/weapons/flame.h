@@ -11,6 +11,14 @@ public:
         return 0;
     }
 
+    virtual const char* shoot_sound() {
+        return nullptr;
+    }
+
+    virtual const char* holding_shoot_sound() {
+        return "../assets/sound/flame.wav";
+    }
+
     virtual int initial_ammo() const {
         return 100;
     }
