@@ -106,6 +106,11 @@ struct PlayerState {
     int source_fire_player = 0;
 
     int ticks_till_next_flame_particle = 0;
+
+    bool sticky_shooting = true;
+
+    uint64_t current_player_shooting_sound = 0;
+    const char* current_player_shooting_sound_filename = nullptr;
 };
 
 class Player {

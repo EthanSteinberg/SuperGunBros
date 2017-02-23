@@ -152,6 +152,12 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
         exit(-1);
     }
 
+    std::vector<float>* vec = &data;
+
+    if (state.z_offset == 100) {
+        vec = &top_data;
+    }
+
     auto& info = metadata[name.c_str()];
 
     int px = info["x"].GetInt() + subx;
@@ -160,76 +166,76 @@ void RenderList::add_image_core(const std::string &name, float x, float y, float
     int py = info["y"].GetInt() + suby;
     int psizey = subheight;
 
-    add_transformed_point(data, x, y + height);
-    data.push_back(state.z_offset);
+    add_transformed_point(*vec, x, y + height);
+    vec->push_back(state.z_offset);
 
-    data.push_back(px);
-    data.push_back(py + psizey);
+    vec->push_back(px);
+    vec->push_back(py + psizey);
 
-    data.push_back(px);
-    data.push_back(py);
-    data.push_back(psizex);
-    data.push_back(psizey);
-
-
-    add_transformed_point(data, x + width, y);
-    data.push_back(state.z_offset);
-
-    data.push_back(px + psizex);
-    data.push_back(py);
-
-    data.push_back(px);
-    data.push_back(py);
-    data.push_back(psizex);
-    data.push_back(psizey);
+    vec->push_back(px);
+    vec->push_back(py);
+    vec->push_back(psizex);
+    vec->push_back(psizey);
 
 
-    add_transformed_point(data, x + width, y + height);
-    data.push_back(state.z_offset);
+    add_transformed_point(*vec, x + width, y);
+    vec->push_back(state.z_offset);
 
-    data.push_back(px + psizex);
-    data.push_back(py + psizey);
+    vec->push_back(px + psizex);
+    vec->push_back(py);
 
-    data.push_back(px);
-    data.push_back(py);
-    data.push_back(psizex);
-    data.push_back(psizey);
-
-
-    add_transformed_point(data, x, y + height);
-    data.push_back(state.z_offset);
-
-    data.push_back(px);
-    data.push_back(py + psizey);
-
-    data.push_back(px);
-    data.push_back(py);
-    data.push_back(psizex);
-    data.push_back(psizey);
+    vec->push_back(px);
+    vec->push_back(py);
+    vec->push_back(psizex);
+    vec->push_back(psizey);
 
 
-    add_transformed_point(data, x + width, y);
-    data.push_back(state.z_offset);
+    add_transformed_point(*vec, x + width, y + height);
+    vec->push_back(state.z_offset);
 
-    data.push_back(px + psizex);
-    data.push_back(py);
+    vec->push_back(px + psizex);
+    vec->push_back(py + psizey);
 
-    data.push_back(px);
-    data.push_back(py);
-    data.push_back(psizex);
-    data.push_back(psizey);
+    vec->push_back(px);
+    vec->push_back(py);
+    vec->push_back(psizex);
+    vec->push_back(psizey);
 
 
-    add_transformed_point(data, x, y);
-    data.push_back(state.z_offset);
+    add_transformed_point(*vec, x, y + height);
+    vec->push_back(state.z_offset);
 
-    data.push_back(px);
-    data.push_back(py);
+    vec->push_back(px);
+    vec->push_back(py + psizey);
 
-    data.push_back(px);
-    data.push_back(py);
-    data.push_back(psizex);
-    data.push_back(psizey);
+    vec->push_back(px);
+    vec->push_back(py);
+    vec->push_back(psizex);
+    vec->push_back(psizey);
+
+
+    add_transformed_point(*vec, x + width, y);
+    vec->push_back(state.z_offset);
+
+    vec->push_back(px + psizex);
+    vec->push_back(py);
+
+    vec->push_back(px);
+    vec->push_back(py);
+    vec->push_back(psizex);
+    vec->push_back(psizey);
+
+
+    add_transformed_point(*vec, x, y);
+    vec->push_back(state.z_offset);
+
+    vec->push_back(px);
+    vec->push_back(py);
+
+    vec->push_back(px);
+    vec->push_back(py);
+    vec->push_back(psizex);
+    vec->push_back(psizey);
 }
 
 void RenderList::add_flame(float center_x, float center_y, float r, float g, float b) {
@@ -299,6 +305,11 @@ void RenderList::draw() {
 void RenderList::draw_flame() {
     glBufferData(GL_ARRAY_BUFFER, 4 * flame_data.size(), flame_data.data(), GL_STREAM_DRAW);
     glDrawArrays(GL_TRIANGLES, 0, flame_data.size() / 9);
+}
+
+void RenderList::draw_top() {
+    glBufferData(GL_ARRAY_BUFFER, 4 * top_data.size(), top_data.data(), GL_STREAM_DRAW);
+    glDrawArrays(GL_TRIANGLES, 0, top_data.size() / 9);
 }
 
 void RenderList::add_transformed_point(std::vector<float>& vec, float x, float y) {

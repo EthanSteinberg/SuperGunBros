@@ -3,15 +3,25 @@
 
 #include <thread>
 #include <boost/lockfree/spsc_queue.hpp>
+#include <cstdint>
 
 class SoundThread {
 public:
     void start();
-    void play_sound(const char* filename);
+    uint64_t play_sound(const char* filename, bool looping = false);
+    void stop_sound(uint64_t index);
 
 private:
+    int next_sound_id = 0;
+
+    struct Message {
+        uint64_t id;
+        bool looping;
+        const char* filename;
+    };
+
     std::thread internal_thread;
-    boost::lockfree::spsc_queue<const char*, boost::lockfree::capacity<1024> > spsc_queue;
+    boost::lockfree::spsc_queue<Message, boost::lockfree::capacity<1024> > spsc_queue;
 };
 
 #endif

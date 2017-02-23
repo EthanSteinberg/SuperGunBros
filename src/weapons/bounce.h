@@ -10,6 +10,10 @@ public:
         return 15;
     }
 
+    virtual const char* shoot_sound() {
+        return "../assets/sound/bounceShoot.wav";
+    }
+
 private:
     virtual double gun_rotation_x() const;
     virtual double gun_rotation_y() const;

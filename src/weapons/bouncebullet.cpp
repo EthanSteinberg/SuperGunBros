@@ -1,8 +1,10 @@
 #include "bouncebullet.h"
 
+#include "soundthread.h"
+
 #include <cmath>
 
-bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>, bool free_horizontal, bool free_vertical) {
+bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>, bool free_horizontal, bool free_vertical, SoundThread& sounds) {
     if (bounces_left == 0) {
         return true;
     }
@@ -15,6 +17,8 @@ bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::functio
         // Nothing is free, so turn around
         angle = M_PI + angle;
     }
+
+    sounds.play_sound("../assets/sound/bounce.wav");
 
     bounces_left--;
 
