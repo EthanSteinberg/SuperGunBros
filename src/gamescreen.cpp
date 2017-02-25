@@ -15,7 +15,7 @@
 #define BOOST_STR 1
 #define BOOST_DUR 180
 #define WALL_FRICTION 0.2
-#define WALL_GRACE 3
+#define WALL_GRACE 5
 #define GROUND_GRACE 5
 
 const int KILLS_TO_WIN = 5;

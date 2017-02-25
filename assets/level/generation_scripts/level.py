@@ -15,22 +15,22 @@ class Level():
             ("spawnLocations", [])
         ])
 
-    def add_obstacle(self, xl, xr, yt, yb, mir=None):
+    def add_obstacle(self, xl, xr, yt, yb, mirror=None):
         obst = {"xLeft": xl, "xRight": xr, "yTop": yt, "yBottom": yb}
-        if mir is not None:
-            obst["mirrored"] = mir
+        if mirror is not None:
+            obst["mirrored"] = mirror
         self.dict["obstacles"].append(obst)
 
-    def add_box_spawn(self, x, y, weapons, isd=15, rd=30, mir=None):
+    def add_box_spawn(self, x, y, weapons, isd=15, rd=30, mirror=None):
         box = {"x" : x, "y": y, "weapons" : weapons, "initialSpawnDelay": isd, "respawnDelay": rd}
-        if mir is not None:
-            box["mirrored"] = mir
+        if mirror is not None:
+            box["mirrored"] = mirror
         self.dict["boxSpawnLocations"].append(box)
 
-    def add_player_spawn(self, x, y, mir=None):
+    def add_player_spawn(self, x, y, mirror=None):
         spawn = {"x" : x, "y": y}
-        if mir is not None:
-            spawn["mirrored"] = mir
+        if mirror is not None:
+            spawn["mirrored"] = mirror
         self.dict["spawnLocations"].append(spawn)
 
     def save(self, filename, note = None):
@@ -38,3 +38,4 @@ class Level():
             if note:
                 f.write(unicode("//" + note + "\n"))
             f.write(unicode(json.dumps(self.dict, indent = 4)))
+        print "Level successfully saved"
