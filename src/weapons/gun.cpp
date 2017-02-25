@@ -5,7 +5,6 @@
 #include "pierce.h"
 #include "bounce.h"
 #include "flame.h"
-#include "magic.h"
 
 #include <cmath>
 #include <iostream>

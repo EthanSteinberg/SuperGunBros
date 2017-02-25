@@ -1,5 +1,4 @@
 #include "bullet.h"
-#include "magic.h"
 
 Bullet::Bullet() : pos(0, 0, 6, 6) {}
 

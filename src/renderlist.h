@@ -13,6 +13,8 @@
 
 #include <fstream>
 
+const double ASSET_SCALE = 0.4;
+
 /**
  * This class allows you to render images to the screen via OpenGL.
  * The basic idea is that you apply stateful transformations to the render list which affect all

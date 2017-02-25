@@ -1,0 +1,158 @@
+{
+    "title": "Complex",
+    "width": 5760,
+    "height": 3240,
+
+    "obstacles": [
+        //Bounds
+        //------
+        {
+            "xLeft": -40,
+            "xRight": 5800,
+            "yTop": -40,
+            "yBottom": 20,
+        },
+        {
+            "xLeft": -40,
+            "xRight": 5800,
+            "yTop": 3220,
+            "yBottom": 3260,
+        },
+        {
+            "xLeft": -40,
+            "xRight": 20,
+            "yTop": -40,
+            "yBottom": 3260,
+        },
+        {
+            "xLeft": 5740,
+            "xRight": 5800,
+            "yTop": -40,
+            "yBottom": 3260,
+        },
+        //------
+
+        //Hotel
+        //------
+        //Facade
+            //ROOMS
+
+            {
+                "xLeft": 4900,
+                "xRight": 5600,
+                "yTop": 250,
+                "yBottom": 400,
+            },
+            {
+                "xLeft": 5530,
+                "xRight": 5600,
+                "yTop": 300,
+                "yBottom": 550,
+            },
+
+
+            {
+                "xLeft": 4900,
+                "xRight": 5600,
+                "yTop": 700,
+                "yBottom": 850,
+            },
+            {
+                "xLeft": 5530,
+                "xRight": 5600,
+                "yTop": 700,
+                "yBottom": 1000,
+            },
+
+            {
+                "xLeft": 4900,
+                "xRight": 5600,
+                "yTop": 1150,
+                "yBottom": 1300,
+            },
+            {
+                "xLeft": 5530,
+                "xRight": 5600,
+                "yTop": 1150,
+                "yBottom": 1450,
+            },
+
+            {
+                "xLeft": 4900,
+                "xRight": 5600,
+                "yTop": 1600,
+                "yBottom": 1750,
+            },
+            {
+                "xLeft": 5530,
+                "xRight": 5600,
+                "yTop": 1600,
+                "yBottom": 1900,
+            },
+
+            {
+                "xLeft": 4900,
+                "xRight": 5600,
+                "yTop": 2050,
+                "yBottom": 2200,
+            },
+            {
+                "xLeft": 5530,
+                "xRight": 5600,
+                "yTop": 2050,
+                "yBottom": 2350,
+            },
+
+
+            {
+                "xLeft": 4900,
+                "xRight": 5600,
+                "yTop": 2500,
+                "yBottom": 2650,
+            },
+            {
+                "xLeft": 5530,
+                "xRight": 5600,
+                "yTop": 2630,
+                "yBottom": 3000,
+            },
+
+
+
+
+        //------
+    ],
+
+    "boxSpawnLocations": [
+        {
+            "x": 200,
+            "y": 600,
+
+            "weapons": [
+                "pierce",
+                "rocket",
+                "flame",
+                "bounce",
+            ]
+        },
+    ],
+
+    "spawnLocations": [
+        {
+            "x": 200,
+            "y": 500,
+        },
+        {
+            "x": 500,
+            "y": 500,
+        },
+        {
+            "x": 800,
+            "y": 500,
+        },
+        {
+            "x": 1100,
+            "y": 500
+        },
+    ]
+}

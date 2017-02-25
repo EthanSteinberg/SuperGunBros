@@ -11,11 +11,13 @@
 #include <exception>
 
 const char* const level_names[] = {
+        "../assets/level/test.json",
     "../assets/level/platforms.json",
     "../assets/level/more_platforms.json",
     "../assets/level/shafts.json",
     "../assets/level/sprawl.json",
-    "../assets/level/close_quarters.json"
+    "../assets/level/complex.json",
+    "../assets/level/close_quarters.json",
 };
 
 const double line_width = 4;
@@ -75,9 +77,9 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 
         obstacles.push_back(rect);
 
-        bool mirror_exception = obstacle.HasMember("mirrored") && !obstacle["mirrored"].GetBool();
+        bool is_mirrored = obstacle.HasMember("mirrored") ? obstacle["mirrored"].GetBool() : mirrored;
 
-        if (mirrored && !mirror_exception) {
+        if (is_mirrored) {
             Rectangle rect2(
                     l_width - x,
                     y,
@@ -118,9 +120,9 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 
         box_spawn_locations.push_back(BoxSpawn(pos, weapons, initial_spawn_delay, respawn_delay, box_spawn_locations.size()));
 
-        bool mirror_exception = spawn_location.HasMember("mirrored") && !spawn_location["mirrored"].GetBool();
+        bool is_mirrored = spawn_location.HasMember("mirrored") ? spawn_location["mirrored"].GetBool() : mirrored;
 
-        if (mirrored  && !mirror_exception) {
+        if (is_mirrored)  {
             Point pos2{
                     l_width - x,
                     y};
@@ -138,9 +140,9 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
         Point p = {x, y};
         player_spawn_locations.push_back(p);
 
-        bool mirror_exception = spawn_location.HasMember("mirrored") && !spawn_location["mirrored"].GetBool();
+        bool is_mirrored = spawn_location.HasMember("mirrored") ? spawn_location["mirrored"].GetBool() : mirrored;
 
-        if (mirrored && !mirror_exception) {
+        if (is_mirrored)  {
             Point p2 = {l_width-x, y};
             player_spawn_locations.push_back(p2);
         }

@@ -108,8 +108,8 @@
         //-----------------
         //high wall
         {
-            "xLeft": 200,
-            "xRight": 230,
+            "xLeft": 180,
+            "xRight": 210,
             "yTop": 370,
             "yBottom": 1050
         },

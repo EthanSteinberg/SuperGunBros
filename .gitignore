@@ -4,3 +4,6 @@ build
 
 #Pesky mac files
 **.DS_Store
+
+#Python .pyc files
+**.pyc
