@@ -709,6 +709,8 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
         if (shooter_index != player_index) {
             shooter.state.score += 2;
+        } else {
+            shooter.state.score = std::max(0, player.state.score - 2);
         }
 
         player.state.score = std::max(0, player.state.score - 1);
