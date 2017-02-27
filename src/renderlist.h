@@ -67,6 +67,9 @@ public:
 	void pop();
 
 	void set_z(float z_value);
+
+
+	void add_red_numbers(const std::string& color, int num, float x, float y);
 private:
 
 	struct RenderState {

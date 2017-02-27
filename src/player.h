@@ -75,7 +75,7 @@ struct PlayerState {
     double dy = 0;
 
     double health = MAX_HEALTH;
-    int kills = 0;
+    int score = 0;
 
     int ticks_till_next_bullet = 0;
     int ticks_left_jumping = 0;
