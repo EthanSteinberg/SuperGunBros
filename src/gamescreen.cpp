@@ -18,7 +18,7 @@
 #define WALL_GRACE 5
 #define GROUND_GRACE 5
 
-const int KILLS_TO_WIN = 5;
+const int SCORE_TO_WIN = 25;
 
 const int FIRE_LENGTH = 200;
 
@@ -72,18 +72,18 @@ void GameScreen::render(RenderList& list) const {
     list.push();
     list.set_z(100);
 
-    Rectangle kill_board_rect = list.get_image_dimensions("kill-board");
-    kill_board_rect = kill_board_rect.offset(1280/2, kill_board_rect.height/2);
-    list.add_rect("kill-board", kill_board_rect);
+    Rectangle score_board_rect = list.get_image_dimensions("score-board");
+    score_board_rect = score_board_rect.offset(1280/2, score_board_rect.height/2);
+    list.add_rect("score-board", score_board_rect);
 
     for (const auto& player : players) {
         int x = 0;
         int y = 0;
-        const int top_row_offset = 120;
-        const int top_row_y = 30;
+        const int top_row_offset = 127;
+        const int top_row_y = 28;
 
-        const int bottom_row_offset = 90;
-        const int bottom_row_y = 80;
+        const int bottom_row_offset = 100;
+        const int bottom_row_y = 65;
 
         switch (player.info.color) {
             case PlayerColor::RED:
@@ -111,21 +111,14 @@ void GameScreen::render(RenderList& list) const {
                 exit(-1);
         }
 
-        Rectangle counter_rect(x, y, 40, 44);
-
-        list.add_rect(get_color_name(player.info.color), counter_rect);
-        list.add_outline("black", counter_rect);
-
-        std::string number = std::to_string(player.state.kills);
-        Rectangle column_number_text = list.get_image_dimensions(number);
-        list.add_rect(number, column_number_text.offset(x, y));
+        list.add_red_numbers(get_color_name(player.info.color), player.state.score, x, y);
     }
 
     if (game_over) {
         std::string winning_color = "";
 
         for (const auto& player: players) {
-            if (player.state.kills == KILLS_TO_WIN) {
+            if (player.state.score == SCORE_TO_WIN) {
                 if (winning_color == "") {
                     winning_color = get_color_name(player.info.color);
                 } else {
@@ -714,14 +707,13 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
         auto& shooter = players[shooter_index];
 
-        if (shooter_index == player_index) {
-            // why are you killing yourself?
-            player.state.kills = std::max(0, player.state.kills - 1);
-        } else {
-            shooter.state.kills++;
+        if (shooter_index != player_index) {
+            shooter.state.score += 2;
         }
 
-        if (shooter.state.kills == KILLS_TO_WIN) {
+        player.state.score = std::max(0, player.state.score - 1);
+
+        if (shooter.state.score == SCORE_TO_WIN) {
             game_over = true;
         } else {
             player.state.ticks_until_spawn = 130;

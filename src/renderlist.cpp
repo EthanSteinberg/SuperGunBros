@@ -135,6 +135,28 @@ void RenderList::add_text(const std::string& text, float x, float y) {
     }
 }
 
+void RenderList::add_red_numbers(const std::string& color, int num, float center_x, float center_y) {
+    std::string num_text = std::to_string(num);
+
+    std::string numbers = "0123456789";
+
+    const int advance = 24;
+    const int height = 33;
+
+    const int visual_advance = 21;
+
+    float y = center_y - height / 2.0;
+    float x = center_x - visual_advance * num_text.size() / 2.0;
+
+    for (unsigned int i = 0; i < num_text.size(); i++) {
+        char current_char = num_text[i];
+        int offset = numbers.find(current_char);
+
+        add_image_core(color + "-numbers", x, y, advance, height, offset * advance, 0, advance, height);
+        x += visual_advance;
+    }
+}
+
 void RenderList::add_image_core(const std::string &name, float x, float y, float width, float height) {
     if (!metadata.HasMember(name.c_str())) {
         std::cerr<<"Could not find image \"" << name << "\"" << std::endl;
