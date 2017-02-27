@@ -5,6 +5,9 @@ from collections import OrderedDict
 class Level():
 
     def __init__(self, title, width, height, mirrored = False):
+        self.width = width
+        self.height = height
+
         self.dict = OrderedDict([
             ("title", title),
             ("width", width),

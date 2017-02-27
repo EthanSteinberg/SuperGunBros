@@ -6,8 +6,13 @@
 class Bounce : public Gun {
 public:
     virtual bool in_front() const;
+
+    virtual int ticks_between_shots() const {
+        return 3;
+    };
+
     virtual int initial_ammo() const {
-        return 15;
+        return 50;
     }
 
     virtual const char* shoot_sound() {

@@ -5,7 +5,7 @@ bool PistolBullet::on_wall_collision(const std::vector<Rectangle>&, std::functio
 }
 
 bool PistolBullet::on_player_collision(int hit_player, const std::vector<Rectangle>&, std::function<void(int, double)> damage_player) {
-    damage_player(hit_player, 8);
+    damage_player(hit_player, 5);
 
     return true;
 }
