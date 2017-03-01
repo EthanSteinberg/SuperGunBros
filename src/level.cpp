@@ -14,9 +14,7 @@ const char* const level_names[] = {
         "../assets/level/platforms.json",
         "../assets/level/more_platforms.json",
         "../assets/level/shafts.json",
-        "../assets/level/sprawl.json",
         "../assets/level/close_quarters.json",
-        "../assets/level/complex.json",
 };
 
 const double line_width = 4;
@@ -177,11 +175,13 @@ void Level::render(RenderList& list, bool show_border) const {
 
             if (show_border) {
                 list.add_image("background", i, j);
-            } else {
-                list.add_image("grey", i, j, 1280, 720);
             }
 
         }
+    }
+
+    if (!show_border) {
+        list.add_image("grey", 0, 0, width, height);
     }
 
     if (show_border) {
