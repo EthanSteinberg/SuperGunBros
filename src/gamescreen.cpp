@@ -18,7 +18,7 @@
 #define WALL_GRACE 5
 #define GROUND_GRACE 5
 
-const int SCORE_TO_WIN = 20;
+const int SCORE_TO_WIN = 10;
 
 const int FIRE_LENGTH = 200;
 
