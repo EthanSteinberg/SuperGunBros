@@ -1,6 +1,10 @@
 #include "bullet.h"
 
-Bullet::Bullet() : pos(0, 0, 6, 6) {}
+static uint64_t next_id = 0;
+
+Bullet::Bullet() : pos(0, 0, 6, 6) {
+    id = next_id++;
+}
 
 Bullet::~Bullet() {}
 

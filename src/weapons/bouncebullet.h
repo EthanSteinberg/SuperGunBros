@@ -12,9 +12,14 @@ public:
 
     virtual double get_velocity() const override;
 
+    virtual bool create_little_explosion_after_destruction() const override {
+        return true;
+    }
+
+
 private:
 
-    int bounces_left = 5;
+    int ticks_left = 300;
 
     virtual const char* bullet_image_name() const override;
 };

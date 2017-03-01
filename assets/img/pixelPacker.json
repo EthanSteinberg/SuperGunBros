@@ -143,6 +143,12 @@
         "x": 1985,
         "y": 578
     },
+    "bounce-explosion": {
+        "sizex": 30,
+        "sizey": 30,
+        "x": 1630,
+        "y": 865
+    },
     "box": {
         "sizex": 86,
         "sizey": 86,
@@ -189,7 +195,7 @@
         "sizex": 137,
         "sizey": 64,
         "x": 1630,
-        "y": 931
+        "y": 962
     },
     "fuel-color": {
         "sizex": 1,
@@ -273,7 +279,7 @@
         "sizex": 30,
         "sizey": 65,
         "x": 1630,
-        "y": 865
+        "y": 896
     },
     "life-blue": {
         "sizex": 31,
@@ -309,7 +315,7 @@
         "sizex": 286,
         "sizey": 21,
         "x": 1249,
-        "y": 1050
+        "y": 977
     },
     "missile": {
         "sizex": 97,
@@ -381,31 +387,31 @@
         "sizex": 1131,
         "sizey": 88,
         "x": 0,
-        "y": 1022
+        "y": 1027
     },
     "player-won-red": {
         "sizex": 1131,
         "sizey": 88,
         "x": 0,
-        "y": 1111
+        "y": 1116
     },
     "player-won-tie": {
         "sizex": 1131,
         "sizey": 89,
         "x": 0,
-        "y": 1200
+        "y": 1205
     },
     "player-won-yellow": {
         "sizex": 1131,
         "sizey": 88,
         "x": 0,
-        "y": 1589
+        "y": 1594
     },
     "press-start-continue": {
         "sizex": 1112,
         "sizey": 102,
         "x": 0,
-        "y": 1486
+        "y": 1491
     },
     "ready-box-outline": {
         "sizex": 714,
@@ -446,8 +452,8 @@
     "red-shoulder": {
         "sizex": 28,
         "sizey": 40,
-        "x": 1958,
-        "y": 881
+        "x": 1661,
+        "y": 921
     },
     "redLife": {
         "sizex": 31,
@@ -471,7 +477,7 @@
         "sizex": 188,
         "sizey": 53,
         "x": 1249,
-        "y": 996
+        "y": 1027
     },
     "score-board": {
         "sizex": 365,
@@ -503,7 +509,7 @@
         "sizex": 951,
         "sizey": 195,
         "x": 0,
-        "y": 1290
+        "y": 1295
     },
     "text5936-9": {
         "sizex": 220,
@@ -544,8 +550,8 @@
     "uppercase": {
         "sizex": 286,
         "sizey": 21,
-        "x": 1438,
-        "y": 996
+        "x": 1249,
+        "y": 999
     },
     "white": {
         "sizex": 1,
@@ -574,8 +580,8 @@
     "yellow-shoulder": {
         "sizex": 28,
         "sizey": 40,
-        "x": 1958,
-        "y": 922
+        "x": 1690,
+        "y": 921
     },
     "yellowLife": {
         "sizex": 31,
