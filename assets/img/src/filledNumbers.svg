@@ -14,8 +14,8 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.0 r15299"
-   sodipodi:docname="filledNumbers.svg">
+   sodipodi:docname="filledNumbers.svg"
+   inkscape:version="0.92.0 r15299">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="474.69161"
-     inkscape:cy="688.54377"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="346.23998"
+     inkscape:cy="658.38322"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,7 +53,7 @@
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111069px;line-height:6.61458254px;font-family:FreeMono;-inkscape-font-specification:FreeMono;letter-spacing:0px;word-spacing:0px;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;line-height:6.61458254px;font-family:FreeMono;-inkscape-font-specification:FreeMono;letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;"
        x="54.428574"
        y="129.93452"
        id="text4487"><tspan
@@ -62,7 +61,7 @@
          id="tspan4485"
          x="54.428574"
          y="129.93452"
-         style="stroke-width:0.79375;fill:#ffff00;stroke:#000000;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers;stroke-linejoin:round;">0123456789</tspan></text>
+         style="stroke-width:0.79375;fill:#00ff00;stroke:#000000;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers;stroke-linejoin:round;font-size:10.58333333px;">0123456789</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.79374999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
        id="rect4489"
@@ -107,5 +106,37 @@
        height="11.025543"
        x="54.338802"
        y="120.0268" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.79374999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="rect5440"
+       width="76.62326"
+       height="11.586806"
+       x="54.338802"
+       y="120.02681"
+       ry="0.18708867" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.79374999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="rect5442"
+       width="60.717724"
+       height="9.0605106"
+       x="53.967625"
+       y="122.55311"
+       ry="1.30962" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.79374999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="rect5444"
+       width="68.669006"
+       height="8.5927811"
+       x="53.967625"
+       y="122.55311"
+       ry="1.3096187" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.79374999;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+       id="rect5446"
+       width="64.646591"
+       height="8.6863308"
+       x="53.967625"
+       y="122.5531"
+       ry="1.3096187" />
   </g>
 </svg>
