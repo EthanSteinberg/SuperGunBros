@@ -39,13 +39,17 @@ private:
         double width,
         double height,
         unsigned int index,
-        const std::string& title);
+        const std::string& title,
+        const std::string& background = "tile"
+    );
 
     std::vector<Rectangle> obstacles;
 
     std::vector<BoxSpawn> box_spawn_locations;
 
     std::vector<Point> player_spawn_locations;
+
+    std::string background_img;
 
 public:
     double width;

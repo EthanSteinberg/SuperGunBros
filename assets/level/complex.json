@@ -187,10 +187,10 @@
             "xLeft": 4940
         }, 
         {
-            "xRight": 3670, 
+            "xRight": 2900, 
             "yTop": 1043, 
             "yBottom": 1123, 
-            "xLeft": 2090
+            "xLeft": -60
         }
     ], 
     "boxSpawnLocations": [

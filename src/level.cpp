@@ -160,27 +160,28 @@ Level::Level(
     double a_width,
     double a_height,
     unsigned int a_index,
-    const std::string& a_title):
+    const std::string& a_title,
+    const std::string& background):
     obstacles(a_obstacles), box_spawn_locations(a_box_spawns),
     player_spawn_locations(a_player_spawns),
     width(a_width),
     height(a_height),
     index(a_index),
-    title(a_title) {}
+    title(a_title),
+    background_img(background){}
 
 void Level::render(RenderList& list, bool show_border) const {
     //TODO: Better background logic
-    for(int i = 0; i < width; i+= 1280){
-        for(int j = 0; j < height; j+= 720){
+    if (show_border) {
+        Rectangle bg_dim = list.get_image_dimensions(background_img);
+        for (int i = -width; i < width + width; i += bg_dim.width) {
+            for (int j = -height; j < height + height; j += bg_dim.height) {
 
-            if (show_border) {
-                list.add_image("background", i, j);
+
+                list.add_image(background_img, i, j);
             }
-
         }
-    }
-
-    if (!show_border) {
+    } else {
         list.add_image("grey", 0, 0, width, height);
     }
 

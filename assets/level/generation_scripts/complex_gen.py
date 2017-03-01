@@ -31,10 +31,10 @@ pre_builts.build_hotel(lev)
 '''
 Central Compound
 '''
-cc_center_x = width/2
-cc_outer_wall = 40
 
-complex_width = 1500
+complex_width = width/2
+cc_center_x = (complex_width/2) - 20
+cc_outer_wall = 40
 lev.add_obstacle(cc_center_x - complex_width/2 - cc_outer_wall,
                  cc_center_x + complex_width/2 + cc_outer_wall,
                  height/3 - cc_outer_wall,

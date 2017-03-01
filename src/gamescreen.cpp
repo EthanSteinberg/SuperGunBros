@@ -118,7 +118,7 @@ void GameScreen::render(RenderList& list) const {
         std::string winning_color = "";
 
         for (const auto& player: players) {
-            if (player.state.score == SCORE_TO_WIN) {
+            if (player.state.score >= SCORE_TO_WIN) {
                 if (winning_color == "") {
                     winning_color = get_color_name(player.info.color);
                 } else {
@@ -715,7 +715,7 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
         player.state.score = std::max(0, player.state.score - 1);
 
-        if (shooter.state.score == SCORE_TO_WIN) {
+        if (shooter.state.score >= SCORE_TO_WIN) {
             game_over = true;
         } else {
             player.state.ticks_until_spawn = 130;
