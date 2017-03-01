@@ -120,18 +120,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.0000001"
-     inkscape:cx="693.05998"
-     inkscape:cy="818.09265"
+     inkscape:zoom="0.25"
+     inkscape:cx="-41.925511"
+     inkscape:cy="721.18211"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
      units="px"
-     inkscape:window-width="1916"
-     inkscape:window-height="1041"
+     inkscape:window-width="1362"
+     inkscape:window-height="729"
      inkscape:window-x="0"
      inkscape:window-y="18"
-     inkscape:window-maximized="0">
+     inkscape:window-maximized="0"
+     inkscape:snap-others="false"
+     inkscape:snap-nodes="false">
     <inkscape:grid
        type="xygrid"
        id="grid10958"
@@ -147,7 +149,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1274,8 +1276,8 @@
          style="fill:#b5a642;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.28743199;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.26495039;stroke-miterlimit:4;stroke-dasharray:none"
-       d="M 155.36781,64.695803 H 256.96782 L 240.03448,93.799967 H 172.30114 Z"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.07919204;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 153.38859,65.68455 H 253.47324 L 241.92501,91.087593 H 164.93682 Z"
        id="rect4668"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
@@ -1349,7 +1351,7 @@
            sodipodi:role="line">2</tspan></text>
     </g>
     <g
-       transform="translate(94.19168,-1.0583235)"
+       transform="translate(100.54168,-24.341665)"
        id="g4722-8-1">
       <rect
          y="67.341629"
@@ -1383,17 +1385,24 @@
          style="stroke-width:0.26458332px">3:00</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:6.61458254px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="182.69481"
-       y="76.469757"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:8.19999981px;font-family:'Terminator Real NFI';-inkscape-font-specification:'Terminator Real NFI';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="203.42621"
+       y="76.333595"
        id="text7161"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/kill-board.png"
        inkscape:export-xdpi="91.020584"
        inkscape:export-ydpi="91.020584"><tspan
          sodipodi:role="line"
-         id="tspan7159"
-         x="182.69481"
-         y="76.469757"
-         style="stroke-width:0.26458332px">KILLS</tspan></text>
+         x="203.42621"
+         y="76.333595"
+         style="font-size:9.87777805px;line-height:8.19999981px;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan5340">Score</tspan><tspan
+         sodipodi:role="line"
+         x="205.19009"
+         y="84.533592"
+         style="font-size:7.05555534px;line-height:8.19999981px;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan5434"><tspan
+   style="font-size:4.93888903px;line-height:8.19999981px"
+   id="tspan5436">20 to win</tspan> </tspan></text>
   </g>
 </svg>

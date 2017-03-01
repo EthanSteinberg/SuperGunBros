@@ -237,6 +237,8 @@ std::array<std::function<void(void)>, 2>  create_and_use_program(int pixel_width
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
+    glEnable(GL_MULTISAMPLE);
+
     auto main_setup = [=]() {
         glUseProgram(main_program);
         glBindVertexArray(vao[0]);
