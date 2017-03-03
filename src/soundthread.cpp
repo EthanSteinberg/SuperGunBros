@@ -71,11 +71,7 @@ void SoundThread::start() {
 
                 for (int i = 0 ; i < count; i++) {
                     int32_t testing = buffer[i] + current_buffer[i];
-                    buffer[i] += current_buffer[i];
-
-                    if (testing != buffer[i]) {
-                        std::cout<<"Problem houston, we are going over!"<<std::endl;
-                    }
+                    buffer[i] = std::min(INT32_MAX, std::max(INT32_MIN, testing));
                 }
 
                 if (count == FRAMES_PER_LOOP) {
@@ -85,12 +81,17 @@ void SoundThread::start() {
                         sf_seek(data.file, 0, SEEK_SET);
 
                         int count2 = sf_read_short(data.file, current_buffer, FRAMES_PER_LOOP - count);
+                        for (int i = 0 ; i < count2; i++) {
+                            current_buffer[i] = (current_buffer[i] + 8)/16;
+                        }
+
                         if (FRAMES_PER_LOOP - count != count2) {
                             std::cout<<"We have a problem where the clip is shorter than FRAMES_PER_LOOP? Talk to Ethan."<<std::endl;
                             exit(-1);
                         }
                         for (int i = 0 ; i < count2; i++) {
-                            buffer[count + i] += (current_buffer[i] + 8)/16;
+                            int32_t testing = buffer[count + i] + current_buffer[i];
+                            buffer[count + i] = std::min(INT32_MAX, std::max(INT32_MIN, testing));
                         }
                         next_playing_sounds[pair.first] = data;
                     } else {
