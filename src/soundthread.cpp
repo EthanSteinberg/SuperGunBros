@@ -6,6 +6,8 @@
 #include <iostream>
 #include <map>
 
+#define RATE 88000
+
 inline void pa_check(PaError error) {
     if (error != paNoError) {
         std::cout<<"audio error: " << Pa_GetErrorText(error)<<std::endl;
@@ -22,7 +24,7 @@ void SoundThread::start() {
                   0,
                   1,
                   paInt16,
-                  44100,
+                  RATE,
                   paFramesPerBufferUnspecified,
                   nullptr,
                   nullptr));

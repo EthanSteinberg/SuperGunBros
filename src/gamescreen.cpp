@@ -314,14 +314,19 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             }
 
             //Checking inputs for later calculations
-            bool starting_jump = button_press(ButtonName::LT, current_inputs, prev_inputs);
-            bool holding_jump = button_hold(ButtonName::LT, current_inputs, prev_inputs);
+            bool starting_jump = button_press(ButtonName::LT, current_inputs, prev_inputs) ||
+                                 button_press(ButtonName::A, current_inputs, prev_inputs);
+            bool holding_jump = button_hold(ButtonName::LT, current_inputs, prev_inputs) ||
+                                button_hold(ButtonName::A, current_inputs, prev_inputs);
 
             bool pull_trigger = button_press(ButtonName::RT, current_inputs, prev_inputs);
             bool holding_trigger = button_hold(ButtonName::RT, current_inputs, prev_inputs);
 
-            bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs);
-            bool continuing_boost = button_hold(ButtonName::LB, current_inputs, prev_inputs) && player.state.boosting;
+            bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs) ||
+                                    button_press(ButtonName::B, current_inputs, prev_inputs);
+            bool continuing_boost = (button_hold(ButtonName::LB, current_inputs, prev_inputs) ||
+                                    button_hold(ButtonName::B, current_inputs, prev_inputs)) &&
+                                    player.state.boosting;
 
             bool attempting_pickup = button_press(ButtonName::X, current_inputs, prev_inputs);
 
