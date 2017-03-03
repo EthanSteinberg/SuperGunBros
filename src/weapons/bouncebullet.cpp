@@ -29,10 +29,7 @@ bool BounceBullet::on_player_collision(int hit_player, const std::vector<Rectang
 }
 
 bool BounceBullet::on_no_collision() {
-    if (ticks_left-- < 0) {
-        return true;
-    }
-
+    ticks_left--;
     return false;
 }
 
