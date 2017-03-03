@@ -1,5 +1,7 @@
 #include "camera.h"
 
+#include <iostream>
+
 const double SCREEN_WIDTH = 1280.0;
 const double SCREEN_HEIGHT = 720.0;
 
@@ -37,7 +39,7 @@ void Camera::update(const std::vector<Point>& player_positions) {
     minX = std::max(0.0, minX - 200);
     maxX = std::min(level_width, maxX + 200);
 
-    minY = std::max(-200.0, minY - 200);
+    minY = minY - 100  - 100.0 * scale;
     maxY = std::min(level_height, maxY + 200);
 
     double desired_x = (minX + maxX)/2.0;
@@ -58,10 +60,6 @@ void Camera::update(const std::vector<Point>& player_positions) {
         x = 0.95 * x + 0.05 * desired_x;
         y = 0.95 * y + 0.05 * desired_y;
 
-        x = std::max(SCREEN_WIDTH * scale * 0.5, x);
-        x = std::min(level_width - SCREEN_WIDTH * scale * 0.5, x);
-
-        y = std::max(SCREEN_HEIGHT * scale * 0.5, y);
         y = std::min(level_height -  SCREEN_HEIGHT * scale * 0.5, y);
     }
 }

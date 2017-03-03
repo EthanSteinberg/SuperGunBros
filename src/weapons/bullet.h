@@ -5,6 +5,7 @@
 #include <vector>
 #include <functional>
 #include "renderlist.h"
+#include <cstdint>
 
 class SoundThread;
 
@@ -20,6 +21,8 @@ public:
 
     double angle;
 
+    uint64_t id;
+
     virtual void render(RenderList& list) const;
 
     // Return true if the bullet should be marked dead
@@ -34,7 +37,15 @@ public:
 
     virtual bool create_explosion_after_destruction() const;
 
+    virtual bool create_little_explosion_after_destruction() const {
+        return false;
+    }
+
     virtual bool catch_on_fire() const;
+
+    virtual bool pierce_special_effect() const {
+        return false;
+    }
 
 private:
     virtual const char* bullet_image_name() const = 0;

@@ -15,6 +15,14 @@ struct PlayerSpawnTimer {
     int player_index;
 };
 
+struct PierceEffectData {
+    uint64_t bullet_id;
+    Point start;
+    Point end;
+    bool has_end_yet;
+    int ticks_left;
+};
+
 class GameScreen : public Screen {
 public:
     GameScreen(const std::vector<PlayerInfo>& players, const Level& level);
@@ -30,6 +38,8 @@ private:
     std::vector<WeaponBox> boxes;
 
     std::vector<Explosion> explosions;
+
+    std::vector<PierceEffectData> pierce_effects;
 
     std::mt19937 gen;
 

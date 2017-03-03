@@ -5,7 +5,7 @@
 #include <cmath>
 
 bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>, bool free_horizontal, bool free_vertical, SoundThread& sounds) {
-    if (bounces_left == 0) {
+    if (ticks_left-- < 0) {
         return true;
     }
 
@@ -20,23 +20,24 @@ bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::functio
 
     sounds.play_sound("../assets/sound/bounce.wav");
 
-    bounces_left--;
-
     return false;
 }
 
 bool BounceBullet::on_player_collision(int hit_player, const std::vector<Rectangle>&, std::function<void(int, double)> damage_player) {
-    damage_player(hit_player, 4);
-
+    damage_player(hit_player, 10);
     return true;
 }
 
 bool BounceBullet::on_no_collision() {
+    if (ticks_left-- < 0) {
+        return true;
+    }
+
     return false;
 }
 
 double BounceBullet::get_velocity() const {
-    return 18;
+    return 10;
 }
 
 const char* BounceBullet::bullet_image_name() const {

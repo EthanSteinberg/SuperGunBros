@@ -14,9 +14,7 @@ const char* const level_names[] = {
         "../assets/level/platforms.json",
         "../assets/level/more_platforms.json",
         "../assets/level/shafts.json",
-        "../assets/level/sprawl.json",
         "../assets/level/close_quarters.json",
-        "../assets/level/complex.json",
 };
 
 const double line_width = 4;
@@ -176,10 +174,10 @@ void Level::render(RenderList& list, bool show_border) const {
     //TODO: Better background logic
     if (show_border) {
         Rectangle bg_dim = list.get_image_dimensions(background_img);
-        for (int i = -width/8; i < width + width/8; i += bg_dim.width) {
-            for (int j = -height/8; j < height + height/8; j += bg_dim.height) {
+        for (int i = -width; i < width + width; i += bg_dim.width) {
+            for (int j = -height; j < height + height; j += bg_dim.height) {
 
-                //if (show_border) {
+
                 list.add_image(background_img, i, j);
             }
         }

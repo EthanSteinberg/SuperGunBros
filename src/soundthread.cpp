@@ -63,8 +63,19 @@ void SoundThread::start() {
                 const PlayData& data = pair.second;
                 int16_t current_buffer[FRAMES_PER_LOOP];
                 int count = sf_read_short(data.file, current_buffer, FRAMES_PER_LOOP);
+
                 for (int i = 0 ; i < count; i++) {
+                    current_buffer[i] = (current_buffer[i] + 8)/16;
+                }
+
+
+                for (int i = 0 ; i < count; i++) {
+                    int32_t testing = buffer[i] + current_buffer[i];
                     buffer[i] += current_buffer[i];
+
+                    if (testing != buffer[i]) {
+                        std::cout<<"Problem houston, we are going over!"<<std::endl;
+                    }
                 }
 
                 if (count == FRAMES_PER_LOOP) {
@@ -79,7 +90,7 @@ void SoundThread::start() {
                             exit(-1);
                         }
                         for (int i = 0 ; i < count2; i++) {
-                            buffer[count + i] += current_buffer[i];
+                            buffer[count + i] += (current_buffer[i] + 8)/16;
                         }
                         next_playing_sounds[pair.first] = data;
                     } else {

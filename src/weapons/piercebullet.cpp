@@ -4,15 +4,16 @@
 
 bool PierceBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>) {
     switch (state) {
-        case PierceBulletState::INIT:
-            state = PierceBulletState::HIT_WALL;
+        case PierceBulletState::BEFORE_WALL:
+            if (num_pierces_left == 0) {
+                return true;
+            }
+
+            state = PierceBulletState::IN_WALL;
             return false;
 
-        case PierceBulletState::HIT_WALL:
+        case PierceBulletState::IN_WALL:
             return false;
-
-        case PierceBulletState::AFTER_HIT_WALL:
-            return true;
 
         default:
             std::cout<<"No such pierce state " << (int) state << std::endl;
@@ -28,14 +29,12 @@ bool PierceBullet::on_player_collision(int hit_player, const std::vector<Rectang
 
 bool PierceBullet::on_no_collision() {
     switch (state) {
-        case PierceBulletState::INIT:
+        case PierceBulletState::BEFORE_WALL:
             return false;
 
-        case PierceBulletState::HIT_WALL:
-            state = PierceBulletState::AFTER_HIT_WALL;
-            return false;
-
-        case PierceBulletState::AFTER_HIT_WALL:
+        case PierceBulletState::IN_WALL:
+            state = PierceBulletState::BEFORE_WALL;
+            num_pierces_left--;
             return false;
 
         default:

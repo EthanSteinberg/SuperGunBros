@@ -18,7 +18,7 @@
 #define WALL_GRACE 5
 #define GROUND_GRACE 5
 
-const int SCORE_TO_WIN = 20;
+const int SCORE_TO_WIN = 10;
 
 const int FIRE_LENGTH = 200;
 
@@ -66,6 +66,12 @@ void GameScreen::render(RenderList& list) const {
 	for (const auto& bullet: bullets) {
         bullet->render(list);
 	}
+
+    for (const auto& effect: pierce_effects) {
+        if (effect.has_end_yet) {
+            list.add_line("orange", effect.start.x, effect.start.y, effect.end.x, effect.end.y);
+        }
+    }
 
     list.pop();
 
@@ -118,7 +124,7 @@ void GameScreen::render(RenderList& list) const {
         std::string winning_color = "";
 
         for (const auto& player: players) {
-            if (player.state.score == SCORE_TO_WIN) {
+            if (player.state.score >= SCORE_TO_WIN) {
                 if (winning_color == "") {
                     winning_color = get_color_name(player.info.color);
                 } else {
@@ -210,6 +216,15 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
     }
 
     explosions = next_explosions;
+
+    std::vector<PierceEffectData> next_pierce_effects;
+    for (auto& effect: pierce_effects) {
+        if (!effect.has_end_yet || effect.ticks_left-- > 0) {
+            next_pierce_effects.push_back(effect);
+        }
+    }
+
+    pierce_effects = next_pierce_effects;
 
     for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
@@ -617,6 +632,58 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             bool vertical_free = !would_hit_ground(bullet->pos.offset(0, dy));
             bool horizontal_free = !would_hit_ground(bullet->pos.offset(dx, 0));
             is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, vertical_free, horizontal_free, sounds);
+
+            if (bullet->pierce_special_effect()) {
+
+                bool found = false;
+                for (auto& an_effect: pierce_effects) {
+                    if (an_effect.bullet_id == bullet->id && !an_effect.has_end_yet) {
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    double low = 0.0;
+                    double high = 1.0;
+                    while(high - low > SIGMA/10){
+                        double mid = low + (high - low)/2;
+                        if (would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
+                            high = mid;
+                        } else {
+                            low = mid;
+                        }
+                    }
+
+
+                    PierceEffectData new_effect;
+                    new_effect.bullet_id = bullet->id;
+                    new_effect.start = bullet->pos.offset(low * dx, low * dy).location();
+                    new_effect.has_end_yet = false;
+                    pierce_effects.push_back(new_effect);
+                }
+            }
+        } else {
+            if (bullet->pierce_special_effect()) {
+                for (auto& an_effect: pierce_effects) {
+                    if (an_effect.bullet_id == bullet->id && !an_effect.has_end_yet) {
+                        an_effect.has_end_yet = true;
+                        an_effect.ticks_left = 20;
+
+                        double low = 0.0;
+                        double high = 1.0;
+                        while(high - low > SIGMA/10) {
+                            double mid = low + (high - low)/2;
+                            if (!would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
+                                high = mid;
+                            } else {
+                                low = mid;
+                            }
+                        }
+
+                        an_effect.end = bullet->pos.offset(low * dx, low * dy).location();
+                    }
+                }
+            }
         }
 
 
@@ -644,6 +711,28 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                     }
                 }
                 is_dead = bullet->on_player_collision(i, player_bounding_boxes, damage_player_func);
+
+                if (is_dead && bullet->pierce_special_effect()) {
+                    for (auto& an_effect: pierce_effects) {
+                        if (an_effect.bullet_id == bullet->id && !an_effect.has_end_yet) {
+                            an_effect.has_end_yet = true;
+                            an_effect.ticks_left = 20;
+
+                            double low = 0.0;
+                            double high = 1.0;
+                            while(high - low > SIGMA/10) {
+                                double mid = low + (high - low)/2;
+                                if (!would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
+                                    high = mid;
+                                } else {
+                                    low = mid;
+                                }
+                            }
+
+                            an_effect.end = bullet->pos.offset(low * dx, low * dy).location();
+                        }
+                    }
+                }
             }
         }
 
@@ -669,6 +758,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             if (bullet->create_explosion_after_destruction()) {
                 sounds.play_sound("../assets/sound/explosion.wav");
                 explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y));
+            }
+
+            if (bullet->create_little_explosion_after_destruction()) {
+                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y, true));
             }
         }
 
@@ -715,7 +808,7 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
         player.state.score = std::max(0, player.state.score - 1);
 
-        if (shooter.state.score == SCORE_TO_WIN) {
+        if (shooter.state.score >= SCORE_TO_WIN) {
             game_over = true;
         } else {
             player.state.ticks_until_spawn = 130;

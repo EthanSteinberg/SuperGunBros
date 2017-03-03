@@ -12,16 +12,21 @@ public:
 
     virtual double get_velocity() const override;
 
+    virtual bool pierce_special_effect() const override {
+        return true;
+    }
+
 private:
     virtual const char* bullet_image_name() const override;
 
     enum class PierceBulletState {
-        INIT,
-        HIT_WALL,
-        AFTER_HIT_WALL
+        BEFORE_WALL,
+        IN_WALL,
     };
 
-    PierceBulletState state = PierceBulletState::INIT;
+    int num_pierces_left = 2;
+
+    PierceBulletState state = PierceBulletState::BEFORE_WALL;
 };
 
 #endif
