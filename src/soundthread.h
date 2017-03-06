@@ -8,7 +8,7 @@
 class SoundThread {
 public:
     void start();
-    uint64_t play_sound(const char* filename, bool looping = false);
+    uint64_t play_sound(const char* filename, bool looping = false, int scale_factor = 4);
     void stop_sound(uint64_t index);
 
 private:
@@ -18,6 +18,7 @@ private:
         uint64_t id;
         bool looping;
         const char* filename;
+        int scale_factor;
     };
 
     std::thread internal_thread;

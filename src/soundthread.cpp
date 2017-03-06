@@ -33,6 +33,7 @@ void SoundThread::start() {
         struct PlayData {
             SNDFILE* file;
             bool looping;
+            int scale_factor;
         };
 
         std::map<int, PlayData> playing_sounds;
@@ -52,6 +53,7 @@ void SoundThread::start() {
                     PlayData data;
                     data.looping = item.looping;
                     data.file = sf_open(item.filename, SFM_READ, &info);
+                    data.scale_factor = item.scale_factor;
 
                     playing_sounds[item.id] = data;
                 }
@@ -67,7 +69,7 @@ void SoundThread::start() {
                 int count = sf_read_short(data.file, current_buffer, FRAMES_PER_LOOP);
 
                 for (int i = 0 ; i < count; i++) {
-                    current_buffer[i] = (current_buffer[i] + 8)/16;
+                    current_buffer[i] = (current_buffer[i] + (1 << (data.scale_factor - 1)))/(1 << data.scale_factor);
                 }
 
 
@@ -84,7 +86,7 @@ void SoundThread::start() {
 
                         int count2 = sf_read_short(data.file, current_buffer, FRAMES_PER_LOOP - count);
                         for (int i = 0 ; i < count2; i++) {
-                            current_buffer[i] = (current_buffer[i] + 8)/16;
+                            current_buffer[i] = (current_buffer[i] + (1 << (data.scale_factor - 1)))/(1 << data.scale_factor);
                         }
 
                         if (FRAMES_PER_LOOP - count != count2) {
@@ -118,7 +120,7 @@ void SoundThread::start() {
 
 }
 
-uint64_t SoundThread::play_sound(const char* filename, bool looping) {
+uint64_t SoundThread::play_sound(const char* filename, bool looping, int scale_factor) {
     uint64_t id = next_sound_id++;
 
     if (filename == nullptr) {
@@ -130,6 +132,7 @@ uint64_t SoundThread::play_sound(const char* filename, bool looping) {
     m.id = id;
     m.looping = looping;
     m.filename = filename;
+    m.scale_factor = scale_factor;
     spsc_queue.push(m);
 
     return id;
