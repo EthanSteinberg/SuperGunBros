@@ -1,13 +1,18 @@
 #ifndef GUN_H_INCLUDED
 #define GUN_H_INCLUDED
 
-#include "renderlist.h"
+#include "rendering/renderlist.h"
 #include "bullet.h"
 #include <memory>
+#include <gameobjects/gameobject.h>
 
-class Gun {
+class Gun : public GameObject{
 public:
-    void render(RenderList& list, double gun_angle) const;
+    void render(RenderList& list) const;
+    void render_aim(RenderList& list, double gun_angle) const;
+
+    void update() {};
+
 
     double grip1_x(double gun_angle) const;
     double grip1_y(double gun_angle) const;

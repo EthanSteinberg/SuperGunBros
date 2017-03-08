@@ -2,12 +2,12 @@
 #define WEAPON_BOX_H_INCLUDED
 
 #include "rectangle.h"
-#include "renderlist.h"
+#include "rendering/renderlist.h"
 
 #include <memory>
-#include "weapons/gun.h"
+#include "gameobjects/weapons/gun.h"
 
-class WeaponBox {
+class WeaponBox : public GameObject {
 public:
 
     WeaponBox(float x, float y, std::unique_ptr<Gun> weapon, int ticks_until_active, int spawn_index);
@@ -17,6 +17,7 @@ public:
     Rectangle pos;
 
     void render(RenderList& list) const;
+    void update(){};
 
     std::unique_ptr<Gun> weapon;
 

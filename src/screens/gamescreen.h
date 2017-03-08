@@ -3,12 +3,12 @@
 
 #include "screen.h"
 #include <vector>
-#include "player.h"
+#include "gameobjects/player.h"
 #include "rectangle.h"
-#include "level.h"
-#include "weaponbox.h"
-#include "explosion.h"
-#include "camera.h"
+#include "gameobjects/level/level.h"
+#include "gameobjects/weapons/weaponbox.h"
+#include "gameobjects/explosion.h"
+#include "rendering/camera.h"
 
 struct PlayerSpawnTimer {
     int ticks_left_till_spawn;
@@ -31,14 +31,10 @@ public:
     std::unique_ptr<Screen> update(const std::map<int, inputs>& joystick_inputs, const std::map<int, inputs>& last_inputs, SoundThread& thread);
 private:
     Level level;
-
     std::vector<Player> players;
     std::vector<std::unique_ptr<Bullet>> bullets;
-
     std::vector<WeaponBox> boxes;
-
     std::vector<Explosion> explosions;
-
     std::vector<PierceEffectData> pierce_effects;
 
     std::mt19937 gen;

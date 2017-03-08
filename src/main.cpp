@@ -6,9 +6,9 @@
 #include <iostream>
 #include <vector>
 
-#include "renderlist.h"
-#include "render.h"
-#include "menuscreen.h"
+#include "rendering/renderlist.h"
+#include "rendering/render.h"
+#include "screens/menuscreen.h"
 
 #include <cmath>
 

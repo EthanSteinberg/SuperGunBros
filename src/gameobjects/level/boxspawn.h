@@ -2,9 +2,9 @@
 #define BOX_SPAWN_H_INCLUDED
 
 #include "rectangle.h"
-#include "weaponbox.h"
+#include "gameobjects/weapons/weaponbox.h"
 #include <random>
-#include "weapons/gun.h"
+#include "gameobjects/weapons/gun.h"
 
 class BoxSpawn {
 public:

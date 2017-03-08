@@ -1,7 +1,7 @@
 #ifndef SCREEN_H_INCLUDED
 #define SCREEN_H_INCLUDED
 
-#include "renderlist.h"
+#include "rendering/renderlist.h"
 #include <GLFW/glfw3.h>
 
 #include "gamepad.h"

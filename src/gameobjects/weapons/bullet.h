@@ -4,7 +4,7 @@
 #include "rectangle.h"
 #include <vector>
 #include <functional>
-#include "renderlist.h"
+#include "rendering/renderlist.h"
 #include <cstdint>
 
 class SoundThread;

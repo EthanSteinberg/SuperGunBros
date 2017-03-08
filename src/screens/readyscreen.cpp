@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <cmath>
-#include "gamescreen.h"
+#include "screens/gamescreen.h"
 
 #include <algorithm>
 

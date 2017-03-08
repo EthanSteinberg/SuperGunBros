@@ -3,9 +3,9 @@
 
 #include "rectangle.h"
 #include <vector>
-#include "renderlist.h"
+#include "rendering/renderlist.h"
 #include "point.h"
-#include "weaponbox.h"
+#include "gameobjects/weapons/weaponbox.h"
 #include "boxspawn.h"
 
 #include <random>
@@ -15,6 +15,8 @@ public:
     static std::vector<Level> load_all_levels();
 
     void render(RenderList& list, bool show_border = true) const;
+
+    void update() {}
 
     bool colliding_with(const Rectangle& other) const;
 

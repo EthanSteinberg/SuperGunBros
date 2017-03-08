@@ -1,5 +1,5 @@
 #include "weaponbox.h"
-#include "weapons/gun.h"
+#include "gameobjects/weapons/gun.h"
 
 #include <iostream>
 

@@ -1,6 +1,6 @@
 #include "rocketbullet.h"
 
-#include "explosion.h"
+#include "gameobjects/explosion.h"
 
 void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) const {
     for (unsigned int i = 0; i < player_positions.size(); i++) {

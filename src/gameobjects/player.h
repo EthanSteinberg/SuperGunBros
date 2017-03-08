@@ -3,11 +3,11 @@
 
 #include <GLFW/glfw3.h>
 #include "gamepad.h"
-#include "renderlist.h"
+#include "rendering/renderlist.h"
 #include "magic.h"
-#include "weapons/bullet.h"
-#include "weapons/gun.h"
-#include "weapons/flamebullet.h"
+#include "gameobjects/weapons/bullet.h"
+#include "gameobjects/weapons/gun.h"
+#include "gameobjects/weapons/flamebullet.h"
 
 #include <iostream>
 
@@ -27,8 +27,6 @@ enum class PlayerColor {
     YELLOW,
     GREEN
 };
-
-class SoundThread;
 
 inline std::string get_color_name(PlayerColor color) {
     switch (color) {
@@ -113,7 +111,7 @@ struct PlayerState {
     const char* current_player_shooting_sound_filename = nullptr;
 };
 
-class Player {
+class Player : public GameObject {
 public:
     Player(double start_x, double start_y, PlayerInfo info);
     void render(RenderList& list) const;

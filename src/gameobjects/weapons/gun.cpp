@@ -15,7 +15,7 @@ inline double dist_sq(double x1, double y1, double x2, double y2) {
 
 Gun::~Gun() {}
 
-void Gun::render(RenderList& list, double gun_angle) const {
+void Gun::render_aim(RenderList& list, double gun_angle) const {
     list.push();
     list.translate(gun_rotation_x(), gun_rotation_y());
 
@@ -23,6 +23,9 @@ void Gun::render(RenderList& list, double gun_angle) const {
 
     list.add_scaled_image(gun_image_name(), gun_offset_x(), gun_offset_y(), ASSET_SCALE);//base_scale);
     list.pop();
+}
+
+void Gun::render(RenderList& list) const{
 }
 
 double Gun::grip1_x(double gun_angle) const {

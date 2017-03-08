@@ -2,8 +2,8 @@
 #define READY_SCREEN_H_INCLUDED
 
 #include "screen.h"
-#include "player.h"
-#include "level.h"
+#include "gameobjects/player.h"
+#include "gameobjects/level/level.h"
 
 class ReadyScreen : public Screen {
 public:

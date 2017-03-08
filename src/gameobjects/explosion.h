@@ -1,7 +1,7 @@
 #ifndef EXPLOSION_H_INCLUDED
 #define EXPLOSION_H_INCLUDED
 
-#include "renderlist.h"
+#include "rendering/renderlist.h"
 
 const int EXPLOSION_RADIUS = 50;
 

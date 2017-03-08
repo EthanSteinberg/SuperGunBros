@@ -102,7 +102,7 @@ AnimationState Player::get_interpolated_frame() const {
     return interpolated;
 }
 
-void Player::update() {
+void Player::update(){
     if (state.dx == 0 || !state.grounded) {
         double dist_to_forward_back = fmod(current_time - 0.86 + 8, 8);
         double dist_to_backward_back = fmod(current_time - 3.5 + 8, 8);
@@ -253,7 +253,7 @@ void Player::render(RenderList& list) const {
     draw_arm(1, list, arms);
 
     if (!state.gun->in_front()) {
-        state.gun->render(list, scaled_gun_angle);
+        state.gun->render_aim(list, scaled_gun_angle);
     }
 
     //TODO revisit the crotch, it's not visible RN and not worth tweaking
@@ -278,7 +278,7 @@ void Player::render(RenderList& list) const {
 
     //GUN
     if (state.gun->in_front()) {
-        state.gun->render(list, scaled_gun_angle);
+        state.gun->render_aim(list, scaled_gun_angle);
     }
 
     //FRONT ARM
