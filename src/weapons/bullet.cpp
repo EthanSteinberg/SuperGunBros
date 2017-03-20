@@ -14,7 +14,7 @@ void Bullet::render(RenderList& list) const {
     list.translate(pos.x, pos.y);
     list.rotate(angle);
 
-    list.add_scaled_image(bullet_image_name(), 0, 0, ASSET_SCALE);
+    list.add_scaled_image(bullet_image_name(), 0, 0, ASSET_SCALE, true);
 
     //Rectangle image = list.get_image_dimensions(bullet_image_name());
     //list.add_rect(bullet_image_name(), image);

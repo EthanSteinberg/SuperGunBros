@@ -85,7 +85,7 @@ void GameScreen::render(RenderList& list) const {
     for (const auto& player : players) {
         int x = 0;
         int y = 0;
-        const int top_row_offset = 127;
+        const int top_row_offset = 129;
         const int top_row_y = 28;
 
         const int bottom_row_offset = 100;
@@ -115,6 +115,15 @@ void GameScreen::render(RenderList& list) const {
             default:
                 std::cout<<"Invalid color " << (int)player.info.color << std::endl;
                 exit(-1);
+        }
+
+        if (player.state.ticks_since_last_score_update != -1 &&
+            player.state.ticks_since_last_score_update < 120) {
+            int phase = player.state.ticks_since_last_score_update/24;
+            if (phase % 2 == 0) {
+                list.add_image(get_color_name(player.info.color), x - 25, y - 18, 50, 36);
+            }
+
         }
 
         list.add_red_numbers(get_color_name(player.info.color), player.state.score, x, y);
@@ -228,6 +237,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
     for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
+
+        if (player.state.ticks_since_last_score_update != -1) {
+            player.state.ticks_since_last_score_update += 1;
+        }
 
         if (player.state.is_dead) {
 
@@ -702,8 +715,8 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 continue;
             }
 
-            if (i == bullet->player_owner) {
-                continue; // Don't intersect with self
+            if (i == bullet->player_owner && !bullet->can_damage_self()) {
+                continue;
             }
 
             if (bullet->pos.colliding_with(player.state.pos)) {
@@ -807,8 +820,9 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
         if (shooter_index != player_index) {
             shooter.state.score += 2;
+            shooter.state.ticks_since_last_score_update = 0;
+            std::cout<<"Setting it to nothing!"<<std::endl;
         } else {
-            shooter.state.score = std::max(0, player.state.score - 2);
         }
 
         player.state.score = std::max(0, player.state.score - 1);

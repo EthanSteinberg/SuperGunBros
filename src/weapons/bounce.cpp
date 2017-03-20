@@ -18,11 +18,11 @@ double Bounce::gun_offset_y() const {
 }
 
 double Bounce::barrel_offset_x() const {
-    return 0;
+    return 10;
 }
 
 double Bounce::barrel_offset_y() const {
-    return 0;
+    return 3;
 }
 
 const char* Bounce::gun_image_name() const {

@@ -47,6 +47,10 @@ public:
         return false;
     }
 
+    virtual bool can_damage_self() const {
+        return false;
+    }
+
 private:
     virtual const char* bullet_image_name() const = 0;
 

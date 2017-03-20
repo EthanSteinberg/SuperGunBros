@@ -3,6 +3,8 @@
 
 #include "bullet.h"
 
+const int BOUNCE_BULLET_LIFE = 180;
+
 class BounceBullet : public Bullet {
 public:
 
@@ -16,10 +18,14 @@ public:
         return true;
     }
 
+    virtual bool can_damage_self() const override {
+        return true;
+    }
+
 
 private:
 
-    int ticks_left = 300;
+    int ticks_left = BOUNCE_BULLET_LIFE;
 
     virtual const char* bullet_image_name() const override;
 };

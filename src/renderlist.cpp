@@ -152,7 +152,9 @@ void RenderList::add_red_numbers(const std::string& color, int num, float center
         char current_char = num_text[i];
         int offset = numbers.find(current_char);
 
-        add_image_core(color + "-numbers", x, y, advance, height, offset * advance, 0, advance, height);
+        // add_image("green", x, y, visual_advance, height);
+        add_image_core(color + "-numbers", x - 3, y, advance, height, offset * advance, 0, advance, height);
+
         x += visual_advance;
     }
 }
