@@ -18,7 +18,6 @@ public:
     }
 
     virtual bool on_blocker_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) override {
-        std::cout<<"Die darn you!"<<std::endl;
         return true;
     }
 
