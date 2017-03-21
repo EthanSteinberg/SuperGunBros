@@ -16,7 +16,7 @@ inline void pa_check(PaError error) {
 }
 
 void SoundThread::start() {
-    internal_thread = std::move(std::thread([&]() {
+    internal_thread = std::thread([&]() {
         pa_check(Pa_Initialize());
         PaStream* stream;
         pa_check(Pa_OpenDefaultStream(
@@ -115,7 +115,7 @@ void SoundThread::start() {
         pa_check(Pa_StopStream(stream));
         pa_check(Pa_CloseStream(stream));
         Pa_Terminate();
-    }));
+    });
 
 
 }

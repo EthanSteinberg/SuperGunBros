@@ -26,44 +26,54 @@ set(WEAPON_SOURCES
         src/gameobjects/weapons/bullet.cpp
 
 
-        src/gameobjects/weapons/pistol.cpp
-        src/gameobjects/weapons/pistolbullet.cpp
+		src/gameobjects/weapons/pistol/pistol.cpp
+		src/gameobjects/weapons/pistol/pistolbullet.cpp
 
-        src/gameobjects/weapons/rocket.cpp
-        src/gameobjects/weapons/rocketbullet.cpp
+		src/gameobjects/weapons/rocket/rocket.cpp
+		src/gameobjects/weapons/rocket/rocketbullet.cpp
 
-        src/gameobjects/weapons/pierce.cpp
-        src/gameobjects/weapons/piercebullet.cpp
+		src/gameobjects/weapons/piercer/pierce.cpp
+		src/gameobjects/weapons/piercer/piercebullet.cpp
 
-        src/gameobjects/weapons/bounce.cpp
-        src/gameobjects/weapons/bouncebullet.cpp
+		src/gameobjects/weapons/ricochet/bounce.cpp
+		src/gameobjects/weapons/ricochet/bouncebullet.cpp
 
-        src/gameobjects/weapons/flame.cpp
-        src/gameobjects/weapons/flamebullet.cpp
+		src/gameobjects/weapons/flame/flame.cpp
+		src/gameobjects/weapons/flame/flamebullet.cpp
     )
 
 set(SOURCE_FILES
-    ${WEAPON_SOURCES}
-	src/main.cpp
-		src/rendering/renderlist.cpp
+		src/main.cpp
+
 		src/rendering/render.cpp
+		src/rendering/renderlist.cpp
+		src/rendering/camera.cpp
+
 		src/screens/menuscreen.cpp
 		src/screens/readyscreen.cpp
 		src/screens/gamescreen.cpp
-	"src/${OS_DIR}/gamepad.cpp"
-		src/gameobjects/player.cpp
-	src/physicsengine.cpp
-		src/gameobjects/player.cpp
-    src/rectangle.cpp
-		src/gameobjects/level/level.cpp
-		src/gameobjects/weapons/weaponbox.cpp
-		src/gameobjects/explosion.cpp
-    src/point.cpp
-		src/rendering/camera.cpp
-	src/magic.h
-		src/gameobjects/level/boxspawn.cpp
+
+		"src/${OS_DIR}/gamepad.cpp"
+
+		#src/physicsengine.cpp
+
 		src/soundthread.cpp
-		src/gameobjects/gameobject.h)
+
+		src/gameobjects/player/player.cpp
+		src/gameobjects/player/statuseffects/burningeffect.cpp
+
+		src/gameobjects/level/boxspawn.cpp
+		src/gameobjects/level/effectfield.cpp
+		src/gameobjects/level/level.cpp
+
+		src/rectangle.cpp
+		src/point.cpp
+
+		${WEAPON_SOURCES}
+		src/gameobjects/weapons/weaponbox.cpp
+		src/gameobjects/weapons/rocket/explosion.cpp
+
+	)
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 

@@ -11,9 +11,9 @@ RenderList::RenderList(const char* filename): file(filename), wrapper(file) {
     metadata.ParseStream(wrapper);
 
 	std::array<std::array<float, 3>, 3> mat = {{
-		{1, 0, 0},
-		{0, 1, 0},
-		{0, 0, 1}
+       {{1, 0, 0}},
+       {{0, 1, 0}},
+       {{0, 0, 1}}
 	}};
 
     state.transform = mat;

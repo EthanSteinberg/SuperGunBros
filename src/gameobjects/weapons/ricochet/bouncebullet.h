@@ -1,7 +1,7 @@
 #ifndef BOUNCE_BULLET_H_INCLUDED
 #define BOUNCE_BULLET_H_INCLUDED
 
-#include "bullet.h"
+#include "gameobjects/weapons/bullet.h"
 
 class BounceBullet : public Bullet {
 public:

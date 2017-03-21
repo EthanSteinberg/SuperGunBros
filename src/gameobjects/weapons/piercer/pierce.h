@@ -1,17 +1,17 @@
-#ifndef ROCKET_H_INCLUDED
-#define ROCKET_H_INCLUDED
+#ifndef PIERCE_H_INCLUDED
+#define PIERCE_H_INCLUDED
 
-#include "gun.h"
+#include "gameobjects/weapons/gun.h"
 
-class Rocket : public Gun {
+class Pierce : public Gun {
 public:
     virtual bool in_front() const;
     virtual int initial_ammo() const {
-        return 3;
+        return 10;
     }
 
     virtual const char* shoot_sound() {
-        return "../assets/sound/rocket_launcher.wav";
+        return "../assets/sound/pierce.wav";
     }
 
 private:

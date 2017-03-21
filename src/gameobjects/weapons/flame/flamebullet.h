@@ -1,9 +1,9 @@
-#ifndef PISTOL_BULLET_H_INCLUDED
-#define PISTOL_BULLET_H_INCLUDED
+#ifndef FLAME_BULLET_H_INCLUDED
+#define FLAME_BULLET_H_INCLUDED
 
-#include "bullet.h"
+#include "gameobjects/weapons/bullet.h"
 
-class PistolBullet : public Bullet {
+class FlameBullet : public Bullet {
 public:
 
     virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) override;
@@ -12,7 +12,17 @@ public:
 
     virtual double get_velocity() const override;
 
+    virtual void render(RenderList& list) const override;
+
+    virtual bool catch_on_fire() const override;
+
+// private:
+
+    int ticks_left = 40;
 private:
+
+    bool count_down_life();
+
     virtual const char* bullet_image_name() const override;
 };
 

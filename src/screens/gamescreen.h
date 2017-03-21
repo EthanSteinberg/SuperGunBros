@@ -3,11 +3,11 @@
 
 #include "screen.h"
 #include <vector>
-#include "gameobjects/player.h"
+#include "gameobjects/player/player.h"
 #include "rectangle.h"
 #include "gameobjects/level/level.h"
 #include "gameobjects/weapons/weaponbox.h"
-#include "gameobjects/explosion.h"
+#include "gameobjects/weapons/rocket/explosion.h"
 #include "rendering/camera.h"
 
 struct PlayerSpawnTimer {

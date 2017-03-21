@@ -1,6 +1,7 @@
 #include "rocketbullet.h"
 
-#include "gameobjects/explosion.h"
+#include "explosion.h"
+#include <cmath>
 
 void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) const {
     for (unsigned int i = 0; i < player_positions.size(); i++) {
@@ -8,8 +9,8 @@ void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positi
 
         // TODO: Actual circle, rect intersection test
 
-        double dx = abs(player_pos.x - pos.x);
-        double dy = abs(player_pos.y - pos.y);
+        double dx = std::abs(player_pos.x - pos.x);
+        double dy = std::abs(player_pos.y - pos.y);
 
         bool hit =  (dx <= player_pos.width / 2 && dy <= (player_pos.height /2 + EXPLOSION_RADIUS)) ||
                     (dx <= (player_pos.width / 2 + EXPLOSION_RADIUS) && dy <= player_pos.height / 2 ) ||

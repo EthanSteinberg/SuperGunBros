@@ -90,7 +90,7 @@ void ReadyScreen::render(RenderList& list) const {
 
 		list.scale(level_scale, level_scale);
 
-		lev.render(list, false);
+		lev.render_thumbnail(list);
 
 		list.pop();
 

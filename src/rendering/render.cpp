@@ -251,5 +251,5 @@ std::array<std::function<void(void)>, 2>  create_and_use_program(int pixel_width
         glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
     };
 
-    return {main_setup, flame_setup};
+    return {{main_setup, flame_setup}};
 }

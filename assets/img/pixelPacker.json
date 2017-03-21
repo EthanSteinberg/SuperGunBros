@@ -215,10 +215,16 @@
         "x": 1791,
         "y": 736
     },
-    "green": {
+    "gold": {
         "sizex": 1,
         "sizey": 1,
         "x": 2043,
+        "y": 26
+    },
+    "green": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2041,
         "y": 26
     },
     "green-head": {
@@ -243,7 +249,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2041,
-        "y": 26
+        "y": 28
     },
     "hand": {
         "sizex": 10,
@@ -356,8 +362,8 @@
     "orange": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2041,
-        "y": 28
+        "x": 2045,
+        "y": 26
     },
     "piercer": {
         "sizex": 131,
@@ -435,7 +441,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2045,
-        "y": 26
+        "y": 28
     },
     "red-head": {
         "sizex": 51,
@@ -556,14 +562,14 @@
     "white": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2045,
+        "x": 2043,
         "y": 28
     },
     "yellow": {
         "sizex": 1,
         "sizey": 1,
         "x": 2043,
-        "y": 28
+        "y": 30
     },
     "yellow-head": {
         "sizex": 51,

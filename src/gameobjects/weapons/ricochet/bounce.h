@@ -1,17 +1,22 @@
-#ifndef PIERCE_H_INCLUDED
-#define PIERCE_H_INCLUDED
+#ifndef BOUNCE_H_INCLUDED
+#define BOUNCE_H_INCLUDED
 
-#include "gun.h"
+#include "gameobjects/weapons/gun.h"
 
-class Pierce : public Gun {
+class Bounce : public Gun {
 public:
     virtual bool in_front() const;
+
+    virtual int ticks_between_shots() const {
+        return 9;
+    };
+
     virtual int initial_ammo() const {
-        return 10;
+        return 50;
     }
 
     virtual const char* shoot_sound() {
-        return "../assets/sound/pierce.wav";
+        return "../assets/sound/bounceShoot.wav";
     }
 
 private:

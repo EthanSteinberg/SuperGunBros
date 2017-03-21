@@ -1,23 +1,29 @@
-#ifndef BOUNCE_H_INCLUDED
-#define BOUNCE_H_INCLUDED
+#ifndef FLAME_H_INCLUDED
+#define FLAME_H_INCLUDED
 
-#include "gun.h"
+#include "gameobjects/weapons/gun.h"
 
-class Bounce : public Gun {
+class Flame : public Gun {
 public:
     virtual bool in_front() const;
 
     virtual int ticks_between_shots() const {
-        return 9;
-    };
-
-    virtual int initial_ammo() const {
-        return 50;
+        return 0;
     }
 
     virtual const char* shoot_sound() {
-        return "../assets/sound/bounceShoot.wav";
+        return nullptr;
     }
+
+    virtual const char* holding_shoot_sound() {
+        return "../assets/sound/flame.wav";
+    }
+
+    virtual int initial_ammo() const {
+        return 100;
+    }
+
+    virtual std::vector<std::unique_ptr<Bullet>> spawn_bullets(double gun_angle) const;
 
 private:
     virtual double gun_rotation_x() const;
@@ -38,6 +44,8 @@ private:
     virtual const char* gun_image_name() const;
 
     virtual std::unique_ptr<Bullet> create_initial_bullet() const;
+
+    virtual double barrel_length() const;
 };
 
 #endif

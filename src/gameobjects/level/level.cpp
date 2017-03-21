@@ -163,29 +163,26 @@ Level::Level(
     unsigned int a_index,
     const std::string& a_title,
     const std::string& background):
-    obstacles(a_obstacles), box_spawn_locations(a_box_spawns),
+    obstacles(a_obstacles),
+    box_spawn_locations(a_box_spawns),
     player_spawn_locations(a_player_spawns),
+    background_img(background),
     width(a_width),
     height(a_height),
     index(a_index),
-    title(a_title),
-    background_img(background){}
+    title(a_title){}
 
-void Level::render(RenderList& list, bool show_border) const {
-    //TODO: Better background logic
-    if (show_border) {
-        Rectangle bg_dim = list.get_image_dimensions(background_img);
-        for (int i = -width; i < width + width; i += bg_dim.width) {
-            for (int j = -height; j < height + height; j += bg_dim.height) {
+void Level::render(RenderList& list) const {
+    render_background(list);
+    render_obstacles(list);
+}
 
+void Level::render_thumbnail(RenderList &list) const {
+    list.add_image("grey", 0, 0, width, height);
+    render_obstacles(list, false);
+}
 
-                list.add_image(background_img, i, j);
-            }
-        }
-    } else {
-        list.add_image("grey", 0, 0, width, height);
-    }
-
+void Level::render_obstacles(RenderList &list, bool show_border) const {
     if (show_border) {
         for (const Rectangle& rect : obstacles) {
             list.add_outline("black", rect, line_width);
@@ -204,6 +201,17 @@ void Level::render(RenderList& list, bool show_border) const {
             double y2 = std::min(height, rect.y + rect.height/2);
 
             list.add_image("darkGrey", x1, y1, (x2 - x1), (y2 - y1));
+        }
+    }
+}
+
+void Level::render_background(RenderList &list) const {
+    Rectangle bg_dim = list.get_image_dimensions(background_img);
+    for (int i = -width; i < width + width; i += bg_dim.width) {
+        for (int j = -height; j < height + height; j += bg_dim.height) {
+
+
+            list.add_image(background_img, i, j);
         }
     }
 }

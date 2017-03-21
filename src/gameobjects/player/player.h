@@ -7,7 +7,7 @@
 #include "magic.h"
 #include "gameobjects/weapons/bullet.h"
 #include "gameobjects/weapons/gun.h"
-#include "gameobjects/weapons/flamebullet.h"
+#include "gameobjects/weapons/flame/flamebullet.h"
 
 #include <iostream>
 
@@ -124,6 +124,8 @@ public:
     PlayerInfo info;
 
     PlayerState state;
+
+    void draw_health(RenderList &list, bool leader = true) const;
 private:
     AnimationState get_interpolated_frame() const;
 

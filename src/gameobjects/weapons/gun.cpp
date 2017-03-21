@@ -1,10 +1,10 @@
 #include "gun.h"
 
-#include "rocket.h"
-#include "pistol.h"
-#include "pierce.h"
-#include "bounce.h"
-#include "flame.h"
+#include "gameobjects/weapons/rocket/rocket.h"
+#include "gameobjects/weapons/pistol/pistol.h"
+#include "gameobjects/weapons/piercer/pierce.h"
+#include "gameobjects/weapons/ricochet/bounce.h"
+#include "gameobjects/weapons/flame/flame.h"
 
 #include <cmath>
 #include <iostream>

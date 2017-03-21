@@ -1,14 +1,17 @@
-#ifndef PISTOL_H_INCLUDED
-#define PISTOL_H_INCLUDED
+#ifndef ROCKET_H_INCLUDED
+#define ROCKET_H_INCLUDED
 
-#include "gun.h"
+#include "gameobjects/weapons/gun.h"
 
-class Pistol : public Gun {
+class Rocket : public Gun {
 public:
     virtual bool in_front() const;
-
     virtual int initial_ammo() const {
-        return -1;
+        return 3;
+    }
+
+    virtual const char* shoot_sound() {
+        return "../assets/sound/rocket_launcher.wav";
     }
 
 private:

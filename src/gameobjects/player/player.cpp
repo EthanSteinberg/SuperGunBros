@@ -3,34 +3,6 @@
 
 #include <cmath>
 
-//TODO do i need the radius_2s? should they reflect the outline instead of the second radius?
-
-const double arm_y_offset = -55 * ASSET_SCALE;
-
-const double upper_arm_length = 32*ASSET_SCALE;
-const double upper_arm_radius = 8*ASSET_SCALE;
-
-const double lower_arm_length = 32*ASSET_SCALE;
-const double lower_arm_radius = 5*ASSET_SCALE;
-
-const double upper_leg_length = 40*ASSET_SCALE;
-const double upper_leg_radius = 10*ASSET_SCALE;
-
-const double lower_leg_length = 36*ASSET_SCALE;
-const double lower_leg_radius = 8*ASSET_SCALE;
-
-const double head_x_offset = 7 * ASSET_SCALE;
-const double head_y_offset = -97 * ASSET_SCALE;
-
-const double shoulder_x_offset = -2 * ASSET_SCALE;
-const double shoulder_y_offset = -55 * ASSET_SCALE;
-const double shoulder_angle_offset = 0;//M_PI / 2 + - 0.2;
-const double shoulder_angle_coef = 1.0;
-
-const double torso_y_offset = -40 * ASSET_SCALE;
-
-const double crotch_x_offset = -18 * ASSET_SCALE;
-const double crotch_y_offset = 0 * ASSET_SCALE;
 
 inline double dist_sq(double x1, double y1, double x2, double y2) {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
@@ -153,6 +125,32 @@ std::vector<std::unique_ptr<Bullet>> Player::spawn_bullets() const {
     return bullets;
 }
 
+//RENDERING CONSTANTS
+//ONLY USED IN RENDERING METHODS
+const double arm_y_offset = -55 * ASSET_SCALE;
+
+const double upper_arm_length = 32*ASSET_SCALE;
+const double upper_arm_radius = 8*ASSET_SCALE;
+
+const double lower_arm_length = 32*ASSET_SCALE;
+const double lower_arm_radius = 5*ASSET_SCALE;
+
+const double upper_leg_length = 40*ASSET_SCALE;
+const double upper_leg_radius = 10*ASSET_SCALE;
+
+const double lower_leg_length = 36*ASSET_SCALE;
+const double lower_leg_radius = 8*ASSET_SCALE;
+
+const double head_x_offset = 7 * ASSET_SCALE;
+const double head_y_offset = -97 * ASSET_SCALE;
+
+const double shoulder_x_offset = -2 * ASSET_SCALE;
+const double shoulder_y_offset = -55 * ASSET_SCALE;
+const double shoulder_angle_offset = 0;//M_PI / 2 + - 0.2;
+const double shoulder_angle_coef = 1.0;
+
+const double torso_y_offset = -40 * ASSET_SCALE;
+
 void Player::render(RenderList& list) const {
 
     if (state.is_dead && state.ticks_until_spawn < DEATH_INVISIBLE_TIME) {
@@ -215,19 +213,7 @@ void Player::render(RenderList& list) const {
     list.translate(posX, posY);
     list.set_z(10);
 
-    //Make this stuff half size by default?
-    //list.scale(0.5, 0.5);
-
-    list.add_image("black", -20, -62, 40, 8);
-    list.add_image("black", -18, -60, 36, 4);
-
-    double fire_damage_to_inflict = FIRE_DMG_PER_TICK * state.ticks_fire_left;
-    double eventual_health = std::max(0.0, state.health - fire_damage_to_inflict);
-
-    double health = std::max(0.0, state.health);
-
-    list.add_image("orange", -18, -60, 36 * health / MAX_HEALTH, 4);
-    list.add_image(get_color_name(info.color), -18, -60, 36 * eventual_health / MAX_HEALTH, 4);
+    draw_health(list);
 
     if (state.is_dead) {
         double angle = M_PI / 2.0 * (1.0 - ((state.ticks_until_spawn - DEATH_INVISIBLE_TIME) / (float)DEATH_ANIMATION_TIME));
@@ -255,10 +241,6 @@ void Player::render(RenderList& list) const {
     if (!state.gun->in_front()) {
         state.gun->render_aim(list, scaled_gun_angle);
     }
-
-    //TODO revisit the crotch, it's not visible RN and not worth tweaking
-    //CROTCH
-    //list.add_scaled_image("torso-crotch", crotch_x_offset, crotch_y_offset, ASSET_SCALE);
 
     //FRONT LEG
     draw_leg(1, list, interpolated);
@@ -291,6 +273,24 @@ void Player::render(RenderList& list) const {
 
     //FIX THAT STUFF
     list.pop();
+}
+
+void Player::draw_health(RenderList &list, bool leader) const {
+    if(leader) {
+        list.add_image("black", -23, -65, 46, 14);
+        list.add_image("grey", -22, -64, 44, 12);
+    }
+        list.add_image("black", -20, -62, 40, 8);
+
+    list.add_image("black", -18, -60, 36, 4);
+
+    double fire_damage_to_inflict = FIRE_DMG_PER_TICK * state.ticks_fire_left;
+    double eventual_health = std::max(0.0, state.health - fire_damage_to_inflict);
+
+    double health = std::max(0.0, state.health);
+
+    list.add_image("orange", -18, -60, 36 * health / MAX_HEALTH, 4);
+    list.add_image(get_color_name(info.color), -18, -60, 36 * eventual_health / MAX_HEALTH, 4);
 }
 
 void Player::draw_leg(int leg, RenderList &list, AnimationState interpolated) const {

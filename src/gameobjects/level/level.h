@@ -10,11 +10,13 @@
 
 #include <random>
 
-class Level {
+class Level : public GameObject {
 public:
     static std::vector<Level> load_all_levels();
 
-    void render(RenderList& list, bool show_border = true) const;
+    void render(RenderList& list) const;
+
+    void render_thumbnail(RenderList& list) const;
 
     void update() {}
 
@@ -33,6 +35,8 @@ public:
 
 private:
     static Level load_from_file(const char* filename, unsigned int index);
+    void render_obstacles(RenderList& list, bool show_border=true) const;
+    void render_background(RenderList& list) const;
 
     Level(
         const std::vector<Rectangle>& obstacles,
@@ -57,7 +61,6 @@ public:
     double width;
     double height;
     unsigned int index;
-
     std::string title;
 };
 
