@@ -16,6 +16,10 @@ public:
 
     virtual bool catch_on_fire() const override;
 
+    virtual bool can_block() override {
+        return true;
+    }
+
 // private:
 
     int ticks_left = 40;

@@ -11,6 +11,7 @@ Bullet::~Bullet() {}
 void Bullet::render(RenderList& list) const {
     list.push();
 
+    list.set_z(100);
     list.translate(pos.x, pos.y);
     list.rotate(angle);
 
@@ -20,10 +21,6 @@ void Bullet::render(RenderList& list) const {
     //list.add_rect(bullet_image_name(), image);
 
     list.pop();
-}
-
-bool Bullet::create_explosion_after_destruction() const {
-    return false;
 }
 
 bool Bullet::catch_on_fire() const {

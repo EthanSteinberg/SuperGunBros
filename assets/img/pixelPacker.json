@@ -383,6 +383,12 @@
         "x": 1132,
         "y": 1009
     },
+    "pistol-explosion": {
+        "sizex": 20,
+        "sizey": 20,
+        "x": 1996,
+        "y": 533
+    },
     "player-won-blue": {
         "sizex": 1131,
         "sizey": 88,

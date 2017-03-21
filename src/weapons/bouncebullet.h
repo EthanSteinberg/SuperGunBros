@@ -14,12 +14,13 @@ public:
 
     virtual double get_velocity() const override;
 
-    virtual bool create_little_explosion_after_destruction() const override {
+    virtual bool can_damage_self() const override {
         return true;
     }
 
-    virtual bool can_damage_self() const override {
-        return true;
+
+    virtual ExplosionType get_explosion() const {
+        return ExplosionType::BOUNCE;
     }
 
 

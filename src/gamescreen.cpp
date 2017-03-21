@@ -664,12 +664,46 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
         bool is_dead = false;
 
-        if (would_hit_ground(bullet->pos.offset(dx, dy))) {
+        bool hit_blocker = false;
+
+        if (!bullet->can_block()) {
+            for (auto& other_bullet: bullets) {
+                if (other_bullet == nullptr) continue;
+                if (other_bullet->can_block() && other_bullet->pos.colliding_with(bullet->pos.offset(dx, dy))) {
+                    hit_blocker = true;
+                    break;
+                }
+            }
+            for (auto& other_bullet: next_bullets) {
+                if (other_bullet == nullptr) continue;
+                if (other_bullet->can_block() && other_bullet->pos.colliding_with(bullet->pos.offset(dx, dy))) {
+                    hit_blocker = true;
+                    break;
+                }
+            }
+        }
+
+        if (hit_blocker) {
+            hit_something = true;
+            is_dead = bullet->on_blocker_collision(player_bounding_boxes, damage_player_func);
+        } else if (would_hit_ground(bullet->pos.offset(dx, dy))) {
             // This bullet hit the ground.
             hit_something = true;
 
+            double low = 0.0;
+            double high = 1.0;
+            while(high - low > SIGMA/10){
+                double mid = low + (high - low)/2;
+                if (would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
+                    high = mid;
+                } else {
+                    low = mid;
+                }
+            }
+
             bool vertical_free = !would_hit_ground(bullet->pos.offset(0, dy));
             bool horizontal_free = !would_hit_ground(bullet->pos.offset(dx, 0));
+
             is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, vertical_free, horizontal_free, sounds);
 
             if (bullet->pierce_special_effect()) {
@@ -682,24 +716,15 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 }
 
                 if (!found) {
-                    double low = 0.0;
-                    double high = 1.0;
-                    while(high - low > SIGMA/10){
-                        double mid = low + (high - low)/2;
-                        if (would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
-                            high = mid;
-                        } else {
-                            low = mid;
-                        }
-                    }
-
-
                     PierceEffectData new_effect;
                     new_effect.bullet_id = bullet->id;
                     new_effect.start = bullet->pos.offset(low * dx, low * dy).location();
                     new_effect.has_end_yet = false;
                     pierce_effects.push_back(new_effect);
                 }
+            } else {
+                dx = high * dx;
+                dy = high * dy;
             }
         } else {
             if (bullet->pierce_special_effect()) {
@@ -794,13 +819,16 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         if (!is_dead && !left_map) {
             next_bullets.push_back(std::move(bullet));
         } else {
-            if (bullet->create_explosion_after_destruction()) {
-                sounds.play_sound("../assets/sound/explosion.wav");
-                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y));
-            }
+            ExplosionType type = bullet->get_explosion();
 
-            if (bullet->create_little_explosion_after_destruction()) {
-                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y, true));
+            if (type != ExplosionType::NONE) {
+
+                if (type == ExplosionType::ROCKET) {
+                    sounds.play_sound("../assets/sound/explosion.wav");
+                }
+
+                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y, type));
+
             }
         }
 

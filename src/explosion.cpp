@@ -1,8 +1,46 @@
 #include "explosion.h"
 
-const double LITTLE_EXPLOSION_RADIUS = 10;
+#include <iostream>
 
-Explosion::Explosion(double a_x, double a_y, bool a_little_explosion) : x(a_x), y(a_y), little_explosion(a_little_explosion) {}
+double get_radius(ExplosionType type) {
+    switch (type) {
+        case ExplosionType::ROCKET:
+            return EXPLOSION_RADIUS;
+
+        case ExplosionType::BOUNCE:
+            return 10;
+
+        case ExplosionType::PISTOL:
+            return 6;
+    }
+
+    std::cout<<"Invalid explosion type " << (int) type << std::endl;
+    abort();
+}
+
+const char* get_image(ExplosionType type) {
+    switch (type) {
+        case ExplosionType::ROCKET:
+            return "ballOfFire";
+
+        case ExplosionType::BOUNCE:
+            return "bounce-explosion";
+
+        case ExplosionType::PISTOL:
+            return "pistol-explosion";
+    }
+
+    std::cout<<"Invalid explosion type " << (int) type << std::endl;
+    abort();
+}
+
+Explosion::Explosion(double a_x, double a_y, ExplosionType a_type) : x(a_x), y(a_y), type(a_type) {
+
+    if (type == ExplosionType::NONE) {
+        std::cout<<"Trying to create a non-existant explosion?"<<std::endl;
+        abort();
+    }
+}
 
 
 void Explosion::update() {
@@ -14,10 +52,12 @@ bool Explosion::is_done() const {
 }
 
 void Explosion::render(RenderList& list) const {
+    list.push();
+    list.set_z(100);
 
-    double whole_radius = little_explosion ? LITTLE_EXPLOSION_RADIUS : EXPLOSION_RADIUS;
-    double radius = whole_radius * (1 - time * time);
+    double radius = get_radius(type) * (1 - time * time);
 
     Rectangle explosion_rect(x, y, radius * 2, radius * 2);
-    list.add_rect(little_explosion ? "bounce-explosion" : "ballOfFire", explosion_rect);
+    list.add_rect(get_image(type), explosion_rect);
+    list.pop();
 }
