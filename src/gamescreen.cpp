@@ -56,10 +56,31 @@ void GameScreen::render(RenderList& list) const {
         box.render(list);
     }
 
+    int max_score = -1;
+    std::vector<int> players_with_max_score;
+
+    for (unsigned int i = 0; i < players.size(); i++) {
+        const auto& player = players[i];
+
+        if (player.state.score == max_score) {
+            players_with_max_score.push_back(i);
+        } else if (player.state.score > max_score) {
+            players_with_max_score.clear();
+            players_with_max_score.push_back(i);
+            max_score = player.state.score;
+        }
+    }
+
 	// Render the players.
 
 	for (const auto& player : players) {
         player.render(list);
+
+        if (players_with_max_score.size() != players.size()) {
+            if (player.state.score == max_score) {
+                player.render_crown(list);
+            }
+        }
 	}
 
 	// Render the bullets
@@ -821,7 +842,6 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
         if (shooter_index != player_index) {
             shooter.state.score += 2;
             shooter.state.ticks_since_last_score_update = 0;
-            std::cout<<"Setting it to nothing!"<<std::endl;
         } else {
         }
 

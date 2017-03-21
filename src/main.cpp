@@ -123,7 +123,7 @@ int main(void)
 {
     SoundThread sounds;
     sounds.start();
-    sounds.play_sound("../assets/sound/menu_too_loud.wav",true, 3);
+    sounds.play_sound("../assets/sound/menu_too_loud.wav",true, 4);
 
     glfwSetErrorCallback(error_callback);
     if (!glfwInit()) {

@@ -155,6 +155,12 @@
         "x": 1662,
         "y": 941
     },
+    "crown": {
+        "sizex": 78,
+        "sizey": 22,
+        "x": 1264,
+        "y": 796
+    },
     "current-players": {
         "sizex": 1,
         "sizey": 1,
@@ -314,7 +320,7 @@
     "lowercase": {
         "sizex": 286,
         "sizey": 21,
-        "x": 1264,
+        "x": 1343,
         "y": 796
     },
     "missile": {

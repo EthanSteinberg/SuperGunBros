@@ -153,6 +153,24 @@ std::vector<std::unique_ptr<Bullet>> Player::spawn_bullets() const {
     return bullets;
 }
 
+void Player::render_crown(RenderList& list) const {
+    if (state.is_dead && state.ticks_until_spawn < DEATH_INVISIBLE_TIME) {
+        return;
+    }
+
+    list.push();
+
+    double posX = state.pos.x;
+    double posY = state.pos.y;
+
+    list.translate(posX, posY);
+    list.set_z(10);
+
+    list.add_scaled_image("crown", 0, -68, ASSET_SCALE, true);
+
+    list.pop();
+}
+
 void Player::render(RenderList& list) const {
 
     if (state.is_dead && state.ticks_until_spawn < DEATH_INVISIBLE_TIME) {
