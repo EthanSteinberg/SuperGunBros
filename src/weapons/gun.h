@@ -27,6 +27,7 @@ public:
 
     virtual std::vector<std::unique_ptr<Bullet>> spawn_bullets(double gun_angle) const;
 
+
     virtual int ticks_between_shots() const {
         return 20;
     }

@@ -21,6 +21,10 @@ public:
         return true;
     }
 
+    virtual void render(RenderList& list) const;
+
+    int ticks_alive = 0;
+
 private:
     virtual const char* bullet_image_name() const override;
 };

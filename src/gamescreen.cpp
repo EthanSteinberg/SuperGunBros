@@ -299,7 +299,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 if (player.state.ticks_till_next_flame_particle == 0) {
                     std::uniform_real_distribution<> dist(-10, 10);
 
-                    auto next_bullet = std::make_unique<FlameBullet>();
+                    auto next_bullet = std::make_unique<FlameBullet>(true);
 
                     next_bullet->ticks_left = 20 + dist(gen);
 
@@ -601,8 +601,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 }
 
                 player.state.ticks_till_next_bullet = player.state.gun->ticks_between_shots();
-
-                std::vector<std::unique_ptr<Bullet>> next_bullets = player.spawn_bullets();
 
                 for (auto& next_bullet: next_bullets) {
                     next_bullet->player_owner = i;

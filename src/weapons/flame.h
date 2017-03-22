@@ -23,7 +23,7 @@ public:
         return 100;
     }
 
-    virtual std::vector<std::unique_ptr<Bullet>> spawn_bullets(double gun_angle) const;
+    virtual std::vector<std::unique_ptr<Bullet>> spawn_bullets(double gun_angle) const override;
 
 private:
     virtual double gun_rotation_x() const;

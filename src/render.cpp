@@ -45,10 +45,10 @@ const char* fragment_shader1_source = R"(
 const char* vertex_shader2_source = R"(
     #version 100
     attribute vec3 position;
-    attribute vec3 a_color;
+    attribute vec4 a_color;
     attribute vec2 a_center;
     attribute float a_radius;
-    varying vec3 v_color;
+    varying vec4 v_color;
     varying vec2 v_center;
     varying vec3 v_position;
     varying float v_radius;
@@ -68,7 +68,7 @@ const char* vertex_shader2_source = R"(
 const char* fragment_shader2_source = R"(
     #version 100
     precision mediump float;
-    varying vec3 v_color;
+    varying vec4 v_color;
     varying vec2 v_center;
     varying vec3 v_position;
     varying float v_radius;
@@ -79,8 +79,9 @@ const char* fragment_shader2_source = R"(
       float dist =  dot(pos, pos);
 
       float alpha = 1.0 - smoothstep(v_radius * v_radius, (v_radius + 1.0) * (v_radius + 1.0), dist);
+      alpha = alpha * v_color.a;
 
-      gl_FragColor = vec4(v_color * alpha, alpha);
+      gl_FragColor = vec4(v_color.rgb * alpha, alpha);
     }
    )";
 
@@ -214,16 +215,18 @@ std::array<std::function<void(void)>, 2>  create_and_use_program(int pixel_width
         int radius_location = glGetAttribLocation(flame_program, "a_radius");
 
         glEnableVertexAttribArray(position_location);
-        glVertexAttribPointer(position_location, 3, GL_FLOAT, false, 4 * 9, 0);
+        glVertexAttribPointer(position_location, 3, GL_FLOAT, false, 4 * 10, 0);
 
         glEnableVertexAttribArray(color_location);
-        glVertexAttribPointer(color_location, 3, GL_FLOAT, false, 4 * 9, (void *)(4 * 3));
+        glVertexAttribPointer(color_location, 4, GL_FLOAT, false, 4 * 10, (void *)(4 * 3));
 
         glEnableVertexAttribArray(center_location);
-        glVertexAttribPointer(center_location, 2, GL_FLOAT, false, 4 * 9, (void *)(4 * 6));
+        glVertexAttribPointer(center_location, 2, GL_FLOAT, false, 4 * 10, (void *)(4 * 7));
 
         glEnableVertexAttribArray(radius_location);
-        glVertexAttribPointer(radius_location, 1, GL_FLOAT, false, 4 * 9, (void *)(4 * 8));
+        glVertexAttribPointer(radius_location, 1, GL_FLOAT, false, 4 * 10, (void *)(4 * 9));
+
+
 
         update_size(flame_program, pixel_width, pixel_height, screen_width, screen_height);
     }

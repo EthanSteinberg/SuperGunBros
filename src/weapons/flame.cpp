@@ -67,12 +67,15 @@ std::vector<std::unique_ptr<Bullet>> Flame::spawn_bullets(double gun_angle) cons
     double x = (gun_rotation_x() + cos(gun_angle) * (gun_offset_x() + barrel_offset_x() + barrel_length()) - sin(gun_angle) * (gun_offset_y() + barrel_offset_y()));
     double y = (gun_rotation_y() + sin(gun_angle) * (gun_offset_x() + barrel_offset_x() + barrel_length()) + cos(gun_angle) * (gun_offset_y() + barrel_offset_y()));
 
-    for (int i = -10; i <= 10; i++) {
+    const int num_flames = 20;
+    const double angle = 30.0;
+
+    for (int i = -num_flames/2; i <= num_flames/2; i++) {
         std::unique_ptr<FlameBullet> result = std::make_unique<FlameBullet>();
-        result->ticks_left = 45 - (std::abs(i));
+        result->ticks_left = MAX_LIFE - (std::abs(i));
         result->pos.x = x;
         result->pos.y = y;
-        result->angle = i/10.0 * 15.0 * M_PI/180.0;
+        result->angle = i/(num_flames/2.0) * angle/2.0 * M_PI/180.0;
 
         results.push_back(std::move(result));
     }

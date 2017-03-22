@@ -11,6 +11,7 @@
 #include <exception>
 
 const char* const level_names[] = {
+        "../assets/level/testlevel.json",
         "../assets/level/platforms.json",
         "../assets/level/more_platforms.json",
         "../assets/level/shafts.json",
