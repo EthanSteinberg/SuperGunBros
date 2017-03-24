@@ -56,10 +56,31 @@ void GameScreen::render(RenderList& list) const {
         box.render(list);
     }
 
+    int max_score = -1;
+    std::vector<int> players_with_max_score;
+
+    for (unsigned int i = 0; i < players.size(); i++) {
+        const auto& player = players[i];
+
+        if (player.state.score == max_score) {
+            players_with_max_score.push_back(i);
+        } else if (player.state.score > max_score) {
+            players_with_max_score.clear();
+            players_with_max_score.push_back(i);
+            max_score = player.state.score;
+        }
+    }
+
 	// Render the players.
 
 	for (const auto& player : players) {
         player.render(list);
+
+        if (players_with_max_score.size() != players.size()) {
+            if (player.state.score == max_score) {
+                player.render_crown(list);
+            }
+        }
 	}
 
 	// Render the bullets
@@ -85,7 +106,7 @@ void GameScreen::render(RenderList& list) const {
     for (const auto& player : players) {
         int x = 0;
         int y = 0;
-        const int top_row_offset = 127;
+        const int top_row_offset = 129;
         const int top_row_y = 28;
 
         const int bottom_row_offset = 100;
@@ -115,6 +136,15 @@ void GameScreen::render(RenderList& list) const {
             default:
                 std::cout<<"Invalid color " << (int)player.info.color << std::endl;
                 exit(-1);
+        }
+
+        if (player.state.ticks_since_last_score_update != -1 &&
+            player.state.ticks_since_last_score_update < 120) {
+            int phase = player.state.ticks_since_last_score_update/24;
+            if (phase % 2 == 0) {
+                list.add_image(get_color_name(player.info.color), x - 25, y - 18, 50, 36);
+            }
+
         }
 
         list.add_red_numbers(get_color_name(player.info.color), player.state.score, x, y);
@@ -229,6 +259,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
     for (unsigned int i = 0; i < players.size(); i++) {
         auto &player = players[i];
 
+        if (player.state.ticks_since_last_score_update != -1) {
+            player.state.ticks_since_last_score_update += 1;
+        }
+
         if (player.state.is_dead) {
 
             if (player.state.current_player_shooting_sound_filename != nullptr) {
@@ -265,7 +299,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 if (player.state.ticks_till_next_flame_particle == 0) {
                     std::uniform_real_distribution<> dist(-10, 10);
 
-                    auto next_bullet = std::make_unique<FlameBullet>();
+                    auto next_bullet = std::make_unique<FlameBullet>(true);
 
                     next_bullet->ticks_left = 20 + dist(gen);
 
@@ -568,9 +602,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                 player.state.ticks_till_next_bullet = player.state.gun->ticks_between_shots();
 
-                std::vector<std::unique_ptr<Bullet>> next_bullets = player.spawn_bullets();
-
-                for (auto& next_bullet: next_bullets) {
+                for (auto& next_bullet: player.spawn_bullets()) {
                     next_bullet->player_owner = i;
 
                     bullets.push_back(std::move(next_bullet));
@@ -630,12 +662,46 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
         bool is_dead = false;
 
-        if (would_hit_ground(bullet->pos.offset(dx, dy))) {
+        bool hit_blocker = false;
+
+        if (!bullet->can_block()) {
+            for (auto& other_bullet: bullets) {
+                if (other_bullet == nullptr) continue;
+                if (other_bullet->can_block() && other_bullet->pos.colliding_with(bullet->pos.offset(dx, dy))) {
+                    hit_blocker = true;
+                    break;
+                }
+            }
+            for (auto& other_bullet: next_bullets) {
+                if (other_bullet == nullptr) continue;
+                if (other_bullet->can_block() && other_bullet->pos.colliding_with(bullet->pos.offset(dx, dy))) {
+                    hit_blocker = true;
+                    break;
+                }
+            }
+        }
+
+        if (hit_blocker) {
+            hit_something = true;
+            is_dead = bullet->on_blocker_collision(player_bounding_boxes, damage_player_func);
+        } else if (would_hit_ground(bullet->pos.offset(dx, dy))) {
             // This bullet hit the ground.
             hit_something = true;
 
+            double low = 0.0;
+            double high = 1.0;
+            while(high - low > SIGMA/10){
+                double mid = low + (high - low)/2;
+                if (would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
+                    high = mid;
+                } else {
+                    low = mid;
+                }
+            }
+
             bool vertical_free = !would_hit_ground(bullet->pos.offset(0, dy));
             bool horizontal_free = !would_hit_ground(bullet->pos.offset(dx, 0));
+
             is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, vertical_free, horizontal_free, sounds);
 
             if (bullet->pierce_special_effect()) {
@@ -648,24 +714,15 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 }
 
                 if (!found) {
-                    double low = 0.0;
-                    double high = 1.0;
-                    while(high - low > SIGMA/10){
-                        double mid = low + (high - low)/2;
-                        if (would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
-                            high = mid;
-                        } else {
-                            low = mid;
-                        }
-                    }
-
-
                     PierceEffectData new_effect;
                     new_effect.bullet_id = bullet->id;
                     new_effect.start = bullet->pos.offset(low * dx, low * dy).location();
                     new_effect.has_end_yet = false;
                     pierce_effects.push_back(new_effect);
                 }
+            } else {
+                dx = high * dx;
+                dy = high * dy;
             }
         } else {
             if (bullet->pierce_special_effect()) {
@@ -702,8 +759,8 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 continue;
             }
 
-            if (i == bullet->player_owner) {
-                continue; // Don't intersect with self
+            if (i == bullet->player_owner && !bullet->can_damage_self()) {
+                continue;
             }
 
             if (bullet->pos.colliding_with(player.state.pos)) {
@@ -760,13 +817,16 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         if (!is_dead && !left_map) {
             next_bullets.push_back(std::move(bullet));
         } else {
-            if (bullet->create_explosion_after_destruction()) {
-                sounds.play_sound("../assets/sound/explosion.wav");
-                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y));
-            }
+            ExplosionType type = bullet->get_explosion();
 
-            if (bullet->create_little_explosion_after_destruction()) {
-                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y, true));
+            if (type != ExplosionType::NONE) {
+
+                if (type == ExplosionType::ROCKET) {
+                    sounds.play_sound("../assets/sound/explosion.wav");
+                }
+
+                explosions.push_back(Explosion(bullet->pos.x, bullet->pos.y, type));
+
             }
         }
 
@@ -807,8 +867,8 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
         if (shooter_index != player_index) {
             shooter.state.score += 2;
+            shooter.state.ticks_since_last_score_update = 0;
         } else {
-            shooter.state.score = std::max(0, player.state.score - 2);
         }
 
         player.state.score = std::max(0, player.state.score - 1);

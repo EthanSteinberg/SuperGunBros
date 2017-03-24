@@ -124,7 +124,6 @@ std::vector<std::unique_ptr<Bullet>> Player::spawn_bullets() const {
 
     return bullets;
 }
-
 //RENDERING CONSTANTS
 //ONLY USED IN RENDERING METHODS
 const double arm_y_offset = -55 * ASSET_SCALE;
@@ -275,13 +274,9 @@ void Player::render(RenderList& list) const {
     list.pop();
 }
 
-void Player::draw_health(RenderList &list, bool leader) const {
-    if(leader) {
-        list.add_image("black", -23, -65, 46, 14);
-        list.add_image("grey", -22, -64, 44, 12);
-    }
-        list.add_image("black", -20, -62, 40, 8);
+void Player::draw_health(RenderList &list) const {
 
+    list.add_image("black", -20, -62, 40, 8);
     list.add_image("black", -18, -60, 36, 4);
 
     double fire_damage_to_inflict = FIRE_DMG_PER_TICK * state.ticks_fire_left;
@@ -367,6 +362,24 @@ void Player::draw_arm(int arm, RenderList& list, ArmState arms) const{
         list.pop();
     }
 
+}
+
+void Player::render_crown(RenderList& list) const {
+    if (state.is_dead && state.ticks_until_spawn < DEATH_INVISIBLE_TIME) {
+        return;
+    }
+
+    list.push();
+
+    double posX = state.pos.x;
+    double posY = state.pos.y;
+
+    list.translate(posX, posY);
+    list.set_z(10);
+
+    list.add_scaled_image("crown", 0, -68, ASSET_SCALE, true);
+
+    list.pop();
 }
 
 void Player::set_gun(std::unique_ptr<Gun> gun) {

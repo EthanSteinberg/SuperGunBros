@@ -17,10 +17,10 @@
 const int screen_width = 1280;
 const int screen_height = 720;
 
-const bool debug_keyboard_player =true;
+const bool debug_keyboard_player = true;
 
-const bool debug_other_player = true;
-bool other_player_start_button = true;
+const bool debug_other_player = false;
+bool other_player_start_button = false;
 
 struct MainData {
     std::unique_ptr<Screen> current_screen;
@@ -123,7 +123,7 @@ int main(void)
 {
     SoundThread sounds;
     sounds.start();
-    sounds.play_sound("../assets/sound/menu_too_loud.wav",true, 3);
+    sounds.play_sound("../assets/sound/menu_too_loud.wav",true, 4);
 
     glfwSetErrorCallback(error_callback);
     if (!glfwInit()) {

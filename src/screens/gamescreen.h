@@ -7,7 +7,7 @@
 #include "rectangle.h"
 #include "gameobjects/level/level.h"
 #include "gameobjects/weapons/weaponbox.h"
-#include "gameobjects/weapons/rocket/explosion.h"
+#include "gameobjects/weapons/explosion.h"
 #include "rendering/camera.h"
 
 struct PlayerSpawnTimer {

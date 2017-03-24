@@ -54,7 +54,7 @@ public:
 
 	Rectangle get_image_dimensions(const std::string &name) const;
 
-	void add_flame(float x, float y, float r, float g, float b);
+	void add_flame(float x, float y, float r, float g, float b, float alpha);
 
 	// Actually draw everything currently in the render list.
 	void draw();

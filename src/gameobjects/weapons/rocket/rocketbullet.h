@@ -12,7 +12,14 @@ public:
 
     virtual double get_velocity() const override;
 
-    virtual bool create_explosion_after_destruction() const override;
+
+    virtual ExplosionType get_explosion() const {
+        return ExplosionType::ROCKET;
+    }
+
+    virtual void render(RenderList& list) const override;
+
+    int ticks_alive = 0;
 
 private:
     virtual const char* bullet_image_name() const override;

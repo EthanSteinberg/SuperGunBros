@@ -5,9 +5,16 @@
 
 const int EXPLOSION_RADIUS = 50;
 
+enum class ExplosionType {
+    ROCKET,
+    BOUNCE,
+    PISTOL,
+    NONE
+};
+
 class Explosion {
 public:
-    Explosion(double x, double y, bool little_explosion = false);
+    Explosion(double x, double y, ExplosionType type);
     void update();
 
     void render(RenderList& list) const;
@@ -19,7 +26,7 @@ private:
     double x;
     double y;
 
-    bool little_explosion;
+    ExplosionType type;
 };
 
 #endif

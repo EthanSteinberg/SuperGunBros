@@ -109,12 +109,15 @@ struct PlayerState {
 
     uint64_t current_player_shooting_sound = 0;
     const char* current_player_shooting_sound_filename = nullptr;
+
+    int ticks_since_last_score_update = -1;
 };
 
 class Player : public GameObject {
 public:
     Player(double start_x, double start_y, PlayerInfo info);
     void render(RenderList& list) const;
+    void render_crown(RenderList& list) const;
     void update();
 
     void set_gun(std::unique_ptr<Gun> gun);
@@ -125,7 +128,7 @@ public:
 
     PlayerState state;
 
-    void draw_health(RenderList &list, bool leader = true) const;
+    void draw_health(RenderList &list) const;
 private:
     AnimationState get_interpolated_frame() const;
 

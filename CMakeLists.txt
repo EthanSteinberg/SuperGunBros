@@ -71,7 +71,7 @@ set(SOURCE_FILES
 
 		${WEAPON_SOURCES}
 		src/gameobjects/weapons/weaponbox.cpp
-		src/gameobjects/weapons/rocket/explosion.cpp
+		src/gameobjects/weapons/explosion.cpp
 
 	)
 

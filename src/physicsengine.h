@@ -8,7 +8,7 @@
 #include <map>
 #import "gameobjects/level/level.h"
 #import "gameobjects/player/player.h"
-#import "gameobjects/weapons/rocket/explosion.h"
+#import "gameobjects/weapons/explosion.h"
 #import "soundthread.h"
 
 #define DRAG_COEF 0.075

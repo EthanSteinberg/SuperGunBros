@@ -1,6 +1,6 @@
 #include "rocketbullet.h"
 
-#include "explosion.h"
+#include "gameobjects/weapons/explosion.h"
 #include <cmath>
 
 void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) const {
@@ -24,11 +24,13 @@ void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positi
 }
 
 bool RocketBullet::on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
+    ticks_alive++;
     perform_explosion(player_positions, damage_player);
     return true;
 }
 
 bool RocketBullet::on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
+    ticks_alive++;
     perform_explosion(player_positions, damage_player);
     damage_player(hit_player, 10);
     return true;
@@ -36,6 +38,7 @@ bool RocketBullet::on_player_collision(int hit_player, const std::vector<Rectang
 
 
 bool RocketBullet::on_no_collision() {
+    ticks_alive++;
     return false;
 }
 
@@ -48,6 +51,17 @@ const char* RocketBullet::bullet_image_name() const {
     return "missile";
 }
 
-bool RocketBullet::create_explosion_after_destruction() const {
-    return true;
+void RocketBullet::render(RenderList& list) const {
+    list.push();
+
+    list.set_z(100);
+    list.translate(pos.x, pos.y);
+    list.rotate(angle);
+
+    double max_dist = std::min(get_velocity() * ticks_alive, 100.0);
+
+    list.add_scaled_image(bullet_image_name(), 0, 0, ASSET_SCALE, true);
+    list.add_image("rocket-trail", -25 - max_dist, -2, max_dist, 4);
+
+    list.pop();
 }

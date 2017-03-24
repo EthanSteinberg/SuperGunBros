@@ -5,6 +5,7 @@
 #include <vector>
 #include <functional>
 #include "rendering/renderlist.h"
+#include "gameobjects/weapons/explosion.h"
 #include <cstdint>
 
 class SoundThread;
@@ -33,17 +34,27 @@ public:
     virtual bool on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) = 0;
     virtual bool on_no_collision() = 0;
 
+    virtual bool on_blocker_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
+        return true;
+    }
+
+    virtual bool can_block() {
+        return false;
+    }
+
     virtual double get_velocity() const = 0;
 
-    virtual bool create_explosion_after_destruction() const;
-
-    virtual bool create_little_explosion_after_destruction() const {
-        return false;
+    virtual ExplosionType get_explosion() const {
+        return ExplosionType::NONE;
     }
 
     virtual bool catch_on_fire() const;
 
     virtual bool pierce_special_effect() const {
+        return false;
+    }
+
+    virtual bool can_damage_self() const {
         return false;
     }
 

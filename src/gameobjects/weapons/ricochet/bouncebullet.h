@@ -3,6 +3,8 @@
 
 #include "gameobjects/weapons/bullet.h"
 
+const int BOUNCE_BULLET_LIFE = 180;
+
 class BounceBullet : public Bullet {
 public:
 
@@ -12,14 +14,19 @@ public:
 
     virtual double get_velocity() const override;
 
-    virtual bool create_little_explosion_after_destruction() const override {
+    virtual bool can_damage_self() const override {
         return true;
+    }
+
+
+    virtual ExplosionType get_explosion() const {
+        return ExplosionType::BOUNCE;
     }
 
 
 private:
 
-    int ticks_left = 300;
+    int ticks_left = BOUNCE_BULLET_LIFE;
 
     virtual const char* bullet_image_name() const override;
 };

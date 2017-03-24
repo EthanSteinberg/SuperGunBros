@@ -3,8 +3,11 @@
 #include <cmath>
 #include <iostream>
 
+FlameBullet::FlameBullet(bool a_individual) : individual(a_individual) {}
+
 bool FlameBullet::count_down_life() {
     ticks_left -= 1;
+    ticks_alive += 1;
 
     return ticks_left < 0;
 }
@@ -24,7 +27,8 @@ bool FlameBullet::on_no_collision() {
 }
 
 double FlameBullet::get_velocity() const {
-    return 4;
+    double fraction = std::pow(1 - (ticks_alive / MAX_LIFE), 2.0);
+    return 4 * fraction + 6;
 }
 
 const char* FlameBullet::bullet_image_name() const {
@@ -33,11 +37,13 @@ const char* FlameBullet::bullet_image_name() const {
 
 void FlameBullet::render(RenderList& list) const {
 
-    double yellow = 1 - std::pow(1 - (ticks_left / 40.0), 2.0);
+    double yellow = 1 - std::pow(1 - (ticks_left / MAX_LIFE), 2.0);
+
+    double alpha = individual ? 0.75 : 0.4;
 
     list.push();
     list.set_z(30);
-    list.add_flame(pos.x, pos.y, 1, yellow, 0);
+    list.add_flame(pos.x, pos.y, 1, yellow, 0, alpha);
     list.pop();
 }
 
