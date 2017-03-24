@@ -13,7 +13,7 @@ public:
     virtual double get_velocity() const override;
 
 
-    virtual ExplosionType get_explosion() const {
+    virtual ExplosionType get_explosion() const override{
         return ExplosionType::ROCKET;
     }
 

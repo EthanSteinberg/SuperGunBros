@@ -12,6 +12,9 @@ double get_radius(ExplosionType type) {
 
         case ExplosionType::PISTOL:
             return 6;
+
+        case ExplosionType ::NONE:
+            break;
     }
 
     std::cout<<"Invalid explosion type " << (int) type << std::endl;
@@ -28,6 +31,9 @@ const char* get_image(ExplosionType type) {
 
         case ExplosionType::PISTOL:
             return "pistol-explosion";
+
+        case ExplosionType ::NONE:
+            break;
     }
 
     std::cout<<"Invalid explosion type " << (int) type << std::endl;

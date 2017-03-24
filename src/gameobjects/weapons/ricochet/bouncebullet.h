@@ -19,7 +19,7 @@ public:
     }
 
 
-    virtual ExplosionType get_explosion() const {
+    virtual ExplosionType get_explosion() const override {
         return ExplosionType::BOUNCE;
     }
 

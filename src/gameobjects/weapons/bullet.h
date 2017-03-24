@@ -44,7 +44,7 @@ public:
 
     virtual double get_velocity() const = 0;
 
-    virtual ExplosionType get_explosion() const {
+    virtual ExplosionType get_explosion() const{
         return ExplosionType::NONE;
     }
 

@@ -60,10 +60,10 @@ set(SOURCE_FILES
 		src/soundthread.cpp
 
 		src/gameobjects/player/player.cpp
-		src/gameobjects/player/statuseffects/burningeffect.cpp
+		#src/gameobjects/player/statuseffects/burningeffect.cpp
 
 		src/gameobjects/level/boxspawn.cpp
-		src/gameobjects/level/effectfield.cpp
+		#src/gameobjects/level/effectfield.cpp
 		src/gameobjects/level/level.cpp
 
 		src/rectangle.cpp

@@ -24,7 +24,7 @@ bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::functio
 }
 
 bool BounceBullet::on_player_collision(int hit_player, const std::vector<Rectangle>&, std::function<void(int, double)> damage_player) {
-    if (hit_player == player_owner && ticks_left > BOUNCE_BULLET_LIFE - 20) {
+    if ((unsigned int)hit_player == player_owner && ticks_left > BOUNCE_BULLET_LIFE - 20) {
         return false;
     }
 

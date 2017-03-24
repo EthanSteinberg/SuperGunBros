@@ -14,7 +14,7 @@ public:
 
     virtual double get_velocity() const override;
 
-    virtual ExplosionType get_explosion() const {
+    virtual ExplosionType get_explosion() const override{
         return ExplosionType::PISTOL;
     }
 
@@ -22,7 +22,7 @@ public:
         return true;
     }
 
-    virtual void render(RenderList& list) const;
+    virtual void render(RenderList& list) const override;
 
     int ticks_alive = 0;
 
