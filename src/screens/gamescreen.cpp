@@ -89,9 +89,7 @@ void GameScreen::render(RenderList& list) const {
 	}
 
     for (const auto& effect: pierce_effects) {
-        if (effect.has_end_yet) {
-            list.add_line("orange", effect.start.x, effect.start.y, effect.end.x, effect.end.y);
-        }
+        list.add_line("white", effect.start.x, effect.start.y, effect.end.x, effect.end.y);
     }
 
     list.pop();
@@ -249,7 +247,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
     std::vector<PierceEffectData> next_pierce_effects;
     for (auto& effect: pierce_effects) {
-        if (!effect.has_end_yet || effect.ticks_left-- > 0) {
+        if (effect.ticks_left-- > 0) {
             next_pierce_effects.push_back(effect);
         }
     }
@@ -601,11 +599,57 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 }
 
                 player.state.ticks_till_next_bullet = player.state.gun->ticks_between_shots();
+                std::vector<std::unique_ptr<Bullet>> new_bullets = player.spawn_bullets();
 
-                for (auto& next_bullet: player.spawn_bullets()) {
+
+                for (auto& next_bullet: new_bullets) {
+
+                    if (level.intersects_line(player.state.pos.x, player.state.pos.y, next_bullet->pos.x, next_bullet->pos.y)) {
+                        double dx = next_bullet->pos.x - player.state.pos.x;
+                        double dy = next_bullet->pos.y - player.state.pos.y;
+
+                        double low = 0.0;
+                        double high = 1.0;
+                        while(high - low > SIGMA/10){
+                            double mid = low + (high - low)/2;
+                            if (level.intersects_line(player.state.pos.x, player.state.pos.y, player.state.pos.x + mid * dx, player.state.pos.y + mid * dy)) {
+                                high = mid;
+                            } else {
+                                low = mid;
+                            }
+                        }
+
+                        next_bullet->pos.x = player.state.pos.x + low * dx;
+                        next_bullet->pos.y = player.state.pos.y + low * dy;
+                    }
+
                     next_bullet->player_owner = i;
 
-                    bullets.push_back(std::move(next_bullet));
+                    if (next_bullet->pierce_special_effect()) {
+                        // If it is a piercing bullet, we have to do a hitscan sort of attack
+
+                        double dx = cos(next_bullet->angle);
+                        double dy = sin(next_bullet->angle);
+                        double max_time = std::max(level.width * 2, level.height * 2);
+
+                        Point start = next_bullet->pos.location();
+                        Point end = next_bullet->pos.offset(dx * max_time, dy * max_time).location();
+
+                        for (unsigned int other_i = 0; other_i < players.size(); other_i++) {
+                            const auto& player = players[other_i];
+                            if (other_i == next_bullet->player_owner) {
+                                continue;
+                            }
+
+                            if (player.state.pos.intersects_line(start.x, start.y, end.x, end.y)) {
+                                damage_player(other_i, 10, i);
+                            }
+                        }
+                        pierce_effects.push_back(PierceEffectData{start, end, 10});
+                    } else {
+                       bullets.push_back(std::move(next_bullet));
+                   }
+
                 }
 
                 if (player.state.ammo_left != -1) {
@@ -704,50 +748,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
             is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, vertical_free, horizontal_free, sounds);
 
-            if (bullet->pierce_special_effect()) {
 
-                bool found = false;
-                for (auto& an_effect: pierce_effects) {
-                    if (an_effect.bullet_id == bullet->id && !an_effect.has_end_yet) {
-                        found = true;
-                    }
-                }
-
-                if (!found) {
-                    PierceEffectData new_effect;
-                    new_effect.bullet_id = bullet->id;
-                    new_effect.start = bullet->pos.offset(low * dx, low * dy).location();
-                    new_effect.has_end_yet = false;
-                    pierce_effects.push_back(new_effect);
-                }
-            } else {
-                dx = high * dx;
-                dy = high * dy;
-            }
-        } else {
-            if (bullet->pierce_special_effect()) {
-                for (auto& an_effect: pierce_effects) {
-                    if (an_effect.bullet_id == bullet->id && !an_effect.has_end_yet) {
-                        an_effect.has_end_yet = true;
-                        an_effect.ticks_left = 20;
-
-                        double low = 0.0;
-                        double high = 1.0;
-                        while(high - low > SIGMA/10) {
-                            double mid = low + (high - low)/2;
-                            if (!would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
-                                high = mid;
-                            } else {
-                                low = mid;
-                            }
-                        }
-
-                        an_effect.end = bullet->pos.offset(low * dx, low * dy).location();
-                    }
-                }
-            }
+            dx = high * dx;
+            dy = high * dy;
         }
-
 
         bullet->pos.x += dx;
         bullet->pos.y += dy;
@@ -773,28 +777,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                     }
                 }
                 is_dead = bullet->on_player_collision(i, player_bounding_boxes, damage_player_func);
-
-                if (is_dead && bullet->pierce_special_effect()) {
-                    for (auto& an_effect: pierce_effects) {
-                        if (an_effect.bullet_id == bullet->id && !an_effect.has_end_yet) {
-                            an_effect.has_end_yet = true;
-                            an_effect.ticks_left = 20;
-
-                            double low = 0.0;
-                            double high = 1.0;
-                            while(high - low > SIGMA/10) {
-                                double mid = low + (high - low)/2;
-                                if (!would_hit_ground(bullet->pos.offset(mid * dx, mid * dy))) {
-                                    high = mid;
-                                } else {
-                                    low = mid;
-                                }
-                            }
-
-                            an_effect.end = bullet->pos.offset(low * dx, low * dy).location();
-                        }
-                    }
-                }
             }
         }
 

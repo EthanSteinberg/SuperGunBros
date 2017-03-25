@@ -39,25 +39,25 @@
             "xLeft": 0
         }, 
         {
-            "xRight": 500, 
-            "yTop": 400, 
-            "yBottom": 430, 
+            "xRight": 470, 
+            "yTop": 430, 
+            "yBottom": 460, 
             "mirrored": true, 
-            "xLeft": 200
+            "xLeft": 140
         }, 
         {
-            "xRight": 500, 
+            "xRight": 470, 
             "yTop": 640, 
             "yBottom": 670, 
             "mirrored": true, 
-            "xLeft": 200
+            "xLeft": 140
         }, 
         {
-            "xRight": 230, 
-            "yTop": 400, 
+            "xRight": 170, 
+            "yTop": 430, 
             "yBottom": 670, 
             "mirrored": true, 
-            "xLeft": 200
+            "xLeft": 140
         }, 
         {
             "xRight": 750, 
@@ -72,28 +72,40 @@
             "y": 120, 
             "x": 720, 
             "weapons": [
-                "flame"
+                "pierce", 
+                "rocket"
             ], 
             "respawnDelay": 30, 
             "initialSpawnDelay": 15
+        }, 
+        {
+            "respawnDelay": 30, 
+            "mirrored": true, 
+            "initialSpawnDelay": 15, 
+            "weapons": [
+                "flame", 
+                "bounce"
+            ], 
+            "y": 620, 
+            "x": 222.5
         }
     ], 
     "spawnLocations": [
         {
-            "y": 660, 
-            "x": 150
+            "y": 710, 
+            "x": 100
         }, 
         {
-            "y": 660, 
-            "x": 1290
+            "y": 710, 
+            "x": 1340
         }, 
         {
-            "y": 660, 
-            "x": 150
+            "y": 710, 
+            "x": 100
         }, 
         {
-            "y": 660, 
-            "x": 1290
+            "y": 710, 
+            "x": 1340
         }
     ]
 }

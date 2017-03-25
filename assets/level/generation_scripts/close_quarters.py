@@ -15,12 +15,12 @@ lev = level.Level(title, width, height, mirrored)
 
 
 
-def add_vertical_bar(xLeft, xRight, yBottom, mirrored = False):
-    lev.add_obstacle(xLeft, xRight, yBottom, yBottom + 30, mirrored)
+def add_vertical_bar(xLeft, xRight, yBottom, mirror = False):
+    lev.add_obstacle(xLeft, xRight, yBottom, yBottom + 30, mirror)
 
 
-def add_horizontal_bar(xLeft, yBottom, yTop, mirrored = False):
-    lev.add_obstacle(xLeft, xLeft + 30, yBottom, yTop, mirrored)
+def add_horizontal_bar(xLeft, yBottom, yTop, mirror = False):
+    lev.add_obstacle(xLeft, xLeft + 30, yBottom, yTop, mirror)
 '''
 Outer Bounds
 '''
@@ -38,25 +38,28 @@ Top portion
 add_vertical_bar(120, width - 120, 140)
 
 
-add_vertical_bar(0, 400, 280, mirrored = True)
+add_vertical_bar(0, 400, 280, mirror = True)
 
 
-xBox = 200
-wBox = 300
-add_vertical_bar(xBox, xBox + wBox, 400, mirrored = True)
+xBox = 140
+wBox = 330
+add_vertical_bar(xBox, xBox + wBox, 430, mirror = True)
 
-add_vertical_bar(xBox, xBox + wBox, 640, mirrored = True)
+add_vertical_bar(xBox, xBox + wBox, 640, mirror = True)
 
-add_horizontal_bar(xBox, 400, 640 + 30, mirrored = True)
+add_horizontal_bar(xBox, 430, 640 + 30, mirror = True)
 
-add_vertical_bar(570, width/2 + 30, 520, mirrored = True)
+add_vertical_bar(570, width/2 + 30, 500, mirror = True)
 
 
-lev.add_box_spawn(width/2, 120, ["flame"])
+lev.add_box_spawn(width/2, 120, ["pierce", "rocket"])
+
+
+lev.add_box_spawn(xBox + wBox/4.0, 620, ["flame", "bounce"], mirror = True)
 
 #Spawns
 for i in range(4):
-    lev.add_player_spawn(width/2 + (1 if i%2 > 0 else -1) * (width/2 - 150), height - 150)
+    lev.add_player_spawn(width/2 + (1 if i%2 > 0 else -1) * (width/2 - 100), height - 100)
     #lev.add_player_spawn(width/2 + (1 if i > 0 else -1) * (width/2 - 150), 150)
 
 print "Saving complex..."

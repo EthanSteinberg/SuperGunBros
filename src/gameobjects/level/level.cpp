@@ -227,6 +227,16 @@ bool Level::colliding_with(const Rectangle& other) const {
     return false;
 }
 
+bool Level::intersects_line(double x_1, double y_1, double x_2, double y_2) const {
+    for (const Rectangle& rect : obstacles) {
+        if (rect.intersects_line(x_1, y_1, x_2, y_2)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 std::vector<Point> Level::get_player_spawn_locations() const {
     return player_spawn_locations;
 }

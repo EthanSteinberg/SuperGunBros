@@ -40,6 +40,22 @@ const char* get_image(ExplosionType type) {
     abort();
 }
 
+double get_decay_rate(ExplosionType type) {
+    switch (type) {
+        case ExplosionType::ROCKET:
+            return 0.04;
+
+        case ExplosionType::BOUNCE:
+            return 0.08;
+
+        case ExplosionType::PISTOL:
+            return 0.08;
+    }
+
+    std::cout<<"Invalid explosion type " << (int) type << std::endl;
+    abort();
+}
+
 Explosion::Explosion(double a_x, double a_y, ExplosionType a_type) : x(a_x), y(a_y), type(a_type) {
 
     if (type == ExplosionType::NONE) {
@@ -50,7 +66,7 @@ Explosion::Explosion(double a_x, double a_y, ExplosionType a_type) : x(a_x), y(a
 
 
 void Explosion::update() {
-    time -= 0.04;
+    time -= get_decay_rate(type);
 }
 
 bool Explosion::is_done() const {

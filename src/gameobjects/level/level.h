@@ -22,6 +22,8 @@ public:
 
     bool colliding_with(const Rectangle& other) const;
 
+    bool intersects_line(double x_1, double y_1, double x_2, double y_2) const;
+
     const std::vector<BoxSpawn>& get_box_spawns() const;
 
     std::vector<Point> get_player_spawn_locations() const;

@@ -16,10 +16,8 @@ struct PlayerSpawnTimer {
 };
 
 struct PierceEffectData {
-    uint64_t bullet_id;
     Point start;
     Point end;
-    bool has_end_yet;
     int ticks_left;
 };
 

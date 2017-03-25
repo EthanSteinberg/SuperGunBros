@@ -14,6 +14,8 @@ public:
 
     bool contains_point(double p_x, double p_y) const;
 
+    bool intersects_line(double x_1, double y_1, double x_2, double y_2) const;
+
     Rectangle offset(double dx, double dy) const;
 
     Point location() const;
