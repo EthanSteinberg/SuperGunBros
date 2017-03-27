@@ -364,6 +364,16 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                                     button_hold(ButtonName::B, current_inputs, prev_inputs)) &&
                                     player.state.boosting;
 
+            for (auto& box: boxes) {
+                if (box.ticks_until_active != 0) {
+                    continue;
+                }
+
+                if (box.pos.colliding_with(player.state.pos)) {
+                    box.opened = true;
+                }
+            }
+
             bool attempting_pickup = button_press(ButtonName::X, current_inputs, prev_inputs);
 
             if (attempting_pickup) {
@@ -649,6 +659,16 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                                 damage_player(other_i, 10, i);
                             }
                         }
+                        for (auto& box: boxes) {
+                            if (box.ticks_until_active != 0) {
+                                continue;
+                            }
+
+                            if (box.pos.intersects_line(start.x, start.y, end.x, end.y)) {
+                                box.opened = true;
+                            }
+                        }
+
                         pierce_effects.push_back(PierceEffectData{start, end, 10});
                     } else {
                        bullets.push_back(std::move(next_bullet));
@@ -900,15 +920,10 @@ std::unique_ptr<Gun> GameScreen::attempt_pick_up(const Rectangle& rect) {
         }
 
         if (box.pos.colliding_with(rect)) {
-            if (box.opened) {
-                result = std::move(box.weapon);
-                box = level.get_box_spawns()[box.spawn_index].get_random_spawn(gen, false);
-            } else {
-                box.opened = true;
-            }
+            result = std::move(box.weapon);
+            box = level.get_box_spawns()[box.spawn_index].get_random_spawn(gen, false);
         }
     }
 
     return result;
 }
-
