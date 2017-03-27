@@ -36,7 +36,8 @@
             "xLeft": 400,
             "xRight": 880,
             "yTop": 250,
-            "yBottom": 280
+            "yBottom": 280,
+            "pierceable": false
         },
         {
             "xLeft": 730,

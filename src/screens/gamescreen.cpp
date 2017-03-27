@@ -644,7 +644,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                         double dx = cos(next_bullet->angle);
                         double dy = sin(next_bullet->angle);
-                        double max_time = std::max(level.width * 2, level.height * 2);
+                        double max_time = level.get_first_non_pierce_intersection(next_bullet->pos.x, next_bullet->pos.y, dx, dy);
 
                         Point start = next_bullet->pos.location();
                         Point end = next_bullet->pos.offset(dx * max_time, dy * max_time).location();

@@ -2,6 +2,8 @@
 #define POINT_H_INCLUDED
 
 struct Point {
+    Point(double a_x, double a_y): x(a_x), y(a_y) {}
+
     double x;
     double y;
 

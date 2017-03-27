@@ -8,6 +8,7 @@
 #include "gameobjects/weapons/weaponbox.h"
 #include "boxspawn.h"
 #include "background.h"
+#include "obstacle.h"
 
 #include <random>
 
@@ -31,6 +32,8 @@ public:
 
     bool in_killbox(double x, double y) const;
 
+    double get_first_non_pierce_intersection(double x, double y, double dx, double dy) const;
+
     template<typename Generator>
     Point get_random_player_spawn_location(Generator& g) const {
         std::uniform_int_distribution<> box_dis(0, player_spawn_locations.size() - 1);
@@ -42,7 +45,7 @@ private:
     void render_obstacles(RenderList& list, bool show_border=true) const;
 
     Level(
-            const std::vector<Rectangle>& obstacles,
+            const std::vector<Obstacle>& obstacles,
             const std::vector<BoxSpawn>& box_spawn_locations,
             const std::vector<Point>& player_spawn_locations,
             const std::vector<Rectangle>& killboxes,
@@ -53,7 +56,7 @@ private:
     );
 
     Level(
-            const std::vector<Rectangle>& obstacles,
+            const std::vector<Obstacle>& obstacles,
             const std::vector<BoxSpawn>& box_spawn_locations,
             const std::vector<Point>& player_spawn_locations,
             const std::vector<Rectangle>& killboxes,
@@ -64,7 +67,7 @@ private:
             const TileBackground& background
     );
 
-    std::vector<Rectangle> obstacles;
+    std::vector<Obstacle> obstacles;
     std::vector<BoxSpawn> box_spawn_locations;
     std::vector<Point> player_spawn_locations;
     std::vector<Rectangle> killboxes;

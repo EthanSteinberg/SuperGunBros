@@ -62,7 +62,7 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
         mirrored = level_data["mirrored"].GetBool();
     }
 
-    std::vector<Rectangle> obstacles;
+    std::vector<Obstacle> obstacles;
 
     for (const auto& obstacle: level_data["obstacles"].GetArray()) {
         double width = obstacle["xRight"].GetDouble() - obstacle["xLeft"].GetDouble();
@@ -71,13 +71,15 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
         double x = obstacle["xRight"].GetDouble() - width/2;
         double y = obstacle["yBottom"].GetDouble() - height/2;
 
+        bool pierceable = !obstacle.HasMember("pierceable") || obstacle["pierceable"].GetBool();
+
         Rectangle rect(
             x,
             y,
             width,
             height);
 
-        obstacles.push_back(rect);
+        obstacles.push_back(Obstacle(rect, pierceable));
 
         bool is_mirrored = obstacle.HasMember("mirrored") ? obstacle["mirrored"].GetBool() : mirrored;
 
@@ -88,7 +90,7 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
                     width,
                     height);
 
-            obstacles.push_back(rect2);
+            obstacles.push_back(Obstacle(rect2, pierceable));
         }
     }
 
@@ -188,7 +190,7 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
 }
 
 Level::Level(
-    const std::vector<Rectangle>& a_obstacles,
+    const std::vector<Obstacle>& a_obstacles,
     const std::vector<BoxSpawn>& a_box_spawns,
     const std::vector<Point>& a_player_spawns,
     const std::vector<Rectangle>& a_killboxes,
@@ -209,7 +211,7 @@ Level::Level(
             //TileBackground("tile", Rectangle(-a_width, -a_height, 2*a_width, 2*a_height))){}
 
 Level::Level(
-        const std::vector<Rectangle>& a_obstacles,
+        const std::vector<Obstacle>& a_obstacles,
         const std::vector<BoxSpawn>& a_box_spawns,
         const std::vector<Point>& a_player_spawns,
         const std::vector<Rectangle>& a_killboxes,
@@ -255,15 +257,17 @@ void Level::render_thumbnail(RenderList &list) const {
 
 void Level::render_obstacles(RenderList &list, bool show_border) const {
     if (show_border) {
-        for (const Rectangle& rect : obstacles) {
-            list.add_outline("black", rect, line_width);
+        for (const Obstacle& obs : obstacles) {
+            list.add_outline("black", obs.rect, line_width);
         }
 
-        for (const Rectangle& rect : obstacles) {
-            list.add_image("darkGrey", rect.x - rect.width/2 + line_width, rect.y - rect.height/2 + line_width, rect.width - line_width * 2, rect.height - line_width * 2);
+        for (const Obstacle& obs : obstacles) {
+            const char* color = obs.pierceable ? "darkGrey" : "nonPierce";
+            list.add_image(color, obs.rect.x - obs.rect.width/2 + line_width, obs.rect.y - obs.rect.height/2 + line_width, obs.rect.width - line_width * 2, obs.rect.height - line_width * 2);
         }
     } else {
-        for (const Rectangle& rect : obstacles) {
+        for (const Obstacle& obs : obstacles) {
+            const Rectangle& rect = obs.rect;
             double x1 = std::max(0.0, rect.x - rect.width/2);
             double x2 = std::min(width, rect.x + rect.width/2);
 
@@ -271,14 +275,15 @@ void Level::render_obstacles(RenderList &list, bool show_border) const {
             double y1 = std::max(0.0, rect.y - rect.height/2);
             double y2 = std::min(height, rect.y + rect.height/2);
 
-            list.add_image("darkGrey", x1, y1, (x2 - x1), (y2 - y1));
+            const char* color = obs.pierceable ? "darkGrey" : "nonPierce";
+            list.add_image(color, x1, y1, (x2 - x1), (y2 - y1));
         }
     }
 }
 
 bool Level::colliding_with(const Rectangle& other) const {
-    for (const Rectangle& rect : obstacles) {
-        if (rect.colliding_with(other)) {
+    for (const Obstacle& obs : obstacles) {
+        if (obs.rect.colliding_with(other)) {
             return true;
         }
     }
@@ -287,8 +292,8 @@ bool Level::colliding_with(const Rectangle& other) const {
 }
 
 bool Level::intersects_line(double x_1, double y_1, double x_2, double y_2) const {
-    for (const Rectangle& rect : obstacles) {
-        if (rect.intersects_line(x_1, y_1, x_2, y_2)) {
+    for (const Obstacle& obs : obstacles) {
+        if (obs.rect.intersects_line(x_1, y_1, x_2, y_2)) {
             return true;
         }
     }
@@ -309,4 +314,27 @@ bool Level::in_killbox(double x, double y) const{
         if (k.contains_point(x, y)) return true;
     }
     return false;
+}
+
+double Level::get_first_non_pierce_intersection(double x, double y, double dx, double dy) const {
+    double min_time = NAN;
+
+    for (const Obstacle& obs: obstacles) {
+        if (!obs.pierceable) {
+            double time = obs.rect.get_ray_intersection(x, y, dx, dy);
+            if (time == time) {
+                if (min_time != min_time) {
+                    min_time = time;
+                } else {
+                    min_time = std::min(min_time, time);
+                }
+            }
+        }
+    }
+
+    if (min_time != min_time) {
+        return std::max(width * 2, height * 2);
+    }
+
+    return min_time;
 }

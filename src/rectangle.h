@@ -16,6 +16,8 @@ public:
 
     bool intersects_line(double x_1, double y_1, double x_2, double y_2) const;
 
+    double get_ray_intersection(double x, double y, double dx, double dy) const;
+
     Rectangle offset(double dx, double dy) const;
 
     Point location() const;

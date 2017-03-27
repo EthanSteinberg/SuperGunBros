@@ -25,48 +25,66 @@ Point Rectangle::location() const {
     return Point{x, y};
 }
 
-bool Rectangle::intersects_line(double x_1, double y_1, double x_2, double y_2) const {
-    // algorithm from http://stackoverflow.com/questions/99353/how-to-test-if-a-line-segment-intersects-an-axis-aligned-rectange-in-2d
+double intersect_ray(Point A, Point Aslope, Point B, Point Bslope) {
 
-    auto f = [&](double x, double y) {
-        return  (y_2-y_1)*x + (x_1-x_2)*y + (x_2*y_1-x_1*y_2);
-    };
+    double determinant = -Aslope.x * Bslope.y + Aslope.y * Bslope.x;
 
-    double values[4] = {
-        f(x - width/2, y - height/2),
-        f(x + width/2, y - height/2),
-        f(x - width/2, y + height/2),
-        f(x + width/2, y + height/2)
-    };
+    if (determinant == 0) {
+        return NAN;
+    }
 
-    bool less = values[0] < 0;
-    bool one_different = false;
+    // Now compute an intersection point using a matrix inverse
+
+    double t1 = (-Bslope.y * (B.x - A.x) + Bslope.x * (B.y - A.y)) / determinant;
+    double t2 = (-Aslope.y * (B.x - A.x) + Aslope.x * (B.y - A.y)) / determinant;
+
+    if (t1 < 0 || t1 > 1) {
+        return NAN;
+    }
+
+    if (t2 < 0) {
+        return NAN;
+    }
+
+    return t2;
+}
+
+double Rectangle::get_ray_intersection(double p_x, double p_y, double dx, double dy) const {
+    double intercepts[4] = {};
+    Point b(p_x, p_y);
+    Point b_slope(dx, dy);
+
+    intercepts[0] = intersect_ray(Point(x - width/2, y - height/2), Point( width,       0), b, b_slope);
+    intercepts[1] = intersect_ray(Point(x - width/2, y + height/2), Point(     0, -height), b, b_slope);
+    intercepts[2] = intersect_ray(Point(x + width/2, y - height/2), Point(     0,  height), b, b_slope);
+    intercepts[3] = intersect_ray(Point(x + width/2, y + height/2), Point(-width,       0), b, b_slope);
 
 
-    // printf("start (%f, %f) (%f, %f), (%f %f %f %f)\n", x_1, y_1, x_2, y_2, x, y, width, height);
+    double min_intercept = NAN;
 
     for (int i = 0; i < 4; i++) {
-        bool current = values[i] < 0;
-        // std::cout<<values[i]<<std::endl;
-
-        if (less != current) {
-            one_different = true;
+        if (intercepts[i] == intercepts[i]) {
+            if (min_intercept != min_intercept) {
+                min_intercept = intercepts[i];
+            } else {
+                min_intercept = std::min(min_intercept, intercepts[i]);
+            }
         }
     }
 
-    if (!one_different) {
+    return min_intercept;
+}
+
+bool Rectangle::intersects_line(double x_1, double y_1, double x_2, double y_2) const {
+    double t = get_ray_intersection(x_1, y_1, x_2 - x_1, y_2 - y_1);
+
+    if (t != t) {
         return false;
     }
 
-    // std::cout<<"It's a possiblity"<<std::endl;
-
-    if (x_1 > (x + width/2) && x_2 > (x + width/2)) return false;
-    if (x_1 < (x - width/2) && x_2 < (x - width/2)) return false;
-
-    if (y_1 > (y + height/2) && y_2 > (y + height/2)) return false;
-    if (y_1 < (y - height/2) && y_2 < (y - height/2)) return false;
-
-    // std::cout<<"Something broke"<<std::endl;
+    if (t > 1) {
+        return false;
+    }
 
     return true;
 }
