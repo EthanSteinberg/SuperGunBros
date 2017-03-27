@@ -290,6 +290,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             player.update();
             double accel = 0;
 
+            if (level.in_killbox(player.state.pos.x, player.state.pos.y)){
+                damage_player(i, MAX_HEALTH, player.state.ticks_fire_left > 0 ? player.state.source_fire_player : i);
+            }
+
             if (player.state.ticks_fire_left > 0) {
                 damage_player(i, FIRE_DMG_PER_TICK, player.state.source_fire_player);
 

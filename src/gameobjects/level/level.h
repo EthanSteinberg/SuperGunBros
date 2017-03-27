@@ -7,6 +7,7 @@
 #include "point.h"
 #include "gameobjects/weapons/weaponbox.h"
 #include "boxspawn.h"
+#include "background.h"
 
 #include <random>
 
@@ -22,42 +23,52 @@ public:
 
     bool colliding_with(const Rectangle& other) const;
 
-    bool intersects_line(double x_1, double y_1, double x_2, double y_2) const;
-
     const std::vector<BoxSpawn>& get_box_spawns() const;
 
     std::vector<Point> get_player_spawn_locations() const;
 
+    bool intersects_line(double x_1, double y_1, double x_2, double y_2) const;
+
+    bool in_killbox(double x, double y) const;
+
     template<typename Generator>
     Point get_random_player_spawn_location(Generator& g) const {
         std::uniform_int_distribution<> box_dis(0, player_spawn_locations.size() - 1);
-
         return player_spawn_locations[box_dis(g)];
     }
 
 private:
     static Level load_from_file(const char* filename, unsigned int index);
     void render_obstacles(RenderList& list, bool show_border=true) const;
-    void render_background(RenderList& list) const;
 
     Level(
-        const std::vector<Rectangle>& obstacles,
-        const std::vector<BoxSpawn>& box_spawn_locations,
-        const std::vector<Point>& player_spawn_locations,
-        double width,
-        double height,
-        unsigned int index,
-        const std::string& title,
-        const std::string& background = "tile"
+            const std::vector<Rectangle>& obstacles,
+            const std::vector<BoxSpawn>& box_spawn_locations,
+            const std::vector<Point>& player_spawn_locations,
+            const std::vector<Rectangle>& killboxes,
+            double width,
+            double height,
+            unsigned int index,
+            const std::string& title
+    );
+
+    Level(
+            const std::vector<Rectangle>& obstacles,
+            const std::vector<BoxSpawn>& box_spawn_locations,
+            const std::vector<Point>& player_spawn_locations,
+            const std::vector<Rectangle>& killboxes,
+            double width,
+            double height,
+            unsigned int index,
+            const std::string& title,
+            const TileBackground& background
     );
 
     std::vector<Rectangle> obstacles;
-
     std::vector<BoxSpawn> box_spawn_locations;
-
     std::vector<Point> player_spawn_locations;
-
-    std::string background_img;
+    std::vector<Rectangle> killboxes;
+    TileBackground background;
 
 public:
     double width;

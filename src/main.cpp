@@ -22,6 +22,8 @@ const bool debug_keyboard_player = true;
 const bool debug_other_player = true;
 bool other_player_start_button = true;
 
+const bool music_on = false;
+
 struct MainData {
     std::unique_ptr<Screen> current_screen;
 };
@@ -123,7 +125,9 @@ int main(void)
 {
     SoundThread sounds;
     sounds.start();
-    sounds.play_sound("../assets/sound/menu_too_loud.wav",true, 4);
+    if (music_on) {
+        sounds.play_sound("../assets/sound/menu.wav", true, 2);
+    }
 
     glfwSetErrorCallback(error_callback);
     if (!glfwInit()) {

@@ -73,7 +73,7 @@ set(SOURCE_FILES
 		src/gameobjects/weapons/weaponbox.cpp
 		src/gameobjects/weapons/explosion.cpp
 
-	)
+		src/gameobjects/level/background.cpp src/gameobjects/level/background.h)
 
 add_executable(SuperGunBros ${SOURCE_FILES} ${LIBRARY_FILES})
 

@@ -61,5 +61,13 @@
             "y": 380, 
             "x": 270
         }
+    ],
+    "killboxes": [
+        {
+            "xRight": 660,
+            "yTop": 400,
+            "yBottom": 480,
+            "xLeft": 620
+        },
     ]
 }

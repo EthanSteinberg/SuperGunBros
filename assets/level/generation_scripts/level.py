@@ -15,7 +15,8 @@ class Level():
             ("mirrored" , mirrored),
             ("obstacles" , []),
             ("boxSpawnLocations" , []),
-            ("spawnLocations", [])
+            ("spawnLocations", []),
+            ("killboxes", [])
         ])
 
     def add_obstacle(self, xl, xr, yt, yb, mirror=None):
@@ -35,6 +36,12 @@ class Level():
         if mirror is not None:
             spawn["mirrored"] = mirror
         self.dict["spawnLocations"].append(spawn)
+
+    def add_kill_box(self, xl, xr, yt, yb, mirror=None):
+        kb = {"xLeft": xl, "xRight": xr, "yTop": yt, "yBottom": yb}
+        if mirror is not None:
+            kb["mirrored"] = mirror
+        self.dict["killboxes"].append(kb)
 
     def save(self, filename, note = None):
         with io.open(filename, 'w', encoding='utf-8') as f:
