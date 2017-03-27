@@ -6,27 +6,30 @@
 #define SUPERGUNBROS_BACKGROUND_H_H
 
 #include "gameobjects/gameobject.h"
+#include <memory>
 
-class Background : public GameObject{
+class Background : public GameObject {
 protected:
     std::string img;
     Rectangle r;
 public:
     Background(const std::string image, Rectangle rect);
+    virtual ~Background() {}
+
     virtual void render(RenderList& list) const;
     virtual void update();
 };
-//
-//class CompoundBackground : public Background{
-//private:
-//    std::vector<Background> bgs;
-//public:
-//    CompoundBackground(std::vector<Background>& backgrounds);
-//    void render(RenderList& list) const override;
-//    void update() override;
-//};
 
-class TileBackground : public Background{
+class CompoundBackground : public GameObject {
+private:
+   std::vector<std::unique_ptr<GameObject>> bgs;
+public:
+   CompoundBackground(std::vector<std::unique_ptr<GameObject>> backgrounds);
+   void render(RenderList& list) const override;
+   void update() override;
+};
+
+class TileBackground : public Background {
 public:
     TileBackground(std::string image, Rectangle rect);
     void render(RenderList& list) const override;

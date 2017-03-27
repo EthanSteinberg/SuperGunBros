@@ -207,7 +207,7 @@ Level::Level(
             a_height,
             a_index,
             a_title,
-            TileBackground("tile", Rectangle(a_width/2, a_height/2, 2*a_width, 2*a_height))){}
+            std::make_shared<TileBackground>("tile", Rectangle(a_width/2, a_height/2, 2*a_width, 2*a_height))){}
             //TileBackground("tile", Rectangle(-a_width, -a_height, 2*a_width, 2*a_height))){}
 
 Level::Level(
@@ -219,7 +219,7 @@ Level::Level(
         double a_height,
         unsigned int a_index,
         const std::string& a_title,
-        const TileBackground& bg):
+        const std::shared_ptr<GameObject> bg):
         obstacles(a_obstacles),
         box_spawn_locations(a_box_spawns),
         player_spawn_locations(a_player_spawns),
@@ -232,7 +232,7 @@ Level::Level(
 
 void Level::render(RenderList& list) const {
     try {
-        background.render(list);
+        background->render(list);
     } catch(std::exception e) {
         printf(e.what());
     }
