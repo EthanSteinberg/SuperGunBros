@@ -25,7 +25,7 @@ class Level():
             obst["mirrored"] = mirror
         self.dict["obstacles"].append(obst)
 
-    def add_box_spawn(self, x, y, weapons, isd=15, rd=30, mirror=None):
+    def add_box_spawn(self, x, y, weapons, isd=600, rd=600, mirror=None):
         box = {"x" : x, "y": y, "weapons" : weapons, "initialSpawnDelay": isd, "respawnDelay": rd}
         if mirror is not None:
             box["mirrored"] = mirror

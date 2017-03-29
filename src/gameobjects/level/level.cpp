@@ -19,7 +19,8 @@ const char* const level_names[] = {
         "../assets/level/shafts.json",
         "../assets/level/close_quarters.json",
         //"../assets/level/complex.json"
-        "../assets/level/the_gap.json"
+        "../assets/level/the_gap.json",
+        "../assets/level/bnb.json"
 };
 
 const double line_width = 4;

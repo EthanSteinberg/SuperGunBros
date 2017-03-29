@@ -22,7 +22,7 @@ const int SCORE_TO_WIN = 10;
 
 const int FIRE_LENGTH = 200;
 
-const double FIRE_TRANSMIT_PROBABILITY = 0.1;
+const double FIRE_TRANSMIT_PROBABILITY = 0.01;
 
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level), camera(level.width, level.height) {
 
@@ -281,8 +281,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 player.state.pos.y = spawn_location.y;
 
                 player.state.ticks_fire_left = 0;
-
-                player.set_gun(create_gun("pistol"));
 
                 player.state.invincibility_ticks_left = DEATH_TIME;
             }
@@ -848,6 +846,12 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
     if (player.state.health <= 0 && !player.state.is_dead) {
         player.state.is_dead = true;
+
+        //TODO: dropped weapons
+//        WeaponBox b = WeaponBox()
+//        boxes.push_back();
+
+        player.set_gun(create_gun("pistol"));
 
         auto& shooter = players[shooter_index];
 

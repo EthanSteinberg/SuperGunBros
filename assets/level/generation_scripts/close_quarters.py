@@ -43,16 +43,17 @@ add_vertical_bar(0, 400, 280, mirror = True)
 
 xBox = 140
 wBox = 330
-add_vertical_bar(xBox, xBox + wBox, 430, mirror = True)
+add_vertical_bar(xBox, xBox + wBox - 15, 430, mirror = True)
 
-add_vertical_bar(xBox, xBox + wBox, 640, mirror = True)
+add_vertical_bar(xBox, xBox + wBox + 15, 640, mirror = True)
 
-add_horizontal_bar(xBox, 430, 640 + 30, mirror = True)
+add_horizontal_bar(xBox, 440, 640 + 30, mirror = True)
 
-add_vertical_bar(570, width/2 + 30, 500, mirror = True)
+add_vertical_bar(width/2 - 75, width/2 + 75, 520, mirror = True)
 
 
-lev.add_box_spawn(width/2, 120, ["pierce", "rocket"])
+lev.add_box_spawn(width/2, 120, ["rocket"])
+lev.add_box_spawn(width/2, 440, ["pierce"])
 
 
 lev.add_box_spawn(xBox + wBox/4.0, 620, ["flame", "bounce"], mirror = True)

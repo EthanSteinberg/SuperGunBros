@@ -28,7 +28,7 @@ bool FlameBullet::on_no_collision() {
 
 double FlameBullet::get_velocity() const {
     double fraction = std::pow(1 - (ticks_alive / MAX_LIFE), 2.0);
-    return 4 * fraction + 6;
+    return 6 * fraction + 8;
 }
 
 const char* FlameBullet::bullet_image_name() const {

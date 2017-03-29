@@ -200,8 +200,8 @@
             "weapons": [
                 "pierce"
             ], 
-            "respawnDelay": 30, 
-            "initialSpawnDelay": 15
+            "respawnDelay": 600, 
+            "initialSpawnDelay": 600
         }, 
         {
             "y": 1120, 
@@ -209,8 +209,8 @@
             "weapons": [
                 "rocket"
             ], 
-            "respawnDelay": 30, 
-            "initialSpawnDelay": 15
+            "respawnDelay": 600, 
+            "initialSpawnDelay": 600
         }, 
         {
             "y": 1740, 
@@ -218,8 +218,8 @@
             "weapons": [
                 "bounce"
             ], 
-            "respawnDelay": 30, 
-            "initialSpawnDelay": 15
+            "respawnDelay": 600, 
+            "initialSpawnDelay": 600
         }, 
         {
             "y": 2360, 
@@ -227,8 +227,8 @@
             "weapons": [
                 "flame"
             ], 
-            "respawnDelay": 30, 
-            "initialSpawnDelay": 15
+            "respawnDelay": 600, 
+            "initialSpawnDelay": 600
         }
     ], 
     "spawnLocations": [
@@ -248,6 +248,6 @@
             "y": 3099, 
             "x": 5610
         }
-    ],
+    ], 
     "killboxes": []
 }
