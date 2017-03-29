@@ -13,19 +13,19 @@ void Background::render(RenderList& list) const {
 
 void Background::update(){}
 
-//CompoundBackground::CompoundBackground(std::vector<Background>& backgrounds) : bgs(backgrounds){}
-//
-//void CompoundBackground::render(RenderList& list) const{
-//    for (auto& bg : bgs) {
-//        bg.render(list);
-//    }
-//}
-//
-//void CompoundBackground::update(){
-//    for (auto& bg : bgs) {
-//            bg.update();
-//    }
-//}
+CompoundBackground::CompoundBackground(std::vector<std::unique_ptr<GameObject>> backgrounds) : bgs(std::move(backgrounds)){}
+
+void CompoundBackground::render(RenderList& list) const{
+   for (auto& bg : bgs) {
+       bg->render(list);
+   }
+}
+
+void CompoundBackground::update(){
+   for (auto& bg : bgs) {
+        bg->update();
+   }
+}
 
 TileBackground::TileBackground(std::string image, Rectangle rect) : Background(image, rect){}
 
@@ -40,4 +40,5 @@ void TileBackground::render(RenderList& list) const{
         }
     }
 }
+
 //TODO: animated backgrounds (the only reason we dispatch all of the updates in compound background)

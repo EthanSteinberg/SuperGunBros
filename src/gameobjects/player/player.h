@@ -116,6 +116,7 @@ struct PlayerState {
 class Player : public GameObject {
 public:
     Player(double start_x, double start_y, PlayerInfo info);
+
     void render(RenderList& list) const;
     void render_crown(RenderList& list) const;
     void update();

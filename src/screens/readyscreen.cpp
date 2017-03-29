@@ -69,7 +69,7 @@ void ReadyScreen::render(RenderList& list) const {
 			list.pop();
 			break;
 		}
-		Level lev = loaded_levels[level_index];
+		const Level& lev = loaded_levels[level_index];
 
 		const double thumbnail_scale = 0.14;
 

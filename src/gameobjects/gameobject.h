@@ -9,6 +9,9 @@
 
 
 class GameObject {
+public:
+    virtual ~GameObject() {}
+
     virtual void render(RenderList& list) const = 0;
     virtual void update() = 0;
     //virtual bool collides_with(GameObject other) const = 0;

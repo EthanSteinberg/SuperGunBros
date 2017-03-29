@@ -221,16 +221,10 @@
         "x": 1791,
         "y": 736
     },
-    "gold": {
-        "sizex": 1,
-        "sizey": 1,
-        "x": 2043,
-        "y": 26
-    },
     "green": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2041,
+        "x": 2043,
         "y": 26
     },
     "green-head": {
@@ -255,7 +249,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2041,
-        "y": 28
+        "y": 26
     },
     "hand": {
         "sizex": 10,
@@ -334,6 +328,12 @@
         "sizey": 27,
         "x": 1630,
         "y": 1006
+    },
+    "nonPierce": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2041,
+        "y": 28
     },
     "not-ready-text": {
         "sizex": 376,
