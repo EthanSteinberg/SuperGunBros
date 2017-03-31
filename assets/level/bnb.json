@@ -6,102 +6,102 @@
     "mirrored": true, 
     "obstacles": [
         {
-            "xRight": 300, 
-            "yTop": 275, 
-            "yBottom": 325, 
-            "xLeft": 80
+            "xRight": 415, 
+            "yTop": 575, 
+            "yBottom": 625, 
+            "xLeft": 195
         }, 
         {
-            "xRight": 720, 
-            "yTop": 475, 
-            "yBottom": 525, 
-            "xLeft": 500
+            "xRight": 805, 
+            "yTop": 725, 
+            "yBottom": 775, 
+            "xLeft": 585
         }, 
         {
-            "xRight": 300, 
-            "yTop": 675, 
-            "yBottom": 725, 
-            "xLeft": 80
-        }, 
-        {
-            "xRight": 720, 
+            "xRight": 415, 
             "yTop": 875, 
             "yBottom": 925, 
-            "xLeft": 500
+            "xLeft": 195
         }, 
         {
-            "xRight": 300, 
-            "yTop": 1075, 
-            "yBottom": 1125, 
-            "xLeft": 80
+            "xRight": 805, 
+            "yTop": 1025, 
+            "yBottom": 1075, 
+            "xLeft": 585
         }, 
         {
-            "xRight": 720, 
-            "yTop": 1275, 
-            "yBottom": 1325, 
-            "xLeft": 500
+            "xRight": 415, 
+            "yTop": 1175, 
+            "yBottom": 1225, 
+            "xLeft": 195
         }, 
         {
-            "xRight": 300, 
+            "xRight": 805, 
+            "yTop": 1325, 
+            "yBottom": 1375, 
+            "xLeft": 585
+        }, 
+        {
+            "xRight": 415, 
             "yTop": 1475, 
             "yBottom": 1525, 
-            "xLeft": 80
+            "xLeft": 195
         }, 
         {
-            "xRight": 720, 
-            "yTop": 1675, 
-            "yBottom": 1725, 
-            "xLeft": 500
+            "xRight": 805, 
+            "yTop": 1625, 
+            "yBottom": 1675, 
+            "xLeft": 585
         }, 
         {
-            "yTop": 1435, 
+            "yTop": 1335, 
             "pierceable": false, 
-            "xLeft": 1070, 
-            "xRight": 2770, 
-            "yBottom": 1485, 
+            "xLeft": 910, 
+            "xRight": 2930, 
+            "yBottom": 1385, 
             "mirrored": false
         }, 
         {
-            "xRight": 1120, 
-            "yTop": 1835, 
-            "yBottom": 1885, 
-            "xLeft": 920
+            "xRight": 1110, 
+            "yTop": 1735, 
+            "yBottom": 1785, 
+            "xLeft": 910
         }, 
         {
-            "xRight": 1570, 
-            "yTop": 1835, 
-            "yBottom": 1885, 
-            "xLeft": 1370
+            "xRight": 1560, 
+            "yTop": 1735, 
+            "yBottom": 1785, 
+            "xLeft": 1360
         }, 
         {
-            "xRight": 2020, 
-            "yTop": 1835, 
-            "yBottom": 1885, 
-            "xLeft": 1820
+            "xRight": 2010, 
+            "yTop": 1735, 
+            "yBottom": 1785, 
+            "xLeft": 1810
         }, 
         {
-            "xRight": 895, 
-            "yTop": 0, 
-            "yBottom": 1300, 
-            "xLeft": 845
+            "xRight": 965, 
+            "yTop": 300, 
+            "yBottom": 1050, 
+            "xLeft": 915
         }, 
         {
-            "xRight": -45, 
-            "yTop": 0, 
-            "yBottom": 1300, 
-            "xLeft": -95
+            "xRight": 85, 
+            "yTop": 300, 
+            "yBottom": 2400, 
+            "xLeft": 35
         }, 
         {
-            "xRight": 870, 
-            "yTop": 0, 
-            "yBottom": 50, 
-            "xLeft": -70
+            "xRight": 940, 
+            "yTop": 300, 
+            "yBottom": 350, 
+            "xLeft": 60
         }
     ], 
     "boxSpawnLocations": [
         {
-            "y": 240, 
-            "x": 190, 
+            "y": 540, 
+            "x": 305, 
             "weapons": [
                 "pierce"
             ], 
@@ -115,7 +115,7 @@
             "weapons": [
                 "rocket"
             ], 
-            "y": 1400, 
+            "y": 1300, 
             "x": 1920
         }, 
         {
@@ -125,18 +125,18 @@
             "weapons": [
                 "bounce"
             ], 
-            "y": 1800, 
+            "y": 1700, 
             "x": 1920
         }
     ], 
     "spawnLocations": [
         {
-            "y": 1780, 
-            "x": 1020
+            "y": 1680, 
+            "x": 1010
         }, 
         {
-            "y": 1380, 
-            "x": 2405
+            "y": 1280, 
+            "x": 2497
         }
     ], 
     "killboxes": [

@@ -37,13 +37,13 @@ def build_wall(x, y, h, mirror=None, pierceable=None):
 
 
 #Towers
-TOWER_X = 400
-TOWER_H = 300
+TOWER_X = 500
+TOWER_H = 600
 
 TOWER_FLOOR_W = 220
 
-TOWER_Y_SEP = 200
-TOWER_X_SEP = 200
+TOWER_Y_SEP = 150
+TOWER_X_SEP = 170
 
 TOWER_FLOORS = 8
 
@@ -57,15 +57,15 @@ build_tower(TOWER_X, TOWER_H, TOWER_FLOOR_W, TOWER_X_SEP, TOWER_Y_SEP, TOWER_FLO
 
 
 #Center
-BUNKER_W = 1700
-BUNKER_H = height - 700
+BUNKER_W = 2020
+BUNKER_H = height - 800
 build_plat(width/2, BUNKER_H, BUNKER_W, mirror=False, pierceable=False)
 
 #Underground
 NUM_UNDG = 6
 UNDG_HEIGHT = BUNKER_H + 400
 UNDG_PLAT_W = 200
-UNDG_LENGTH = BUNKER_W + 300
+UNDG_LENGTH = BUNKER_W
 UNDG_GAP = 450
 for i in range(NUM_UNDG/2):
     build_plat(width/2 - UNDG_LENGTH/2 + i * UNDG_GAP + UNDG_PLAT_W/2, UNDG_HEIGHT, UNDG_PLAT_W)
@@ -73,12 +73,14 @@ for i in range(NUM_UNDG/2):
 
 #WALLS?
 WALL_X = TOWER_X + TOWER_X_SEP + TOWER_FLOOR_W + 50
-WALL_H = TOWER_H + (TOWER_FLOORS/2 + 1) * TOWER_Y_SEP
-WALL_Y = TOWER_H + WALL_H/2 - 300
+INNER_WALL_H = TOWER_H + (TOWER_FLOORS/2 - 3) * TOWER_Y_SEP
+OUTER_WALL_H = TOWER_H + (TOWER_FLOORS + 2) * TOWER_Y_SEP
+INNER_WALL_Y = TOWER_H + INNER_WALL_H/2 - 300
+OUTER_WALL_Y = TOWER_H + OUTER_WALL_H/2 - 300
 
-build_wall(WALL_X, WALL_Y, WALL_H)
-build_wall(2*TOWER_X - WALL_X, WALL_Y, WALL_H)
-build_plat(TOWER_X, WALL_Y - WALL_H/2 + PLAT_TH/2, (WALL_X - TOWER_X) * 2)
+build_wall(WALL_X, INNER_WALL_Y, INNER_WALL_H)
+build_wall(2*TOWER_X - WALL_X, OUTER_WALL_Y, OUTER_WALL_H)
+build_plat(TOWER_X, INNER_WALL_Y - INNER_WALL_H/2 + PLAT_TH/2, (WALL_X - TOWER_X) * 2)
 
 
 '''
