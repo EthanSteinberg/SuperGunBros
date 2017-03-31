@@ -812,7 +812,9 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             }
         }
 
-        bool left_map = (bullet->pos.x < 0 || bullet->pos.x > level.width || bullet->pos.y < 0 || bullet->pos.y > level.height);
+        //Slap a margin on that for good measure, it was looking weird on borderless maps
+        int MAP_MARGIN = 500;
+        bool left_map = (bullet->pos.x < 0 - MAP_MARGIN || bullet->pos.x > level.width + MAP_MARGIN || bullet->pos.y < 0 - MAP_MARGIN|| bullet->pos.y > level.height + MAP_MARGIN);
 
         if (!hit_something) {
             is_dead = bullet->on_no_collision();

@@ -1,5 +1,8 @@
 import level
 
+def build_box(lev, x, y, w, h, mirror=None, pierceable=None):
+    lev.add_obstacle(x - w/2, x + w/2, y - h/2, y + h/2, mirror=mirror, pierceable=pierceable)
+
 def build_hotel(lev):
 
     width = lev.width

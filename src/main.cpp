@@ -22,7 +22,7 @@ const bool debug_keyboard_player = true;
 const bool debug_other_player = true;
 bool other_player_start_button = true;
 
-const bool music_on = true;
+const bool music_on = false;
 
 struct MainData {
     std::unique_ptr<Screen> current_screen;

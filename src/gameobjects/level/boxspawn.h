@@ -19,6 +19,8 @@ public:
         return WeaponBox(spawn_location.x, spawn_location.y, create_gun(weapons_to_choose[weapon_dist(g)]), ticks, index);
     }
 
+    Point get_location() const;
+
 private:
 
     Point spawn_location;

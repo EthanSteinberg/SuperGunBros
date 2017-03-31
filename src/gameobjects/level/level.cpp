@@ -220,7 +220,7 @@ Level::Level(
         double a_height,
         unsigned int a_index,
         const std::string& a_title,
-        const std::shared_ptr<GameObject> bg):
+        const std::shared_ptr<Background> bg):
         obstacles(a_obstacles),
         box_spawn_locations(a_box_spawns),
         player_spawn_locations(a_player_spawns),
@@ -232,11 +232,7 @@ Level::Level(
         title(a_title){}
 
 void Level::render(RenderList& list) const {
-    try {
-        background->render(list);
-    } catch(std::exception e) {
-        printf(e.what());
-    }
+    background->render(list);
     render_obstacles(list);
 
     if (level_build_debug) {
@@ -247,6 +243,10 @@ void Level::render(RenderList& list) const {
 
         for (auto &spawn : player_spawn_locations) {
             list.add_rect("blue", Rectangle(spawn.x, spawn.y, 10, 10));
+        }
+
+        for (auto &box : box_spawn_locations){
+            list.add_rect("green", Rectangle(box.get_location().x, box.get_location().y, 10, 10));
         }
     }
 }

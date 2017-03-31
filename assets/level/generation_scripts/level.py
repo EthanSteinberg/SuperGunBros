@@ -19,10 +19,12 @@ class Level():
             ("killboxes", [])
         ])
 
-    def add_obstacle(self, xl, xr, yt, yb, mirror=None):
+    def add_obstacle(self, xl, xr, yt, yb, mirror=None, pierceable=None):
         obst = {"xLeft": xl, "xRight": xr, "yTop": yt, "yBottom": yb}
         if mirror is not None:
             obst["mirrored"] = mirror
+        if pierceable is not None:
+            obst["pierceable"] = pierceable
         self.dict["obstacles"].append(obst)
 
     def add_box_spawn(self, x, y, weapons, isd=600, rd=600, mirror=None):
