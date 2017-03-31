@@ -20,6 +20,8 @@ public:
     double grip2_x(double gun_angle) const;
     double grip2_y(double gun_angle) const;
 
+    Point get_barrel_position(double gun_angle) const;
+
     virtual const char* shoot_sound() {
         return "../assets/sound/shoot.wav";
     }

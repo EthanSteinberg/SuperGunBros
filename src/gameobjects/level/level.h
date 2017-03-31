@@ -33,6 +33,7 @@ public:
     bool in_killbox(double x, double y) const;
 
     double get_first_non_pierce_intersection(double x, double y, double dx, double dy) const;
+    double get_first_intersection(double x, double y, double dx, double dy) const;
 
     std::vector<std::pair<Point, Point>> get_intersections(double x_1, double y_1, double x_2, double y_2) const;
 

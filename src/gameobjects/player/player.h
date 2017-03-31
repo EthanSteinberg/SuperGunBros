@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+class Level;
+
 #define MAX_HEALTH 40.0
 
 const int player_width = (int)(90 * ASSET_SCALE);
@@ -132,7 +134,12 @@ public:
     PlayerState state;
 
     void draw_health(RenderList &list) const;
+
+    void draw_laser(RenderList& list, const Level& level) const;
+
 private:
+    Point get_barrel_position() const;
+
     AnimationState get_interpolated_frame() const;
 
     double get_gun_angle(double mouseX, double mouseY) const;

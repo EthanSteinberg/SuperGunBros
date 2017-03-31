@@ -8,6 +8,10 @@ struct Point {
     double y;
 
     double dist(const Point& other);
+
+    Point offset(Point other) const {
+        return Point(x + other.x, y + other.y);
+    }
 };
 
 #endif

@@ -340,6 +340,27 @@ double Level::get_first_non_pierce_intersection(double x, double y, double dx, d
     return min_time;
 }
 
+double Level::get_first_intersection(double x, double y, double dx, double dy) const {
+    double min_time = NAN;
+
+    for (const Obstacle& obs: obstacles) {
+        double time = obs.rect.get_ray_intersection(x, y, dx, dy);
+        if (time == time) {
+            if (min_time != min_time) {
+                min_time = time;
+            } else {
+                min_time = std::min(min_time, time);
+            }
+        }
+    }
+
+    if (min_time != min_time) {
+        return std::max(width * 2, height * 2);
+    }
+
+    return min_time;
+}
+
 std::vector<std::pair<Point, Point>> Level::get_intersections(double x_1, double y_1, double x_2, double y_2) const {
     std::vector<std::pair<Point, Point>> results;
 

@@ -2,6 +2,7 @@
 #include "player.h"
 
 #include <cmath>
+#include "gameobjects/level/level.h"
 
 
 inline double dist_sq(double x1, double y1, double x2, double y2) {
@@ -105,6 +106,30 @@ void Player::update(){
 
 bool Player::is_facing_right() const {
     return fabs(state.gun_angle) < M_PI / 2;
+}
+
+void Player::draw_laser(RenderList& list, const Level& level) const {
+    double dx = cos(state.gun_angle);
+    double dy = sin(state.gun_angle);
+    Point pos = get_barrel_position();
+
+    double x = pos.x;
+    double y = pos.y;
+
+    double time = level.get_first_intersection(x, y, dx, dy);
+
+    list.add_line("red", x, y, x + dx * time, y + dy * time);
+}
+
+Point Player::get_barrel_position() const {
+    double scaled_gun_angle = is_facing_right() ? state.gun_angle : (M_PI - state.gun_angle);
+    Point pos = state.gun->get_barrel_position(scaled_gun_angle);
+
+    if (!is_facing_right()) {
+        pos.x *= -1;
+    }
+
+    return pos.offset(state.pos.location());
 }
 
 std::vector<std::unique_ptr<Bullet>> Player::spawn_bullets() const {

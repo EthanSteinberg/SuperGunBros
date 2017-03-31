@@ -44,6 +44,14 @@ double Gun::grip2_y(double gun_angle) const {
    return gun_rotation_y() + sin(gun_angle) * grip2_dx() + cos(gun_angle) * grip2_dy();
 }
 
+Point Gun::get_barrel_position(double gun_angle) const {
+
+    double x = (gun_rotation_x() + cos(gun_angle) * (gun_offset_x() + barrel_offset_x() + barrel_length()) - sin(gun_angle) * (gun_offset_y() + barrel_offset_y()));
+    double y = (gun_rotation_y() + sin(gun_angle) * (gun_offset_x() + barrel_offset_x() + barrel_length()) + cos(gun_angle) * (gun_offset_y() + barrel_offset_y()));
+
+    return Point(x, y);
+}
+
 std::vector<std::unique_ptr<Bullet>> Gun::spawn_bullets(double gun_angle) const {
 
     std::vector<std::unique_ptr<Bullet>> results;
