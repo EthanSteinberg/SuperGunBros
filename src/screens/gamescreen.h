@@ -19,6 +19,7 @@ struct PierceEffectData {
     Point start;
     Point end;
     int ticks_left;
+    bool is_red;
 };
 
 class GameScreen : public Screen {

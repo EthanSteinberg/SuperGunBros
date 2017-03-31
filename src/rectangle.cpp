@@ -49,7 +49,7 @@ double intersect_ray(Point A, Point Aslope, Point B, Point Bslope) {
     return t2;
 }
 
-double Rectangle::get_ray_intersection(double p_x, double p_y, double dx, double dy) const {
+std::pair<double, double> Rectangle::get_total_ray_intersection(double p_x, double p_y, double dx, double dy) const {
     double intercepts[4] = {};
     Point b(p_x, p_y);
     Point b_slope(dx, dy);
@@ -59,20 +59,30 @@ double Rectangle::get_ray_intersection(double p_x, double p_y, double dx, double
     intercepts[2] = intersect_ray(Point(x + width/2, y - height/2), Point(     0,  height), b, b_slope);
     intercepts[3] = intersect_ray(Point(x + width/2, y + height/2), Point(-width,       0), b, b_slope);
 
+    double min_time = NAN;
+    double max_time = NAN;
 
-    double min_intercept = NAN;
-
-    for (int i = 0; i < 4; i++) {
-        if (intercepts[i] == intercepts[i]) {
-            if (min_intercept != min_intercept) {
-                min_intercept = intercepts[i];
+    for (double element: intercepts) {
+        if (!std::isnan(element)) {
+            if (std::isnan(min_time)) {
+                min_time = element;
             } else {
-                min_intercept = std::min(min_intercept, intercepts[i]);
+                min_time = std::min(min_time, element);
+            }
+
+            if (std::isnan(max_time)) {
+                max_time = element;
+            } else {
+                max_time = std::max(max_time, element);
             }
         }
     }
 
-    return min_intercept;
+    return std::make_pair(min_time, max_time);
+}
+
+double Rectangle::get_ray_intersection(double p_x, double p_y, double dx, double dy) const {
+    return get_total_ray_intersection(p_x, p_y, dx, dy).first;
 }
 
 bool Rectangle::intersects_line(double x_1, double y_1, double x_2, double y_2) const {
