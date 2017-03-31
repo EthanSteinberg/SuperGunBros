@@ -111,6 +111,8 @@ struct PlayerState {
     const char* current_player_shooting_sound_filename = nullptr;
 
     int ticks_since_last_score_update = -1;
+
+    int last_damager = -1;
 };
 
 class Player : public GameObject {

@@ -18,7 +18,7 @@
 #define WALL_GRACE 5
 #define GROUND_GRACE 5
 
-const int SCORE_TO_WIN = 10;
+const int SCORE_TO_WIN = 25;
 
 const int FIRE_LENGTH = 200;
 
@@ -283,13 +283,14 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 player.state.ticks_fire_left = 0;
 
                 player.state.invincibility_ticks_left = DEATH_TIME;
+                player.state.last_damager = -1;
             }
         } else {
             player.update();
             double accel = 0;
 
             if (level.in_killbox(player.state.pos.x, player.state.pos.y)){
-                damage_player(i, MAX_HEALTH, player.state.ticks_fire_left > 0 ? player.state.source_fire_player : i);
+                damage_player(i, MAX_HEALTH, i);
             }
 
             if (player.state.ticks_fire_left > 0) {
@@ -864,6 +865,10 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
         return;
     }
 
+    if (shooter_index != player_index) {
+        player.state.last_damager = shooter_index;
+    }
+
     player.state.health -= damage;
 
     if (player.state.health <= 0 && !player.state.is_dead) {
@@ -875,19 +880,19 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
 
         player.set_gun(create_gun("pistol"));
 
-        auto& shooter = players[shooter_index];
-
-        if (shooter_index != player_index) {
-            shooter.state.score += 2;
-            shooter.state.ticks_since_last_score_update = 0;
-        } else {
-        }
-
         player.state.score = std::max(0, player.state.score - 1);
 
-        if (shooter.state.score >= SCORE_TO_WIN) {
-            game_over = true;
-        } else {
+        if (player.state.last_damager != -1) {
+            auto& shooter = players[player.state.last_damager];
+            shooter.state.score += 5;
+            shooter.state.ticks_since_last_score_update = 0;
+
+            if (shooter.state.score >= SCORE_TO_WIN) {
+                game_over = true;
+            }
+        }
+
+        if (!game_over) {
             player.state.ticks_until_spawn = 130;
         }
     }
