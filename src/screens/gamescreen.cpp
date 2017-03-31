@@ -89,7 +89,8 @@ void GameScreen::render(RenderList& list) const {
 	}
 
     for (const auto& effect: pierce_effects) {
-        list.add_line("white", effect.start.x, effect.start.y, effect.end.x, effect.end.y);
+        const char* color = effect.is_red ? "orange" : "white";
+        list.add_line(color, effect.start.x, effect.start.y, effect.end.x, effect.end.y);
     }
 
     list.pop();
@@ -668,7 +669,12 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                             }
                         }
 
-                        pierce_effects.push_back(PierceEffectData{start, end, 10});
+                        for (std::pair<Point, Point>& effect: level.get_intersections(start.x, start.y, end.x, end.y)) {
+                            pierce_effects.push_back(PierceEffectData{effect.first, effect.second, 20, true});
+                        }
+
+                        pierce_effects.push_back(PierceEffectData{start, end, 10, false});
+
                     } else {
                        bullets.push_back(std::move(next_bullet));
                    }

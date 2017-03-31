@@ -339,3 +339,21 @@ double Level::get_first_non_pierce_intersection(double x, double y, double dx, d
 
     return min_time;
 }
+
+std::vector<std::pair<Point, Point>> Level::get_intersections(double x_1, double y_1, double x_2, double y_2) const {
+    std::vector<std::pair<Point, Point>> results;
+
+    for (const Obstacle& obs: obstacles) {
+        std::pair<double, double> times = obs.rect.get_total_ray_intersection(x_1, y_1, x_2 - x_1, y_2 - y_1);
+        if (times.first < 1) {
+            double first_time = times.first;
+            double second_time = std::min(1.0, times.second);
+            results.push_back(std::make_pair(
+                Point(x_1 + (x_2 - x_1) * first_time, y_1 + (y_2 - y_1) * first_time),
+                Point(x_1 + (x_2 - x_1) * second_time, y_1 + (y_2 - y_1) * second_time)
+                ));
+        }
+    }
+
+    return results;
+}

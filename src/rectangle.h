@@ -2,6 +2,7 @@
 #define RECTANGLE_H_INCLUDED
 
 #include "point.h"
+#include <utility>
 
 class Rectangle {
 public:
@@ -16,6 +17,7 @@ public:
 
     bool intersects_line(double x_1, double y_1, double x_2, double y_2) const;
 
+    std::pair<double, double> get_total_ray_intersection(double x, double y, double dx, double dy) const;
     double get_ray_intersection(double x, double y, double dx, double dy) const;
 
     Rectangle offset(double dx, double dy) const;
