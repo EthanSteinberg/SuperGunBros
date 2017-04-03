@@ -100,5 +100,8 @@ lev.add_box_spawn(TOWER_X - TOWER_X_SEP/2 - TOWER_FLOOR_W/2, TOWER_H - 60, ["pie
 lev.add_box_spawn(width/2, BUNKER_H - 60, ["rocket"], mirror=False)
 lev.add_box_spawn(width/2, UNDG_HEIGHT - 60, ["bounce"], mirror=False)
 
+
+lev.add_box_spawn(TOWER_X - TOWER_X_SEP/2 - TOWER_FLOOR_W/2, TOWER_H + TOWER_Y_SEP * 3.6, ["bounce"], mirror=True)
+
 print "Saving complex..."
 lev.save("../bnb.json", note = note)

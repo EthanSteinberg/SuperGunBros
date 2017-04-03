@@ -337,12 +337,6 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                 double index = std::round(player.state.gun_angle / rads_per_stop);
 
                 player.state.gun_angle = rads_per_stop * index;
-            } else {
-                if (std::abs(player.state.gun_angle) < 10 * M_PI/180.0) {
-                    player.state.gun_angle = 0;
-                } else if ((M_PI - std::abs(player.state.gun_angle) < 10 * M_PI/180.0)) {
-                    player.state.gun_angle = M_PI;
-                }
             }
 
             if (button_press(ButtonName::R3, current_inputs, prev_inputs)) {

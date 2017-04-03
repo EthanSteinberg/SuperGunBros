@@ -127,6 +127,16 @@
             ], 
             "y": 1700, 
             "x": 1920
+        }, 
+        {
+            "respawnDelay": 600, 
+            "mirrored": true, 
+            "initialSpawnDelay": 600, 
+            "weapons": [
+                "bounce"
+            ], 
+            "y": 1140.0, 
+            "x": 305
         }
     ], 
     "spawnLocations": [
