@@ -137,14 +137,13 @@ public:
 
     void draw_laser(RenderList& list, const Level& level) const;
 
+    bool is_facing_right() const;
 private:
     Point get_barrel_position() const;
 
     AnimationState get_interpolated_frame() const;
 
     double get_gun_angle(double mouseX, double mouseY) const;
-
-    bool is_facing_right() const;
     std::vector<AnimationState> frames;
     double current_time;
 

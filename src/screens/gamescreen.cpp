@@ -352,6 +352,8 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             bool pull_trigger = button_press(ButtonName::RT, current_inputs, prev_inputs);
             bool holding_trigger = button_hold(ButtonName::RT, current_inputs, prev_inputs);
 
+            bool press_punch = button_press(ButtonName::RB, current_inputs, prev_inputs);
+
             bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs) ||
                                     button_press(ButtonName::B, current_inputs, prev_inputs);
             bool continuing_boost = (button_hold(ButtonName::LB, current_inputs, prev_inputs) ||
@@ -686,9 +688,12 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
             const char* desired_shooting_sound = nullptr;
 
-            if (pull_trigger || holding_trigger) {
+            if (pull_trigger || holding_trigger) { 
                 desired_shooting_sound = player.state.gun->holding_shoot_sound();
             }
+//            } else if (press_punch) {
+//                for (player& : players)
+//            }
 
             if (desired_shooting_sound != player.state.current_player_shooting_sound_filename) {
                 if (player.state.current_player_shooting_sound_filename != nullptr) {
@@ -701,6 +706,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
                 player.state.current_player_shooting_sound_filename = desired_shooting_sound;
             }
+
         }
     }
 
