@@ -6,102 +6,99 @@
     "mirrored": true, 
     "obstacles": [
         {
-            "xRight": 415, 
-            "yTop": 575, 
-            "yBottom": 625, 
-            "xLeft": 195
+            "xRight": 1105, 
+            "yTop": 695, 
+            "yBottom": 745, 
+            "xLeft": 885
         }, 
         {
-            "xRight": 805, 
-            "yTop": 725, 
-            "yBottom": 775, 
-            "xLeft": 585
+            "xRight": 715, 
+            "yTop": 845, 
+            "yBottom": 895, 
+            "xLeft": 495
         }, 
         {
-            "xRight": 415, 
-            "yTop": 875, 
-            "yBottom": 925, 
-            "xLeft": 195
+            "xRight": 1105, 
+            "yTop": 995, 
+            "yBottom": 1045, 
+            "xLeft": 885
         }, 
         {
-            "xRight": 805, 
-            "yTop": 1025, 
-            "yBottom": 1075, 
-            "xLeft": 585
+            "xRight": 715, 
+            "yTop": 1145, 
+            "yBottom": 1195, 
+            "xLeft": 495
         }, 
         {
-            "xRight": 415, 
-            "yTop": 1175, 
-            "yBottom": 1225, 
-            "xLeft": 195
+            "xRight": 1105, 
+            "yTop": 1295, 
+            "yBottom": 1345, 
+            "xLeft": 885
         }, 
         {
-            "xRight": 805, 
-            "yTop": 1325, 
-            "yBottom": 1375, 
-            "xLeft": 585
+            "xRight": 715, 
+            "yTop": 1445, 
+            "yBottom": 1495, 
+            "xLeft": 495
         }, 
         {
-            "xRight": 415, 
-            "yTop": 1475, 
-            "yBottom": 1525, 
-            "xLeft": 195
-        }, 
-        {
-            "xRight": 805, 
-            "yTop": 1625, 
-            "yBottom": 1675, 
-            "xLeft": 585
+            "xRight": 1105, 
+            "yTop": 1595, 
+            "yBottom": 1645, 
+            "xLeft": 885
         }, 
         {
             "yTop": 1335, 
             "pierceable": false, 
-            "xLeft": 910, 
-            "xRight": 2930, 
+            "xLeft": 1215, 
+            "xRight": 2625, 
             "yBottom": 1385, 
             "mirrored": false
         }, 
         {
-            "xRight": 1110, 
+            "xRight": 1535, 
             "yTop": 1735, 
             "yBottom": 1785, 
-            "xLeft": 910
+            "mirrored": false, 
+            "xLeft": 1295
         }, 
         {
-            "xRight": 1560, 
+            "xRight": 2040, 
             "yTop": 1735, 
             "yBottom": 1785, 
-            "xLeft": 1360
+            "mirrored": false, 
+            "xLeft": 1800
         }, 
         {
-            "xRight": 2010, 
+            "xRight": 2545, 
             "yTop": 1735, 
             "yBottom": 1785, 
-            "xLeft": 1810
+            "mirrored": false, 
+            "xLeft": 2305
         }, 
         {
-            "xRight": 965, 
-            "yTop": 300, 
-            "yBottom": 1050, 
-            "xLeft": 915
+            "xRight": 1265, 
+            "yTop": 420, 
+            "yBottom": 1140, 
+            "xLeft": 1215
         }, 
         {
-            "xRight": 85, 
-            "yTop": 300, 
-            "yBottom": 2400, 
-            "xLeft": 35
+            "xRight": 385, 
+            "yTop": 420, 
+            "yBottom": 2490, 
+            "xLeft": 335
         }, 
         {
-            "xRight": 940, 
-            "yTop": 300, 
-            "yBottom": 350, 
-            "xLeft": 60
+            "xRight": 1240, 
+            "yTop": 420, 
+            "yBottom": 470, 
+            "xLeft": 360
         }
     ], 
     "boxSpawnLocations": [
         {
-            "y": 540, 
-            "x": 305, 
+            "y": 660, 
+            "x": 995, 
             "weapons": [
                 "pierce"
             ], 
@@ -129,24 +126,23 @@
             "x": 1920
         }, 
         {
-            "respawnDelay": 600, 
-            "mirrored": true, 
-            "initialSpawnDelay": 600, 
+            "y": 1410, 
+            "x": 605, 
             "weapons": [
                 "bounce"
             ], 
-            "y": 1140.0, 
-            "x": 305
+            "respawnDelay": 600, 
+            "initialSpawnDelay": 600
         }
     ], 
     "spawnLocations": [
         {
             "y": 1680, 
-            "x": 1010
+            "x": 1415
         }, 
         {
             "y": 1280, 
-            "x": 2497
+            "x": 2322
         }
     ], 
     "killboxes": [

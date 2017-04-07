@@ -45,7 +45,7 @@ PLAT_W = 200
 PLAT_OFFSET = 200
 PLAT_TILT = 75
 
-NUM_PLATS = 8
+NUM_PLATS = 6
 
 #Staircase
 for i in range(NUM_PLATS):
