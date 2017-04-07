@@ -18,7 +18,7 @@ double Rocket::gun_offset_y() const {
 }
 
 double Rocket::barrel_offset_x() const {
-    return 0;
+    return 50;
 }
 
 double Rocket::barrel_offset_y() const {

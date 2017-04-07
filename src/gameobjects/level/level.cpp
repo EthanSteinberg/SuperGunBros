@@ -18,7 +18,7 @@ const char* const level_names[] = {
         "../assets/level/more_platforms.json",
         "../assets/level/shafts.json",
         "../assets/level/close_quarters.json",
-        //"../assets/level/complex.json"
+        "../assets/level/complex.json",
         "../assets/level/the_gap.json",
         "../assets/level/bnb.json"
 };

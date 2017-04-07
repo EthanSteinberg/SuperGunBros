@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>, bool free_horizontal, bool free_vertical, SoundThread& sounds) {
+bool BounceBullet::on_wall_collision(const std::vector<Rectangle>&, std::function<void(int, double)>, std::function<void(int, double, double)>, bool free_horizontal, bool free_vertical, SoundThread& sounds) {
     if (ticks_left-- < 0) {
         return true;
     }

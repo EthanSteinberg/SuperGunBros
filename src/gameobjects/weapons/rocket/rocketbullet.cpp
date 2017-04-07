@@ -2,8 +2,9 @@
 
 #include "gameobjects/weapons/explosion.h"
 #include <cmath>
+#include <iostream>
 
-void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) const {
+void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player) const {
     for (unsigned int i = 0; i < player_positions.size(); i++) {
         auto& player_pos = player_positions[i];
 
@@ -19,23 +20,52 @@ void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positi
 
         if (hit) {
             damage_player(i, 15);
+
+            double offset_dx1 = player_pos.x - pos.x;
+            double offset_dy1 = (player_pos.y - 60 * ASSET_SCALE) - pos.y;
+
+            double distance1 = sqrt(offset_dx1 * offset_dx1 + offset_dy1 * offset_dy1);
+
+            double offset_dx2 = player_pos.x - pos.x;
+            double offset_dy2 = (player_pos.y + 20 * ASSET_SCALE) - pos.y;
+
+            double distance2 = sqrt(offset_dx2 * offset_dx2 + offset_dy2 * offset_dy2);
+
+            double f_dx;
+            double f_dy;
+
+            if (distance1 < distance2) {
+                f_dx = offset_dx1/distance1;
+                f_dy = offset_dy1/distance1;
+            } else {
+                f_dx = offset_dx2/distance2;
+                f_dy = offset_dy2/distance2;
+            }
+
+            double force_factor = 25;
+            push_back_player(i, force_factor * f_dx, force_factor * f_dy);
         }
     }
 }
 
-bool RocketBullet::on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
+bool RocketBullet::on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player) {
     ticks_alive++;
-    perform_explosion(player_positions, damage_player);
+    perform_explosion(player_positions, damage_player, push_back_player);
     return true;
 }
 
-bool RocketBullet::on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
+bool RocketBullet::on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player) {
     ticks_alive++;
-    perform_explosion(player_positions, damage_player);
+    perform_explosion(player_positions, damage_player, push_back_player);
     damage_player(hit_player, 10);
     return true;
 }
 
+bool RocketBullet::on_blocker_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player) {
+    ticks_alive++;
+    perform_explosion(player_positions, damage_player, push_back_player);
+    return true;
+}
 
 bool RocketBullet::on_no_collision() {
     ticks_alive++;

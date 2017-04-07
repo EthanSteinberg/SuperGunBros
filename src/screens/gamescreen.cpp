@@ -22,6 +22,8 @@ const int SCORE_TO_WIN = 25;
 
 const int FIRE_LENGTH = 200;
 
+const int MAX_DAZE = 20;
+
 const double FIRE_TRANSMIT_PROBABILITY = 0.01;
 
 GameScreen::GameScreen(const std::vector<PlayerInfo> &infos, const Level& a_level): level(a_level), camera(level.width, level.height) {
@@ -89,8 +91,9 @@ void GameScreen::render(RenderList& list) const {
 	}
 
     for (const auto& effect: pierce_effects) {
-        const char* color = effect.is_red ? "orange" : "white";
-        list.add_line(color, effect.start.x, effect.start.y, effect.end.x, effect.end.y);
+        const char* color = effect.is_red ? "orange" : "test-beam";
+        int line_width = effect.is_red ? 4 : 8;
+        list.add_line(color, effect.start.x, effect.start.y, effect.end.x, effect.end.y, line_width);
     }
 
     list.pop();
@@ -325,6 +328,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             float x_thresh = (fabs(current_inputs.ls.x) > 0.3) ? current_inputs.ls.x : 0;
             accel += x_thresh * X_ACCEL;
 
+            // Lower the accel if in dazed mode
+            double daze_accel_ratio = (MAX_DAZE - player.state.dazed_ticks_left)/ (double) MAX_DAZE;
+            accel *= std::max(daze_accel_ratio, 0.25);
+
             //Directional aiming, but if player isn't aiming, aim flat in direction of motion.
             if (fabs(current_inputs.rs.x) > 0.3 || fabs(current_inputs.rs.y) > 0.3) {
                 player.state.gun_angle = atan2(current_inputs.rs.y, current_inputs.rs.x);
@@ -394,19 +401,28 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
             //X-Speed considerations for stopping and turning around on the ground
             if (player.state.grounded) {
-                if (accel == 0) {
-                    player.state.dx = player.state.dx / 4;
-                    if (fabs(player.state.dx) < 0.2 * X_ACCEL) {
-                        player.state.dx = 0;
-                    }
-                } else if (fabs(player.state.dx + accel) < fabs(player.state.dx)) {
-                    player.state.dx = (player.state.dx / 4) + accel;
-                } else {
+                if (player.state.dazed_ticks_left != 0) {
+                    // Still dazed
                     player.state.dx += accel;
+                } else {
+                    if (accel == 0) {
+                        player.state.dx = player.state.dx / 4;
+                        if (fabs(player.state.dx) < 0.2 * X_ACCEL) {
+                            player.state.dx = 0;
+                        }
+                    } else if (fabs(player.state.dx + accel) < fabs(player.state.dx)) {
+                        player.state.dx = (player.state.dx / 4) + accel;
+                    } else {
+                        player.state.dx += accel;
+                    }
                 }
             } else {
                 //X-Speed considerations for aerial motion
                 player.state.dx += accel;
+            }
+
+            if (player.state.dazed_ticks_left > 0) {
+                player.state.dazed_ticks_left -= 1;
             }
 
             //Can't accelerate into the wall we're already on
@@ -714,10 +730,13 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
 
     std::vector<Rectangle> player_bounding_boxes;
+    std::vector<int> actual_player_indices;
 
-    for (const auto& player: players) {
+    for (unsigned int i = 0; i < players.size(); i++) {
+        const Player& player = players[i];
         if (!player.state.is_dead) {
             player_bounding_boxes.push_back(player.state.pos);
+            actual_player_indices.push_back(i);
         }
     }
 
@@ -730,7 +749,13 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         double dy = bullet->get_velocity() * sin(bullet->angle);
 
         auto damage_player_func = [&](int player_index, double damage) {
-            damage_player(player_index, damage, bullet->player_owner);
+            damage_player(actual_player_indices[player_index], damage, bullet->player_owner);
+        };
+
+        auto push_back_player_func = [&](int player_index, double dx, double dy) {
+            players[actual_player_indices[player_index]].state.dx += dx;
+            players[actual_player_indices[player_index]].state.dy += dy;
+            players[actual_player_indices[player_index]].state.dazed_ticks_left = MAX_DAZE;
         };
 
         bool is_dead = false;
@@ -756,7 +781,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
         if (hit_blocker) {
             hit_something = true;
-            is_dead = bullet->on_blocker_collision(player_bounding_boxes, damage_player_func);
+            is_dead = bullet->on_blocker_collision(player_bounding_boxes, damage_player_func, push_back_player_func);
         } else if (would_hit_ground(bullet->pos.offset(dx, dy))) {
             // This bullet hit the ground.
             hit_something = true;
@@ -775,7 +800,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             bool vertical_free = !would_hit_ground(bullet->pos.offset(0, dy));
             bool horizontal_free = !would_hit_ground(bullet->pos.offset(dx, 0));
 
-            is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, vertical_free, horizontal_free, sounds);
+            is_dead = bullet->on_wall_collision(player_bounding_boxes, damage_player_func, push_back_player_func, vertical_free, horizontal_free, sounds);
 
 
             dx = high * dx;
@@ -785,14 +810,14 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
         bullet->pos.x += dx;
         bullet->pos.y += dy;
 
-        for (unsigned int i = 0; i < players.size(); i++) {
-            auto& player = players[i];
+        for (unsigned int i = 0; i < actual_player_indices.size(); i++) {
+            auto& player = players[actual_player_indices[i]];
 
             if (player.state.is_dead) {
                 continue;
             }
 
-            if (i == bullet->player_owner && !bullet->can_damage_self()) {
+            if (actual_player_indices[i] == bullet->player_owner && !bullet->can_damage_self()) {
                 continue;
             }
 
@@ -805,7 +830,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                         player.state.ticks_fire_left = FIRE_LENGTH;
                     }
                 }
-                is_dead = bullet->on_player_collision(i, player_bounding_boxes, damage_player_func);
+                is_dead = bullet->on_player_collision(i, player_bounding_boxes, damage_player_func, push_back_player_func);
             }
         }
 
@@ -897,6 +922,10 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
                 game_over = true;
             }
         }
+
+        player.state.dx = 0;
+        player.state.dy = 0;
+        player.state.dazed_ticks_left = 0;
 
         if (!game_over) {
             player.state.ticks_until_spawn = 130;
