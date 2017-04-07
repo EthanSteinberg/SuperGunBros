@@ -27,16 +27,31 @@ public:
     virtual void render(RenderList& list) const;
 
     // Return true if the bullet should be marked dead
-    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, bool free_horizontal, bool free_vertical, SoundThread& sounds) {
+    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player, bool free_horizontal, bool free_vertical, SoundThread& sounds) {
+        return on_wall_collision(player_positions, damage_player, push_back_player);
+    }
+    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player) {
         return on_wall_collision(player_positions, damage_player);
     }
+    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
+        return false;
+    }
 
-    virtual bool on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) = 0;
-    virtual bool on_no_collision() = 0;
+    virtual bool on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player) {
+        return on_player_collision(hit_player, player_positions, damage_player);
+    }
+    virtual bool on_player_collision(int hit_player, const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
+        return false;
+    }
 
+    virtual bool on_blocker_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player, std::function<void(int, double, double)> push_back_player) {
+        return on_blocker_collision(player_positions, damage_player);
+    }
     virtual bool on_blocker_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {
         return true;
     }
+
+    virtual bool on_no_collision() = 0;
 
     virtual bool can_block() {
         return false;
@@ -60,8 +75,6 @@ public:
 
 private:
     virtual const char* bullet_image_name() const = 0;
-
-    virtual bool on_wall_collision(const std::vector<Rectangle>& player_positions, std::function<void(int, double)> damage_player) {return false;}
 
 };
 

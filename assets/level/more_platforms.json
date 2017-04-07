@@ -22,15 +22,9 @@
             "xLeft": -20,
             "xRight": 30,
             "yTop": -20,
-            "yBottom": 720
+            "yBottom": 720,
+            "mirrored": true
         },
-        {
-            "xLeft": 1250,
-            "xRight": 1300,
-            "yTop": -20,
-            "yBottom": 720
-        },
-
 
         //
         {
@@ -42,53 +36,37 @@
 
         {
             "xLeft": 125,
-            "xRight": 250,
+            "xRight": 270,
             "yTop": 350,
-            "yBottom": 380
+            "yBottom": 380,
+            "mirrored": true
         },
         {
             "xLeft": 125,
             "xRight": 155,
             "yTop": 350,
-            "yBottom": 550
+            "yBottom": 550,
+            "mirrored": true
         },
 
         {
             "xLeft": 0,
-            "xRight": 230,
+            "xRight": 210,
             "yTop": 200,
-            "yBottom": 230
+            "yBottom": 230,
+            "mirrored": true
         },
-
 
 
         {
             "xLeft": 580,
             "xRight": 700,
             "yTop": 0,
-            "yBottom": 200
+            "yBottom": 200,
+            "mirrored": true
         },
 
 
-        {
-            "xLeft": 1030,
-            "xRight": 1155,
-            "yTop": 350,
-            "yBottom": 380
-        },
-        {
-            "xLeft": 1125,
-            "xRight": 1155,
-            "yTop": 350,
-            "yBottom": 550
-        },
-
-        {
-            "xLeft": 1050,
-            "xRight": 1280,
-            "yTop": 200,
-            "yBottom": 230
-        }
     ],
 
     "boxSpawnLocations": [

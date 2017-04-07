@@ -116,6 +116,8 @@ struct PlayerState {
     int ticks_since_last_score_update = -1;
 
     int last_damager = -1;
+
+    int dazed_ticks_left = 0;
 };
 
 class Player : public GameObject {
