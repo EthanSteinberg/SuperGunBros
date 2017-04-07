@@ -75,7 +75,7 @@ void GameScreen::render(RenderList& list) const {
 
 	for (const auto& player : players) {
         player.render(list);
-
+        if (player.state.laser_sight) player.draw_laser(list, level);
         if (players_with_max_score.size() != players.size()) {
             if (player.state.score == max_score) {
                 player.render_crown(list);
@@ -359,6 +359,10 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             bool continuing_boost = (button_hold(ButtonName::LB, current_inputs, prev_inputs) ||
                                     button_hold(ButtonName::B, current_inputs, prev_inputs)) &&
                                     player.state.boosting;
+
+            if (button_press(ButtonName::Y, current_inputs, prev_inputs)){
+                player.state.laser_sight = !player.state.laser_sight;
+            }
 
             for (auto& box: boxes) {
                 if (box.ticks_until_active != 0) {

@@ -13,7 +13,7 @@
 #include <cmath>
 
 #include "soundthread.h"
-
+    
 const int screen_width = 1280;
 const int screen_height = 720;
 

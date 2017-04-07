@@ -118,7 +118,7 @@ void Player::draw_laser(RenderList& list, const Level& level) const {
 
     double time = level.get_first_intersection(x, y, dx, dy);
 
-    list.add_line("red", x, y, x + dx * time, y + dy * time);
+    list.add_line("laser", x, y, x + dx * time, y + dy * time);
 }
 
 Point Player::get_barrel_position() const {

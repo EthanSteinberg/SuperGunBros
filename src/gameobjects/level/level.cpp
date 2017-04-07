@@ -237,6 +237,8 @@ void Level::render(RenderList& list) const {
 
     if (level_build_debug) {
 
+        list.add_outline("green", Rectangle(width/2, height/2, width, height), 3);
+
         for (auto &kb : killboxes) {
             list.add_outline("red", kb, 3);
         }
