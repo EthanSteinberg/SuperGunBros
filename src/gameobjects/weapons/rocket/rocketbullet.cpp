@@ -19,8 +19,6 @@ void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positi
                         (dy - player_pos.height) * (dy - player_pos.height)) <= EXPLOSION_RADIUS * EXPLOSION_RADIUS);
 
         if (hit) {
-            damage_player(i, 15);
-
             double offset_dx1 = player_pos.x - pos.x;
             double offset_dy1 = (player_pos.y - 60 * ASSET_SCALE) - pos.y;
 
@@ -44,6 +42,8 @@ void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positi
 
             double force_factor = 25;
             push_back_player(i, force_factor * f_dx, force_factor * f_dy);
+
+            damage_player(i, 15);
         }
     }
 }
