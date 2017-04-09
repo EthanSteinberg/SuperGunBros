@@ -221,16 +221,10 @@
         "x": 1791,
         "y": 736
     },
-    "gold": {
-        "sizex": 1,
-        "sizey": 1,
-        "x": 2043,
-        "y": 26
-    },
     "green": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2041,
+        "x": 2043,
         "y": 26
     },
     "green-head": {
@@ -255,7 +249,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2041,
-        "y": 28
+        "y": 26
     },
     "hand": {
         "sizex": 10,
@@ -272,8 +266,8 @@
     "laser": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2045,
-        "y": 26
+        "x": 2041,
+        "y": 28
     },
     "leg-lower-fill": {
         "sizex": 17,
@@ -345,7 +339,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2045,
-        "y": 28
+        "y": 26
     },
     "not-ready-text": {
         "sizex": 376,
@@ -380,7 +374,7 @@
     "orange": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2043,
+        "x": 2045,
         "y": 28
     },
     "piercer": {
@@ -471,7 +465,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2043,
-        "y": 30
+        "y": 28
     },
     "red-head": {
         "sizex": 51,
@@ -496,6 +490,24 @@
         "sizey": 31,
         "x": 2002,
         "y": 293
+    },
+    "refuge_basement": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2043,
+        "y": 30
+    },
+    "refuge_sky": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2041,
+        "y": 30
+    },
+    "refuge_tower": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2041,
+        "y": 32
     },
     "ricochet-rifle": {
         "sizex": 102,
@@ -604,13 +616,13 @@
     "white": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2041,
+        "x": 2045,
         "y": 30
     },
     "yellow": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2041,
+        "x": 2045,
         "y": 32
     },
     "yellow-head": {

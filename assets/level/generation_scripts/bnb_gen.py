@@ -111,18 +111,40 @@ lev.add_box_spawn(TOWER_X - TOWER_X_SEP/2 - TOWER_FLOOR_W/2, TOWER_H + TOWER_Y_S
 '''
 Background
 '''
-lev.add_background("yellow", -width, width*2, -height, height *2)
-lev.add_background("blue", WALL_X, 2*TOWER_X - WALL_X, WALL_H, BUNKER_H)
-lev.add_background("blue", width - WALL_X, width - 2*TOWER_X + WALL_X, WALL_H, BUNKER_H)
-lev.add_background("red", 2*TOWER_X - WALL_X, width - 2*TOWER_X + WALL_X, BUNKER_H, height * 2)
+sky = "refuge_sky"
+tower = "refuge_basement"
+bunker = "refuge_basement"
+
+sky_tower = "refuge_tower"
+tower_bunker = "refuge_basement"
+
+#SKY AND BACKGROUND TOWERS
+lev.add_background(sky, -width, width*2, -height, height *2)
+
+#center
+lev.add_background(tower, width/2 - 565, width/2 - 200, BUNKER_H, BUNKER_H - 523)
+lev.add_background(tower, width/2 + 233, width/2 + 470, BUNKER_H, BUNKER_H - 350)
+
+#left
+lev.add_background(tower, -100, 400, BUNKER_H - 100, height * 2)
+
+#right
+lev.add_background(tower, width-204 , width-600, WALL_H - 232, height * 2)
+# lev.add_background(tower, width-259 , width-560, WALL_H + 66, height * 2)
+# lev.add_background(tower, width-214 , width-620, WALL_H + 332, height * 2)
+
+
+lev.add_background(tower, WALL_X, 2*TOWER_X - WALL_X, WALL_H, BUNKER_H)
+lev.add_background(tower, width - WALL_X, width - 2*TOWER_X + WALL_X, WALL_H, BUNKER_H)
+lev.add_background(bunker, 2*TOWER_X - WALL_X, width - 2*TOWER_X + WALL_X, BUNKER_H, height * 2)
 
 '''
 Border pieces?
 '''
-lev.add_background("green", WALL_X - PLAT_TH/2, WALL_X + PLAT_TH/2, INNER_WALL_Y + INNER_WALL_H/2, BUNKER_H)
-lev.add_background("green", width - WALL_X - PLAT_TH/2, width - WALL_X + PLAT_TH/2, INNER_WALL_Y + INNER_WALL_H/2, BUNKER_H)
+lev.add_background(sky_tower, WALL_X - PLAT_TH/2, WALL_X + PLAT_TH/2, INNER_WALL_Y + INNER_WALL_H/2, BUNKER_H)
+lev.add_background(sky_tower, width - WALL_X - PLAT_TH/2, width - WALL_X + PLAT_TH/2, INNER_WALL_Y + INNER_WALL_H/2, BUNKER_H)
 
-lev.add_background("orange", 2*TOWER_X - WALL_X, width - (2*TOWER_X - WALL_X), BUNKER_H - PLAT_TH/2, BUNKER_H + PLAT_TH/2)
+lev.add_background(tower_bunker, 2*TOWER_X - WALL_X, width - (2*TOWER_X - WALL_X), BUNKER_H - PLAT_TH/2, BUNKER_H + PLAT_TH/2)
 
 
 
