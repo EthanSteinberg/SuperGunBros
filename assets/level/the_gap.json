@@ -7,51 +7,39 @@
     "obstacles": [
         {
             "xRight": 400, 
-            "yTop": 120, 
-            "yBottom": 170, 
+            "yTop": 500, 
+            "yBottom": 550, 
             "xLeft": 200
         }, 
         {
-            "xRight": 875, 
-            "yTop": 340, 
-            "yBottom": 390, 
-            "xLeft": 675
+            "xRight": 900, 
+            "yTop": 720, 
+            "yBottom": 770, 
+            "xLeft": 700
         }, 
         {
-            "xRight": 550, 
-            "yTop": 560, 
-            "yBottom": 610, 
-            "xLeft": 350
+            "xRight": 600, 
+            "yTop": 940, 
+            "yBottom": 990, 
+            "xLeft": 400
         }, 
         {
-            "xRight": 1025, 
-            "yTop": 780, 
-            "yBottom": 830, 
-            "xLeft": 825
+            "xRight": 1100, 
+            "yTop": 1160, 
+            "yBottom": 1210, 
+            "xLeft": 900
         }, 
         {
-            "xRight": 700, 
-            "yTop": 1000, 
-            "yBottom": 1050, 
-            "xLeft": 500
+            "xRight": 800, 
+            "yTop": 1380, 
+            "yBottom": 1430, 
+            "xLeft": 600
         }, 
         {
-            "xRight": 1175, 
-            "yTop": 1220, 
-            "yBottom": 1270, 
-            "xLeft": 975
-        }, 
-        {
-            "xRight": 850, 
-            "yTop": 1440, 
-            "yBottom": 1490, 
-            "xLeft": 650
-        }, 
-        {
-            "xRight": 1325, 
-            "yTop": 1660, 
-            "yBottom": 1710, 
-            "xLeft": 1125
+            "xRight": 1300, 
+            "yTop": 1600, 
+            "yBottom": 1650, 
+            "xLeft": 1100
         }, 
         {
             "xRight": 2120, 
@@ -68,7 +56,7 @@
     ], 
     "boxSpawnLocations": [
         {
-            "y": 60, 
+            "y": 440, 
             "x": 300, 
             "weapons": [
                 "pierce"

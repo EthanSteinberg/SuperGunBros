@@ -67,14 +67,14 @@ private:
             double height,
             unsigned int index,
             const std::string& title,
-            const std::shared_ptr<Background> background
+            const std::shared_ptr<GameObject> background
     );
 
     std::vector<Obstacle> obstacles;
     std::vector<BoxSpawn> box_spawn_locations;
     std::vector<Point> player_spawn_locations;
     std::vector<Rectangle> killboxes;
-    std::shared_ptr<Background> background;
+    std::shared_ptr<GameObject> background;
 
 public:
     double width;

@@ -36,14 +36,14 @@ def build_wall(x, y, h):
 
 
 #Towers
-PLAT_CEIL = 120
+PLAT_CEIL = 500
 
 PLAT_H = 220
 PLAT_X = 200
 PLAT_W = 200
 
 PLAT_OFFSET = 200
-PLAT_TILT = 75
+PLAT_TILT = 100
 
 NUM_PLATS = 6
 

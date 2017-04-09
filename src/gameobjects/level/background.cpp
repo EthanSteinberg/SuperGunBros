@@ -13,7 +13,7 @@ void Background::render(RenderList& list) const {
 
 void Background::update(){}
 
-CompoundBackground::CompoundBackground(std::vector<std::unique_ptr<GameObject>> backgrounds) : bgs(std::move(backgrounds)){}
+CompoundBackground::CompoundBackground(std::vector<std::shared_ptr<GameObject>> backgrounds) : bgs(std::move(backgrounds)){}
 
 void CompoundBackground::render(RenderList& list) const{
    for (auto& bg : bgs) {

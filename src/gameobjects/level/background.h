@@ -22,9 +22,9 @@ public:
 
 class CompoundBackground : public GameObject {
 private:
-   std::vector<std::unique_ptr<GameObject>> bgs;
+   std::vector<std::shared_ptr<GameObject>> bgs;
 public:
-   CompoundBackground(std::vector<std::unique_ptr<GameObject>> backgrounds);
+   CompoundBackground(std::vector<std::shared_ptr<GameObject>> backgrounds);
    void render(RenderList& list) const override;
    void update() override;
 };

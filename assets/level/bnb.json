@@ -153,5 +153,56 @@
             "mirrored": false, 
             "xLeft": -38400
         }
+    ], 
+    "background": [
+        {
+            "xRight": 7680, 
+            "yTop": -2160, 
+            "yBottom": 4320, 
+            "xLeft": -3840, 
+            "img": "yellow"
+        }, 
+        {
+            "xRight": 360, 
+            "yTop": 420, 
+            "yBottom": 1360, 
+            "xLeft": 1240, 
+            "img": "blue"
+        }, 
+        {
+            "xRight": 3480, 
+            "yTop": 420, 
+            "yBottom": 1360, 
+            "xLeft": 2600, 
+            "img": "blue"
+        }, 
+        {
+            "xRight": 3480, 
+            "yTop": 1360, 
+            "yBottom": 4320, 
+            "xLeft": 360, 
+            "img": "red"
+        }, 
+        {
+            "xRight": 1265, 
+            "yTop": 1140, 
+            "yBottom": 1360, 
+            "xLeft": 1215, 
+            "img": "green"
+        }, 
+        {
+            "xRight": 2625, 
+            "yTop": 1140, 
+            "yBottom": 1360, 
+            "xLeft": 2575, 
+            "img": "green"
+        }, 
+        {
+            "xRight": 3480, 
+            "yTop": 1335, 
+            "yBottom": 1385, 
+            "xLeft": 360, 
+            "img": "orange"
+        }
     ]
 }

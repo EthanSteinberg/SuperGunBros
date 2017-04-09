@@ -83,6 +83,8 @@ OUTER_WALL_H = TOWER_H + (TOWER_FLOORS + 2) * TOWER_Y_SEP
 INNER_WALL_Y = TOWER_H + INNER_WALL_H/2 - 300
 OUTER_WALL_Y = TOWER_H + OUTER_WALL_H/2 - 300
 
+WALL_H = INNER_WALL_Y - INNER_WALL_H/2
+
 build_wall(WALL_X, INNER_WALL_Y, INNER_WALL_H)
 build_wall(2*TOWER_X - WALL_X, OUTER_WALL_Y, OUTER_WALL_H)
 build_plat(TOWER_X, INNER_WALL_Y - INNER_WALL_H/2 + PLAT_TH/2, (WALL_X - TOWER_X) * 2)
@@ -105,6 +107,25 @@ lev.add_box_spawn(TOWER_X + TOWER_X_SEP/2 + TOWER_FLOOR_W/2, TOWER_H - 60, ["pie
 lev.add_box_spawn(width/2, BUNKER_H - 60, ["rocket"], mirror=False)
 lev.add_box_spawn(width/2, UNDG_HEIGHT - 60, ["bounce"], mirror=False)
 lev.add_box_spawn(TOWER_X - TOWER_X_SEP/2 - TOWER_FLOOR_W/2, TOWER_H + TOWER_Y_SEP * 5 - 60, ["bounce"])
+
+'''
+Background
+'''
+lev.add_background("yellow", -width, width*2, -height, height *2)
+lev.add_background("blue", WALL_X, 2*TOWER_X - WALL_X, WALL_H, BUNKER_H)
+lev.add_background("blue", width - WALL_X, width - 2*TOWER_X + WALL_X, WALL_H, BUNKER_H)
+lev.add_background("red", 2*TOWER_X - WALL_X, width - 2*TOWER_X + WALL_X, BUNKER_H, height * 2)
+
+'''
+Border pieces?
+'''
+lev.add_background("green", WALL_X - PLAT_TH/2, WALL_X + PLAT_TH/2, INNER_WALL_Y + INNER_WALL_H/2, BUNKER_H)
+lev.add_background("green", width - WALL_X - PLAT_TH/2, width - WALL_X + PLAT_TH/2, INNER_WALL_Y + INNER_WALL_H/2, BUNKER_H)
+
+lev.add_background("orange", 2*TOWER_X - WALL_X, width - (2*TOWER_X - WALL_X), BUNKER_H - PLAT_TH/2, BUNKER_H + PLAT_TH/2)
+
+
+
 
 print "Saving complex..."
 lev.save("../bnb.json", note = note)

@@ -187,6 +187,32 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
         title = level_data["title"].GetString();
     }
 
+    if (level_data.HasMember("background")){
+        std::vector<std::shared_ptr<GameObject>> bgs;
+        for(const auto& bg : level_data["background"].GetArray()) {
+
+            std::string img = bg["img"].GetString();
+
+            double width = bg["xRight"].GetDouble() - bg["xLeft"].GetDouble();
+            double height = bg["yBottom"].GetDouble() - bg["yTop"].GetDouble();
+
+            double x = bg["xRight"].GetDouble() - width / 2;
+            double y = bg["yBottom"].GetDouble() - height / 2;
+
+            Rectangle rect(
+                    x,
+                    y,
+                    width,
+                    height);
+
+            bgs.push_back(std::make_shared<Background>(img, rect));
+        }
+
+        return Level(obstacles, box_spawn_locations, player_spawn_locations, killboxes, l_width, l_height, index, title, std::make_shared<CompoundBackground>(bgs));
+
+    }
+
+
     return Level(obstacles, box_spawn_locations, player_spawn_locations, killboxes, l_width, l_height, index, title);
 }
 
@@ -220,7 +246,7 @@ Level::Level(
         double a_height,
         unsigned int a_index,
         const std::string& a_title,
-        const std::shared_ptr<Background> bg):
+        const std::shared_ptr<GameObject> bg):
         obstacles(a_obstacles),
         box_spawn_locations(a_box_spawns),
         player_spawn_locations(a_player_spawns),

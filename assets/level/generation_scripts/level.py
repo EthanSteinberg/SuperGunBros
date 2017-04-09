@@ -45,6 +45,12 @@ class Level():
             kb["mirrored"] = mirror
         self.dict["killboxes"].append(kb)
 
+    def add_background(self, img, xl, xr, yt, yb):
+        if "background" not in self.dict:
+            self.dict["background"] = []
+        bg = {"img" : img, "xLeft": xl, "xRight": xr, "yTop": yt, "yBottom": yb}
+        self.dict["background"].append(bg)
+
     def save(self, filename, note = None):
         with io.open(filename, 'w', encoding='utf-8') as f:
             if note:
