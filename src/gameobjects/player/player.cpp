@@ -128,7 +128,7 @@ AnimationState Player::get_interpolated_frame() const {
             current_frame = kick_frames[(int) (index_within_kick - 1)];
         }
 
-        if ((int)index_within_kick == 3) {
+        if ((int)index_within_kick == 2) {
             next_frame = interpolated;
             if (state.kick_foot != 0) {
                 next_frame = {
