@@ -335,11 +335,17 @@
         "x": 1630,
         "y": 1006
     },
-    "nonPierce": {
+    "nice_sky": {
         "sizex": 1,
         "sizey": 1,
         "x": 2045,
         "y": 26
+    },
+    "nonPierce": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2045,
+        "y": 28
     },
     "not-ready-text": {
         "sizex": 376,
@@ -374,7 +380,7 @@
     "orange": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2045,
+        "x": 2043,
         "y": 28
     },
     "piercer": {
@@ -465,7 +471,7 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2043,
-        "y": 28
+        "y": 30
     },
     "red-head": {
         "sizex": 51,
@@ -494,20 +500,20 @@
     "refuge_basement": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2043,
+        "x": 2041,
         "y": 30
     },
     "refuge_sky": {
         "sizex": 1,
         "sizey": 1,
         "x": 2041,
-        "y": 30
+        "y": 32
     },
     "refuge_tower": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2041,
-        "y": 32
+        "x": 2045,
+        "y": 30
     },
     "ricochet-rifle": {
         "sizex": 102,
@@ -617,12 +623,12 @@
         "sizex": 1,
         "sizey": 1,
         "x": 2045,
-        "y": 30
+        "y": 32
     },
     "yellow": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2045,
+        "x": 2043,
         "y": 32
     },
     "yellow-head": {

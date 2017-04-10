@@ -6,60 +6,48 @@
     "mirrored": true, 
     "obstacles": [
         {
-            "xRight": 400, 
-            "yTop": 500, 
-            "yBottom": 550, 
+            "xRight": 450, 
+            "yTop": 1300, 
+            "yBottom": 1350, 
             "xLeft": 200
         }, 
         {
-            "xRight": 900, 
-            "yTop": 720, 
-            "yBottom": 770, 
-            "xLeft": 700
-        }, 
-        {
-            "xRight": 600, 
-            "yTop": 940, 
-            "yBottom": 990, 
-            "xLeft": 400
-        }, 
-        {
-            "xRight": 1100, 
-            "yTop": 1160, 
-            "yBottom": 1210, 
+            "xRight": 1150, 
+            "yTop": 1550, 
+            "yBottom": 1600, 
             "xLeft": 900
         }, 
         {
-            "xRight": 800, 
-            "yTop": 1380, 
-            "yBottom": 1430, 
-            "xLeft": 600
-        }, 
-        {
-            "xRight": 1300, 
-            "yTop": 1600, 
-            "yBottom": 1650, 
-            "xLeft": 1100
+            "xRight": 750, 
+            "yTop": 1800, 
+            "yBottom": 1850, 
+            "xLeft": 500
         }, 
         {
             "xRight": 2120, 
-            "yTop": 1160, 
-            "yBottom": 1210, 
+            "yTop": 1700, 
+            "yBottom": 1750, 
             "xLeft": 1720
         }, 
         {
-            "xRight": 600, 
-            "yTop": 1940, 
-            "yBottom": 1990, 
-            "xLeft": 200
+            "xRight": 730, 
+            "yTop": 500, 
+            "yBottom": 550, 
+            "xLeft": 480
+        }, 
+        {
+            "xRight": 1690, 
+            "yTop": 500, 
+            "yBottom": 550, 
+            "xLeft": 1440
         }
     ], 
     "boxSpawnLocations": [
         {
-            "y": 440, 
-            "x": 300, 
+            "y": 1240, 
+            "x": 325, 
             "weapons": [
-                "pierce"
+                "rocket"
             ], 
             "respawnDelay": 600, 
             "initialSpawnDelay": 600
@@ -71,36 +59,18 @@
             "weapons": [
                 "rocket"
             ], 
-            "y": 1100, 
+            "y": 1640, 
             "x": 1920
         }
     ], 
     "spawnLocations": [
         {
-            "y": 1880, 
-            "x": 300
+            "y": 440, 
+            "x": 605
         }, 
         {
-            "y": 1880, 
-            "x": 500
-        }, 
-        {
-            "y": 1880, 
-            "x": 300
-        }, 
-        {
-            "y": 1880, 
-            "x": 500
-        }, 
-        {
-            "y": 1100, 
-            "x": 1820, 
-            "mirrored": false
-        }, 
-        {
-            "y": 1100, 
-            "x": 2020, 
-            "mirrored": false
+            "y": 440, 
+            "x": 1565
         }
     ], 
     "killboxes": [
@@ -110,6 +80,22 @@
             "yBottom": 4320, 
             "mirrored": false, 
             "xLeft": -38400
+        }
+    ], 
+    "background": [
+        {
+            "xRight": 7680, 
+            "yTop": -2160, 
+            "yBottom": 500, 
+            "xLeft": -3840, 
+            "img": "nice_sky"
+        }, 
+        {
+            "xRight": 7680, 
+            "yTop": 500, 
+            "yBottom": 4320, 
+            "xLeft": -3840, 
+            "img": "refuge_basement"
         }
     ]
 }

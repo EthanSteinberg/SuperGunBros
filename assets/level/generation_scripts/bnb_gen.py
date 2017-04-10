@@ -111,7 +111,7 @@ lev.add_box_spawn(TOWER_X - TOWER_X_SEP/2 - TOWER_FLOOR_W/2, TOWER_H + TOWER_Y_S
 '''
 Background
 '''
-sky = "refuge_sky"
+sky = "nice_sky"
 tower = "refuge_basement"
 bunker = "refuge_basement"
 
@@ -121,15 +121,15 @@ tower_bunker = "refuge_basement"
 #SKY AND BACKGROUND TOWERS
 lev.add_background(sky, -width, width*2, -height, height *2)
 
-#center
-lev.add_background(tower, width/2 - 565, width/2 - 200, BUNKER_H, BUNKER_H - 523)
-lev.add_background(tower, width/2 + 233, width/2 + 470, BUNKER_H, BUNKER_H - 350)
-
-#left
-lev.add_background(tower, -100, 400, BUNKER_H - 100, height * 2)
-
-#right
-lev.add_background(tower, width-204 , width-600, WALL_H - 232, height * 2)
+# #center
+# lev.add_background(tower, width/2 - 565, width/2 - 200, BUNKER_H, BUNKER_H - 523)
+# lev.add_background(tower, width/2 + 233, width/2 + 470, BUNKER_H, BUNKER_H - 350)
+#
+# #left
+# lev.add_background(tower, -100, 400, BUNKER_H - 100, height * 2)
+#
+# #right
+# lev.add_background(tower, width-204 , width-600, WALL_H - 232, height * 2)
 # lev.add_background(tower, width-259 , width-560, WALL_H + 66, height * 2)
 # lev.add_background(tower, width-214 , width-620, WALL_H + 332, height * 2)
 

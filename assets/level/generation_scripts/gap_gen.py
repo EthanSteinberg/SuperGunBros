@@ -36,16 +36,16 @@ def build_wall(x, y, h):
 
 
 #Towers
-PLAT_CEIL = 500
+PLAT_CEIL = 1300
 
-PLAT_H = 220
+PLAT_H = 250
 PLAT_X = 200
-PLAT_W = 200
+PLAT_W = 250
 
-PLAT_OFFSET = 200
-PLAT_TILT = 100
+PLAT_OFFSET = 300
+PLAT_TILT = 150
 
-NUM_PLATS = 6
+NUM_PLATS = 3
 
 #Staircase
 for i in range(NUM_PLATS):
@@ -53,27 +53,45 @@ for i in range(NUM_PLATS):
 
 #Center
 CENTER_W = 400
-CENTER_H = height - 1000
+CENTER_H = PLAT_CEIL + 400
 build_plat(width/2 - CENTER_W/2, CENTER_H, CENTER_W)
 
 '''
 Spawns
 '''
 #Side Spawn plats
-build_plat(PLAT_X, height - PLAT_H, 2 * PLAT_W)
+
+SPAWN_H = 500
+
+SPAWN_X = width/8
+DIFF = width/4
+
+build_plat(SPAWN_X, SPAWN_H, PLAT_W)
+build_plat(SPAWN_X + DIFF, SPAWN_H, PLAT_W)
 
 #For now, all clustered on same plats
-for i in range(4):
-    lev.add_player_spawn(PLAT_X + PLAT_W + (PLAT_W/2 * (1 if i%2 > 0 else -1)), height - PLAT_H - 60)
-
 for i in range(2):
-    lev.add_player_spawn(width/2 + (CENTER_W/4 * (1 if i%2 > 0 else -1)), CENTER_H - 60, mirror=False)
+    lev.add_player_spawn(SPAWN_X + PLAT_W/2 + i * DIFF, SPAWN_H - 60)
+
+
+
+# for i in range(2):
+#     lev.add_player_spawn(width/2 + (CENTER_W/4 * (1 if i%2 > 0 else -1)), CENTER_H - 60, mirror=False)
 
 '''
 Weapons
 '''
-lev.add_box_spawn(PLAT_X + PLAT_W/2, PLAT_CEIL - 60, ["pierce"])
+lev.add_box_spawn(PLAT_X + PLAT_W/2, PLAT_CEIL - 60, ["rocket"])
 lev.add_box_spawn(width/2, CENTER_H - 60, ["rocket"], mirror=False)
+
+'''
+Background
+'''
+sky = "nice_sky"
+pit = "refuge_basement"
+
+lev.add_background(sky, -width, width*2, -height, SPAWN_H)
+lev.add_background(pit, -width, width*2, SPAWN_H, height * 2)
 
 print "Saving complex..."
 lev.save("../the_gap.json", note = note)

@@ -19,7 +19,7 @@ const int screen_height = 720;
 
 const bool debug_keyboard_player = true;
 
-const bool debug_other_player = false;
+const bool debug_other_player = true;
 bool other_player_start_button = true;
 
 const bool music_on = false;
@@ -77,7 +77,7 @@ inputs keyboard_debug_input(GLFWwindow* window) {
     input.buttons[ButtonName::A] = 0;
     input.buttons[ButtonName::B] = 0;
     input.buttons[ButtonName::X] = (button_val) (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS);
-    input.buttons[ButtonName::Y] = 0;
+    input.buttons[ButtonName::Y] = (button_val) (glfwGetKey(window, GLFW_KEY_RIGHT_BRACKET) == GLFW_PRESS);
 
     input.buttons[ButtonName::LB] = (button_val) (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS);
     input.buttons[ButtonName::RB] = (button_val) (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
@@ -88,7 +88,7 @@ inputs keyboard_debug_input(GLFWwindow* window) {
     input.buttons[ButtonName::BACK] = (button_val) (glfwGetKey(window, GLFW_KEY_BACKSPACE) == GLFW_PRESS);;
     input.buttons[ButtonName::START] = (button_val) (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS);
     input.buttons[ButtonName::L3] = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
-    input.buttons[ButtonName::R3] = 0;
+    input.buttons[ButtonName::R3] = (button_val) (glfwGetKey(window, GLFW_KEY_LEFT_BRACKET) == GLFW_PRESS);;
 
     input.buttons[ButtonName::UD] = glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS;
     input.buttons[ButtonName::DD] = glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS;

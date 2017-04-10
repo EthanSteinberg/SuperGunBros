@@ -160,35 +160,7 @@
             "yTop": -2160, 
             "yBottom": 4320, 
             "xLeft": -3840, 
-            "img": "refuge_sky"
-        }, 
-        {
-            "xRight": 1720, 
-            "yTop": 1360, 
-            "yBottom": 837, 
-            "xLeft": 1355, 
-            "img": "refuge_basement"
-        }, 
-        {
-            "xRight": 2390, 
-            "yTop": 1360, 
-            "yBottom": 1010, 
-            "xLeft": 2153, 
-            "img": "refuge_basement"
-        }, 
-        {
-            "xRight": 400, 
-            "yTop": 1260, 
-            "yBottom": 4320, 
-            "xLeft": -100, 
-            "img": "refuge_basement"
-        }, 
-        {
-            "xRight": 3240, 
-            "yTop": 188, 
-            "yBottom": 4320, 
-            "xLeft": 3636, 
-            "img": "refuge_basement"
+            "img": "nice_sky"
         }, 
         {
             "xRight": 360, 
