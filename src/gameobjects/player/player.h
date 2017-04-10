@@ -23,6 +23,8 @@ const int DEATH_ANIMATION_TIME = 30;
 
 const int DEATH_INVISIBLE_TIME = DEATH_TIME - DEATH_ANIMATION_TIME;
 
+const int KICK_ANIMATION_TIME = 24;
+
 enum class PlayerColor {
     RED = 0,
     BLUE,
@@ -118,6 +120,9 @@ struct PlayerState {
     int last_damager = -1;
 
     int dazed_ticks_left = 0;
+
+    int kick_ticks_left = 0;
+    int kick_foot = 0;
 };
 
 class Player : public GameObject {
@@ -141,6 +146,8 @@ public:
     void draw_laser(RenderList& list, const Level& level) const;
 
     bool is_facing_right() const;
+
+    void start_kick();
 private:
     Point get_barrel_position() const;
 
@@ -148,6 +155,7 @@ private:
 
     double get_gun_angle(double mouseX, double mouseY) const;
     std::vector<AnimationState> frames;
+    std::vector<AnimationState> kick_frames;
     double current_time;
 
     double last_time_diff;

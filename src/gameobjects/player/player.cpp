@@ -57,11 +57,49 @@ Player::Player(double start_x, double start_y, PlayerInfo a_info) : info(a_info)
             },
     };
 
+    AnimationState kick_frames_init[] = {
+            {
+                    {-80, 0},
+                    {30, 0},
+            },
+            {
+                    {-85, 0},
+                    {2, 0},
+            },
+    };
+
     frames = std::vector<AnimationState>(std::begin(frames_init), std::end(frames_init));
+
+
+    kick_frames = std::vector<AnimationState>(std::begin(kick_frames_init), std::end(kick_frames_init));
+
+}
+
+void Player::start_kick() {
+    state.kick_ticks_left = KICK_ANIMATION_TIME;
+
+    double dist_to_forward_back = fmod(current_time - 0.86 + 8, 8);
+    double dist_to_backward_back = fmod(current_time - 3.5 + 8, 8);
+
+    double dist_to_forward_front = fmod(-current_time + 0.86 + 8, 8);
+    double dist_to_backward_front = fmod(-current_time + 3.5 + 8, 8);
+
+    double min_distance = std::min(dist_to_forward_back, std::min(dist_to_forward_front, std::min(dist_to_backward_front, dist_to_backward_back)));
+
+    if (dist_to_forward_front == min_distance) {
+        state.kick_foot = 0;
+    } else if (dist_to_forward_back == min_distance) {
+        state.kick_foot = 0;
+    } else if (dist_to_backward_front == min_distance) {
+        state.kick_foot = 1;
+    } else if (dist_to_backward_back == min_distance) {
+        state.kick_foot = 1;
+    }
 
 }
 
 AnimationState Player::get_interpolated_frame() const {
+
     AnimationState current_frame = frames[(int) (current_time) % frames.size()];
     AnimationState next_frame = frames[(int) (current_time + 1) % frames.size()];
 
@@ -71,6 +109,53 @@ AnimationState Player::get_interpolated_frame() const {
             {current_frame.hip_angle[0] * (1 - ratio) + next_frame.hip_angle[0] * ratio, current_frame.hip_angle[1] * (1 - ratio) + next_frame.hip_angle[1] * ratio},
             {current_frame.knee_angle[0] * (1 - ratio) + next_frame.knee_angle[0] * ratio, current_frame.knee_angle[1] * (1 - ratio) + next_frame.knee_angle[1] * ratio},
     };
+
+    if (state.kick_ticks_left != 0) {
+        double index_within_kick = (KICK_ANIMATION_TIME - state.kick_ticks_left)/6.0;
+
+        AnimationState current_frame;
+        AnimationState next_frame;
+
+        if ((int)index_within_kick == 0) {
+            current_frame = interpolated;
+            if (state.kick_foot != 0) {
+                current_frame = {
+                    {current_frame.hip_angle[1], current_frame.hip_angle[0]},
+                    {current_frame.knee_angle[1] , current_frame.knee_angle[0]},
+                };
+            }
+        } else {
+            current_frame = kick_frames[(int) (index_within_kick - 1)];
+        }
+
+        if ((int)index_within_kick == 3) {
+            next_frame = interpolated;
+            if (state.kick_foot != 0) {
+                next_frame = {
+                    {next_frame.hip_angle[1], next_frame.hip_angle[0]},
+                    {next_frame.knee_angle[1] , next_frame.knee_angle[0]},
+                };
+            }
+        } else {
+            next_frame = kick_frames[(int) (index_within_kick)];
+        }
+
+        double ratio = index_within_kick - floor(index_within_kick);
+
+        interpolated.hip_angle[state.kick_foot] =
+            current_frame.hip_angle[0] * (1 - ratio) + next_frame.hip_angle[0] * ratio;
+
+        interpolated.knee_angle[state.kick_foot] =
+            current_frame.knee_angle[0] * (1 - ratio) + next_frame.knee_angle[0] * ratio;
+
+        interpolated.hip_angle[1 - state.kick_foot] =
+            current_frame.hip_angle[1] * (1 - ratio) + next_frame.hip_angle[1] * ratio;
+
+        interpolated.knee_angle[1 - state.kick_foot] =
+            current_frame.knee_angle[1] * (1 - ratio) + next_frame.knee_angle[1] * ratio;
+
+
+    }
 
     return interpolated;
 }

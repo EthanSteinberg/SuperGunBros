@@ -359,7 +359,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             bool pull_trigger = button_press(ButtonName::RT, current_inputs, prev_inputs);
             bool holding_trigger = button_hold(ButtonName::RT, current_inputs, prev_inputs);
 
-            bool press_punch = button_press(ButtonName::RB, current_inputs, prev_inputs);
+            bool press_kick = button_press(ButtonName::RB, current_inputs, prev_inputs);
 
             bool starting_boost = button_press(ButtonName::LB, current_inputs, prev_inputs) ||
                                     button_press(ButtonName::B, current_inputs, prev_inputs);
@@ -382,6 +382,33 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
             }
 
             bool attempting_pickup = button_press(ButtonName::X, current_inputs, prev_inputs);
+
+            if (press_kick && player.state.kick_ticks_left == 0) {
+                player.start_kick();
+
+                int constant = player.is_facing_right() ? 1 : -1;
+
+                Rectangle kick_box = player.state.pos.offset(constant * (player_width/2 + 15), 0);
+                kick_box.width *= 0.75;
+
+                for (unsigned int other_i = 0; other_i < players.size(); other_i++) {
+                    Player& other_player = players[other_i];
+
+                    if (i != other_i && other_player.state.pos.colliding_with(kick_box)) {
+                        other_player.state.dx += constant * 25;
+                        other_player.state.dy -= 5;
+                        other_player.state.dazed_ticks_left = MAX_DAZE;
+                        damage_player(other_i, 3, i);
+
+                    }
+                }
+
+
+            } else {
+                if (player.state.kick_ticks_left > 0) {
+                    player.state.kick_ticks_left--;
+                }
+            }
 
             if (attempting_pickup) {
                 auto potential_gun = attempt_pick_up(player.state.pos);
@@ -708,7 +735,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
 
             const char* desired_shooting_sound = nullptr;
 
-            if (pull_trigger || holding_trigger) { 
+            if (pull_trigger || holding_trigger) {
                 desired_shooting_sound = player.state.gun->holding_shoot_sound();
             }
 //            } else if (press_punch) {
