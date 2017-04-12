@@ -23,7 +23,7 @@ const int DEATH_ANIMATION_TIME = 30;
 
 const int DEATH_INVISIBLE_TIME = DEATH_TIME - DEATH_ANIMATION_TIME;
 
-const int KICK_ANIMATION_TIME = 24;
+const int KICK_ANIMATION_TIME = 18;
 
 enum class PlayerColor {
     RED = 0,
