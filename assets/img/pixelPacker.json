@@ -20,7 +20,7 @@
     "3": {
         "sizex": 19,
         "sizey": 30,
-        "x": 1219,
+        "x": 1220,
         "y": 933
     },
     "4": {
@@ -32,7 +32,7 @@
     "5": {
         "sizex": 19,
         "sizey": 30,
-        "x": 1239,
+        "x": 1240,
         "y": 933
     },
     "6": {
@@ -69,7 +69,7 @@
         "sizex": 11,
         "sizey": 41,
         "x": 2036,
-        "y": 125
+        "y": 115
     },
     "arm-lower-outline": {
         "sizex": 15,
@@ -153,7 +153,7 @@
         "sizex": 86,
         "sizey": 86,
         "x": 1132,
-        "y": 933
+        "y": 998
     },
     "crown": {
         "sizex": 78,
@@ -189,13 +189,13 @@
         "sizex": 7,
         "sizey": 14,
         "x": 2034,
-        "y": 180
+        "y": 189
     },
     "flame-start": {
         "sizex": 12,
         "sizey": 12,
         "x": 2034,
-        "y": 167
+        "y": 157
     },
     "flamethrower": {
         "sizex": 137,
@@ -236,8 +236,8 @@
     "green-numbers": {
         "sizex": 244,
         "sizey": 33,
-        "x": 1196,
-        "y": 1034
+        "x": 190,
+        "y": 1745
     },
     "green-shoulder": {
         "sizex": 28,
@@ -356,26 +356,26 @@
     "number-blue": {
         "sizex": 188,
         "sizey": 103,
-        "x": 1441,
-        "y": 1031
+        "x": 1264,
+        "y": 1034
     },
     "number-green": {
         "sizex": 189,
         "sizey": 103,
-        "x": 0,
-        "y": 1587
+        "x": 1453,
+        "y": 1034
     },
     "number-red": {
         "sizex": 189,
         "sizey": 103,
         "x": 0,
-        "y": 1691
+        "y": 1587
     },
     "number-yellow": {
         "sizex": 188,
         "sizey": 103,
         "x": 0,
-        "y": 1795
+        "y": 1691
     },
     "orange": {
         "sizex": 1,
@@ -398,8 +398,8 @@
     "pistol": {
         "sizex": 58,
         "sizey": 30,
-        "x": 1630,
-        "y": 1068
+        "x": 1506,
+        "y": 1138
     },
     "pistol-explosion": {
         "sizex": 20,
@@ -447,7 +447,7 @@
         "sizex": 1112,
         "sizey": 102,
         "x": 0,
-        "y": 1899
+        "y": 1795
     },
     "ready-box-outline": {
         "sizex": 714,
@@ -467,10 +467,16 @@
         "x": 1783,
         "y": 875
     },
-    "red": {
+    "rect5611": {
         "sizex": 1,
         "sizey": 1,
         "x": 2043,
+        "y": 30
+    },
+    "red": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2041,
         "y": 30
     },
     "red-head": {
@@ -482,8 +488,8 @@
     "red-numbers": {
         "sizex": 244,
         "sizey": 33,
-        "x": 1196,
-        "y": 1068
+        "x": 435,
+        "y": 1745
     },
     "red-shoulder": {
         "sizex": 28,
@@ -497,23 +503,35 @@
         "x": 2002,
         "y": 293
     },
-    "refuge_basement": {
-        "sizex": 1,
-        "sizey": 1,
-        "x": 2041,
-        "y": 30
+    "refuge-basement": {
+        "sizex": 87,
+        "sizey": 64,
+        "x": 1132,
+        "y": 933
     },
-    "refuge_sky": {
+    "refuge-tower": {
+        "sizex": 10,
+        "sizey": 8,
+        "x": 2037,
+        "y": 106
+    },
+    "refuge_basement": {
         "sizex": 1,
         "sizey": 1,
         "x": 2041,
         "y": 32
     },
-    "refuge_tower": {
+    "refuge_sky": {
         "sizex": 1,
         "sizey": 1,
         "x": 2045,
         "y": 30
+    },
+    "refuge_tower": {
+        "sizex": 1,
+        "sizey": 1,
+        "x": 2045,
+        "y": 32
     },
     "ricochet-rifle": {
         "sizex": 102,
@@ -536,8 +554,8 @@
     "rocket_launcher": {
         "sizex": 188,
         "sizey": 53,
-        "x": 1132,
-        "y": 1103
+        "x": 189,
+        "y": 1691
     },
     "score-board": {
         "sizex": 365,
@@ -561,7 +579,7 @@
         "sizex": 63,
         "sizey": 82,
         "x": 1132,
-        "y": 1020
+        "y": 1085
     },
     "sizex": 2048,
     "sizey": 2048,
@@ -570,6 +588,12 @@
         "sizey": 195,
         "x": 0,
         "y": 1391
+    },
+    "sunset": {
+        "sizex": 67,
+        "sizey": 62,
+        "x": 1196,
+        "y": 1085
     },
     "test-beam": {
         "sizex": 280,
@@ -610,26 +634,26 @@
     "upper-arm": {
         "sizex": 8,
         "sizey": 18,
-        "x": 2037,
-        "y": 106
+        "x": 2034,
+        "y": 170
     },
     "uppercase": {
         "sizex": 286,
         "sizey": 21,
         "x": 1219,
-        "y": 1009
+        "y": 1148
     },
     "white": {
         "sizex": 1,
         "sizey": 1,
-        "x": 2045,
+        "x": 2043,
         "y": 32
     },
     "yellow": {
         "sizex": 1,
         "sizey": 1,
         "x": 2043,
-        "y": 32
+        "y": 34
     },
     "yellow-head": {
         "sizex": 51,
@@ -640,8 +664,8 @@
     "yellow-numbers": {
         "sizex": 244,
         "sizey": 33,
-        "x": 1441,
-        "y": 1135
+        "x": 190,
+        "y": 1587
     },
     "yellow-shoulder": {
         "sizex": 28,
