@@ -957,6 +957,7 @@ void GameScreen::damage_player(int player_index, double damage, int shooter_inde
         player.state.dx = 0;
         player.state.dy = 0;
         player.state.dazed_ticks_left = 0;
+        player.state.fuel_left = 1.0;
 
         if (!game_over) {
             player.state.ticks_until_spawn = 130;
