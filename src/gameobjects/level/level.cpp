@@ -10,7 +10,7 @@
 
 #include <exception>
 
-const bool level_build_debug = true;
+const bool level_build_debug = false;
 
 const char* const level_names[] = {
         // "../assets/level/testlevel.json",

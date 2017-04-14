@@ -77,7 +77,7 @@ void GameScreen::render(RenderList& list) const {
 
 	for (const auto& player : players) {
         player.render(list);
-        if (player.state.laser_sight) player.draw_laser(list, level);
+        if (player.state.laser_sight && !player.state.is_dead) player.draw_laser(list, level);
         if (players_with_max_score.size() != players.size()) {
             if (player.state.score == max_score) {
                 player.render_crown(list);
