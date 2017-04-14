@@ -8,11 +8,11 @@ public:
     virtual bool in_front() const;
 
     virtual int ticks_between_shots() const {
-        return 13;
+        return 10;
     };
 
     virtual int initial_ammo() const {
-        return 50;
+        return 20;
     }
 
     virtual const char* shoot_sound() {

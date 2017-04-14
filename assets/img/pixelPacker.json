@@ -236,8 +236,8 @@
     "green-numbers": {
         "sizex": 244,
         "sizey": 33,
-        "x": 190,
-        "y": 1745
+        "x": 1419,
+        "y": 1138
     },
     "green-shoulder": {
         "sizex": 28,
@@ -356,26 +356,26 @@
     "number-blue": {
         "sizex": 188,
         "sizey": 103,
-        "x": 1264,
+        "x": 1389,
         "y": 1034
     },
     "number-green": {
         "sizex": 189,
         "sizey": 103,
-        "x": 1453,
-        "y": 1034
+        "x": 0,
+        "y": 1587
     },
     "number-red": {
         "sizex": 189,
         "sizey": 103,
         "x": 0,
-        "y": 1587
+        "y": 1691
     },
     "number-yellow": {
         "sizex": 188,
         "sizey": 103,
         "x": 0,
-        "y": 1691
+        "y": 1795
     },
     "orange": {
         "sizex": 1,
@@ -398,7 +398,7 @@
     "pistol": {
         "sizex": 58,
         "sizey": 30,
-        "x": 1506,
+        "x": 1664,
         "y": 1138
     },
     "pistol-explosion": {
@@ -447,7 +447,7 @@
         "sizex": 1112,
         "sizey": 102,
         "x": 0,
-        "y": 1795
+        "y": 1899
     },
     "ready-box-outline": {
         "sizex": 714,
@@ -488,8 +488,8 @@
     "red-numbers": {
         "sizex": 244,
         "sizey": 33,
-        "x": 435,
-        "y": 1745
+        "x": 952,
+        "y": 2002
     },
     "red-shoulder": {
         "sizex": 28,
@@ -554,8 +554,8 @@
     "rocket_launcher": {
         "sizex": 188,
         "sizey": 53,
-        "x": 189,
-        "y": 1691
+        "x": 1200,
+        "y": 1085
     },
     "score-board": {
         "sizex": 365,
@@ -576,10 +576,16 @@
         "y": 736
     },
     "shield": {
-        "sizex": 63,
-        "sizey": 82,
-        "x": 1132,
-        "y": 1085
+        "sizex": 71,
+        "sizey": 103,
+        "x": 1578,
+        "y": 1034
+    },
+    "shield2": {
+        "sizex": 71,
+        "sizey": 103,
+        "x": 1650,
+        "y": 1034
     },
     "sizex": 2048,
     "sizey": 2048,
@@ -592,7 +598,7 @@
     "sunset": {
         "sizex": 67,
         "sizey": 62,
-        "x": 1196,
+        "x": 1132,
         "y": 1085
     },
     "test-beam": {
@@ -640,7 +646,7 @@
     "uppercase": {
         "sizex": 286,
         "sizey": 21,
-        "x": 1219,
+        "x": 1132,
         "y": 1148
     },
     "white": {
@@ -664,8 +670,8 @@
     "yellow-numbers": {
         "sizex": 244,
         "sizey": 33,
-        "x": 190,
-        "y": 1587
+        "x": 0,
+        "y": 2002
     },
     "yellow-shoulder": {
         "sizex": 28,

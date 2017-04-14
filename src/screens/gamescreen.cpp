@@ -395,7 +395,7 @@ std::unique_ptr<Screen> GameScreen::update(const std::map<int, inputs>& all_joys
                     Player& other_player = players[other_i];
 
                     if (i != other_i && other_player.state.pos.colliding_with(kick_box)) {
-                        other_player.state.dx += constant * 25;
+                        other_player.state.dx += constant * 30;
                         other_player.state.dy -= 5;
                         other_player.state.dazed_ticks_left = MAX_DAZE;
                         damage_player(other_i, 3, i);
