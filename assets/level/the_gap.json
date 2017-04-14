@@ -7,27 +7,27 @@
     "obstacles": [
         {
             "xRight": 450, 
-            "yTop": 1300, 
-            "yBottom": 1350, 
+            "yTop": 1100, 
+            "yBottom": 1150, 
             "xLeft": 200
         }, 
         {
-            "xRight": 1150, 
-            "yTop": 1550, 
-            "yBottom": 1600, 
-            "xLeft": 900
+            "xRight": 1400, 
+            "yTop": 1350, 
+            "yBottom": 1400, 
+            "xLeft": 1150
         }, 
         {
-            "xRight": 750, 
-            "yTop": 1800, 
-            "yBottom": 1850, 
-            "xLeft": 500
+            "xRight": 850, 
+            "yTop": 1600, 
+            "yBottom": 1650, 
+            "xLeft": 600
         }, 
         {
-            "xRight": 2120, 
+            "xRight": 2070, 
             "yTop": 1700, 
             "yBottom": 1750, 
-            "xLeft": 1720
+            "xLeft": 1770
         }, 
         {
             "xRight": 730, 
@@ -44,7 +44,7 @@
     ], 
     "boxSpawnLocations": [
         {
-            "y": 1240, 
+            "y": 1040, 
             "x": 325, 
             "weapons": [
                 "rocket"
@@ -76,7 +76,7 @@
     "killboxes": [
         {
             "xRight": 42240, 
-            "yTop": 2260, 
+            "yTop": 2460, 
             "yBottom": 4320, 
             "mirrored": false, 
             "xLeft": -38400
@@ -85,17 +85,24 @@
     "background": [
         {
             "xRight": 7680, 
-            "yTop": -2160, 
-            "yBottom": 500, 
+            "yTop": -1080, 
+            "yBottom": 4320, 
             "xLeft": -3840, 
-            "img": "nice_sky"
+            "img": "sunset"
         }, 
         {
             "xRight": 7680, 
             "yTop": 500, 
             "yBottom": 4320, 
             "xLeft": -3840, 
-            "img": "refuge_basement"
+            "img": "refuge_tower"
+        }, 
+        {
+            "xRight": 7680, 
+            "yTop": 495, 
+            "yBottom": 2700, 
+            "xLeft": -3840, 
+            "img": "shadow"
         }
     ]
 }

@@ -16,7 +16,7 @@ lev = level.Level(title, width, height, mirrored)
 '''
 Killing floor
 '''
-lev.add_kill_box(-10*width, 11*width, height + 100, 2*height, mirror=False)
+lev.add_kill_box(-10*width, 11*width, height + 300, 2*height, mirror=False)
 
 '''
 Plats / Walls
@@ -36,14 +36,14 @@ def build_wall(x, y, h):
 
 
 #Towers
-PLAT_CEIL = 1300
+PLAT_CEIL = 1100
 
 PLAT_H = 250
 PLAT_X = 200
 PLAT_W = 250
 
-PLAT_OFFSET = 300
-PLAT_TILT = 150
+PLAT_OFFSET = 500
+PLAT_TILT = 200
 
 NUM_PLATS = 3
 
@@ -52,15 +52,13 @@ for i in range(NUM_PLATS):
     build_plat(PLAT_X + (PLAT_W + PLAT_OFFSET)*(i%2) + PLAT_TILT * i, PLAT_CEIL + PLAT_H * (i), PLAT_W)
 
 #Center
-CENTER_W = 400
-CENTER_H = PLAT_CEIL + 400
+CENTER_W = 300
+CENTER_H = PLAT_CEIL + 600
 build_plat(width/2 - CENTER_W/2, CENTER_H, CENTER_W)
 
 '''
 Spawns
 '''
-#Side Spawn plats
-
 SPAWN_H = 500
 
 SPAWN_X = width/8
@@ -87,11 +85,13 @@ lev.add_box_spawn(width/2, CENTER_H - 60, ["rocket"], mirror=False)
 '''
 Background
 '''
-sky = "nice_sky"
-pit = "refuge_basement"
+sky = "sunset"
+pit = "refuge_tower"
+shadow = "shadow"
 
-lev.add_background(sky, -width, width*2, -height, SPAWN_H)
+lev.add_background(sky, -width, width*2, -height/2, height * 2)
 lev.add_background(pit, -width, width*2, SPAWN_H, height * 2)
+lev.add_background(shadow, -width, width*2, SPAWN_H - 5, 5*height/4)
 
 print "Saving complex..."
 lev.save("../the_gap.json", note = note)
