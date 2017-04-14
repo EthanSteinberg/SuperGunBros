@@ -19,6 +19,26 @@
    sodipodi:docname="artstyle.svg">
   <defs
      id="defs4209">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4601">
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="0"
+         id="stop4597" />
+      <stop
+         id="stop4607"
+         offset="0.92583442"
+         style="stop-color:#00ffff;stop-opacity:0.02747253" />
+      <stop
+         id="stop4605"
+         offset="0.96830106"
+         style="stop-color:#00ffff;stop-opacity:1" />
+      <stop
+         style="stop-color:#00ffff;stop-opacity:0.01648352"
+         offset="1"
+         id="stop4599" />
+    </linearGradient>
     <inkscape:path-effect
        effect="spiro"
        id="path-effect8109"
@@ -129,6 +149,17 @@
        apply_no_weight="true"
        apply_with_weight="true"
        only_selected="false" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4601"
+       id="radialGradient4603"
+       cx="-140.625"
+       cy="1014.8622"
+       fx="-140.625"
+       fy="1014.8622"
+       r="33.19727"
+       gradientTransform="matrix(3.1424107e-7,-1.4543728,0.98840981,-3.3893387e-7,-1143.7246,810.34129)"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -137,9 +168,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313708"
-     inkscape:cx="-126.99239"
-     inkscape:cy="56.384126"
+     inkscape:zoom="7.9999996"
+     inkscape:cx="-175.18953"
+     inkscape:cy="56.006536"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -156,9 +187,11 @@
      inkscape:snap-center="false"
      inkscape:snap-nodes="false"
      units="in"
-     inkscape:snap-others="true"
+     inkscape:snap-others="false"
      inkscape:measure-start="82.3779,17.442"
-     inkscape:measure-end="100.38,27.9602">
+     inkscape:measure-end="100.38,27.9602"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-midpoints="true">
     <inkscape:grid
        type="xygrid"
        id="grid4160" />
@@ -290,12 +323,12 @@
        inkscape:export-xdpi="899.69434"
        inkscape:export-ydpi="899.69434" />
     <ellipse
-       style="fill:none;fill-opacity:1;stroke:#00ffff;stroke-width:2.97424984;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:none;fill-opacity:1;stroke:#00ffff;stroke-width:3.51131964;stroke-miterlimit:4;stroke-dasharray:none"
        id="path4562"
-       cx="-54.121601"
-       cy="1018.605"
-       rx="28.230206"
-       ry="37.169201"
+       cx="-50.641308"
+       cy="1008.9927"
+       rx="31.441963"
+       ry="46.512897"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/shield.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
@@ -728,11 +761,19 @@
     <circle
        style="fill:#ff1900;fill-opacity:1;stroke:none;stroke-width:1.70952642;stroke-miterlimit:4;stroke-dasharray:none"
        id="path4577-4"
-       cx="-141.96561"
-       cy="988.9386"
+       cx="-168.15065"
+       cy="1077.106"
        inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/flame-end.png"
        inkscape:export-xdpi="78.453148"
        inkscape:export-ydpi="78.453148"
        r="5.7359118" />
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:url(#radialGradient4603);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.51131988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m -140.625,966.59375 c -9.38427,0 -17.76558,5.63604 -23.6875,14.39648 -5.92192,8.76045 -9.50977,20.70617 -9.50977,33.87107 0,13.1649 3.58785,25.1126 9.50977,33.8731 5.92192,8.7604 14.30323,14.3965 23.6875,14.3965 9.38427,0 17.76558,-5.6361 23.6875,-14.3965 5.92192,-8.7605 9.50977,-20.7082 9.50977,-33.8731 0,-13.1649 -3.58785,-25.11062 -9.50977,-33.87107 -5.92192,-8.76044 -14.30323,-14.39648 -23.6875,-14.39648 z m 0,3.51172 c 7.98064,0 15.31951,4.77569 20.77734,12.84961 5.45784,8.07391 8.90821,19.38272 8.90821,31.90622 0,12.5235 -3.45037,23.8324 -8.90821,31.9063 -5.45783,8.0739 -12.7967,12.8515 -20.77734,12.8515 -7.98064,0 -15.31951,-4.7776 -20.77734,-12.8515 -5.45784,-8.0739 -8.90821,-19.3828 -8.90821,-31.9063 0,-12.5235 3.45037,-23.83231 8.90821,-31.90622 5.45783,-8.07392 12.7967,-12.84961 20.77734,-12.84961 z"
+       id="path4562-3"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/ethan/Projects/SuperGunBros/assets/img/shield2.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
   </g>
 </svg>

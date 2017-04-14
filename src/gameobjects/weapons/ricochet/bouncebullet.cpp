@@ -28,7 +28,7 @@ bool BounceBullet::on_player_collision(int hit_player, const std::vector<Rectang
         return false;
     }
 
-    damage_player(hit_player, 10);
+    damage_player(hit_player, 7);
     return true;
 }
 
