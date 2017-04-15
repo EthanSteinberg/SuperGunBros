@@ -50,6 +50,7 @@ NUM_PLATS = 3
 #Staircase
 for i in range(NUM_PLATS):
     build_plat(PLAT_X + (PLAT_W + PLAT_OFFSET)*(i%2) + PLAT_TILT * i, PLAT_CEIL + PLAT_H * (i), PLAT_W)
+    lev.add_box_spawn(PLAT_X + (PLAT_W + PLAT_OFFSET)*(i%2) + PLAT_TILT * i + PLAT_W/2.0, PLAT_CEIL + PLAT_H * (i) - 60, ["rocket"], rd=1200)
 
 #Center
 CENTER_W = 300
@@ -79,7 +80,6 @@ for i in range(2):
 '''
 Weapons
 '''
-lev.add_box_spawn(PLAT_X + PLAT_W/2, PLAT_CEIL - 60, ["rocket"])
 lev.add_box_spawn(width/2, CENTER_H - 60, ["rocket"], mirror=False)
 
 '''

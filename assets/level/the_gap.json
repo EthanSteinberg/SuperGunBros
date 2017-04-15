@@ -45,7 +45,25 @@
     "boxSpawnLocations": [
         {
             "y": 1040, 
-            "x": 325, 
+            "x": 325.0, 
+            "weapons": [
+                "rocket"
+            ], 
+            "respawnDelay": 600, 
+            "initialSpawnDelay": 600
+        }, 
+        {
+            "y": 1290, 
+            "x": 1275.0, 
+            "weapons": [
+                "rocket"
+            ], 
+            "respawnDelay": 600, 
+            "initialSpawnDelay": 600
+        }, 
+        {
+            "y": 1540, 
+            "x": 725.0, 
             "weapons": [
                 "rocket"
             ], 
