@@ -40,7 +40,7 @@ void RocketBullet::perform_explosion(const std::vector<Rectangle>& player_positi
                 f_dy = offset_dy2/distance2;
             }
 
-            double force_factor = 25;
+            double force_factor = 35;
             push_back_player(i, force_factor * f_dx, force_factor * f_dy);
 
             damage_player(i, 15);
