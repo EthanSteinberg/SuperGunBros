@@ -112,8 +112,8 @@ Level Level::load_from_file(const char* filename, unsigned int index) {
             weapons.push_back(weapon.GetString());
         }
 
-        int initial_spawn_delay = 100;
-        int respawn_delay = 100;
+        int initial_spawn_delay = 120;
+        int respawn_delay = 600;
 
         if (spawn_location.HasMember("initialSpawnDelay")) {
             initial_spawn_delay = spawn_location["initialSpawnDelay"].GetInt();
