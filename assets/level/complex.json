@@ -201,7 +201,7 @@
                 "pierce"
             ], 
             "respawnDelay": 600, 
-            "initialSpawnDelay": 600
+            "initialSpawnDelay": 120
         }, 
         {
             "y": 1120, 
@@ -210,7 +210,7 @@
                 "rocket"
             ], 
             "respawnDelay": 600, 
-            "initialSpawnDelay": 600
+            "initialSpawnDelay": 120
         }, 
         {
             "y": 1740, 
@@ -219,7 +219,7 @@
                 "bounce"
             ], 
             "respawnDelay": 600, 
-            "initialSpawnDelay": 600
+            "initialSpawnDelay": 120
         }, 
         {
             "y": 2360, 
@@ -228,7 +228,7 @@
                 "flame"
             ], 
             "respawnDelay": 600, 
-            "initialSpawnDelay": 600
+            "initialSpawnDelay": 120
         }
     ], 
     "spawnLocations": [

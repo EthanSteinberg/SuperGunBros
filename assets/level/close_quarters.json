@@ -61,12 +61,12 @@
                 "flame"
             ], 
             "respawnDelay": 600, 
-            "initialSpawnDelay": 600
+            "initialSpawnDelay": 120
         }, 
         {
             "respawnDelay": 600, 
             "mirrored": true, 
-            "initialSpawnDelay": 600, 
+            "initialSpawnDelay": 120, 
             "weapons": [
                 "bounce"
             ], 

@@ -103,12 +103,12 @@
                 "pierce"
             ], 
             "respawnDelay": 600, 
-            "initialSpawnDelay": 600
+            "initialSpawnDelay": 120
         }, 
         {
             "respawnDelay": 600, 
             "mirrored": false, 
-            "initialSpawnDelay": 600, 
+            "initialSpawnDelay": 120, 
             "weapons": [
                 "rocket"
             ], 
@@ -118,7 +118,7 @@
         {
             "respawnDelay": 600, 
             "mirrored": false, 
-            "initialSpawnDelay": 600, 
+            "initialSpawnDelay": 120, 
             "weapons": [
                 "bounce"
             ], 
@@ -132,7 +132,7 @@
                 "bounce"
             ], 
             "respawnDelay": 600, 
-            "initialSpawnDelay": 600
+            "initialSpawnDelay": 120
         }
     ], 
     "spawnLocations": [
