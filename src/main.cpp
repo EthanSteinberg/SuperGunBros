@@ -17,9 +17,9 @@
 const int screen_width = 1280;
 const int screen_height = 720;
 
-const bool debug_keyboard_player = true;
+const bool debug_keyboard_player = false;
 
-const bool debug_other_player = true;
+const bool debug_other_player = false;;
 bool other_player_start_button = true;
 
 const bool music_on = true;
